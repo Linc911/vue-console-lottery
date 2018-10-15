@@ -1,0 +1,14 @@
+一、CSS书写顺序
+  1. 位置属性(position, top, right, z-index, display, float等)
+  2. 大小(width, height, padding, margin)
+  3. 文字系列(font, line-height, letter-spacing, color- text-align等)
+  4. 背景(background, border等)
+  5. 其他(animation, transition等)
+
+二.CSS书写规范
+  1. 不能使用子代选择器，所有的样式一律用class选择器来控制（意味着每个需控制的样式的元素，必须加上class属性）；
+  2. 浮点数不能去掉小数点前的“0”，一律要完整表示（0.314）；
+  3. CSS有些属性是可以缩写的，尽量采用简写，比如padding,margin,font等等；
+  4. 16进制颜色代码，一律采用小写；能简写尽量简写（#ffeeff => #fef);
+  5. 长名称用中横线（-）来为选择器命名 ，最长不超过4个(如 top-nav-list-item) ；
+  6. 为选择器添加状态class时，统一用 current 单词；
