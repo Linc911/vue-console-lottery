@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$message({
@@ -60,25 +60,25 @@ export default {
     },
     login () {
       const formData = `username=${this.ruleForm.username}&password=${this.ruleForm.password}`
-      this.$axios.post('http://192.168.5.129:8080/sys/login',formData , {
+      this.$axios.post('/sys/login', formData, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
       })
         .then(response => {
-          //将access_token和refresh_token写入本地
-          localStorage.setItem("access_token", response.data.access_token)
-          localStorage.setItem("refresh_token", response.data.refresh_token)
+          // 将access_token和refresh_token写入本地
+          localStorage.setItem('access_token', response.data.access_token)
+          localStorage.setItem('refresh_token', response.data.refresh_token)
           // 跳转到首页
           this.$router.push('/home')
         })
         .catch(error => {
-          if(error.code === '401') {
+          if (error.code === '401') {
             this.$message({
               message: '用户不存在',
               type: 'info'
             })
           }
         })
-      }
+    }
   }
 }
 </script>

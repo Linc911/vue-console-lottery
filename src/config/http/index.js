@@ -13,8 +13,17 @@ function endLoading () {
   loading.close()
 }
 
+// 设置基本的配置（URL，Token)
+const AUTO_TOKEN = 'Bearer ' + (localStorage.getItem('access_token') ? localStorage.getItem('access_token') : '')
+const instance = axios.create({
+  baseURL: 'http://192.168.5.129:8080',
+  headers: {
+    'Authorization': AUTO_TOKEN
+  }
+})
+
 // 请求拦截
-axios.interceptors.request.use(config => {
+instance.interceptors.request.use(config => {
   // 发起http请求时，显示loading动画
   startLoading()
   return config
@@ -23,7 +32,7 @@ axios.interceptors.request.use(config => {
 })
 
 // 响应拦截
-axios.interceptors.response.use(response => {
+instance.interceptors.response.use(response => {
   // http响应完成时，停止动画； 返回获取的对象
   endLoading()
   return response
@@ -33,4 +42,4 @@ axios.interceptors.response.use(response => {
   return Promise.reject(error)
 })
 
-export default axios
+export default instance

@@ -11,3 +11,10 @@ a {
   color: inherit;
   text-decoration: none;
 }
+p {
+  margin: 0;
+}
+
+.el-input.is-disabled .el-input__inner {
+  color: #999 !important;
+}

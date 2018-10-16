@@ -35,13 +35,13 @@ export default {
         ],
         verificationCode: [
           { required: true, message: '验证码不能为空' },
-          { pattern:/^\d{6}$/, message: '验证码长度为6位数字' }
+          { pattern: /^\d{6}$/, message: '验证码长度为6位数字' }
         ]
       }
     }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$message({
