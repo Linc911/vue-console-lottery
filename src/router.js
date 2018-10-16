@@ -1,6 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+
+import NotFound from './views/NotFound'
+
+import TheLogin from './views/login/TheLogin'
+import LoginByUsername from './views/login/LoginByUsername'
+import LoginByPhone from './views/login/LoginByPhone'
+
+import TheHome from './views/TheHome'
 
 Vue.use(Router)
 
@@ -9,9 +16,33 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '*',
+      component: NotFound
+    },
+    {
+      path: '',
+      redirect: '/login/username'
+    },
+    {
+      path: '/login',
+      name: 'login',
+      redirect: '/login/username',
+      component: TheLogin,
+      children: [
+        {
+          path: 'username',
+          component: LoginByUsername
+        },
+        {
+          path: 'phone',
+          component: LoginByPhone
+        }
+      ]
+    },
+    {
+      path: '/home',
       name: 'home',
-      component: Home
+      component: TheHome
     }
     // {
     //   path: '/about',
