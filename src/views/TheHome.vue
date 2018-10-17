@@ -5,7 +5,7 @@
         <HeadNav />
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside width="220px">
           <AsideNav />
         </el-aside>
         <el-container>
@@ -37,10 +37,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home {
+  min-width: 1190px;
+  margin: 0 auto;
+}
+.el-header {
+  position: fixed;
+  z-index: 10000;
+  width: 100%;
+  height: 60px;
+  border-bottom: 2px solid #324057;
+  background-color: #fff;
+}
+.el-aside {
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  margin-top: 60px;
+  background-color: #324057;
+}
 .el-main {
-  border-top: 2px solid #324057;
+  margin: 60px 0 0 220px;
+  background-color: #f8f8f8;
 }
 .el-footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  width: calc(100% - 220px);
+  margin-left: 220px;
   padding: 0;
 }
 </style>

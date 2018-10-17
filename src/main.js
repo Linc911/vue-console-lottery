@@ -2,6 +2,9 @@ import Vue from 'vue'
 import router from './router'
 import store from './store'
 
+// 引入自定义指令
+import './directives'
+
 // CSS Reset and Others
 import 'normalize.css/normalize.css'
 import '@/styles/base.scss'

@@ -1,73 +1,85 @@
-<template>
-  <el-table
-    :data="tableData"
-    style="width: 100%">
-    <el-table-column
-      label="Date"
-      width="180">
-      <template slot-scope="scope">
-        <i class="el-icon-time"></i>
-        <span style="margin-left: 10px">{{ scope.row.date }}</span>
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="Name"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>Name: {{ scope.row.name }}</p>
-          <p>Addr: {{ scope.row.address }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="Operations">
-      <template slot-scope="scope">
-        <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+<template lang="html">
+  <section class="vip-info-manage">
+    <!-- 条件筛选 -->
+    <div class="search-container clearfix">
+      <div class="search-left">
+        <el-input v-model="input4" size="small" placeholder="请输入角色" style="width: 240px;">
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </div>
+      <div class="search-right">
+        <el-button icon="el-icon-circle-plus-outline" size="small" type="primary">添加</el-button>
+      </div>
+    </div>
+    <!-- 表格数据 -->
+    <div class="">
+      <el-table
+        :data="tableData"
+        size="small"
+        highlight-current-row
+        border
+      >
+        <el-table-column prop="code" label="Code"></el-table-column>
+        <el-table-column prop="name" label="角色名"></el-table-column>
+        <el-table-column prop="changedTime" label="修改时间" >
+          <template slot-scope="scope">
+            <span v-localtime="scope.row.changedTime"></span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="operations" label="操作">
+          <template slot-scope="scope">
+            <el-button icon="el-icon-edit" size="mini" type="primary"></el-button>
+            <el-button icon="el-icon-delete" size="mini" type="primary"></el-button>
+            <span class="table-operations-item">安全预测</span>
+            <span class="table-operations-item">赔率预览</span>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+  </section>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        tableData: [{
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles'
-        }, {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles'
-        }, {
-          date: '2016-05-04',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles'
-        }, {
-          date: '2016-05-01',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles'
-        }]
-      }
-    },
-    methods: {
-      handleEdit(index, row) {
-        console.log(index, row);
-      },
-      handleDelete(index, row) {
-        console.log(index, row);
-      }
+import moment from 'moment'
+
+export default {
+  data () {
+    return {
+      input4: '',
+      time: '',
+      valueDate: '',
+      valueData: '',
+      tableData: [
+        {
+          code: 123,
+          changedTime: new Date(),
+          name: 'Jhon',
+          name: '新会员'
+        },
+      ]
     }
   }
+}
 </script>
+
+<style lang="scss" scoped>
+.search-container {
+  margin-bottom: 20px;
+}
+.search-left {
+  float: left;
+}
+.search-right {
+  float: right;
+  text-align: right;
+}
+// .form-label {
+//   font-size: 14px;
+//   color: #606266;
+// }
+// .table-operations-item {
+//   display: inline-block;
+//   width: 60px;
+//   text-align: center;
+// }
+</style>

@@ -14,6 +14,10 @@ import UserInfo from './views/user/UserInfo'
 import UserAvatar from './views/user/UserAvatar'
 import UserPhone from './views/user/UserPhone'
 
+import VipInfoManage from './views/vip/VipInfoManage'
+
+import SystemRole from './views/system/SystemRole'
+
 Vue.use(Router)
 
 export default new Router({
@@ -67,6 +71,16 @@ export default new Router({
         {
           path: '/user/phone',
           component: UserPhone
+        },
+        // 会员管理模块
+        {
+          path: '/vip/info/manage',
+          component: VipInfoManage
+        },
+        // 系统管理
+        {
+          path: '/system/role',
+          component: SystemRole
         }
       ]
     }

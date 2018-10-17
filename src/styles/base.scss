@@ -7,6 +7,9 @@ body {
   font: 12px/1.5 "Microsoft YaHei",tahoma,arial,Hiragino Sans GB,sans-serif;
 }
 
+*  {
+  box-sizing: border-box;
+}
 a {
   color: inherit;
   text-decoration: none;
@@ -14,7 +17,16 @@ a {
 p {
   margin: 0;
 }
+ul, ol {
+  list-style-type: none;
+}
+ul {
+  padding: 0;
+  margin: 0;
+}
 
 .el-input.is-disabled .el-input__inner {
   color: #999 !important;
 }
+
+@import 'common'
