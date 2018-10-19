@@ -49,7 +49,9 @@ export default {
           icon: 'fa-user',
           children: [
             { id: 'test0201', name: '信息管理', path: '/vip/info/manage', icon: 'fa-cubes' },
-            { id: 'test0202', name: '账号核查', path: '/vip/accout/check', icon: 'fa-cubes' },
+            { id: 'test0210', name: '会员列表', path: '/vip/list', icon: 'fa-cubes' },
+            { id: 'test0202', name: '注单列表', path: '/vip/stakes', icon: 'fa-cubes' },
+            // { id: 'test0202', name: '账号核查', path: '/vip/accout/check', icon: 'fa-cubes' },
             { id: 'test0203', name: '信息修改', path: '/vip/info/change', icon: 'fa-cubes' },
             { id: 'test0204', name: '分组管理', path: '/vip/group/manage', icon: 'fa-cubes' },
             { id: 'test0205', name: '资料管理', path: '/vip/data/manage', icon: 'fa-cubes' },

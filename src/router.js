@@ -15,8 +15,12 @@ import UserAvatar from './views/user/UserAvatar'
 import UserPhone from './views/user/UserPhone'
 
 import VipInfoManage from './views/vip/VipInfoManage'
+import VipsList from './views/vip/VipsList'
+import VipBets from './views/vip/VipBets'
+import VipChangedList from './views/vip/VipChangedList'
 
-import SystemRole from './views/system/SystemRole'
+import SystemRoles from './views/system/SystemRoles'
+import SystemRoleCreate from './views/system/SystemRoleCreate'
 
 Vue.use(Router)
 
@@ -77,10 +81,31 @@ export default new Router({
           path: '/vip/info/manage',
           component: VipInfoManage
         },
+        {
+          path: '/vip/list',
+          component: VipsList,
+          meta: { title: '会员信息管理 - 会员列表' }
+        },
+        {
+          path: '/vip/:id/bets',
+          component: VipBets,
+          meta: { title: '会员信息管理 - 会员个人注单列表' }
+        },
+        {
+          path: '/vip/:id/changedList',
+          component: VipChangedList,
+          meta: { title: '会员信息管理 - 会员个人充值列表' }
+        },
         // 系统管理
         {
           path: '/system/role',
-          component: SystemRole
+          component: SystemRoles,
+          meta: { title: '系统设置 - 角色列表' }
+        },
+        {
+          path: '/system/role/create',
+          component: SystemRoleCreate,
+          meta: { title: '系统设置 - 创建新角色' }
         }
       ]
     }

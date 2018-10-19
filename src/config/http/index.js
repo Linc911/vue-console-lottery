@@ -16,7 +16,7 @@ function endLoading () {
 // 设置基本的配置（URL，Token)
 const AUTO_TOKEN = 'Bearer ' + (localStorage.getItem('access_token') ? localStorage.getItem('access_token') : '')
 const instance = axios.create({
-  baseURL: 'http://192.168.5.129:8080',
+  baseURL: 'http://192.168.5.182:8080',
   headers: {
     'Authorization': AUTO_TOKEN
   }

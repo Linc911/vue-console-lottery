@@ -51,11 +51,11 @@
         <el-table-column prop="accountNumber" label="账号编码"></el-table-column>
         <el-table-column prop="username" label="姓名"></el-table-column>
         <el-table-column prop="type" label="类型"></el-table-column>
-        <el-table-column prop="level" label="级别"></el-table-column>
+        <!-- <el-table-column prop="level" label="级别"></el-table-column> -->
         <el-table-column prop="accountBalance" label="账户余额"></el-table-column>
-        <el-table-column prop="accountReceive" label="返水账号"></el-table-column>
-        <el-table-column prop="accountChange" label="输赢"></el-table-column>
-        <el-table-column prop="isMonitored" label="是否受监管" :width="40">
+        <!-- <el-table-column prop="accountReceive" label="返水账号"></el-table-column>
+        <el-table-column prop="accountChange" label="输赢"></el-table-column> -->
+        <!-- <el-table-column prop="isMonitored" label="是否受监管" :width="40">
           <template slot-scope="scope">
             <i :class="[ scope.row.isMonitored ? 'el-icon-success' : 'el-icon-error' ]"></i>
           </template>
@@ -64,9 +64,9 @@
           <template slot-scope="scope">
             <i :class="[ scope.row.isChanged ? 'el-icon-success' : 'el-icon-error' ]"></i>
           </template>
-        </el-table-column>
-        <el-table-column prop="registerIP" label="注册IP"></el-table-column>
-        <el-table-column prop="loginInfo" label="登录信息"></el-table-column>
+        </el-table-column> -->
+        <!-- <el-table-column prop="registerIP" label="注册IP"></el-table-column>
+        <el-table-column prop="loginInfo" label="登录信息"></el-table-column> -->
         <el-table-column prop="operations" label="操作">
           <template slot-scope="scope">
             <span class="table-operations-item">会员详情</span>

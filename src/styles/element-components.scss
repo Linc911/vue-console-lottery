@@ -1,0 +1,28 @@
+/*
+ * Override ElementUI Default Components Styles
+ */
+
+// icon
+// .el-icon {
+//   font-size: 14px;
+// }
+
+/* input 组件 */
+// 设置属性 disabled 时
+.el-input.is-disabled .el-input__inner {
+  color: #999;
+}
+
+/* card 组件 */
+// 头部标题
+.el-card__header {
+  color: #333;
+  font-size: 14px;
+  padding: 12px 20px;
+}
+
+/* pagination 组件 */
+.el-pagination {
+  margin-top: 20px;
+  text-align: right;
+}

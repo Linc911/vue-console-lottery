@@ -1,23 +1,23 @@
 import Vue from 'vue'
 import router from './router'
 import store from './store'
+// import App from './App.vue'
 
 // 引入自定义指令
 import './directives'
 
-// CSS Reset and Others
-import 'normalize.css/normalize.css'
-import '@/styles/base.scss'
+// HTTP拦截处理文件
+import axios from './config/http'
 
-// FontAwesome
-import 'font-awesome/css/font-awesome.css'
-
-// ElementUI
+// ElementUI；样式引入必须在其他CSS引入文件之前引入，以便后续的样式覆盖原ElementUI的初始样式
 import ElementUI from 'element-ui'
 import './styles/element-variables.scss'
 
-// HTTP拦截处理文件
-import axios from './config/http'
+// CSS Reset and Others
+import 'normalize.css/normalize.css'
+import '@/styles/index.scss'
+// FontAwesome
+import 'font-awesome/css/font-awesome.css'
 
 import App from './App.vue'
 
@@ -25,6 +25,13 @@ Vue.use(ElementUI)
 Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
+
+// 路由配置
+router.beforeEach((to, from, next) => {
+  // console.log(to)
+  document.title = to.meta.title
+  next()
+})
 
 new Vue({
   router,

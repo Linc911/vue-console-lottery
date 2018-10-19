@@ -43,7 +43,7 @@ export default {
 }
 .el-header {
   position: fixed;
-  z-index: 10000;
+  z-index: 100;
   width: 100%;
   height: 60px;
   border-bottom: 2px solid #324057;
@@ -57,7 +57,7 @@ export default {
   background-color: #324057;
 }
 .el-main {
-  margin: 60px 0 0 220px;
+  margin: 60px 0 30px 220px;
   background-color: #f8f8f8;
 }
 .el-footer {
