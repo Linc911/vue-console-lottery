@@ -6,6 +6,9 @@ import store from './store'
 // 引入自定义指令
 import './directives'
 
+// 引入自定义过滤器
+import './filters'
+
 // HTTP拦截处理文件
 import axios from './config/http'
 

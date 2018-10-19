@@ -34,6 +34,24 @@
     </div>
     <!-- 表格数据 -->
     <div class="table-list">
+      <!-- 会员基本信息 -->
+      <ul v-if="tableDataReady" class="user-info-list clearfix">
+        <li class="user-info-item">
+          <span>用户ID：</span>
+          <span class="user-info-detail">{{tableData[0].id}}</span>
+        </li>
+        <li class="user-info-item">
+          <span>会员ID：</span>
+          <span class="user-info-detail">{{tableData[0].userId}}</span>
+        </li>
+        <li class="user-info-item">
+          <span>会员账号：</span>
+          <span class="user-info-detail">{{tableData[0].username}}</span>
+        </li>
+        <li class="pull-right">
+          <el-button @click="$router.push(`/user/${tableData[0].userId}/betsStatistics`)" type="primary" size="mini">近15天注单统计</el-button>
+        </li>
+      </ul>
       <!-- 表格 -->
       <el-table
         :data="tableData"
@@ -46,7 +64,7 @@
 
         <el-table-column prop="createDate" label="投注时间" :min-width="140">
           <template slot-scope="scope">
-            <span v-localtime="scope.row.createDate"></span>
+            <span>{{scope.row.createDate | time}}</span>
           </template>
         </el-table-column>
 
@@ -54,23 +72,28 @@
 
         <el-table-column prop="betsType" label="投注主类型">
           <template slot-scope="scope">
-            <span>{{transferBetsType(scope.row.betsType)}}</span>
+            <span>{{scope.row.betsType | betType}}</span>
           </template>
         </el-table-column>
 
         <!-- <el-table-column prop="bets" label="投注内容"></el-table-column> -->
-        <el-table-column prop="totalBets" label="总投注数" width="70">
+        <el-table-column prop="totalBets" label="总投注数" :width="70">
           <template slot-scope="scope">
             <span>{{scope.row.totalBets}}</span>
-            <i @click="showDialogBetsDetails(scope.row.bet.bettings)" class="el-icon-search bets-detials-icon"></i>
+            <MoreDetail @on-click="showDialogBetsDetails(scope.row.bet.bettings)" class="pull-right" />
           </template>
         </el-table-column>
-        <el-table-column prop="totalAmount" label="总投注金额" :width="60"></el-table-column>
+
+        <el-table-column prop="totalAmount" label="总投注金额" :min-width="60">
+          <template slot-scope="scope">
+            <span>{{scope.row.totalAmount | RMB}}</span>
+          </template>
+        </el-table-column>
         <!-- <el-table-column prop="orderType" label="订单类型"></el-table-column> -->
 
         <el-table-column prop="status" label="注单状态">
           <template slot-scope="scope">
-            <span>{{transferStatus(scope.row.status)}}</span>
+            <span>{{scope.row.status | betStatus}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -95,34 +118,38 @@
     >
       <div>
         <el-row :gutter="20">
-          <el-col :span="6" v-for="(item, i) in currentBets" :key="i">
+          <el-col :sm="12" :md="8" :lg="6" :xl="4" v-for="(item, i) in currentBets" :key="i">
             <el-card>
               <ul>
-                <li class="clearfix">
+                <li class="balls-row clearfix">
                   <span>球号</span>
-                  <span style="float: right;">
-                    <span class="dialog-ball" v-for="(ball, j) in item.ballNums" :key="j">{{ball}}</span>
+                  <div class="balls-container">
+                    <template v-for="(ball, j) in item.ballNums">
+                      <BaseBall :number="ball" :key="j" />
+                    </template>
+                  </div>
+                </li>
+                <li class="balls-row clearfix">
+                  <span>第五个球选号</span>
+                  <span class="balls-container">
+                    <BaseBall />
                   </span>
                 </li>
                 <li>
-                  <span>第五个球选号</span>
-                  <span>{{item.awardAmount}}</span>
-                </li>
-                <li>
                   <span>投注子类型</span>
-                  <span>{{item.childType}}</span>
+                  <span class="pull-right">{{item.childType | betSubtype }}</span>
                 </li>
                 <li>
                   <span>每注的金额</span>
-                  <span>{{item.betAmount}}</span>
+                  <span class="pull-right">{{item.betAmount | RMB}}</span>
                 </li>
                 <li>
                   <span>赔率</span>
-                  <span>{{item.rate}}</span>
+                  <span class="pull-right">{{item.rate}}</span>
                 </li>
                 <li>
                   <span>投注结果</span>
-                  <span>{{item.betResulte}}</span>
+                  <span class="pull-right">{{item.betResulte | betResult}}</span>
                 </li>
               </ul>
             </el-card>
@@ -134,13 +161,21 @@
 </template>
 
 <script>
+import BaseBall from '@/components/base/BaseBall'
+import MoreDetail from '@/components/base/MoreDetail'
+
 export default {
+  components: {
+    BaseBall,
+    MoreDetail
+  },
   data () {
     return {
       input4: '',
       valueDate: '',
       valueData: '',
       dialogVisible: false,
+      tableDataReady: false,
       tableData: [],
       page: {
         total: 10,
@@ -162,47 +197,22 @@ export default {
     handleSizeChange (pageSize) {
       this.fetchUserList({ current: this.page.current = 1, size: this.page.size = pageSize })
     },
-    handleClose () {
-      this.dialogVisible = false
-    },
+    // 显示每注详情弹框
     showDialogBetsDetails(bets) {
       this.dialogVisible = true
       this.currentBets = bets
     },
-    transferBetsType (type) {
-      switch (type) {
-        case 1:
-          return '主盘势'
-        case 2:
-          return '单选'
-        case 3:
-          return '选号-任选'
-        case 4:
-          return '选号-组选'
-        case 5:
-          return '选号-直选'
-        default:
-          return '主盘势'
-      }
-    },
-    transferStatus (status) {
-      switch (status) {
-        case 0:
-          return '未处理'
-        case 1:
-          return '已处理'
-        default:
-          return '未处理'
-      }
+    // 关闭弹框
+    handleClose () {
+      this.dialogVisible = false
     },
     fetchUserList (page) {
       this.$axios.post('/api-g/getUserBetsInfo', {}, {
         params: { id: this.$route.params.id, pageNo: this.page.current, pageSize: this.page.size }
       }).then(response => {
-        // 表格对象赋值
-        this.tableData = response.data.results
-        // 分页对象赋值
-        this.page.total = response.data.amount
+        this.tableData = response.data.results// 表格对象赋值
+        this.page.total = response.data.amount // 分页对象赋值
+        this.tableDataReady = true
       }).catch(error => console.log(error))
     }
   }
@@ -220,26 +230,28 @@ export default {
   float: right;
   text-align: right;
 }
-.bets-detials-icon {
-  float: right;
-  width: 20px;
-  font-size: 14px;
-  line-height: 24px;
-  color: #189F92;
-  cursor: pointer;
+// 会员基本信息
+.user-info-list {
+  margin: 30px 0 10px;
 }
+.user-info-item {
+  float: left;
+  margin-right: 30px;
+  font-size: 14px;
+}
+.user-info-detail {
+  color: #999;
+}
+// 每注详情弹框
 .el-card {
+  line-height: 30px;
   margin-bottom: 20px;
 }
-.dialog-ball {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  margin-left: 8px;
-  text-align: center;
+.balls-row  {
+  margin-bottom: 8px;
   line-height: 30px;
-  background: antiquewhite;
-  border-radius: 50%;
-  color: #666;
+}
+.balls-container {
+  float: right;
 }
 </style>

@@ -67,7 +67,7 @@ export default {
           icon: 'fa-gears',
           children: [
             { id: 'test0101', name: '菜单', path: '/system/menu', icon: 'fa-windows' },
-            { id: 'test0102', name: '角色', path: '/system/role', icon: 'fa-cubes' },
+            { id: 'test0102', name: '角色', path: '/system/roles', icon: 'fa-cubes' },
             { id: 'test0103', name: '权限', path: '/system/authorization', icon: 'fa-align-justify' }
           ]
         }

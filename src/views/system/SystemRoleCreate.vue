@@ -16,7 +16,7 @@
 
       <el-form-item>
         <el-button type="primary" @click="submitForm('createRoleForm')">确认</el-button>
-        <el-button type="info" @click="$router.push('/system/role')">返回</el-button>
+        <el-button type="info" @click="$router.push('/system/roles')">返回</el-button>
       </el-form-item>
     </el-form>
   </section>
@@ -48,12 +48,12 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios.post('/api-u/roles', this.formData).then(() => {
-            this.$router.push('/system/role')
+            this.$router.push('/system/roles')
           }).catch(error => console.log(error))
         } else {
           this.$message({
             message: 'Code或角色名称输入不正确',
-            type: 'warning'
+            type: 'error'
           })
           return false
         }

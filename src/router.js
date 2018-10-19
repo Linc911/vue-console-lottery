@@ -17,9 +17,12 @@ import UserPhone from './views/user/UserPhone'
 import VipInfoManage from './views/vip/VipInfoManage'
 import VipsList from './views/vip/VipsList'
 import VipBets from './views/vip/VipBets'
+import UserBetsStatistics from './views/user/UserBetsStatistics'
 import VipChangedList from './views/vip/VipChangedList'
+import UserAccountDeposit from './views/user/UserAccountDeposit'
+import VipLogsList from './views/vip/VipLogsList'
 
-import SystemRoles from './views/system/SystemRoles'
+import SystemRolesList from './views/system/SystemRolesList'
 import SystemRoleCreate from './views/system/SystemRoleCreate'
 
 Vue.use(Router)
@@ -45,11 +48,13 @@ export default new Router({
       children: [
         {
           path: 'username',
-          component: LoginByUsername
+          component: LoginByUsername,
+          meta: { title: '账号登录' }
         },
         {
           path: 'phone',
-          component: LoginByPhone
+          component: LoginByPhone,
+          meta: { title: '手机登录' }
         }
       ]
     },
@@ -61,7 +66,8 @@ export default new Router({
       children: [
         {
           path: '/home/index',
-          component: HomeIndex
+          component: HomeIndex,
+          meta: { title: '系统首页' }
         },
         // 用户中心设置模块
         {
@@ -84,28 +90,43 @@ export default new Router({
         {
           path: '/vip/list',
           component: VipsList,
-          meta: { title: '会员信息管理 - 会员列表' }
+          meta: { title: '会员列表' }
         },
         {
           path: '/vip/:id/bets',
           component: VipBets,
-          meta: { title: '会员信息管理 - 会员个人注单列表' }
+          meta: { title: '会员个人注单列表' }
+        },
+        {
+          path: '/user/:id/betsStatistics',
+          component: UserBetsStatistics,
+          meta: { title: '投注历史统计' }
         },
         {
           path: '/vip/:id/changedList',
           component: VipChangedList,
-          meta: { title: '会员信息管理 - 会员个人充值列表' }
+          meta: { title: '会员个人充值列表' }
+        },
+        {
+          path: '/user/:id/depositStatistics',
+          component: UserAccountDeposit,
+          meta: { title: '存款历史统计' }
+        },
+        {
+          path: '/user/:id/logs',
+          component: VipLogsList,
+          meta: { title: '会员个人日志列表' }
         },
         // 系统管理
         {
-          path: '/system/role',
-          component: SystemRoles,
-          meta: { title: '系统设置 - 角色列表' }
+          path: '/system/roles',
+          component: SystemRolesList,
+          meta: { title: '角色列表' }
         },
         {
           path: '/system/role/create',
           component: SystemRoleCreate,
-          meta: { title: '系统设置 - 创建新角色' }
+          meta: { title: '创建新角色' }
         }
       ]
     }

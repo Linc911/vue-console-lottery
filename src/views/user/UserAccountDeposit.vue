@@ -1,5 +1,5 @@
 <template lang="html">
-  <section class="vip-bets">
+  <section class="account-deposit">
     <!-- 条件筛选 -->
     <div class="search-container clearfix">
       <div class="search-left">
@@ -34,15 +34,16 @@
     </div>
     <!-- 表格数据 -->
     <div class="table-list">
+      <!-- 用户基本信息 -->
       <ul v-if="tableDataReady" class="user-info-list clearfix">
         <li class="user-info-item">
           <span>用户ID：</span>
           <span class="user-info-detail">{{tableData[0].id}}</span>
         </li>
-        <li class="user-info-item">
+        <!-- <li class="user-info-item">
           <span>会员ID：</span>
           <span class="user-info-detail">{{tableData[0].userId}}</span>
-        </li>
+        </li> -->
         <li class="user-info-item">
           <span>会员账号：</span>
           <span class="user-info-detail">{{tableData[0].username}}</span>
@@ -56,30 +57,15 @@
         border
       >
         <el-table-column type="index"></el-table-column>
-        <el-table-column prop="orderID" label="订单流水号" :min-width="140"></el-table-column>
-        <el-table-column prop="otherOrderId" label="第三方订单流水号" :min-width="140"></el-table-column>
-
-        <el-table-column prop="payTime" label="充值时间" :min-width="140"></el-table-column>
-
-        <el-table-column prop="payType" label="支付类型">
+        <el-table-column prop="list" label="业务类型">
           <template slot-scope="scope">
-            <span>{{scope.row.payType | changedType}}</span>
+            <template v-if="scope.row.list">
+              <span v-for="(item, index) in scope.row.list" :key="index">{{item.payType === 1 ? '微信' : '其他' }} {{item.payNum | RMB}}</span>
+            </template>
+            <span v-else>本月无业务往来</span>
           </template>
         </el-table-column>
-
-        <el-table-column prop="payNum" label="支付金额">
-          <template slot-scope="scope">
-            <span>{{scope.row.payNum | RMB}}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column prop="selfStatus" label="订单状态">
-          <template slot-scope="scope">
-            <span>{{scope.row.selfStatus | changedStatus}}</span>
-          </template>
-        </el-table-column>
-
-
+        <el-table-column prop="businessTime" label="业务时间" :min-width="140"></el-table-column>
       </el-table>
       <!-- 分页 -->
       <el-pagination
@@ -112,25 +98,25 @@ export default {
     }
   },
   created () {
-    this.fetchUserList({ current: this.page.current = 1, size: this.page.size = 10 })
+    this.fetchUserLogs({ current: this.page.current = 1, size: this.page.size = 10 })
   },
   methods: {
     // 分页跳转时
     handleCurrentChange (currentPage) {
-      this.fetchUserList({ current: this.page.current = currentPage, size: this.page.size })
+      this.fetchUserLogs({ current: this.page.current = currentPage, size: this.page.size })
     },
     // 分页调整每页显示条数时
     handleSizeChange (pageSize) {
-      this.fetchUserList({ current: this.page.current = 1, size: this.page.size = pageSize })
+      this.fetchUserLogs({ current: this.page.current = 1, size: this.page.size = pageSize })
     },
-    fetchUserList (page) {
-      this.$axios.get('/api-p/UserOrder/findPage', {
+    fetchUserLogs (page) {
+      this.$axios.get('/api-p/backend/statisticsUserOrder', {
         params: { userId: this.$route.params.id, pageNo: this.page.current, pageSize: this.page.size }
       }).then(response => {
         // 表格对象赋值
         this.tableData = response.data.data
         // 分页对象赋值
-        this.page.total = response.data.amount
+        this.page.total = response.data.data.length
         this.tableDataReady = true
       }).catch(error => console.log(error))
     }
@@ -149,6 +135,7 @@ export default {
   float: right;
   text-align: right;
 }
+// 用户基本信息
 .user-info-list {
   margin: 30px 0 10px;
 }

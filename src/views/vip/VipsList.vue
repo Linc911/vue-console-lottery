@@ -42,7 +42,14 @@
         border
       >
         <el-table-column type="index" :width="40"></el-table-column>
-        <el-table-column prop="username" label="名称"></el-table-column>
+
+        <el-table-column prop="username" label="名称" :min-width="100">
+          <template slot-scope="scope">
+            <span>{{scope.row.username}}</span>
+            <MoreDetail @on-click="handleViewUserInfo(scope.row.id)" class="pull-right" />
+          </template>
+        </el-table-column>
+
         <el-table-column prop="nickname" label="昵称"></el-table-column>
         <el-table-column prop="banlance" label="账户余额"></el-table-column>
         <el-table-column prop="win" label="输赢"></el-table-column>
@@ -57,6 +64,8 @@
           <template slot-scope="scope">
             <el-button @click="$router.push(`/vip/${scope.row.id}/bets`)" type="primary" size="mini">注单详情</el-button>
             <el-button @click="$router.push(`/vip/${scope.row.id}/changedList`)" type="primary" size="mini">充值详情</el-button>
+            <el-button @click="$router.push(`/user/${scope.row.id}/depositStatistics`)" type="primary" size="mini">存款详情</el-button>
+            <el-button @click="$router.push(`/user/${scope.row.id}/logs`)" type="primary" size="mini">日志详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -71,11 +80,31 @@
         layout="total, sizes, prev, pager, next, jumper"
       />
     </div>
+    <!-- 会员信息详情弹框 -->
+    <el-dialog
+      title="会员信息详情"
+      :visible.sync="dialogVisible"
+      :before-close="handleClose"
+      width="320px"
+      center
+    >
+      <ul class="dialog-user-info">
+        <li>用户ID：{{currentUser.id}}</li>
+        <li>会员账号：{{currentUser.username}}</li>
+        <li>会员昵称：{{currentUser.nickname}}</li>
+        <li>账号状态：{{currentUser.enable ? '正常' : '异常'}}</li>
+      </ul>
+    </el-dialog>
   </section>
 </template>
 
 <script>
+import MoreDetail from '@/components/base/MoreDetail'
+
 export default {
+  components: {
+    MoreDetail
+  },
   data () {
     return {
       input4: '',
@@ -86,7 +115,9 @@ export default {
         total: 10,
         current: 1,
         size: 10
-      }
+      },
+      dialogVisible: false,
+      currentUser: {}
     }
   },
   created () {
@@ -100,6 +131,20 @@ export default {
     // 分页调整每页显示条数时
     handleSizeChange (pageSize) {
       this.fetchUserList({ current: this.page.current = 1, size: this.page.size = pageSize })
+    },
+    // 请求会员信息， 显示弹框
+    handleViewUserInfo (userId) {
+      this.$axios.get('/api-u/backend/user', { params: { userId } }).then(response => {
+        if (response.data.data) {
+          this.currentUser = response.data.data
+          this.dialogVisible = true
+        } else {
+          this.$message.warning('数据异常，无法正常显示！')
+        }
+      })
+    },
+    handleClose () {
+      this.dialogVisible = false
     },
     fetchUserList (page) {
       this.$axios.get('/api-u/backend/userList', {
@@ -128,5 +173,9 @@ export default {
 .search-right {
   float: right;
   text-align: right;
+}
+.dialog-user-info {
+  padding-bottom: 30px;
+  line-height: 2;
 }
 </style>
