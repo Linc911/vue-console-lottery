@@ -3,12 +3,12 @@ import router from './router'
 import store from './store'
 // import App from './App.vue'
 
-// 引入自定义指令
+// 引入自定义指令、自定义过滤器
 import './directives'
-
-// 引入自定义过滤器
 import './filters'
 
+/* 引入其他插件 */
+import _ from 'lodash'
 // HTTP拦截处理文件
 import axios from './config/http'
 
@@ -28,13 +28,6 @@ Vue.use(ElementUI)
 Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
-
-// 路由配置
-router.beforeEach((to, from, next) => {
-  // console.log(to)
-  document.title = to.meta.title
-  next()
-})
 
 new Vue({
   router,

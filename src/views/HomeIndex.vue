@@ -6,16 +6,14 @@
           <i class="fa fa-gears"></i>
           <span> 关键数据实时指标</span>
         </div>
-        <div>
-          <el-row :gutter="20">
-            <el-col  v-for="item in summary" :key="item.title" :span="6">
-              <div class="data-summary-item" :class="item.color">
-                <p class="data-summary-number">{{item.number}}</p>
-                <p class="data-summary-title">{{item.title}}</p>
-              </div>
-            </el-col>
-          </el-row>
-        </div>
+        <ul class="clearfix">
+          <li v-for="item in summary" :key="item.identifier" :class="item.color" class="data-summary-item" >
+            <p class="data-summary-number">
+              <AnimatedNumber :value="statisticData[item.identifier]" :formatValue="formatValue" :duration="600" />
+            </p>
+            <p class="data-summary-title">{{item.title}}</p>
+          </li>
+        </ul>
       </el-card>
     </section>
     <div class="data-summary">
@@ -26,8 +24,8 @@
             <i class="fa fa-gears"></i>
             <span> 会员在线人员统计</span>
           </div>
-          <div>
-            <LineChart :data="chartLineData" :options="chartLineOptions" :width="920" />
+          <div class="chart-container">
+            <BarChart :chart-data="chartBarData" :width="920" />
           </div>
         </el-card>
       </section>
@@ -38,8 +36,8 @@
             <i class="fa fa-gears"></i>
             <span> 存款统计</span>
           </div>
-          <div>
-            <DoughnutChart :data="chartDoughnutData" :width="920" />
+          <div class="chart-container">
+            <DoughnutChart :chart-data="chartDoughnutData" :width="920" />
           </div>
         </el-card>
       </section>
@@ -89,72 +87,109 @@
 </template>
 
 <script type="text/javascript">
-import  LineChart from '@/components/vue-chartjs/LineChart'
+import AnimatedNumber from "animated-number-vue"
+
+import  BarChart from '@/components/vue-chartjs/BarChart'
 import  DoughnutChart from '@/components/vue-chartjs/DoughnutChart'
 
 export default {
+  name: 'homeIndex',
   components: {
-    LineChart,
+    AnimatedNumber,
+    BarChart,
     DoughnutChart
   },
   data () {
     return {
-      chartLineData: {
-        labels: [
-          '00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00',
-          '14:00', '16:00', '18:00', '20:00', '22:00', '23:59'
-        ],
-        datasets: [
-          {
-            label: '今日 会员在线人数',
-            backgroundColor: '#699478',
-            data: this.generateRandomInteger(10, 200, 13)
-          }
-        ]
-      },
-      chartLineOptions: {
-        responsive: false,
-        maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero:true
-            }
-          }]
-        }
-      },
-      chartDoughnutData: {
-        labels: [ '微信', '支付宝', 'QQ', '银联卡', '汇款' ],
-        datasets: [
-          {
-            backgroundColor: [ '#FC7A6A', '#60A5B5', '#F1C77A', '#8994A8', '#5AC79D' ],
-            data: this.generateRandomInteger(10000, 1000000, 5)
-          }
-        ]
-      },
+      chartBarData: null,
+      chartDoughnutData: null,
+      statisticData: {},
       summary: [
-        { title: '在线会员数量', number: Math.ceil(Math.random() * 1000), color: 'red' },
-        { title: '今日新增会员数量', number: Math.ceil(Math.random() * 1000), color: 'blue' },
-        { title: '总会员数量', number: Math.ceil(Math.random() * 1000), color: 'orange' },
-        // { title: '今日注单笔数', number: Math.ceil(Math.random() * 1000), color: 'red' },
-        { title: '今日注单总额', number: Math.ceil(Math.random() * 1000), color: 'green' },
+        { title: '在线会员数量', identifier: 'onlineuseramount', color: 'red' },
+        { title: '今日新增会员数量', identifier: 'todayuseramount', color: 'blue' },
+        { title: '总会员数量', identifier: 'useramount', color: 'orange' },
+        { title: '今日注单笔数', identifier: 'todayorderamount', color: 'purple' },
+        { title: '今日注单总额', identifier: 'todayordermoney', color: 'green' },
       ]
     }
   },
+  created () {
+    this.fetchIndexStatistic()
+  },
+  mounted () {
+    this.fetchUsersOnline()
+    this.fetchUsersDeposit()
+  },
   methods: {
-    generateRandomInteger(min, max, n) {
-      if (n <= 0) {
-        n = 1
-      }
-
-      let arr = []
-      for(;;) {
-        arr.push(Math.ceil(Math.random() * max + min))
-        if (arr.length >= n) {
-          break;
+    formatValue (value) {
+      return value.toFixed(0)
+    },
+    // 关键数据统计
+    fetchIndexStatistic () {
+      this.$axios.get('/api-b/index/statistic').then(response => {
+        this.statisticData = response.data.data
+      }).catch(error => console.log(error))
+    },
+    // 在线会员统计
+    fetchUsersOnline () {
+      this.$axios.get('/api-b/index/statistic/online').then(response => {
+        this.chartBarData = {
+          labels: _.map(response.data.data.today, 'time'),
+          datasets: [
+            {
+              label: '今日 会员在线人数',
+              backgroundColor: '#60A5B5',
+              data: _.map(response.data.data.today, 'amount')
+            },
+            {
+              label: '昨日 会员在线人数',
+              backgroundColor: '#5AC79D',
+              data: _.map(response.data.data.yesterday, 'amount')
+            }
+          ]
         }
+      }).catch(error => console.log(error))
+    },
+    // 存款统计
+    fetchUsersDeposit () {
+      this.$axios.get('/api-b/index/statistic/deposit').then(response => {
+        const obj = response.data.data
+        let keys = [], values =[]
+
+        // 生成统计表需要的标题数组，和数据数组
+        for( let k in obj) {
+          keys.push(this._transferPayType(k))
+          values.push(obj[k].toFixed(2))
+        }
+
+        this.chartDoughnutData = {
+          labels: keys,
+          datasets: [
+            {
+              backgroundColor: [ '#FC7A6A', '#60A5B5', '#F1C77A', '#8994A8', '#5AC79D' ],
+              data: values
+            }
+          ]
+        }
+      }).catch(error => console.log(error))
+    },
+    // 将支付方式转为中文
+    _transferPayType(type) {
+      switch (type) {
+        case 'ali':
+          return '支付宝'
+        case 'qq':
+          return 'Q币'
+        case 'remittance':
+          return '汇款'
+        case 'unionpay':
+          return '银联'
+        case 'wechat':
+          return '微信'
+        default:
+          return '支付宝'
+
       }
-      return arr
     }
   }
 }
@@ -166,9 +201,11 @@ export default {
   margin-bottom: 20px;
 }
 .data-summary-item {
-  width: 100%;
+  float: left;
+  width: 18%;
   height: 80px;
   padding: 15px;
+  margin: 0 1%;
   &.red {
     background-color: #FC7A6A;
   }
@@ -177,6 +214,9 @@ export default {
   }
   &.orange {
     background-color: #F1C77A;
+  }
+  &.purple {
+    background-color: #8994A8;
   }
   &.green {
     background-color: #5AC79D;

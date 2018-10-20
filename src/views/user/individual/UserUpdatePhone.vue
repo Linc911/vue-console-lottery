@@ -43,22 +43,23 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$message({
-            message: '登录成功',
-            type: 'success'
-          })
-          // 调用登录函数
-          this.login()
-        } else {
-          this.$message({
-            message: '用户名或密码格式不正确，无法登录！',
-            type: 'warning'
-          })
-          return false
-        }
-      })
+      this.$message.info('该功能正在开发中...')
+      // this.$refs[formName].validate(valid => {
+      //   if (valid) {
+      //     this.$message({
+      //       message: '登录成功',
+      //       type: 'success'
+      //     })
+      //     // 调用登录函数
+      //     this.login()
+      //   } else {
+      //     this.$message({
+      //       message: '用户名或密码格式不正确，无法登录！',
+      //       type: 'warning'
+      //     })
+      //     return false
+      //   }
+      // })
     },
     fetchUserInfo () {
       this.$axios.get('/api-u/users/current')

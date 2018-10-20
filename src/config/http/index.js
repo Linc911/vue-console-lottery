@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { Message, Loading } from 'element-ui'
+import router from '@/router'
+import { Loading } from 'element-ui'
 
 let loading
 function startLoading () {
@@ -13,17 +14,16 @@ function endLoading () {
   loading.close()
 }
 
-// 设置基本的配置（URL，Token)
-const AUTO_TOKEN = 'Bearer ' + (localStorage.getItem('access_token') ? localStorage.getItem('access_token') : '')
-const instance = axios.create({
-  baseURL: 'http://192.168.5.182:8080',
-  headers: {
-    'Authorization': AUTO_TOKEN
-  }
-})
+/* 设置axios全局配置 */
+axios.defaults.baseURL = 'http://192.168.5.182:8080'
+// 处理页面刷新时，设置Token; Token的初始设置在登录模块;
+if (localStorage.getItem('access_token')) {
+  const AUTO_TOKEN = `${localStorage.getItem('token_type')} ${localStorage.getItem('access_token')}`
+  axios.defaults.headers.common['Authorization'] = AUTO_TOKEN
+}
 
 // 请求拦截
-instance.interceptors.request.use(config => {
+axios.interceptors.request.use(config => {
   // 发起http请求时，显示loading动画
   startLoading()
   return config
@@ -32,14 +32,36 @@ instance.interceptors.request.use(config => {
 })
 
 // 响应拦截
-instance.interceptors.response.use(response => {
+axios.interceptors.response.use(response => {
   // http响应完成时，停止动画； 返回获取的对象
   endLoading()
   return response
 }, error => {
-  endLoading()
-  Message.error('获取数据失败！')
+  endLoading() // 停止加载动画
+
+  switch (error.toString().substr(-3)) {
+    case '401':
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
+      localStorage.removeItem('token_type')
+
+      router.push('/login/username')
+
+      console.log('Token已过期，请重新登录。')
+      break
+    case '403':
+      console.log('未授权，请检查HTTP请求头是否携带Token。')
+      break
+    case '404':
+      console.log('没有找到对应的请求，请核对HTTP请求地址。')
+      break
+    case '500':
+      console.log(`系统错误：${error.data.messge}，请刷新页面或联系管理员。`)
+      break
+    default:
+      console.log(`获取数据异常：${error.data.messge}。`)
+  }
   return Promise.reject(error)
 })
 
-export default instance
+export default axios

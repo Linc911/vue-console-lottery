@@ -1,12 +1,12 @@
 <template lang="html">
   <section class="login-by-phone">
-    <el-form :model="ruleForm" :rules="rules" ref="loginForm">
+    <el-form :model="formData" :rules="rules" ref="loginForm">
       <el-form-item prop="phone">
-        <el-input v-model="ruleForm.phone" placeholder="手机号"></el-input>
+        <el-input v-model="formData.phone" placeholder="手机号"></el-input>
       </el-form-item>
 
       <el-form-item prop="verificationCode">
-        <el-input v-model="ruleForm.verificationCode" style="width: 60%;" placeholder="验证码"></el-input>
+        <el-input v-model="formData.verificationCode" style="width: 60%;" placeholder="验证码"></el-input>
         <span class="get-code">获取验证码</span>
       </el-form-item>
 
@@ -24,10 +24,7 @@
 export default {
   data () {
     return {
-      ruleForm: {
-        phone: '',
-        verificationCode: ''
-      },
+      formData: { phone: '', verificationCode: '' },
       rules: {
         phone: [
           { required: true, message: '手机号码不能为空' },

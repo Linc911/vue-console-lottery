@@ -7,7 +7,7 @@
       :on-remove="handleRemove"
       :file-list="fileList2"
       list-type="picture">
-      <el-button size="small" type="primary">Click to upload</el-button>
+      <el-button size="small" type="primary">点击上传</el-button>
       <div slot="tip" class="el-upload__tip">小于500kb的jpg/png图片</div>
     </el-upload>
   </section>

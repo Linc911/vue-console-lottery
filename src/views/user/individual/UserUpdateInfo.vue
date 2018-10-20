@@ -1,16 +1,16 @@
 <template lang="html">
   <section v-if="userInfoReady" class="user-info">
-    <el-form :model="ruleForm" :rules="rules" label-width="100px" ref="loginForm">
+    <el-form :model="formData" :rules="rules" label-width="100px" ref="loginForm">
       <el-form-item label="用户名">
-        <el-input v-model="ruleForm.username" disabled></el-input>
+        <el-input v-model="formData.username" disabled></el-input>
       </el-form-item>
 
       <el-form-item label="昵称" prop="nickname">
-        <el-input v-model="ruleForm.nickname" placeholder="用户昵称"></el-input>
+        <el-input v-model="formData.nickname" placeholder="用户昵称"></el-input>
       </el-form-item>
 
-      <el-form-item label="昵称" prop="sex">
-        <el-select v-model="ruleForm.sex" placeholder="选择性别">
+      <el-form-item label="性别" prop="sex">
+        <el-select v-model="formData.sex" placeholder="选择性别">
           <el-option label="男" :value="1"></el-option>
           <el-option label="女" :value="0"></el-option>
         </el-select>
@@ -27,7 +27,7 @@
 export default {
   data () {
     return {
-      ruleForm: {
+      formData: {
         username: '',
         nickname: '',
         sex: ''
@@ -51,26 +51,24 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$message({
-            message: '登录成功',
-            type: 'success'
+          this.$axios.put('/api-u/users/me', this.formData).then(response => {
+            this.$message.success('修改登录用户信息成功！')
+            this.$router.push('/home')
+          }).catch(error => {
+            console.log(error)
+            this.$message.error('修改登录用户信息失败！')
           })
-          // 调用登录函数
-          this.login()
         } else {
-          this.$message({
-            message: '用户名或密码格式不正确，无法登录！',
-            type: 'warning'
-          })
-          return false
+          this.$message.warning('登录用户信息填写不正确！')
         }
       })
     },
     fetchUserInfo () {
       this.$axios.get('/api-u/users/current')
         .then(response => {
-          const { username, nickname, sex } = response.data
-          Object.assign(this.ruleForm, { username, nickname, sex })
+          const { id, username, nickname, sex } = response.data
+          Object.assign(this.formData, { id, username, nickname, sex })
+
           this.userInfoReady = true
         })
         .catch(error => {

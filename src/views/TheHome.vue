@@ -11,6 +11,8 @@
         <el-container>
           <el-main>
             <router-view />
+            <!-- <keep-alive>
+            </keep-alive> -->
           </el-main>
           <el-footer height="auto">
             <FooterMain />

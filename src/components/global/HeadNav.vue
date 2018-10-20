@@ -64,31 +64,28 @@ export default {
     handleDropdownCommand (command) {
       switch (command) {
         case 'info':
-          this.$router.push('/user/info')
+          this.$router.push('/user/update/info')
           break;
         case 'avatar':
-          this.$router.push('/user/avatar')
+          this.$router.push('/user/update/avatar')
           break;
         case 'phone':
-          this.$router.push('/user/phone')
+          this.$router.push('/user/update/phone')
           break;
         case 'logout':
-          this.$axios.get('/sys/logout')
-            .then(response => {
-              localStorage.removeItem("access_token")
-        			localStorage.removeItem("refresh_token")
+          this.$axios.get('/sys/logout').then(response => {
+              localStorage.removeItem('access_token')
+        			localStorage.removeItem('refresh_token')
+        			localStorage.removeItem('token_type')
+
               this.$router.push('/login/username')
-            })
-            .catch(error => {
+            }).catch(error => {
               console.log(error)
-              this.$message({
-                message: '登出账号异常',
-                type: 'warning'
-              })
+              this.$message.error('登出账号异常')
             })
           break;
         default:
-          console.log('Jump to User Center Page')
+          this.$router.push('/home')
       }
     },
     fetchUserInfo () {
@@ -125,6 +122,7 @@ export default {
   height: 40px;
   margin-right: 10px;
   vertical-align: middle;
+  background-color: #eee;
   border-radius: 100%;
 }
 .user-username {

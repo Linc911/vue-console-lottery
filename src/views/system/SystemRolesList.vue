@@ -28,7 +28,7 @@
         </el-table-column>
         <el-table-column prop="operations" label="操作" min-width="300px">
           <template slot-scope="scope">
-            <el-button icon="el-icon-edit" size="mini" type="primary" />
+            <el-button @click="$router.push(`/system/role/${scope.row.id}/update`)" icon="el-icon-edit" size="mini" type="primary" />
             <el-button @click="showDialog(scope.row)" icon="el-icon-delete" size="mini" type="primary" />
             <el-button @click="showDialogAuthorization(scope.row.id)" size="mini" type="primary">分配权限</el-button>
             <el-button @click="showDialogMenu(scope.row.id)" size="mini" type="primary">分配菜单</el-button>
@@ -211,6 +211,9 @@ export default {
       } else {
         this.dialogTreeVisible = true
       }
+    },
+    handleCheckChange () {
+      console.log('handleCheckChange')
     },
     // 隐藏弹框
     handleClose(done) {

@@ -10,9 +10,9 @@ import TheLogin from './views/login/TheLogin'
 import LoginByUsername from './views/login/LoginByUsername'
 import LoginByPhone from './views/login/LoginByPhone'
 
-import UserInfo from './views/user/UserInfo'
-import UserAvatar from './views/user/UserAvatar'
-import UserPhone from './views/user/UserPhone'
+import UserUpdateInfo from './views/user/individual/UserUpdateInfo'
+import UserUpdateAvatar from './views/user/individual/UserUpdateAvatar'
+import UserUpdatePhone from './views/user/individual/UserUpdatePhone'
 
 import VipInfoManage from './views/vip/VipInfoManage'
 import VipsList from './views/vip/VipsList'
@@ -24,10 +24,11 @@ import VipLogsList from './views/vip/VipLogsList'
 
 import SystemRolesList from './views/system/SystemRolesList'
 import SystemRoleCreate from './views/system/SystemRoleCreate'
+import SystemRoleUpdate from './views/system/SystemRoleUpdate'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -58,31 +59,35 @@ export default new Router({
         }
       ]
     },
+    // 主页
     {
-      path: '/home',
       name: 'home',
-      redirect: '/home/index',
+      path: '/index',
+      redirect: '/home',
       component: TheHome,
       children: [
         {
-          path: '/home/index',
+          path: '/home',
           component: HomeIndex,
           meta: { title: '系统首页' }
         },
-        // 用户中心设置模块
+        // 登录用户模块
         {
-          path: '/user/info',
-          component: UserInfo
+          path: '/user/update/info',
+          component: UserUpdateInfo,
+          meta: { title: '修改登录用户信息' }
         },
         {
-          path: '/user/avatar',
-          component: UserAvatar
+          path: '/user/update/avatar',
+          component: UserUpdateAvatar,
+          meta: { title: '上传登录用户头像' }
         },
         {
-          path: '/user/phone',
-          component: UserPhone
+          path: '/user/update/phone',
+          component: UserUpdatePhone,
+          meta: { title: '修改登录用户绑定手机' }
         },
-        // 会员管理模块
+        // 全部用户信息模块
         {
           path: '/vip/info/manage',
           component: VipInfoManage
@@ -117,7 +122,8 @@ export default new Router({
           component: VipLogsList,
           meta: { title: '会员个人日志列表' }
         },
-        // 系统管理
+        /* 系统管理 */
+        // 系统管理 - 角色模块
         {
           path: '/system/roles',
           component: SystemRolesList,
@@ -127,6 +133,11 @@ export default new Router({
           path: '/system/role/create',
           component: SystemRoleCreate,
           meta: { title: '创建新角色' }
+        },
+        {
+          path: '/system/role/:id/update',
+          component: SystemRoleUpdate,
+          meta: { title: '修改角色信息' }
         }
       ]
     }
@@ -140,3 +151,31 @@ export default new Router({
     // }
   ]
 })
+
+// 路由配置
+router.beforeEach((to, from, next) => {
+  // 每次跳转路由，修改页签标题
+  document.title = to.meta.title
+
+  const tokenExisted = !!localStorage.getItem('access_token')
+
+  if (to.path === '/login/username' || to.path === '/login/phone') {
+    // 当访问的地址是登录模块且access_token存在时
+    // 用户必须通过点击退出登录，才能跳转到登记模块界面，否则默认跳转到主页面
+    if (tokenExisted) {
+      next('/home')
+    } else {
+      next()
+    }
+  } else {
+    // 当访问的地址不是登录模块且access_token不存在时
+    // 用户无法访问内部页面，默认跳转到用户账号登录页面
+    if (tokenExisted) {
+      next()
+    } else {
+      next('/login/username')
+    }
+  }
+})
+
+export default router
