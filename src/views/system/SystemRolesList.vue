@@ -28,30 +28,46 @@
         </el-table-column>
         <el-table-column prop="operations" label="操作" min-width="300px">
           <template slot-scope="scope">
-            <el-button @click="$router.push(`/system/role/${scope.row.id}/update`)" icon="el-icon-edit" size="mini" type="primary" />
-            <el-button @click="showDialog(scope.row)" icon="el-icon-delete" size="mini" type="primary" />
-            <el-button @click="showDialogAuthorization(scope.row.id)" size="mini" type="primary">分配权限</el-button>
-            <el-button @click="showDialogMenu(scope.row.id)" size="mini" type="primary">分配菜单</el-button>
+            <el-button
+              @click="$router.push(`/system/role/${scope.row.id}/update`)"
+              icon="el-icon-edit"
+              size="mini"
+              type="primary"
+            />
+
+            <el-button
+              @click="showDialogDelete(scope.row)"
+              icon="el-icon-delete"
+              size="mini"
+              type="primary"
+            />
+
+            <el-button
+              @click="showDialogAuthorization(scope.row.id)"
+              size="mini"
+              type="primary"
+            >分配权限</el-button>
+
+            <el-button
+              @click="showDialogMenu(scope.row.id)"
+              size="mini"
+              type="primary"
+            >分配菜单</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog
-      title="删除确认"
-      :visible.sync="dialogVisible"
-      width="400px"
-    >
-      <span><strong>删除</strong>角色名称为<strong> {{deletingRole.name}} </strong>数据?</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="confirmDelet">确认</el-button>
-        <el-button @click="dialogVisible = false">取消</el-button>
-      </span>
-    </el-dialog>
+    <!-- 删除确认弹框 -->
+    <DialogDeleteConfirm
+      @on-confirm="handleDialogDeleteConfirm"
+      :name="deletingRole.name"
+      title="角色名"
+      ref="dialogDelete"
+    />
     <!-- 分配权限弹框 -->
     <el-dialog
       title="分配角色权限"
       :visible.sync="dialogAuthorizationVisible"
-      :before-close="handleClose"
       width="560px"
       center
     >
@@ -64,11 +80,10 @@
         filterable
       />
     </el-dialog>
-    <!-- 分配权限弹框 -->
+    <!-- 分配菜单弹框 -->
     <el-dialog
       title="分配角色菜单"
       :visible.sync="dialogTreeVisible"
-      :before-close="handleClose"
       width="60%"
       center
     >
@@ -88,59 +103,25 @@
 
 <script>
 import SearchPlain from '@/components/base/SearchPlain'
+import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
   name: 'rolesList',
   components: {
-    SearchPlain
+    SearchPlain,
+    DialogDeleteConfirm
   },
   data () {
     return {
-      tableData: [],
-      tableActiveData: [],
-      dialogVisible: false,
-      deletingRole: {},
+      tableData: [], // 全部角色对象
+      tableActiveData: [], // 搜索匹配的角色对象
+      deletingRole: { name: '' }, // 将要删除的角色对象
       dialogAuthorizationVisible: false,
       authorizations: [],
       transferData: [],
       transferCurrentData: [],
       dialogTreeVisible: false,
-      treeData: [],
-      data: [{
-          label: 'Level one 1',
-          children: [{
-            label: 'Level two 1-1',
-            children: [{
-              label: 'Level three 1-1-1'
-            }]
-          }]
-        }, {
-          label: 'Level one 2',
-          children: [{
-            label: 'Level two 2-1',
-            children: [{
-              label: 'Level three 2-1-1'
-            }]
-          }, {
-            label: 'Level two 2-2',
-            children: [{
-              label: 'Level three 2-2-1'
-            }]
-          }]
-        }, {
-          label: 'Level one 3',
-          children: [{
-            label: 'Level two 3-1',
-            children: [{
-              label: 'Level three 3-1-1'
-            }]
-          }, {
-            label: 'Level two 3-2',
-            children: [{
-              label: 'Level three 3-2-1'
-            }]
-          }]
-        }]
+      treeData: []
     }
   },
   created () {
@@ -149,22 +130,20 @@ export default {
   methods: {
     // 根据输入框内容，显示符合匹配条件的角色
     handleSearchInfo (keyword) {
-      this.tableActiveData = _.filter(this.tableData, item => item.name.includes(keyword))
+      this.tableActiveData = this.$_.filter(this.tableData, item => item.name.includes(keyword))
     },
-    // 显示确认删除对话框
-    showDialog (role) {
+    // 显示删除确认弹框
+    showDialogDelete (role) {
       this.deletingRole = role
-      this.dialogVisible = true
+      this.$refs.dialogDelete.toggleDialogStatus(true)
     },
-    // 确认删除角色
-    confirmDelet () {
-      this.$axios.delete('/api-u/roles/' + this.deletingRole.id ).then(() => {
-        this.dialogVisible = false // 隐藏对话框
-        this.fetchUsersRoles() // 获取最新数据
-      }).catch(error => {
-        this.$message.error('删除数据失败')
-        console.log(error);
-      })
+    // 删除对应的权限
+    handleDialogDeleteConfirm () {
+      this.$axios.delete('/api-u/roles/' + this.deletingRole.id).then(() => {
+        this.$refs.dialogDelete.toggleDialogStatus(false) // 隐藏弹框
+        this.fetchUsersRoles() // 请求最新数据
+        this.$message.success('删除角色成功！')
+      }).catch(() => this.$message.error('删除角色失败！'))
     },
     // 显示分配角色权限弹框
     showDialogAuthorization (id) {
@@ -215,10 +194,6 @@ export default {
     handleCheckChange () {
       console.log('handleCheckChange')
     },
-    // 隐藏弹框
-    handleClose(done) {
-      done()
-    },
     // 获取全部角色数据
     fetchUsersRoles () {
       this.$axios.get('/api-u/roles').then(response => {
@@ -241,9 +216,6 @@ export default {
 .search-right {
   float: right;
   text-align: right;
-}
-strong {
-  color: #F56C6C;
 }
 .tree-container {
   padding-bottom: 20px;

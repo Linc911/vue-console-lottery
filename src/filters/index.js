@@ -10,6 +10,91 @@ Vue.filter('time', value => {
 Vue.filter('RMB', value => {
   return '￥ ' + parseInt(value).toLocaleString()
 })
+/* 赔率相关 */
+// 11选5 赔率第二类类型
+Vue.filter('rateSecondType', value => {
+  switch (value) {
+    case 1:
+      return '第一球'
+    case 2:
+      return '第二球'
+    case 3:
+      return '第三球'
+    case 4:
+      return '第四球'
+    case 5:
+      return '第五球'
+    case 6:
+      return '总和'
+    default:
+      return '其他'
+  }
+})
+// 11选5 赔率第三类类型
+Vue.filter('rateThirdType', value => {
+  switch (value) {
+    case 1:
+      return '大'
+    case 2:
+      return '小'
+    case 3:
+      return '单'
+    case 4:
+      return '双'
+    case 5:
+      return '尾大'
+    case 6:
+      return '尾小'
+    case 7:
+      return '龙'
+    case 8:
+      return '虎'
+    case 9:
+      return '一中一'
+    case 10:
+      return '二中二'
+    case 11:
+      return '三中三'
+    case 12:
+      return '四中四'
+    case 13:
+      return '五中五'
+    case 14:
+      return '六中五'
+    case 15:
+      return '七中五'
+    case 16:
+      return '八中五'
+    case 17:
+      return '前二'
+    case 18:
+      return '前三'
+    case 19:
+      return '1号球'
+    case 20:
+      return '2号球'
+    case 21:
+      return '3号球'
+    case 22:
+      return '4号球'
+    case 23:
+      return '5号球'
+    case 24:
+      return '6号球'
+    case 25:
+      return '7号球'
+    case 26:
+      return '8号球'
+    case 27:
+      return '9号球'
+    case 28:
+      return '10号球'
+    case 29:
+      return '11号球'
+    default:
+      return '其他'
+  }
+})
 
 /* 投注相关 */
 // 投注主类型
@@ -26,7 +111,7 @@ Vue.filter('betType', value => {
     case 5:
       return '选号-直选'
     default:
-      return '主盘势'
+      return '其他'
   }
 })
 // 投注子类型
@@ -122,11 +207,11 @@ Vue.filter('changedStatus', value => {
       return '未支付'
     case 1:
       return '未确认'
-    case 2:
-      return '支付成功'
     case 3:
+      return '支付成功'
+    case 4:
       return '失败'
     default:
-      return '未支付'
+      return '其他'
   }
 })

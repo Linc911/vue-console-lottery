@@ -23,9 +23,9 @@
                 </el-menu-item>
               </router-link>
             </el-submenu>
-            <router-link v-else to="/" :key="group.id">
+            <router-link v-else :to="group.path" :key="group.id">
               <el-menu-item :index="group.name">
-                <i :class="`fa ${group.css}`"></i>
+                <i :class="`fa ${group.icon}`"></i>
                 <span>{{group.name}}</span>
               </el-menu-item>
             </router-link>
@@ -49,7 +49,7 @@ export default {
           icon: 'fa-user',
           children: [
             // { id: 'test0201', name: '信息管理', path: '/vip/info/manage', icon: 'fa-cubes' },
-            { id: 'test0210', name: '会员列表', path: '/users/list', icon: 'fa-cubes' },
+            { id: 'test0210', name: '会员列表', path: '/users/list', icon: 'fa-cubes' }
             // { id: 'test0202', name: '注单列表', path: '/vip/stakes', icon: 'fa-cubes' },
             // { id: 'test0202', name: '账号核查', path: '/vip/accout/check', icon: 'fa-cubes' },
             // { id: 'test0203', name: '信息修改', path: '/vip/info/change', icon: 'fa-cubes' },
@@ -68,9 +68,21 @@ export default {
           children: [
             { id: 'test0101', name: '菜单', path: '/system/menu', icon: 'fa-windows' },
             { id: 'test0102', name: '角色', path: '/system/roles', icon: 'fa-cubes' },
-            { id: 'test0103', name: '权限', path: '/system/authorization', icon: 'fa-align-justify' }
+            { id: 'test0103', name: '权限', path: '/system/permissions', icon: 'fa-align-justify' }
           ]
+        },
+        {
+          id: 'test03',
+          name: '赔率设置',
+          path: '/rate/bets',
+          icon: 'fa-gears'
         }
+        // {
+        //   id: 'test04',
+        //   name: '短信验证码日志',
+        //   path: '/validationCode/logs',
+        //   icon: 'fa-gears'
+        // }
       ]
     }
   },

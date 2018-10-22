@@ -7,15 +7,19 @@
       ref="updateRoleForm"
     >
       <el-form-item label="角色ID">
-        <el-input v-model="formData.id" disabled></el-input>
+        <el-input v-model="formData.id" disabled />
       </el-form-item>
 
       <el-form-item label="Code">
-        <el-input v-model="formData.code" disabled></el-input>
+        <el-input v-model="formData.code" disabled />
       </el-form-item>
 
       <el-form-item label="角色名称" prop="name">
-        <el-input @keyup.native.enter="submitForm('updateRoleForm')" v-model="formData.name" placeholder="角色名称"></el-input>
+        <el-input
+          @keyup.native.enter="submitForm('updateRoleForm')"
+          v-model="formData.name"
+          placeholder="角色名称"
+        />
       </el-form-item>
 
       <el-form-item>
@@ -64,16 +68,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.search-container {
-  margin-bottom: 20px;
-}
-.search-left {
-  float: left;
-}
-.search-right {
-  float: right;
-  text-align: right;
-}
-</style>

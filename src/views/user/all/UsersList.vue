@@ -13,7 +13,7 @@
       >
         <el-table-column type="index" :width="40"></el-table-column>
 
-        <el-table-column prop="username" label="名称" :min-width="100">
+        <el-table-column prop="username" label="名称" :width="120">
           <template slot-scope="scope">
             <span>{{scope.row.username}}</span>
             <MoreDetail @on-click="handleViewUserInfo(scope.row.id)" class="pull-right" />
@@ -34,7 +34,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="operations" label="操作" min-width="350px">
+        <el-table-column prop="operations" label="操作" :min-width="380">
           <template slot-scope="scope">
             <el-button @click="$router.push(`/users/${scope.row.id}/bets`)" type="primary" size="mini">注单详情</el-button>
             <el-button @click="$router.push(`/users/${scope.row.id}/rechargeLogs`)" type="primary" size="mini">充值详情</el-button>

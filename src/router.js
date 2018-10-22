@@ -24,6 +24,13 @@ import UserHttpLogs from './views/user/all/UserHttpLogs'
 import SystemRolesList from './views/system/SystemRolesList'
 import SystemRoleCreate from './views/system/SystemRoleCreate'
 import SystemRoleUpdate from './views/system/SystemRoleUpdate'
+import SystemPermissionsList from './views/system/SystemPermissionsList'
+import SystemPermissionCreate from './views/system/SystemPermissionCreate'
+import SystemPermissionUpdate from './views/system/SystemPermissionUpdate'
+
+import BetsRate from './views/rate/BetsRate'
+
+import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 
 Vue.use(Router)
 
@@ -70,7 +77,7 @@ const router = new Router({
           component: HomeIndex,
           meta: { title: '系统首页' }
         },
-        // 登录用户模块
+        /* 登录用户模块 */
         {
           path: '/user/update/info',
           component: UserUpdateInfo,
@@ -86,7 +93,7 @@ const router = new Router({
           component: UserUpdatePhone,
           meta: { title: '修改登录用户绑定手机' }
         },
-        // 全部用户信息模块
+        /* 全部用户信息模块 */
         {
           path: '/users/list',
           component: UsersList,
@@ -133,6 +140,34 @@ const router = new Router({
           path: '/system/role/:id/update',
           component: SystemRoleUpdate,
           meta: { title: '修改角色信息' }
+        },
+        // 系统管理 - 权限模块
+        {
+          path: '/system/permissions',
+          component: SystemPermissionsList,
+          meta: { title: '权限列表' }
+        },
+        {
+          path: '/system/permission/create',
+          component: SystemPermissionCreate,
+          meta: { title: '创建新权限' }
+        },
+        {
+          path: '/system/permission/:id/update',
+          component: SystemPermissionUpdate,
+          meta: { title: '更新权限' }
+        },
+        /* 赔率设置 */
+        {
+          path: '/rate/bets',
+          component: BetsRate,
+          meta: { title: '赔率列表 - 11选5' }
+        },
+        /* 短信验证码日志 */
+        {
+          path: '/validationCode/logs',
+          component: ValidationCodeLogs,
+          meta: { title: '短信验证码日志' }
         }
       ]
     }

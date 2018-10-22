@@ -4,18 +4,18 @@
       :model="formData"
       :rules="rules"
       label-width="100px"
-      ref="createRoleForm"
+      ref="roleCreateForm"
     >
       <el-form-item label="Code" prop="code">
         <el-input v-model="formData.code" placeholder="code(一旦创建，不能修改)"></el-input>
       </el-form-item>
 
       <el-form-item label="角色名称" prop="name">
-        <el-input @keyup.native.enter="submitForm('createRoleForm')" v-model="formData.name" placeholder="角色名称"></el-input>
+        <el-input @keyup.native.enter="submitForm('roleCreateForm')" v-model="formData.name" placeholder="角色名称"></el-input>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('createRoleForm')">确认</el-button>
+        <el-button type="primary" @click="submitForm('roleCreateForm')">确认</el-button>
         <el-button type="info" @click="$router.push('/system/roles')">返回</el-button>
       </el-form-item>
     </el-form>
@@ -50,12 +50,6 @@ export default {
           this.$axios.post('/api-u/roles', this.formData).then(() => {
             this.$router.push('/system/roles')
           }).catch(error => console.log(error))
-        } else {
-          this.$message({
-            message: 'Code或角色名称输入不正确',
-            type: 'error'
-          })
-          return false
         }
       })
     }

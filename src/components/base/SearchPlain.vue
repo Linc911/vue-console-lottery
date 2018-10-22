@@ -2,8 +2,8 @@
   <el-input
     v-model="search"
     @input="searchInfo"
-    :debounce="400"
     :placeholder="placeholder"
+    :debounce="400"
     suffix-icon="el-icon-search"
     size="small"
     style="width: 240px;"
