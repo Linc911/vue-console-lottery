@@ -87,10 +87,10 @@
 </template>
 
 <script type="text/javascript">
-import AnimatedNumber from "animated-number-vue"
+import AnimatedNumber from 'animated-number-vue'
 
-import  BarChart from '@/components/vue-chartjs/BarChart'
-import  DoughnutChart from '@/components/vue-chartjs/DoughnutChart'
+import BarChart from '@/components/vue-chartjs/BarChart'
+import DoughnutChart from '@/components/vue-chartjs/DoughnutChart'
 
 export default {
   name: 'homeIndex',
@@ -109,7 +109,7 @@ export default {
         { title: '今日新增会员数量', identifier: 'todayuseramount', color: 'blue' },
         { title: '总会员数量', identifier: 'useramount', color: 'orange' },
         { title: '今日注单笔数', identifier: 'todayorderamount', color: 'purple' },
-        { title: '今日注单总额', identifier: 'todayordermoney', color: 'green' },
+        { title: '今日注单总额', identifier: 'todayordermoney', color: 'green' }
       ]
     }
   },
@@ -134,17 +134,17 @@ export default {
     fetchUsersOnline () {
       this.$axios.get('/api-b/index/statistic/online').then(response => {
         this.chartBarData = {
-          labels: _.map(response.data.data.today, 'time'),
+          labels: this.$_.map(response.data.data.today, 'time'),
           datasets: [
             {
               label: '今日 会员在线人数',
               backgroundColor: '#60A5B5',
-              data: _.map(response.data.data.today, 'amount')
+              data: this.$_.map(response.data.data.today, 'amount')
             },
             {
               label: '昨日 会员在线人数',
               backgroundColor: '#5AC79D',
-              data: _.map(response.data.data.yesterday, 'amount')
+              data: this.$_.map(response.data.data.yesterday, 'amount')
             }
           ]
         }
@@ -154,10 +154,11 @@ export default {
     fetchUsersDeposit () {
       this.$axios.get('/api-b/index/statistic/deposit').then(response => {
         const obj = response.data.data
-        let keys = [], values =[]
+        let keys = []
+        let values = []
 
         // 生成统计表需要的标题数组，和数据数组
-        for( let k in obj) {
+        for (let k in obj) {
           keys.push(this._transferPayType(k))
           values.push(obj[k].toFixed(2))
         }
@@ -174,7 +175,7 @@ export default {
       }).catch(error => console.log(error))
     },
     // 将支付方式转为中文
-    _transferPayType(type) {
+    _transferPayType (type) {
       switch (type) {
         case 'ali':
           return '支付宝'
@@ -188,7 +189,6 @@ export default {
           return '微信'
         default:
           return '支付宝'
-
       }
     }
   }

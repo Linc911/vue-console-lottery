@@ -2,6 +2,7 @@
   <el-input
     v-model="search"
     @input="searchInfo"
+    :debounce="400"
     :placeholder="placeholder"
     suffix-icon="el-icon-search"
     size="small"
@@ -10,8 +11,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
-
 export default {
   props: {
     placeholder: {
@@ -26,9 +25,9 @@ export default {
   },
   methods: {
     // 根据输入框内容，显示符合匹配条件的角色
-    searchInfo: _.debounce(function () {
+    searchInfo () {
       this.$emit('on-input', this.search)
-    }, 400)
+    }
   }
 }
 </script>

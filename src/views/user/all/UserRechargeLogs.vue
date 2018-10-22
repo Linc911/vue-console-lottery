@@ -1,49 +1,18 @@
 <template lang="html">
-  <section class="vip-logs">
+  <section class="vip-bets">
     <!-- 条件筛选 -->
-    <div class="search-container clearfix">
-      <div class="search-left">
-        <template>
-          <span class="form-label">注册时间：</span>
-          <el-date-picker
-            v-model="valueDate"
-            type="daterange"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :default-time="['00:00:00', '23:59:59']"
-            size="small"
-            clearable
-            style="width: 240px; margin-right: 20px;"
-          />
-        </template>
-        <template>
-          <span class="form-label">所属分组：</span>
-          <el-select v-model="valueData" size="small" placeholder="全部">
-            <el-option label="在线" :value="0"></el-option>
-            <el-option label="充值" :value="1"></el-option>
-            <el-option label="彩金" :value="2"></el-option>
-          </el-select>
-        </template>
-      </div>
-      <div class="search-right">
-        <el-input v-model="input4" size="small" placeholder="请输入内容" style="width: 240px;">
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
-        <el-button icon="el-icon-refresh" size="small" style="margin-left: 10px;"></el-button>
-      </div>
-    </div>
+    <FilterArea />
     <!-- 表格数据 -->
     <div class="table-list">
-      <!-- 用户基本信息 -->
       <ul v-if="tableDataReady" class="user-info-list clearfix">
         <li class="user-info-item">
           <span>用户ID：</span>
           <span class="user-info-detail">{{tableData[0].id}}</span>
         </li>
-        <!-- <li class="user-info-item">
+        <li class="user-info-item">
           <span>会员ID：</span>
           <span class="user-info-detail">{{tableData[0].userId}}</span>
-        </li> -->
+        </li>
         <li class="user-info-item">
           <span>会员账号：</span>
           <span class="user-info-detail">{{tableData[0].username}}</span>
@@ -57,12 +26,28 @@
         border
       >
         <el-table-column type="index"></el-table-column>
-        <el-table-column prop="module" label="请求模块"></el-table-column>
-        <el-table-column prop="params" label="请求参数"></el-table-column>
-        <el-table-column prop="remark" label="备注"></el-table-column>
-        <el-table-column prop="ip" label="ip地址"></el-table-column>
-        <el-table-column prop="area" label="所属区域"></el-table-column>
-        <el-table-column prop="createTime" label="请求时间" :min-width="140"></el-table-column>
+        <el-table-column prop="orderID" label="订单流水号" :min-width="140"></el-table-column>
+        <el-table-column prop="otherOrderId" label="第三方订单流水号" :min-width="140"></el-table-column>
+
+        <el-table-column prop="payTime" label="充值时间" :min-width="140"></el-table-column>
+
+        <el-table-column prop="payType" label="支付类型">
+          <template slot-scope="scope">
+            <span>{{scope.row.payType | changedType}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="payNum" label="支付金额">
+          <template slot-scope="scope">
+            <span>{{scope.row.payNum | RMB}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="selfStatus" label="订单状态">
+          <template slot-scope="scope">
+            <span>{{scope.row.selfStatus | changedStatus}}</span>
+          </template>
+        </el-table-column>
       </el-table>
       <!-- 分页 -->
       <el-pagination
@@ -79,7 +64,12 @@
 </template>
 
 <script>
+import FilterArea from '@/components/others/FilterArea'
+
 export default {
+  components: {
+    FilterArea
+  },
   data () {
     return {
       input4: '',
@@ -95,19 +85,19 @@ export default {
     }
   },
   created () {
-    this.fetchUserLogs({ current: this.page.current = 1, size: this.page.size = 10 })
+    this.fetchUserList({ current: this.page.current = 1, size: this.page.size = 10 })
   },
   methods: {
     // 分页跳转时
     handleCurrentChange (currentPage) {
-      this.fetchUserLogs({ current: this.page.current = currentPage, size: this.page.size })
+      this.fetchUserList({ current: this.page.current = currentPage, size: this.page.size })
     },
     // 分页调整每页显示条数时
     handleSizeChange (pageSize) {
-      this.fetchUserLogs({ current: this.page.current = 1, size: this.page.size = pageSize })
+      this.fetchUserList({ current: this.page.current = 1, size: this.page.size = pageSize })
     },
-    fetchUserLogs (page) {
-      this.$axios.get('/api-l/statisticsUserOrder', {
+    fetchUserList (page) {
+      this.$axios.get('/api-p/UserOrder/findPage', {
         params: { userId: this.$route.params.id, pageNo: this.page.current, pageSize: this.page.size }
       }).then(response => {
         // 表格对象赋值
@@ -132,7 +122,6 @@ export default {
   float: right;
   text-align: right;
 }
-// 用户基本信息
 .user-info-list {
   margin: 30px 0 10px;
 }

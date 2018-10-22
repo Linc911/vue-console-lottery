@@ -1,37 +1,7 @@
 <template lang="html">
   <section class="vip-bets">
     <!-- 条件筛选 -->
-    <div class="search-container clearfix">
-      <div class="search-left">
-        <template>
-          <span class="form-label">注册时间：</span>
-          <el-date-picker
-            v-model="valueDate"
-            type="daterange"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :default-time="['00:00:00', '23:59:59']"
-            size="small"
-            clearable
-            style="width: 240px; margin-right: 20px;"
-          />
-        </template>
-        <template>
-          <span class="form-label">所属分组：</span>
-          <el-select v-model="valueData" size="small" placeholder="全部">
-            <el-option label="在线" :value="0"></el-option>
-            <el-option label="充值" :value="1"></el-option>
-            <el-option label="彩金" :value="2"></el-option>
-          </el-select>
-        </template>
-      </div>
-      <div class="search-right">
-        <el-input v-model="input4" size="small" placeholder="请输入内容" style="width: 240px;">
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
-        <el-button icon="el-icon-refresh" size="small" style="margin-left: 10px;"></el-button>
-      </div>
-    </div>
+    <FilterArea />
     <!-- 表格数据 -->
     <div class="table-list">
       <!-- 会员基本信息 -->
@@ -49,7 +19,7 @@
           <span class="user-info-detail">{{tableData[0].username}}</span>
         </li>
         <li class="pull-right">
-          <el-button @click="$router.push(`/user/${tableData[0].userId}/betsStatistics`)" type="primary" size="mini">近15天注单统计</el-button>
+          <el-button @click="$router.push(`/users/${tableData[0].userId}/betsStatistics`)" type="primary" size="mini">近15天注单统计</el-button>
         </li>
       </ul>
       <!-- 表格 -->
@@ -161,11 +131,13 @@
 </template>
 
 <script>
+import FilterArea from '@/components/others/FilterArea'
 import BaseBall from '@/components/base/BaseBall'
 import MoreDetail from '@/components/base/MoreDetail'
 
 export default {
   components: {
+    FilterArea,
     BaseBall,
     MoreDetail
   },
@@ -198,7 +170,7 @@ export default {
       this.fetchUserList({ current: this.page.current = 1, size: this.page.size = pageSize })
     },
     // 显示每注详情弹框
-    showDialogBetsDetails(bets) {
+    showDialogBetsDetails (bets) {
       this.dialogVisible = true
       this.currentBets = bets
     },

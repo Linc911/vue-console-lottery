@@ -14,13 +14,12 @@ import UserUpdateInfo from './views/user/individual/UserUpdateInfo'
 import UserUpdateAvatar from './views/user/individual/UserUpdateAvatar'
 import UserUpdatePhone from './views/user/individual/UserUpdatePhone'
 
-import VipInfoManage from './views/vip/VipInfoManage'
-import VipsList from './views/vip/VipsList'
-import VipBets from './views/vip/VipBets'
-import UserBetsStatistics from './views/user/UserBetsStatistics'
-import VipChangedList from './views/vip/VipChangedList'
-import UserAccountDeposit from './views/user/UserAccountDeposit'
-import VipLogsList from './views/vip/VipLogsList'
+import UsersList from './views/user/all/UsersList'
+import UserBets from './views/user/all/UserBets'
+import UserBetsStatistics from './views/user/all/UserBetsStatistics'
+import UserRechargeLogs from './views/user/all/UserRechargeLogs'
+import UserAccountDeposit from './views/user/all/UserAccountDeposit'
+import UserHttpLogs from './views/user/all/UserHttpLogs'
 
 import SystemRolesList from './views/system/SystemRolesList'
 import SystemRoleCreate from './views/system/SystemRoleCreate'
@@ -89,38 +88,34 @@ const router = new Router({
         },
         // 全部用户信息模块
         {
-          path: '/vip/info/manage',
-          component: VipInfoManage
+          path: '/users/list',
+          component: UsersList,
+          meta: { title: '全部会员列表' }
         },
         {
-          path: '/vip/list',
-          component: VipsList,
-          meta: { title: '会员列表' }
-        },
-        {
-          path: '/vip/:id/bets',
-          component: VipBets,
+          path: '/users/:id/bets',
+          component: UserBets,
           meta: { title: '会员个人注单列表' }
         },
         {
-          path: '/user/:id/betsStatistics',
+          path: '/users/:id/betsStatistics',
           component: UserBetsStatistics,
           meta: { title: '投注历史统计' }
         },
         {
-          path: '/vip/:id/changedList',
-          component: VipChangedList,
-          meta: { title: '会员个人充值列表' }
+          path: '/users/:id/rechargeLogs',
+          component: UserRechargeLogs,
+          meta: { title: '会员个人充值记录' }
         },
         {
-          path: '/user/:id/depositStatistics',
+          path: '/users/:id/depositStatistics',
           component: UserAccountDeposit,
           meta: { title: '存款历史统计' }
         },
         {
-          path: '/user/:id/logs',
-          component: VipLogsList,
-          meta: { title: '会员个人日志列表' }
+          path: '/users/:id/httpLogs',
+          component: UserHttpLogs,
+          meta: { title: '会员个人HTTP请求日志列表' }
         },
         /* 系统管理 */
         // 系统管理 - 角色模块

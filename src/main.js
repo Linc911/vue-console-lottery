@@ -26,6 +26,7 @@ import App from './App.vue'
 
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios
+Vue.prototype.$_ = _
 
 Vue.config.productionTip = false
 

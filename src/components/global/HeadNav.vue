@@ -65,25 +65,25 @@ export default {
       switch (command) {
         case 'info':
           this.$router.push('/user/update/info')
-          break;
+          break
         case 'avatar':
           this.$router.push('/user/update/avatar')
-          break;
+          break
         case 'phone':
           this.$router.push('/user/update/phone')
-          break;
+          break
         case 'logout':
           this.$axios.get('/sys/logout').then(response => {
-              localStorage.removeItem('access_token')
-        			localStorage.removeItem('refresh_token')
-        			localStorage.removeItem('token_type')
+            localStorage.removeItem('access_token')
+            localStorage.removeItem('refresh_token')
+            localStorage.removeItem('token_type')
 
-              this.$router.push('/login/username')
-            }).catch(error => {
-              console.log(error)
-              this.$message.error('登出账号异常')
-            })
-          break;
+            this.$router.push('/login/username')
+          }).catch(error => {
+            console.log(error)
+            this.$message.error('登出账号异常')
+          })
+          break
         default:
           this.$router.push('/home')
       }
