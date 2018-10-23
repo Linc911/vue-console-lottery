@@ -1,6 +1,6 @@
 import axios from 'axios'
 import router from '@/router'
-import { Loading } from 'element-ui'
+import { Loading, Message } from 'element-ui'
 
 let loading
 function startLoading () {
@@ -38,6 +38,8 @@ axios.interceptors.response.use(response => {
   return response
 }, error => {
   endLoading() // 停止加载动画
+
+  Message.error('获取数据异常!')
 
   switch (error.toString().substr(-3)) {
     case '401':

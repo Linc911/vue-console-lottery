@@ -11,11 +11,15 @@
       </el-form-item>
 
       <el-form-item label="权限标识">
-        <el-input v-model="formData.permission" placeholder="权限名" />
+        <el-input
+          @keyup.native.enter="submitForm('updatePermissionForm')"
+          v-model="formData.permission"
+          placeholder="权限名"
+        />
       </el-form-item>
 
       <el-form-item>
-        <el-button @click="submitForm('updatePermissionForm')" type="primary">确认</el-button>
+        <el-button @click="submitForm('updatePermissionForm')" type="primary">修改</el-button>
         <el-button @click="$router.push('/system/permissions')" type="info">返回</el-button>
       </el-form-item>
     </el-form>

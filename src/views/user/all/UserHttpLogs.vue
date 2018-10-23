@@ -8,7 +8,7 @@
       <ul v-if="tableDataReady" class="user-info-list clearfix">
         <li class="user-info-item">
           <span>用户ID：</span>
-          <span class="user-info-detail">{{tableData[0].id}}</span>
+          <span class="user-info-detail">{{this.$route.params.id}}</span>
         </li>
         <!-- <li class="user-info-item">
           <span>会员ID：</span>
@@ -27,12 +27,18 @@
         border
       >
         <el-table-column type="index"></el-table-column>
-        <el-table-column prop="module" label="请求模块"></el-table-column>
-        <el-table-column prop="params" label="请求参数"></el-table-column>
-        <el-table-column prop="remark" label="备注"></el-table-column>
+
+        <el-table-column prop="createTime" label="请求时间" :width="140">
+          <template slot-scope="scope">
+            <span>{{scope.row.createTime | time}}</span>
+          </template>
+        </el-table-column>
+
         <el-table-column prop="ip" label="ip地址"></el-table-column>
+        <el-table-column prop="params" label="请求参数" :min-width="160"></el-table-column>
+        <el-table-column prop="module" label="请求模块"></el-table-column>
         <el-table-column prop="area" label="所属区域"></el-table-column>
-        <el-table-column prop="createTime" label="请求时间" :min-width="140"></el-table-column>
+        <el-table-column prop="remark" label="备注" :min-width="180"></el-table-column>
       </el-table>
       <!-- 分页 -->
       <el-pagination

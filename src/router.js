@@ -21,6 +21,9 @@ import UserRechargeLogs from './views/user/all/UserRechargeLogs'
 import UserAccountDeposit from './views/user/all/UserAccountDeposit'
 import UserHttpLogs from './views/user/all/UserHttpLogs'
 
+import SystemMenuList from './views/system/SystemMenuList'
+import SystemMenuItemCreate from './views/system/SystemMenuItemCreate'
+import SystemMenuItemUpdate from './views/system/SystemMenuItemUpdate'
 import SystemRolesList from './views/system/SystemRolesList'
 import SystemRoleCreate from './views/system/SystemRoleCreate'
 import SystemRoleUpdate from './views/system/SystemRoleUpdate'
@@ -28,7 +31,13 @@ import SystemPermissionsList from './views/system/SystemPermissionsList'
 import SystemPermissionCreate from './views/system/SystemPermissionCreate'
 import SystemPermissionUpdate from './views/system/SystemPermissionUpdate'
 
+import AdminUsers from './views/admin/AdminUsers'
+import AdminUserCreate from './views/admin/AdminUserCreate'
+import AdminUserUpdate from './views/admin/AdminUserUpdate'
+
 import BetsRate from './views/rate/BetsRate'
+
+import GamesList from './views/others/GamesList'
 
 import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 
@@ -125,6 +134,22 @@ const router = new Router({
           meta: { title: '会员个人HTTP请求日志列表' }
         },
         /* 系统管理 */
+        // 系统管理 - 侧边栏菜单模块
+        {
+          path: '/system/menu',
+          component: SystemMenuList,
+          meta: { title: '侧边栏菜单列表' }
+        },
+        {
+          path: '/system/menu/create',
+          component: SystemMenuItemCreate,
+          meta: { title: '创建菜单新栏目' }
+        },
+        {
+          path: '/system/menu/:id/update',
+          component: SystemMenuItemUpdate,
+          meta: { title: '修改菜单配置' }
+        },
         // 系统管理 - 角色模块
         {
           path: '/system/roles',
@@ -155,13 +180,35 @@ const router = new Router({
         {
           path: '/system/permission/:id/update',
           component: SystemPermissionUpdate,
-          meta: { title: '更新权限' }
+          meta: { title: '修改权限' }
+        },
+        /* 用户管理 */
+        {
+          path: '/admin/users',
+          component: AdminUsers,
+          meta: { title: '全部用户信息列表' }
+        },
+        {
+          path: '/admin/user/create',
+          component: AdminUserCreate,
+          meta: { title: '创建新用户' }
+        },
+        {
+          path: '/admin/user/:id/update',
+          component: AdminUserUpdate,
+          meta: { title: '修改用户信息' }
         },
         /* 赔率设置 */
         {
           path: '/rate/bets',
           component: BetsRate,
-          meta: { title: '赔率列表 - 11选5' }
+          meta: { title: '游戏赔率列表' }
+        },
+        /* 游戏设置 */
+        {
+          path: '/games/list',
+          component: GamesList,
+          meta: { title: '游戏列表' }
         },
         /* 短信验证码日志 */
         {

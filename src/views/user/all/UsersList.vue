@@ -30,7 +30,7 @@
 
         <el-table-column prop="createTime" label="注册时间" :width="140">
           <template slot-scope="scope">
-            <span v-localtime="scope.row.createTime"></span>
+            <span>{{scope.row.createTime | time}}</span>
           </template>
         </el-table-column>
 

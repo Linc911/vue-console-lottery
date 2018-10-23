@@ -23,8 +23,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('updateRoleForm')">确认</el-button>
-        <el-button type="info" @click="$router.push('/system/roles')">返回</el-button>
+        <el-button @click="submitForm('updateRoleForm')" type="primary">修改</el-button>
+        <el-button @click="$router.push('/system/roles')" type="info">返回</el-button>
       </el-form-item>
     </el-form>
   </section>

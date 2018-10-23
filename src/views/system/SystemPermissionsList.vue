@@ -29,7 +29,6 @@
             @click="searchPremission"
             type="primary"
             size="small"
-            placeholder="权限标识"
           >
           搜索</el-button>
         </div>
@@ -162,18 +161,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search-container {
+  margin-bottom: 20px;
+}
+.search-left {
+  float: left;
+}
 .input-group {
   display: inline-block;
   margin-right: 20px;
 }
 .el-input {
   width: 240px;
-}
-.search-container {
-  margin-bottom: 20px;
-}
-.search-left {
-  float: left;
 }
 .search-right {
   float: right;
