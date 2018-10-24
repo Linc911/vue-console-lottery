@@ -1,6 +1,10 @@
 <template lang="html">
   <el-dialog :visible.sync="dialogVisible" :title="title" width="400px">
-    <el-input v-model="innerValue" :placeholder="placeholder" />
+    <el-input
+      @keyup.native.enter="$emit('on-confirm', innerValue)"
+      v-model="innerValue"
+      :placeholder="placeholder"
+    />
     <span slot="footer">
       <el-button type="primary" @click="$emit('on-confirm', innerValue)">确认</el-button>
     </span>

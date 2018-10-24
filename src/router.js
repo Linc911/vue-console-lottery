@@ -35,9 +35,13 @@ import AdminUsers from './views/admin/AdminUsers'
 import AdminUserCreate from './views/admin/AdminUserCreate'
 import AdminUserUpdate from './views/admin/AdminUserUpdate'
 
-import BetsRate from './views/rate/BetsRate'
+import LotteryOdds from './views/lottery/LotteryOdds'
+import LotteryOddsEleven from './views/lottery/LotteryOddsEleven'
+import LotteryOddsFast3 from './views/lottery/LotteryOddsFast3'
 
 import GamesList from './views/others/GamesList'
+import GamePreview from './views/others/GamePreview'
+import GameUpdate from './views/others/GameUpdate'
 
 import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 
@@ -198,17 +202,39 @@ const router = new Router({
           component: AdminUserUpdate,
           meta: { title: '修改用户信息' }
         },
-        /* 赔率设置 */
+        /* 彩票管理模块 */
         {
-          path: '/rate/bets',
-          component: BetsRate,
-          meta: { title: '游戏赔率列表' }
+          path: '/lottery/odds',
+          redirect: '/lottery/odds/eleven/3',
+          component: LotteryOdds,
+          children: [
+            {
+              path: 'eleven/:id',
+              component: LotteryOddsEleven,
+              meta: { title: '11选5赔率设置' }
+            },
+            {
+              path: 'fast3/:id',
+              component: LotteryOddsFast3,
+              meta: { title: '快3赔率设置' }
+            }
+          ]
         },
         /* 游戏设置 */
         {
           path: '/games/list',
           component: GamesList,
           meta: { title: '游戏列表' }
+        },
+        {
+          path: '/game/:id',
+          component: GamePreview,
+          meta: { title: '游戏配置详情' }
+        },
+        {
+          path: '/game/:id/update',
+          component: GameUpdate,
+          meta: { title: '修改游戏配置' }
         },
         /* 短信验证码日志 */
         {

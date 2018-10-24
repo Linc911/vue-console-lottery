@@ -15,18 +15,18 @@
           </template>
 
           <router-link v-for="item in group.children" :to="item.path" :key="item.id">
-            <el-menu-item :index="item.id">
+            <el-menu-item :index="item.id" :class="{ 'unprepared-link': item.path === '/users/unset' }">
               <i :class="`fa ${item.icon}`"></i>
               <span>{{item.name}}</span>
             </el-menu-item>
           </router-link>
         </el-submenu>
-        <router-link v-else :to="group.path" :key="group.id">
+        <!-- <router-link v-else :to="group.path" :key="group.id">
           <el-menu-item :index="group.name">
             <i :class="`fa ${group.icon}`"></i>
             <span>{{group.name}}</span>
           </el-menu-item>
-        </router-link>
+        </router-link> -->
       </template>
     </el-menu>
   </section>
@@ -46,7 +46,8 @@ export default {
           children: [
             { id: 'test0101', name: '菜单', path: '/system/menu', icon: 'fa-windows' },
             { id: 'test0102', name: '角色', path: '/system/roles', icon: 'fa-cubes' },
-            { id: 'test0103', name: '权限', path: '/system/permissions', icon: 'fa-align-justify' }
+            { id: 'test0103', name: '权限', path: '/system/permissions', icon: 'fa-align-justify' },
+            { id: 'test0104', name: '用户查询', path: '/admin/users', icon: 'fa-cubes' }
           ]
         },
         {
@@ -66,25 +67,31 @@ export default {
           ]
         },
         {
-          id: 'test04',
-          name: '超级管理员',
+          id: 'test09',
+          name: '彩票管理',
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test0401', name: '用户查询', path: '/admin/users', icon: 'fa-cubes' }
+            { id: 'test0901', name: '彩票开盘', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0902', name: '彩票开奖', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0903', name: '未结彩票撤单', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0904', name: '彩票注单', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0905', name: '彩票杀率配置', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0906', name: '彩票赔率设置', path: '/lottery/odds', icon: 'fa-cubes' },
+            { id: 'test0907', name: '彩票期数校对', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0908', name: '彩票会员报表', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0909', name: '彩票注单报表', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0910', name: '彩票总报表', path: '/users/unset', icon: 'fa-cubes' }
           ]
-        },
-        {
-          id: 'test05',
-          name: '赔率设置',
-          path: '/rate/bets',
-          icon: 'fa-gears'
         },
         {
           id: 'test06',
           name: '游戏设置',
-          path: '/games/list',
-          icon: 'fa-gears'
+          path: '',
+          icon: 'fa-gears',
+          children: [
+            { id: 'test0601', name: '彩票设置', path: '/games/list', icon: 'fa-cubes' }
+          ]
         },
         {
           id: 'test07',
@@ -115,24 +122,6 @@ export default {
             { id: 'test0806', name: '代理线条业绩', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test0807', name: '代理一键分润', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test0808', name: '会员一键分润', path: '/users/unset', icon: 'fa-cubes' }
-          ]
-        },
-        {
-          id: 'test09',
-          name: '彩票管理',
-          path: '',
-          icon: 'fa-user',
-          children: [
-            { id: 'test0901', name: '彩票开盘', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0902', name: '彩票开奖', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0903', name: '未结彩票撤单', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0904', name: '彩票注单', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0905', name: '彩票杀率配置', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0906', name: '彩票赔率设置', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0907', name: '彩票期数校对', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0908', name: '彩票会员报表', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0909', name: '彩票注单报表', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0910', name: '彩票总报表', path: '/users/unset', icon: 'fa-cubes' }
           ]
         },
         {
@@ -274,5 +263,9 @@ export default {
   margin-right: 6px;
   font-size: 20;
   color: #fff;
+}
+.unprepared-link {
+  text-decoration: line-through;
+  color: #de8c8c !important;
 }
 </style>

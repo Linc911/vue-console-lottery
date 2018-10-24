@@ -5,6 +5,17 @@
         <!-- 左侧logo部分 -->
         <div class="head-logo">
           <router-link to="/home" class="head-logo-link">后台管理系统</router-link>
+          <!-- 页面前进与后退 -->
+          <div class="history-go">
+            <div @click="myWindow.history.back()" class="history-go-item">
+              <i class="el-icon-d-arrow-left"></i>
+              <span>上一页</span>
+            </div>
+            <div @click="myWindow.history.forward()" class="history-go-item">
+              <span>上一页</span>
+              <i class="el-icon-d-arrow-right"></i>
+            </div>
+          </div>
         </div>
       </el-col>
       <el-col :span="12">
@@ -103,6 +114,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 页面前进与后退
+.history-go {
+  display: inline-block;
+  padding-left: 60px;
+}
+.history-go-item {
+  display: inline-block;
+  font-size: 14px;
+  color: #189F92;
+  cursor: pointer;
+}
+.history-go-item:last-child {
+  margin-left: 20px;
+}
+
+.head {
+  overflow: hidden;
+}
 .head-logo {
   line-height: 60px;
 }

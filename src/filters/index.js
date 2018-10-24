@@ -1,9 +1,24 @@
 import Vue from 'vue'
 import moment from 'moment'
 
+function addZeroPrefix (n) {
+  if (n >= 10) {
+    return n
+  } else {
+    return '0' + n
+  }
+}
+
 // 时间格式化
 Vue.filter('time', value => {
   return moment(value).format('YYYY-MM-DD HH:mm:ss')
+})
+Vue.filter('sortTime', second => {
+  const s = addZeroPrefix(second % 60)
+  const m = second >= 3600 ? addZeroPrefix(second % 3600) : addZeroPrefix(Math.floor(second / 60))
+  const h = addZeroPrefix(Math.floor(second / 3600))
+
+  return `${h}:${m}:${s}`
 })
 
 // 货币数值格式化
@@ -12,7 +27,7 @@ Vue.filter('RMB', value => {
 })
 /* 赔率相关 */
 // 11选5 赔率第二类类型
-Vue.filter('rateSecondType', value => {
+Vue.filter('rateEleventSType', value => {
   switch (value) {
     case 1:
       return '第一球'
@@ -31,7 +46,7 @@ Vue.filter('rateSecondType', value => {
   }
 })
 // 11选5 赔率第三类类型
-Vue.filter('rateThirdType', value => {
+Vue.filter('rateEleventTType', value => {
   switch (value) {
     case 1:
       return '大'
@@ -91,6 +106,93 @@ Vue.filter('rateThirdType', value => {
       return '10号球'
     case 29:
       return '11号球'
+    default:
+      return '其他'
+  }
+})
+
+// 快3 赔率第一类类型
+Vue.filter('rateFast3FType', value => {
+  switch (value) {
+    case 1:
+      return '总和'
+    case 2:
+      return '三军'
+    case 3:
+      return '围骰/全骰'
+    case 4:
+      return '点数'
+    case 5:
+      return '长牌'
+    case 6:
+      return '短牌'
+    default:
+      return '其他'
+  }
+})
+// 快3 赔率第二类类型
+Vue.filter('rateFast3SType', value => {
+  switch (value) {
+    case 1:
+      return '大'
+    case 2:
+      return '小'
+    case 3:
+      return '单'
+    case 4:
+      return '双'
+    case 5:
+      return '1'
+    case 6:
+      return '2'
+    case 7:
+      return '3'
+    case 8:
+      return '4'
+    case 9:
+      return '5'
+    case 10:
+      return '6'
+    case 11:
+      return '111'
+    case 12:
+      return '222'
+    case 13:
+      return '333'
+    case 14:
+      return '444'
+    case 15:
+      return '555'
+    case 16:
+      return '666'
+    case 17:
+      return '全骰'
+    case 18:
+      return '4'
+    case 19:
+      return '5'
+    case 20:
+      return '6'
+    case 21:
+      return '7'
+    case 22:
+      return '8'
+    case 23:
+      return '9'
+    case 24:
+      return '10'
+    case 25:
+      return '11'
+    case 26:
+      return '12'
+    case 27:
+      return '13'
+    case 28:
+      return '14'
+    case 29:
+      return '15'
+    case 32:
+      return '1'
     default:
       return '其他'
   }

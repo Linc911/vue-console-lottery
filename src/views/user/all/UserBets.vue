@@ -14,10 +14,10 @@
           <span>会员ID：</span>
           <span class="user-info-detail">{{tableData[0].userId}}</span>
         </li>
-        <li class="user-info-item">
+        <!-- <li class="user-info-item">
           <span>会员账号：</span>
           <span class="user-info-detail">{{tableData[0].username}}</span>
-        </li>
+        </li> -->
         <li class="pull-right">
           <el-button @click="$router.push(`/users/${tableData[0].userId}/betsStatistics`)" type="primary" size="mini">近15天注单统计</el-button>
         </li>
@@ -143,9 +143,6 @@ export default {
   },
   data () {
     return {
-      input4: '',
-      valueDate: '',
-      valueData: '',
       dialogVisible: false,
       tableDataReady: false,
       tableData: [],
@@ -192,16 +189,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.search-container {
-  margin-bottom: 20px;
-}
-.search-left {
-  float: left;
-}
-.search-right {
-  float: right;
-  text-align: right;
-}
 // 会员基本信息
 .user-info-list {
   margin: 30px 0 10px;

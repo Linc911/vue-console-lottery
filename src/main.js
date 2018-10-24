@@ -25,8 +25,10 @@ import 'font-awesome/css/font-awesome.css'
 import App from './App.vue'
 
 Vue.use(ElementUI)
+
 Vue.prototype.$axios = axios
 Vue.prototype.$_ = _
+Vue.prototype.myWindow = window
 
 Vue.config.productionTip = false
 

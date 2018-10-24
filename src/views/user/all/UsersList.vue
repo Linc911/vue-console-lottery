@@ -11,16 +11,16 @@
         highlight-current-row
         border
       >
-        <el-table-column type="index" :width="40"></el-table-column>
+        <el-table-column type="index" :min-width="30" />
 
-        <el-table-column prop="username" label="名称" :width="120">
+        <el-table-column prop="username" label="名称" :min-width="120">
           <template slot-scope="scope">
             <span>{{scope.row.username}}</span>
             <MoreDetail @on-click="handleViewUserInfo(scope.row.id)" class="pull-right" />
           </template>
         </el-table-column>
 
-        <el-table-column prop="nickname" label="昵称"></el-table-column>
+        <el-table-column prop="nickname" label="昵称" :min-width="100" />
         <el-table-column prop="banlance" label="账户余额" :min-width="120">
           <template slot-scope="scope">
             <span>{{scope.row.banlance | RMB}}</span>
