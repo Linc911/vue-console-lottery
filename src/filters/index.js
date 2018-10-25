@@ -25,6 +25,66 @@ Vue.filter('sortTime', second => {
 Vue.filter('RMB', value => {
   return '￥ ' + parseInt(value).toLocaleString()
 })
+
+/* 充值相关 */
+// 充值支付类型
+Vue.filter('changedType', value => {
+  switch (value) {
+    case 1:
+      return '微信'
+    default:
+      return '其他'
+  }
+})
+// 充值订单状态
+Vue.filter('changedStatus', value => {
+  switch (value) {
+    case 0:
+      return '未支付'
+    case 1:
+      return '未确认'
+    case 3:
+      return '支付成功'
+    case 4:
+      return '失败'
+    default:
+      return '其他'
+  }
+})
+
+/* 彩票相关 */
+// 彩票球
+Vue.filter('lotteryBall', value => {
+  if (value === 11) {
+    return '和 和'
+  } else if (value < 6) {
+    return value % 2 ? '小 单' : '小 双'
+  } else {
+    return value % 2 ? '大 单' : '大 双'
+  }
+})
+// 骰子围骰
+Vue.filter('diceRepeat', value => {
+  switch (value) {
+    case 0:
+      return '无围骰'
+    case 1:
+      return '围骰1'
+    case 2:
+      return '围骰2'
+    case 3:
+      return '围骰3'
+    case 4:
+      return '围骰4'
+    case 5:
+      return '围骰5'
+    case 6:
+      return '围骰6'
+    default:
+      return '其他'
+  }
+})
+
 /* 赔率相关 */
 // 11选5 赔率第二类类型
 Vue.filter('rateEleventSType', value => {
@@ -289,31 +349,5 @@ Vue.filter('betResult', value => {
       return '赢'
     default:
       return '未处理'
-  }
-})
-
-/* 充值相关 */
-// 充值支付类型
-Vue.filter('changedType', value => {
-  switch (value) {
-    case 1:
-      return '微信'
-    default:
-      return '其他'
-  }
-})
-// 充值订单状态
-Vue.filter('changedStatus', value => {
-  switch (value) {
-    case 0:
-      return '未支付'
-    case 1:
-      return '未确认'
-    case 3:
-      return '支付成功'
-    case 4:
-      return '失败'
-    default:
-      return '其他'
   }
 })

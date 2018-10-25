@@ -20,6 +20,9 @@ import UserBetsStatistics from './views/user/all/UserBetsStatistics'
 import UserRechargeLogs from './views/user/all/UserRechargeLogs'
 import UserAccountDeposit from './views/user/all/UserAccountDeposit'
 import UserHttpLogs from './views/user/all/UserHttpLogs'
+import UsersGroup from './views/user/UsersGroup'
+import UsersGroupCreate from './views/user/UsersGroupCreate'
+import UsersGroupUpdate from './views/user/UsersGroupUpdate'
 
 import SystemMenuList from './views/system/SystemMenuList'
 import SystemMenuItemCreate from './views/system/SystemMenuItemCreate'
@@ -35,9 +38,12 @@ import AdminUsers from './views/admin/AdminUsers'
 import AdminUserCreate from './views/admin/AdminUserCreate'
 import AdminUserUpdate from './views/admin/AdminUserUpdate'
 
-import LotteryOdds from './views/lottery/LotteryOdds'
+import LotteryManage from './views/lottery/LotteryManage'
+// import LotteryOdds from './views/lottery/LotteryOdds'
 import LotteryOddsEleven from './views/lottery/LotteryOddsEleven'
 import LotteryOddsFast3 from './views/lottery/LotteryOddsFast3'
+import LotteryResultsEleven from './views/lottery/LotteryResultsEleven'
+import LotteryResultsFast3 from './views/lottery/LotteryResultsFast3'
 
 import GamesList from './views/others/GamesList'
 import GamePreview from './views/others/GamePreview'
@@ -106,7 +112,7 @@ const router = new Router({
           component: UserUpdatePhone,
           meta: { title: '修改登录用户绑定手机' }
         },
-        /* 全部用户信息模块 */
+        /* 会员管理模块 */
         {
           path: '/users/list',
           component: UsersList,
@@ -136,6 +142,25 @@ const router = new Router({
           path: '/users/:id/httpLogs',
           component: UserHttpLogs,
           meta: { title: '会员个人HTTP请求日志列表' }
+        },
+        // 会员分组
+        {
+          name: 'usersGroup',
+          path: '/users/group',
+          component: UsersGroup,
+          meta: { title: '会员分组列表' }
+        },
+        {
+          name: 'usersGroupCreate',
+          path: '/users/group/:id',
+          component: UsersGroupCreate,
+          meta: { title: '单个会员分组详情' }
+        },
+        {
+          name: 'usersGroupUpdate',
+          path: '/users/group/:id/update',
+          component: UsersGroupUpdate,
+          meta: { title: '修改单个会员分组' }
         },
         /* 系统管理 */
         // 系统管理 - 侧边栏菜单模块
@@ -204,17 +229,33 @@ const router = new Router({
         },
         /* 彩票管理模块 */
         {
-          path: '/lottery/odds',
-          redirect: '/lottery/odds/eleven/3',
-          component: LotteryOdds,
+          name: 'lottery',
+          path: '/lottery',
+          redirect: '/lottery/results/eleven/3',
+          component: LotteryManage,
           children: [
+            // 开奖结果
             {
-              path: 'eleven/:id',
+              name: 'lotteryResultsEleven',
+              path: '/lottery/results/eleven/:id',
+              component: LotteryResultsEleven,
+              meta: { title: '11选5开奖结果' }
+            },
+            {
+              name: 'lotteryResultsFast3',
+              path: '/lottery/results/fast3/:id',
+              component: LotteryResultsFast3,
+              meta: { title: '快3开奖结果' }
+            },
+            // 赔率设置
+            {
+              name: 'lotteryOddsEleven',
+              path: '/lottery/odds/eleven/:id',
               component: LotteryOddsEleven,
               meta: { title: '11选5赔率设置' }
             },
             {
-              path: 'fast3/:id',
+              path: '/lottery/odds/fast3/:id',
               component: LotteryOddsFast3,
               meta: { title: '快3赔率设置' }
             }

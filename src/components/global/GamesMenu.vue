@@ -34,7 +34,9 @@ export default {
   methods: {
     // 根据选项的 parentType, 转换对应的游戏；通过监控路由变化来获取对应的数据
     jumpTo (id, parentType) {
-      const route = `/lottery/odds/${this._generateRouteByParentType(parentType)}/${id}`
+      const routeArr = this.$route.path.split('/')
+      const route = `/lottery/${routeArr[2]}/${this._generateRouteByParentType(parentType)}/${id}`
+
       this.$router.push(route)
     },
     _generateRouteByParentType (type) {
