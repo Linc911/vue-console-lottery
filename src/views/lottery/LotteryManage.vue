@@ -1,10 +1,13 @@
 <template lang="html">
-  <section class="lottery-odds">
+  <section class="lottery-manage">
     <aside class="aside-menu">
       <GamesMenu v-if="menu.length" :menu="menu" :activeItemId="$route.params.id" />
     </aside>
     <main class="content-container">
-      <router-view />
+      <keep-alive v-if="$route.meta.keepAlive">
+        <router-view />
+      </keep-alive>
+      <router-view v-else />
     </main>
   </section>
 </template>
@@ -13,7 +16,7 @@
 import GamesMenu from '@/components/global/GamesMenu'
 
 export default {
-  name: 'lotteryOdds',
+  name: 'LotteryManage',
   components: {
     GamesMenu
   },
@@ -23,11 +26,11 @@ export default {
     }
   },
   created () {
-    this.fetchGameMenu()
+    this.getGamesMenu()
   },
   methods: {
-    fetchGameMenu () {
-      this.$axios.get('/api-g/GameTypeConfig/tree').then(response => {
+    getGamesMenu () {
+      this.$httpAPI.fetchGamesMenu().then(response => {
         this.menu = response.data.data
       }).catch(error => console.log(error))
     }

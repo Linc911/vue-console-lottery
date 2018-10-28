@@ -11,7 +11,7 @@
 
       <el-table-column prop="drawno" label="期号" />
 
-      <!-- <el-table-column prop="drawno" label="期号" /> -->
+      <el-table-column prop="dateTime" label="开奖时间" :min-width="140" />
 
       <el-table-column label="彩球号码" :min-width="200">
         <template slot-scope="scope">
@@ -23,9 +23,8 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="ballSum" label="总和">
+      <el-table-column prop="ballSum" label="总和" :min-width="100">
         <template slot-scope="scope">
-          <!-- <span>{{ballTotal}}</span> -->
           <span>{{scope.row.ballSum.join(' ')}}</span>
         </template>
       </el-table-column>
@@ -35,62 +34,59 @@
           <span>{{scope.row.dragonTiger.toString()}}</span>
         </template>
       </el-table-column>
+
+      <el-table-column label="操作" :min-width="200">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini">相关操作</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <el-pagination
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-      :current-page="page.current"
-      :total="page.total"
-      :page-sizes="[10, 20, 40, 100]"
-      :page-size="10"
-      layout="total, sizes, prev, pager, next, jumper"
+    <BasePagination
+      @on-change="handlePaginationChange"
+      :pageTotal="pageTotal"
+      :requestParams="{ type: this.$route.params.id }"
+      httpURL="fetchLotteryResultsEleven"
     />
   </section>
 </template>
 
 <script>
 import LotteryBall from '@/components/base/LotteryBall'
+import BasePagination from '@/components/base/BasePagination'
 
 export default {
-  name: 'lotteryResultsEleven',
+  name: 'LotteryResultsEleven',
   components: {
-    LotteryBall
+    LotteryBall,
+    BasePagination
   },
   data () {
     return {
       tableData: [],
-      page: {
-        total: 10,
-        current: 1,
-        size: 10
-      }
+      pageTotal: 0
     }
-  },
-  created () {
-    this.fetchLotteryResults({ current: this.page.current = 1, size: this.page.size = 10 })
   },
   watch: {
     $route () {
-      this.fetchLotteryResults({ current: this.page.current = 1, size: this.page.size = 10 })
+      this.getLotteryResults()
     }
   },
+  created () {
+    this.getLotteryResults()
+  },
   methods: {
-    // 分页跳转时
-    handleCurrentChange (currentPage) {
-      this.fetchLotteryResults({ current: this.page.current = currentPage, size: this.page.size })
+    // 分页变化时，更新数据
+    handlePaginationChange (payload) {
+      this.tableData = payload
     },
-    // 分页调整每页显示条数时
-    handleSizeChange (pageSize) {
-      this.fetchLotteryResults({ current: this.page.current = 1, size: this.page.size = pageSize })
-    },
-    // 获取赔率
-    fetchLotteryResults (page) {
-      this.$axios.get('/api-g/result/1', {
-        params: { type: this.$route.params.id, pageNo: this.page.current, pageSize: this.page.size }
+    // 获取开奖结果
+    getLotteryResults () {
+      this.$httpAPI.fetchLotteryResultsEleven({
+        params: { type: this.$route.params.gameId, pageNo: 1, pageSize: 10 }
       }).then(response => {
         this.tableData = response.data.data
-        this.page.total = response.data.amount // 分页对象赋值
+        this.pageTotal = response.data.amount
       }).catch(error => console.log(error))
     }
   }

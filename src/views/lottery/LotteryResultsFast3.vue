@@ -32,62 +32,51 @@
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <el-pagination
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-      :current-page="page.current"
-      :total="page.total"
-      :page-sizes="[10, 20, 40, 100]"
-      :page-size="10"
-      layout="total, sizes, prev, pager, next, jumper"
+    <BasePagination
+      @on-change="handlePaginationChange"
+      :pageTotal="pageTotal"
+      :requestParams="{ type: this.$route.params.id }"
+      httpURL="fetchLotteryResultsFast3"
     />
   </section>
 </template>
 
 <script>
-import LotteryBall from '@/components/base/LotteryBall'
 import BaseDice from '@/components/base/BaseDice'
+import BasePagination from '@/components/base/BasePagination'
 
 export default {
-  name: 'lotteryResultsFast3',
+  name: 'LotteryResultsFast3',
   components: {
-    LotteryBall,
-    BaseDice
+    BaseDice,
+    BasePagination
   },
   data () {
     return {
       tableData: [],
-      page: {
-        total: 10,
-        current: 1,
-        size: 10
-      }
+      pageTotal: 0
     }
-  },
-  created () {
-    this.fetchLotteryResults({ current: this.page.current = 1, size: this.page.size = 10 })
   },
   watch: {
     $route () {
-      this.fetchLotteryResults({ current: this.page.current = 1, size: this.page.size = 10 })
+      this.getLotteryResults()
     }
   },
+  created () {
+    this.getLotteryResults()
+  },
   methods: {
-    // 分页跳转时
-    handleCurrentChange (currentPage) {
-      this.fetchLotteryResults({ current: this.page.current = currentPage, size: this.page.size })
+    // 分页变化时，更新数据
+    handlePaginationChange (payload) {
+      this.tableData = payload
     },
-    // 分页调整每页显示条数时
-    handleSizeChange (pageSize) {
-      this.fetchLotteryResults({ current: this.page.current = 1, size: this.page.size = pageSize })
-    },
-    // 获取赔率
-    fetchLotteryResults (page) {
-      this.$axios.get('/api-g/result/2', {
-        params: { type: this.$route.params.id, pageNo: this.page.current, pageSize: this.page.size }
+    // 获取快3开奖数据
+    getLotteryResults (page) {
+      this.$httpAPI.fetchLotteryResultsFast3({
+        params: { type: this.$route.params.gameId, pageNo: 1, pageSize: 10 }
       }).then(response => {
         this.tableData = response.data.data
-        this.page.total = response.data.amount // 分页对象赋值
+        this.pageTotal = response.data.amount
       }).catch(error => console.log(error))
     }
   }

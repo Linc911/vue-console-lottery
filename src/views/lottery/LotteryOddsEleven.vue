@@ -7,7 +7,7 @@
       highlight-current-row
       border
     >
-      <el-table-column type="index"></el-table-column>
+      <el-table-column type="index" />
 
       <el-table-column
         prop="parentType"
@@ -46,9 +46,9 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="remark" label="备注"></el-table-column>
-    </el-table>
 
+      <el-table-column prop="remark" label="备注" />
+    </el-table>
     <!-- 设置赔率弹框 -->
     <DialogInput
       @on-confirm="handleRateUpdate"
@@ -64,7 +64,7 @@ import BaseSetting from '@/components/base/BaseSetting'
 import DialogInput from '@/components/dialog/DialogInput'
 
 export default {
-  name: 'oddsEleven',
+  name: 'LotteryOddsEleven',
   components: {
     BaseSetting,
     DialogInput
@@ -76,11 +76,11 @@ export default {
     }
   },
   created () {
-    this.fetchOddsRate(this.$route.params.id)
+    this.getOddsList()
   },
   watch: {
     $route () {
-      this.fetchOddsRate(this.$route.params.id)
+      this.getOddsList()
     }
   },
   methods: {
@@ -93,7 +93,7 @@ export default {
     handleRateUpdate (value) {
       this.rateForm.odds = Number(value).toFixed(2)
 
-      this.$axios.post('/api-g/oddsset/1/save', [ this.rateForm ]).then(() => {
+      this.$httpAPI.postLotteryOddsEleven([ this.rateForm ]).then(() => {
         // 在表格中找到对应的数据做修改，不再请求新的数据更新组件
         this.$_.forEach(this.tableData, item => {
           if (item.oddsid === this.rateForm.oddsid) {
@@ -110,10 +110,10 @@ export default {
       const property = column['property']
       return row[property] === value
     },
-    // 获取赔率
-    fetchOddsRate (type) {
-      this.$axios.get('/api-g/oddsset/1', {
-        params: { type }
+    // 获取赔率列表
+    getOddsList () {
+      this.$httpAPI.fetchLotteryOddsEleven({
+        params: { type: this.$route.params.gameId }
       }).then(response => {
         this.tableData = response.data.data
       }).catch(error => console.log(error))

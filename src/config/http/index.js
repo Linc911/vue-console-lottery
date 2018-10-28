@@ -39,7 +39,14 @@ axios.interceptors.response.use(response => {
 }, error => {
   endLoading() // 停止加载动画
 
-  Message.error('获取数据异常!')
+  if (error.error === 'invalid_token') {
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    localStorage.removeItem('token_type')
+    console.log('Token已过期，请重新登录。')
+    return
+  }
+  // Message.error('获取数据异常!')
 
   switch (error.toString().substr(-3)) {
     case '401':

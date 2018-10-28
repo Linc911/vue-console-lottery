@@ -26,13 +26,17 @@
           </template>
         </el-table-column>
 
+        <el-table-column prop="nickname" label="昵称" :min-width="90" />
+
+        <el-table-column prop="" label="分组" />
+
+        <el-table-column prop="" label="邀请码" />
+
         <el-table-column prop="control" label="监控状态" :width="50">
           <template slot-scope="scope">
             <i @click="toggleControlStatus(scope.row.id, scope.row.control)" :class="scope.row.control ? 'el-icon-success' : 'el-icon-error'"></i>
           </template>
         </el-table-column>
-
-        <el-table-column prop="nickname" label="昵称" :min-width="90" />
 
         <el-table-column prop="banlance" label="账户余额" :min-width="100">
           <template slot-scope="scope">
@@ -42,7 +46,7 @@
 
         <el-table-column prop="win" label="输赢" />
 
-        <el-table-column prop="operations" label="操作" :min-width="460">
+        <el-table-column prop="operations" label="操作" :min-width="470">
           <template slot-scope="scope">
             <el-button @click="$router.push(`/users/${scope.row.id}/bets`)" type="primary" size="mini">注单详情</el-button>
             <el-button @click="$router.push(`/users/${scope.row.id}/rechargeLogs`)" type="primary" size="mini">充值详情</el-button>

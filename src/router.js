@@ -3,16 +3,17 @@ import Router from 'vue-router'
 
 import NotFound from './views/NotFound'
 
-import TheHome from './views/TheHome'
-import HomeIndex from './views/HomeIndex'
+import HomeLayout from './views/HomeLayout'
+import HomePage from './views/HomePage'
 
-import TheLogin from './views/login/TheLogin'
-import LoginByUsername from './views/login/LoginByUsername'
-import LoginByPhone from './views/login/LoginByPhone'
+import LoginLayout from './views/login/LoginLayout'
+import LoginUsername from './views/login/LoginUsername'
+import LoginPhone from './views/login/LoginPhone'
 
-import UserUpdateInfo from './views/user/individual/UserUpdateInfo'
-import UserUpdateAvatar from './views/user/individual/UserUpdateAvatar'
-import UserUpdatePhone from './views/user/individual/UserUpdatePhone'
+import UserActive from './views/useractive/UserActive'
+import UserActiveInfoUpdate from './views/useractive/UserActiveInfoUpdate'
+import UserActiveAvatarUpdate from './views/useractive/UserActiveAvatarUpdate'
+import UserActivePhoneUpdate from './views/useractive/UserActivePhoneUpdate'
 
 import UsersList from './views/user/all/UsersList'
 import UserBets from './views/user/all/UserBets'
@@ -20,9 +21,11 @@ import UserBetsStatistics from './views/user/all/UserBetsStatistics'
 import UserRechargeLogs from './views/user/all/UserRechargeLogs'
 import UserAccountDeposit from './views/user/all/UserAccountDeposit'
 import UserHttpLogs from './views/user/all/UserHttpLogs'
+import UsersLogs from './views/user/UsersLogs'
 import UsersGroup from './views/user/UsersGroup'
 import UsersGroupCreate from './views/user/UsersGroupCreate'
 import UsersGroupUpdate from './views/user/UsersGroupUpdate'
+import UsersAccountCheck from './views/user/UsersAccountCheck'
 
 import SystemMenuList from './views/system/SystemMenuList'
 import SystemMenuItemCreate from './views/system/SystemMenuItemCreate'
@@ -67,50 +70,64 @@ const router = new Router({
     },
     // 登录模块
     {
+      name: 'LoginLayout',
       path: '/login',
-      name: 'login',
       redirect: '/login/username',
-      component: TheLogin,
+      component: LoginLayout,
       children: [
         {
+          name: 'LoginUsername',
           path: 'username',
-          component: LoginByUsername,
-          meta: { title: '账号登录' }
+          component: LoginUsername,
+          meta: { title: '账号登录', keepAlive: true }
         },
         {
+          name: 'LoginPhone',
           path: 'phone',
-          component: LoginByPhone,
-          meta: { title: '手机登录' }
+          component: LoginPhone,
+          meta: { title: '手机登录', keeAlive: true }
         }
       ]
     },
     // 主页
     {
-      name: 'home',
-      path: '/index',
+      name: 'HomeLayout',
+      path: '/homelayout',
       redirect: '/home',
-      component: TheHome,
+      component: HomeLayout,
       children: [
         {
+          name: 'HomePage',
           path: '/home',
-          component: HomeIndex,
+          component: HomePage,
           meta: { title: '系统首页' }
         },
         /* 登录用户模块 */
         {
-          path: '/user/update/info',
-          component: UserUpdateInfo,
-          meta: { title: '修改登录用户信息' }
-        },
-        {
-          path: '/user/update/avatar',
-          component: UserUpdateAvatar,
-          meta: { title: '上传登录用户头像' }
-        },
-        {
-          path: '/user/update/phone',
-          component: UserUpdatePhone,
-          meta: { title: '修改登录用户绑定手机' }
+          name: 'UserActive',
+          path: '/useractive',
+          redirect: '/useractive/info/update',
+          component: UserActive,
+          children: [
+            {
+              name: 'UserActiveInfoUpdate',
+              path: 'info/update',
+              component: UserActiveInfoUpdate,
+              meta: { title: '修改登录用户信息', keepAlive: true }
+            },
+            {
+              name: 'UserActiveAvatarUpdate',
+              path: 'avatar/update',
+              component: UserActiveAvatarUpdate,
+              meta: { title: '上传登录用户头像', keepAlive: true }
+            },
+            {
+              name: 'UserActivePhoneUpdate',
+              path: 'phone/update',
+              component: UserActivePhoneUpdate,
+              meta: { title: '修改登录用户绑定手机', keepAlive: true }
+            }
+          ]
         },
         /* 会员管理模块 */
         {
@@ -143,6 +160,13 @@ const router = new Router({
           component: UserHttpLogs,
           meta: { title: '会员个人HTTP请求日志列表' }
         },
+        // 会员日志
+        {
+          name: 'UsersLogs',
+          path: '/users/logs',
+          component: UsersLogs,
+          meta: { title: '全部会员日志记录' }
+        },
         // 会员分组
         {
           name: 'usersGroup',
@@ -161,6 +185,13 @@ const router = new Router({
           path: '/users/group/:id/update',
           component: UsersGroupUpdate,
           meta: { title: '修改单个会员分组' }
+        },
+        // 会员账户核查
+        {
+          name: 'UsersAccountCheck',
+          path: '/users/account/check',
+          component: UsersAccountCheck,
+          meta: { title: '会员账户核查' }
         },
         /* 系统管理 */
         // 系统管理 - 侧边栏菜单模块
@@ -229,35 +260,35 @@ const router = new Router({
         },
         /* 彩票管理模块 */
         {
-          name: 'lottery',
+          name: 'LotteryManage',
           path: '/lottery',
           redirect: '/lottery/results/eleven/3',
           component: LotteryManage,
           children: [
             // 开奖结果
             {
-              name: 'lotteryResultsEleven',
-              path: '/lottery/results/eleven/:id',
+              name: 'LotteryResultsEleven',
+              path: 'results/eleven/:gameId',
               component: LotteryResultsEleven,
               meta: { title: '11选5开奖结果' }
             },
             {
-              name: 'lotteryResultsFast3',
-              path: '/lottery/results/fast3/:id',
+              name: 'LotteryResultsFast3',
+              path: 'results/fast3/:gameId',
               component: LotteryResultsFast3,
               meta: { title: '快3开奖结果' }
             },
             // 赔率设置
             {
               name: 'lotteryOddsEleven',
-              path: '/lottery/odds/eleven/:id',
+              path: '/lottery/odds/eleven/:gameId',
               component: LotteryOddsEleven,
-              meta: { title: '11选5赔率设置' }
+              meta: { title: '11选5赔率设置', keepAlive: true }
             },
             {
-              path: '/lottery/odds/fast3/:id',
+              path: '/lottery/odds/fast3/:gameId',
               component: LotteryOddsFast3,
-              meta: { title: '快3赔率设置' }
+              meta: { title: '快3赔率设置', keepAlive: true }
             }
           ]
         },
