@@ -50,7 +50,7 @@
         <el-table-column prop="totalBets" label="总投注数" :width="70">
           <template slot-scope="scope">
             <span>{{scope.row.totalBets}}</span>
-            <MoreDetail @on-click="showDialogBetsDetails(scope.row.bet.bettings)" class="pull-right" />
+            <BaseMore @on-click="showDialogBetsDetails(scope.row.bet.bettings)" class="pull-right" />
           </template>
         </el-table-column>
 
@@ -133,13 +133,13 @@
 <script>
 import FilterArea from '@/components/others/FilterArea'
 import BaseBall from '@/components/base/BaseBall'
-import MoreDetail from '@/components/base/MoreDetail'
+import BaseMore from '@/components/base/BaseMore'
 
 export default {
   components: {
     FilterArea,
     BaseBall,
-    MoreDetail
+    BaseMore
   },
   data () {
     return {

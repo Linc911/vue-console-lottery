@@ -15,16 +15,14 @@ import UserActiveInfoUpdate from './views/useractive/UserActiveInfoUpdate'
 import UserActiveAvatarUpdate from './views/useractive/UserActiveAvatarUpdate'
 import UserActivePhoneUpdate from './views/useractive/UserActivePhoneUpdate'
 
-import UsersList from './views/user/all/UsersList'
+import UsersInfo from './views/user/info/UsersInfo'
+import UsersList from './views/user/info/users-list'
 import UserBets from './views/user/all/UserBets'
 import UserBetsStatistics from './views/user/all/UserBetsStatistics'
 import UserRechargeLogs from './views/user/all/UserRechargeLogs'
 import UserAccountDeposit from './views/user/all/UserAccountDeposit'
 import UserHttpLogs from './views/user/all/UserHttpLogs'
 import UsersLogs from './views/user/UsersLogs'
-import UsersGroup from './views/user/UsersGroup'
-import UsersGroupCreate from './views/user/UsersGroupCreate'
-import UsersGroupUpdate from './views/user/UsersGroupUpdate'
 import UsersAccountCheck from './views/user/UsersAccountCheck'
 
 import SystemMenuList from './views/system/SystemMenuList'
@@ -36,6 +34,10 @@ import SystemRoleUpdate from './views/system/SystemRoleUpdate'
 import SystemPermissionsList from './views/system/SystemPermissionsList'
 import SystemPermissionCreate from './views/system/SystemPermissionCreate'
 import SystemPermissionUpdate from './views/system/SystemPermissionUpdate'
+import SystemGroup from './views/system/group/SystemGroup'
+import SystemGroupList from './views/system/group/SystemGroupList'
+import SystemGroupCreate from './views/system/group/SystemGroupCreate'
+import SystemGroupUpdate from './views/system/group/SystemGroupUpdate'
 
 import AdminUsers from './views/admin/AdminUsers'
 import AdminUserCreate from './views/admin/AdminUserCreate'
@@ -85,7 +87,7 @@ const router = new Router({
           name: 'LoginPhone',
           path: 'phone',
           component: LoginPhone,
-          meta: { title: '手机登录', keeAlive: true }
+          meta: { title: '手机登录', keepAlive: true }
         }
       ]
     },
@@ -130,10 +132,20 @@ const router = new Router({
           ]
         },
         /* 会员管理模块 */
+        // 会员信息
         {
-          path: '/users/list',
-          component: UsersList,
-          meta: { title: '全部会员列表' }
+          name: 'UserInfo',
+          path: '/users/info',
+          redirect: '/users/list',
+          component: UsersInfo,
+          children: [
+            {
+              name: 'UsersList',
+              path: '/users/list',
+              component: UsersList,
+              meta: { title: '全部会员信息列表' }
+            }
+          ]
         },
         {
           path: '/users/:id/bets',
@@ -166,25 +178,6 @@ const router = new Router({
           path: '/users/logs',
           component: UsersLogs,
           meta: { title: '全部会员日志记录' }
-        },
-        // 会员分组
-        {
-          name: 'usersGroup',
-          path: '/users/group',
-          component: UsersGroup,
-          meta: { title: '会员分组列表' }
-        },
-        {
-          name: 'usersGroupCreate',
-          path: '/users/group/:id',
-          component: UsersGroupCreate,
-          meta: { title: '单个会员分组详情' }
-        },
-        {
-          name: 'usersGroupUpdate',
-          path: '/users/group/:id/update',
-          component: UsersGroupUpdate,
-          meta: { title: '修改单个会员分组' }
         },
         // 会员账户核查
         {
@@ -241,6 +234,33 @@ const router = new Router({
           path: '/system/permission/:id/update',
           component: SystemPermissionUpdate,
           meta: { title: '修改权限' }
+        },
+        // 系统管理 - 分组模块
+        {
+          name: 'SystemGroup',
+          path: '/system/group',
+          redirect: '/system/group/list',
+          component: SystemGroup,
+          children: [
+            {
+              name: 'SystemGroupList',
+              path: 'list',
+              component: SystemGroupList,
+              meta: { title: '会员分组列表' }
+            },
+            {
+              name: 'SystemGroupCreate',
+              path: 'create',
+              component: SystemGroupCreate,
+              meta: { title: '创建会员新分组', keepAlive: true }
+            },
+            {
+              name: 'SystemGroupUpdate',
+              path: ':groupId/update',
+              component: SystemGroupUpdate,
+              meta: { title: '修改会员分组' }
+            }
+          ]
         },
         /* 用户管理 */
         {

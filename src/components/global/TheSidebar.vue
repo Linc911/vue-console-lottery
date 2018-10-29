@@ -40,6 +40,7 @@ export default {
             { id: 'test0101', name: '菜单', path: '/system/menu', icon: 'fa-windows' },
             { id: 'test0102', name: '角色', path: '/system/roles', icon: 'fa-cubes' },
             { id: 'test0103', name: '权限', path: '/system/permissions', icon: 'fa-align-justify' },
+            { id: 'test0105', name: '分组', path: '/system/group', icon: 'fa-align-justify' },
             { id: 'test0104', name: '用户查询', path: '/admin/users', icon: 'fa-cubes' }
           ]
         },
@@ -52,7 +53,7 @@ export default {
             { id: 'test0201', name: '会员信息管理', path: '/users/list', icon: 'fa-cubes' },
             { id: 'test0202', name: '会员账户核查', path: '/users/account/check', icon: 'fa-cubes' },
             { id: 'test0203', name: '关键信息修改', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0204', name: '会员分组管理', path: '/users/group', icon: 'fa-cubes' },
+            // { id: 'test0204', name: '会员分组管理', path: '/users/group', icon: 'fa-cubes' },
             { id: 'test0205', name: '会员资料管理', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test0206', name: '会员报表统计', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test0207', name: '会员日志管理', path: '/users/logs', icon: 'fa-cubes' },

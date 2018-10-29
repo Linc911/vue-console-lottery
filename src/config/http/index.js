@@ -1,6 +1,6 @@
 import axios from 'axios'
 import router from '@/router'
-import { Loading, Message } from 'element-ui'
+import { Loading } from 'element-ui'
 
 let loading
 function startLoading () {
@@ -43,10 +43,11 @@ axios.interceptors.response.use(response => {
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
     localStorage.removeItem('token_type')
+
+    axios.defaults.headers.common['Authorization'] = ''
     console.log('Token已过期，请重新登录。')
     return
   }
-  // Message.error('获取数据异常!')
 
   switch (error.toString().substr(-3)) {
     case '401':

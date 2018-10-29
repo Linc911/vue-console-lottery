@@ -1,9 +1,9 @@
 <template lang="html">
-  <section class="users-group">
+  <section class="system-group">
     <!-- 条件筛选 -->
     <div class="search-container clearfix">
       <el-button
-        @click="$router.push({ name: 'usersGroupCreate' })"
+        @click="$router.push({ name: 'SystemGroupCreate' })"
         icon="el-icon-circle-plus-outline"
         type="primary"
         size="small"
@@ -28,7 +28,7 @@
         <el-table-column prop="operations" label="操作">
           <template slot-scope="scope">
             <el-button
-              @click="$router.push(`/users/group/${scope.row.groupId}/update`)"
+              @click="$router.push({ name: 'SystemGroupUpdate', params: { groupId: scope.row.groupId } })"
               icon="el-icon-edit"
               type="primary"
               size="mini"
@@ -37,50 +37,43 @@
         </el-table-column>
       </el-table>
       <!-- 分页 -->
-      <el-pagination
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-        :current-page="page.current"
-        :total="page.total"
-        :page-sizes="[10, 20, 40, 100]"
-        :page-size="10"
-        layout="total, sizes, prev, pager, next, jumper"
+      <BasePagination
+        @on-change="handlePaginationChange"
+        :pageTotal="pageTotal"
+        httpURL="fetchSystemGroup"
       />
     </div>
   </section>
 </template>
 
 <script>
+import BasePagination from '@/components/base/BasePagination'
+
 export default {
-  name: 'usersGroup',
+  name: 'SystemGroupList',
+  components: {
+    BasePagination
+  },
   data () {
     return {
       tableData: [],
-      page: {
-        total: 10,
-        current: 1,
-        size: 10
-      }
+      pageTotal: 0
     }
   },
   created () {
-    this.fetchUsersGroupList({ current: 1, size: this.page.size })
+    this.getGroupList()
   },
   methods: {
-    // 分页跳转时
-    handleCurrentChange (currentPage) {
-      this.fetchUserList({ current: this.page.current = currentPage, size: this.page.size })
+    // 分页变化时，更新数据
+    handlePaginationChange (payload) {
+      this.tableData = payload
     },
-    // 分页调整每页显示条数时
-    handleSizeChange (pageSize) {
-      this.fetchUserList({ current: this.page.current = 1, size: this.page.size = pageSize })
-    },
-    fetchUsersGroupList (page) {
-      this.$httpAPI.fetchUsersGroupList({
-        params: { pageNo: page.current, pageSize: page.size }
+    getGroupList () {
+      this.$httpAPI.fetchSystemGroup({
+        params: { pageNo: 1, pageSize: 10 }
       }).then(response => {
         this.tableData = response.data.data
-        this.page.total = response.data.amount
+        this.pageTotal = response.data.amount
       }).catch(error => console.log(error))
     }
   }

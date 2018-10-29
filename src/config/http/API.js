@@ -4,21 +4,27 @@ export default {
   /* 公共数据 */
   fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 游戏菜单
 
-  /* 登录模块 */
+  /* 登录 */
   postUserLogin: (data, options) => axios.post('/api-u/sys/login', data, options),
   fetchLogoutInfo: () => axios.get('/api-u/sys/logout'),
 
   fetchUserInfo: () => axios.get('/api-u/users/current'),
   putUserInfo: data => axios.put('/api-u/users/me', data),
 
-  /* 会员管理模块 */
+  /* 系统管理 */
   // 会员分组
-  fetchUsersGroupList: options => axios.get('/api-u/group/list', options),
-  fetchUsersGroupLItem: options => axios.get('/api-u/group/info', options),
-  postUsersGroupCreate: (data, options) => axios.post('/api-u/group/save', data, options),
+  getSystemGroup: options => axios.get('/api-u/group/list', options), // 全部列表
+  fetchSystemGroupItem: options => axios.get('/api-u/group/info', options), // 单个详情
+  postSystemGroupChange: data => axios.post('/api-u/group/save', data), // 创建或修改单个分组
+  postUserGroupSetting: options => axios.get('/api-u/group/saveRelation', options), // 设置单个会员分组
+
+  /* 会员管理 */
+  // 会员信息
+  fetchUsersList: options => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
+  getUserInfo: options => axios.get('/api-u/backend/user', options), // 单个会员信息
 
   // 会员抽点
-  fetchUsersRebate: options => axios.get('/api-u/userRelation/get', options),
+  getUsersRebate: options => axios.get('/api-u/userRelation/get', options),
   updateUsersRebate: (data, options) => axios.post('/api-u/group/save', data, options),
 
   // 修改会员监控状态
@@ -27,7 +33,7 @@ export default {
   // 全部会员日志
   fetchUsersLogs: (options) => axios.get('/api-l/logList', options),
 
-  /* 彩票管理模块 */
+  /* 彩票管理 */
   // 开奖结果
   fetchLotteryResultsEleven: options => axios.get('/api-g/result/1', options),
   fetchLotteryResultsFast3: options => axios.get('/api-g/result/2', options),
