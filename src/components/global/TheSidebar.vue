@@ -41,7 +41,8 @@ export default {
             { id: 'test0102', name: '角色', path: '/system/roles', icon: 'fa-cubes' },
             { id: 'test0103', name: '权限', path: '/system/permissions', icon: 'fa-align-justify' },
             { id: 'test0105', name: '分组', path: '/system/group', icon: 'fa-align-justify' },
-            { id: 'test0104', name: '用户查询', path: '/admin/users', icon: 'fa-cubes' }
+            { id: 'test0104', name: '用户', path: '/system/users', icon: 'fa-cubes' },
+            { id: 'test0601', name: '彩票', path: '/system/lottery', icon: 'fa-cubes' }
           ]
         },
         {
@@ -52,7 +53,7 @@ export default {
           children: [
             { id: 'test0201', name: '会员信息管理', path: '/users/list', icon: 'fa-cubes' },
             { id: 'test0202', name: '会员账户核查', path: '/users/account/check', icon: 'fa-cubes' },
-            { id: 'test0203', name: '关键信息修改', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0203', name: '关键信息修改', path: '/users/keyinfo', icon: 'fa-cubes' },
             // { id: 'test0204', name: '会员分组管理', path: '/users/group', icon: 'fa-cubes' },
             { id: 'test0205', name: '会员资料管理', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test0206', name: '会员报表统计', path: '/users/unset', icon: 'fa-cubes' },
@@ -66,25 +67,16 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test0901', name: '彩票开盘', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0901', name: '彩票开盘', path: '/lottery/open/eleven/3', icon: 'fa-cubes' },
             { id: 'test0902', name: '彩票开奖', path: '/lottery/results/eleven/3', icon: 'fa-cubes' },
-            { id: 'test0903', name: '未结彩票撤单', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0904', name: '彩票注单', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0905', name: '彩票杀率配置', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0903', name: '未结彩票撤单', path: '/lottery/withdraw', icon: 'fa-cubes' },
+            { id: 'test0904', name: '彩票注单', path: '/lottery/bets', icon: 'fa-cubes' },
+            { id: 'test0905', name: '彩票杀率配置', path: '/lottery/killrate', icon: 'fa-cubes' },
             { id: 'test0906', name: '彩票赔率设置', path: '/lottery/odds/eleven/3', icon: 'fa-cubes' },
             { id: 'test0907', name: '彩票期数校对', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0908', name: '彩票会员报表', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0908', name: '彩票会员报表', path: '/lottery/users/info', icon: 'fa-cubes' },
             { id: 'test0909', name: '彩票注单报表', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0910', name: '彩票总报表', path: '/users/unset', icon: 'fa-cubes' }
-          ]
-        },
-        {
-          id: 'test06',
-          name: '游戏设置',
-          path: '',
-          icon: 'fa-gears',
-          children: [
-            { id: 'test0601', name: '彩票设置', path: '/games/list', icon: 'fa-cubes' }
+            { id: 'test0910', name: '彩票总报表', path: '/lottery/statistics', icon: 'fa-cubes' }
           ]
         },
         {
@@ -93,12 +85,12 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test0701', name: '加减款操作', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0702', name: '填单存款管理', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0703', name: '在线存款管理', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0704', name: '提款申请管理', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0705', name: '会员资金管理', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0706', name: '额度转换管理', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0701', name: '加减款操作', path: '/finance/balance/change', icon: 'fa-cubes' },
+            { id: 'test0702', name: '填单存款管理', path: '/finance/deposit/form', icon: 'fa-cubes' },
+            { id: 'test0703', name: '在线存款管理', path: '/finance/deposit/online', icon: 'fa-cubes' },
+            { id: 'test0704', name: '提款申请管理', path: '/finance/withdraw/apply', icon: 'fa-cubes' },
+            { id: 'test0705', name: '会员资金管理', path: '/finance/users/assets', icon: 'fa-cubes' },
+            { id: 'test0706', name: '额度转换管理', path: '/finance/limit/change', icon: 'fa-cubes' },
             { id: 'test0707', name: '收支财务总汇', path: '/users/unset', icon: 'fa-cubes' }
           ]
         },
@@ -108,14 +100,14 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test0801', name: '创建代理会员', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0802', name: '游戏分润基数', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0803', name: '邀请号码管理', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0804', name: '代理会员列表', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0805', name: '代理个人业绩', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0806', name: '代理线条业绩', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0807', name: '代理一键分润', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0808', name: '会员一键分润', path: '/users/unset', icon: 'fa-cubes' }
+            { id: 'test0804', name: '代理会员列表', path: '/agent/list', icon: 'fa-cubes' },
+            { id: 'test0801', name: '创建代理会员', path: '/agent/create', icon: 'fa-cubes' },
+            { id: 'test0803', name: '邀请号码管理', path: '/agent/invitationcode', icon: 'fa-cubes' },
+            { id: 'test0805', name: '代理个人业绩', path: '/agent/achievement/users', icon: 'fa-cubes' },
+            { id: 'test0806', name: '代理线条业绩', path: '/agent/achievement/linear', icon: 'fa-cubes' },
+            { id: 'test0802', name: '游戏分润基数', path: '/agent/interest/games', icon: 'fa-cubes' },
+            { id: 'test0807', name: '代理一键分润', path: '/agent/interest/division', icon: 'fa-cubes' },
+            { id: 'test0808', name: '会员一键分润', path: '/agent/interest/usersdivision', icon: 'fa-cubes' }
           ]
         },
         {

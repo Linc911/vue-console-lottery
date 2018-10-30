@@ -38,8 +38,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button @click="$router.push(`/game/${$route.params.id}/update`)" type="primary">修改</el-button>
-        <el-button @click="$router.push('/games/list')" type="info">返回</el-button>
+        <el-button @click="$router.push({ name: 'SystemLotteryUpdate', params: { gameId: $route.params.gameId } })" type="primary">修改</el-button>
+        <el-button @click="$router.push({ name: 'SystemLotteryList' })" type="info">返回</el-button>
       </el-form-item>
     </el-form>
   </section>
@@ -58,9 +58,7 @@ export default {
   methods: {
     // 获取全部菜单
     fetchGameInfo () {
-      this.$axios.get('/api-g/GameTypeConfig/get', {
-        params: { id: this.$route.params.id }
-      }).then(response => {
+      this.$httpAPI.fetchLotterySettingInfo({ params: { id: this.$route.params.gameId } }).then(response => {
         this.formData = response.data.data
       }).catch(error => console.log(error))
     }

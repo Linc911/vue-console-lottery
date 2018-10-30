@@ -63,7 +63,10 @@ export default {
 
         // 跳转到首页
         this.$router.push({ name: 'HomePage' })
-      }).catch(error => console.log(error))
+      }).catch(error => {
+        console.log(error)
+        this.$message.error('登录出现异常，请尝试刷新页面后再登录。')
+      })
     },
     _generatePairKeys (obj) {
       let result = ''

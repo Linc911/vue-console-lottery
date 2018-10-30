@@ -40,7 +40,7 @@
 
       <el-form-item>
         <el-button @click="submitForm('gameForm')" type="primary">确认</el-button>
-        <el-button @click="$router.push('/games/list')" type="info">返回</el-button>
+        <el-button @click="$router.push({ name: 'SystemLotteryList' })" type="info">返回</el-button>
       </el-form-item>
     </el-form>
   </section>
@@ -72,13 +72,13 @@ export default {
         ],
         startTime: { required: true, message: '时间不能为空' },
         endTime: { required: true, message: '时间不能为空' },
-        url: [
-          { required: true, message: '开奖结果的地址不能为空' }
-          // { pattern: /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/, message: '开奖结果的地址格式不正确' }
-        ],
-        intervalTime: { required: true, message: '时间不能为空' },
-        crontab: { required: true, message: '表达式不能为空' },
-        myCrontab: { required: true, message: '表达式不能为空' }
+        intervalTime: { required: true, message: '时间不能为空' }
+        // url: [
+        // { required: true, message: '开奖结果的地址不能为空' }
+        // { pattern: /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/, message: '开奖结果的地址格式不正确' }
+        // ],
+        // crontab: { required: true, message: '表达式不能为空' },
+        // myCrontab: { required: true, message: '表达式不能为空' }
       }
     }
   },
@@ -112,9 +112,7 @@ export default {
     },
     // 获取全部菜单
     fetchGameInfo () {
-      this.$axios.get('/api-g/GameTypeConfig/get', {
-        params: { id: this.$route.params.id }
-      }).then(response => {
+      this.$httpAPI.fetchLotterySettingInfo({ params: { id: this.$route.params.gameId } }).then(response => {
         this.formData = response.data.data
       }).catch(error => console.log(error))
     }

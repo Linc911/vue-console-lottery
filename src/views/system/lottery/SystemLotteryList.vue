@@ -5,10 +5,10 @@
         <ul>
           <li v-for="item in props.row.children" :key="item.id" class="games-children-item">
             <span class="game-name">{{item.name}}</span>
-            <router-link :to="`/game/${item.id}`">
+            <router-link :to="{ name: 'SystemLotteryInfo', params: { gameId: item.id } }">
               <i class="el-icon-search"></i>
             </router-link>
-            <router-link :to="`/game/${item.id}/update`">
+            <router-link :to="{ name: 'SystemLotteryUpdate', params: { gameId: item.id } }">
               <i class="el-icon-setting"></i>
             </router-link>
           </li>
@@ -39,12 +39,12 @@ export default {
     }
   },
   created () {
-    this.fetchGamesList()
+    this.fetchGamesMenu()
   },
   methods: {
     // 获取游戏菜单
-    fetchGamesList () {
-      this.$axios.get('/api-g/GameTypeConfig/tree').then(response => {
+    fetchGamesMenu () {
+      this.$httpAPI.fetchGamesMenu().then(response => {
         this.games = response.data.data
       }).catch(error => console.log(error))
     }
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .games-children-item {
   padding-left: 60px;

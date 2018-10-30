@@ -56,7 +56,7 @@ axios.interceptors.response.use(response => {
       localStorage.removeItem('token_type')
 
       router.push('/login/username')
-
+      axios.defaults.headers.common['Authorization'] = ''
       console.log('Token已过期，请重新登录。')
       break
     case '403':

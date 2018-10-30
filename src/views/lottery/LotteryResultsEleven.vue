@@ -9,7 +9,7 @@
     >
       <el-table-column type="index" />
 
-      <el-table-column prop="drawno" label="期号" />
+      <el-table-column prop="drawno" label="期号" :min-width="90" />
 
       <el-table-column prop="dateTime" label="开奖时间" :min-width="140" />
 
@@ -23,21 +23,28 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="ballSum" label="总和" :min-width="100">
+      <el-table-column prop="ballSum" label="总和" :min-width="110">
         <template slot-scope="scope">
           <span>{{scope.row.ballSum.join(' ')}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="龙虎">
+      <el-table-column label="龙虎" :width="40">
         <template slot-scope="scope">
           <span>{{scope.row.dragonTiger.toString()}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :min-width="200">
+      <el-table-column prop="" label="结算状态" />
+
+      <el-table-column label="操作" :min-width="300">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini">相关操作</el-button>
+          <el-button @click="showTip" type="primary" size="mini">手动结算</el-button>
+          <el-button @click="showTip" type="primary" size="mini">开奖详情</el-button>
+          <el-button @click="showTip" type="primary" size="mini">注单详情</el-button>
+          <el-button @click="showTip" type="primary" size="mini">修改配置</el-button>
+          <el-button @click="showTip" type="primary" size="mini">删除开盘</el-button>
+          <el-button @click="showTip" type="primary" size="mini">已结撤单</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -76,6 +83,9 @@ export default {
     this.getLotteryResults()
   },
   methods: {
+    showTip () {
+      this.$message.warning('该功能正在开发中...')
+    },
     // 分页变化时，更新数据
     handlePaginationChange (payload) {
       this.tableData = payload

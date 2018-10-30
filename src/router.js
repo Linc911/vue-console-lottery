@@ -24,35 +24,70 @@ import UserAccountDeposit from './views/user/all/UserAccountDeposit'
 import UserHttpLogs from './views/user/all/UserHttpLogs'
 import UsersLogs from './views/user/UsersLogs'
 import UsersAccountCheck from './views/user/UsersAccountCheck'
+import UsersKeyInfo from './views/user/UsersKeyInfo'
 
+/* 系统设置 */
+// 菜单
 import SystemMenuList from './views/system/SystemMenuList'
 import SystemMenuItemCreate from './views/system/SystemMenuItemCreate'
 import SystemMenuItemUpdate from './views/system/SystemMenuItemUpdate'
+// 角色
 import SystemRolesList from './views/system/SystemRolesList'
 import SystemRoleCreate from './views/system/SystemRoleCreate'
 import SystemRoleUpdate from './views/system/SystemRoleUpdate'
+// 权限
 import SystemPermissionsList from './views/system/SystemPermissionsList'
 import SystemPermissionCreate from './views/system/SystemPermissionCreate'
 import SystemPermissionUpdate from './views/system/SystemPermissionUpdate'
+// 分组
 import SystemGroup from './views/system/group/SystemGroup'
 import SystemGroupList from './views/system/group/SystemGroupList'
 import SystemGroupCreate from './views/system/group/SystemGroupCreate'
 import SystemGroupUpdate from './views/system/group/SystemGroupUpdate'
+// 用户
+import SystemUsers from './views/system/user/SystemUsers'
+import SystemUsersList from './views/system/user/SystemUsersList'
+import SystemUserCreate from './views/system/user/SystemUserCreate'
+import SystemUserUpdate from './views/system/user/SystemUserUpdate'
+// 彩票
+import SystemLottery from './views/system/lottery/SystemLottery'
+import SystemLotteryList from './views/system/lottery/SystemLotteryList'
+import SystemLotteryInfo from './views/system/lottery/SystemLotteryInfo'
+import SystemLotteryUpdate from './views/system/lottery/SystemLotteryUpdate'
 
-import AdminUsers from './views/admin/AdminUsers'
-import AdminUserCreate from './views/admin/AdminUserCreate'
-import AdminUserUpdate from './views/admin/AdminUserUpdate'
-
+/* 彩票管理 */
+import LotteryUsersInfo from './views/lottery/LotteryUsersInfo'
 import LotteryManage from './views/lottery/LotteryManage'
-// import LotteryOdds from './views/lottery/LotteryOdds'
 import LotteryOddsEleven from './views/lottery/LotteryOddsEleven'
 import LotteryOddsFast3 from './views/lottery/LotteryOddsFast3'
 import LotteryResultsEleven from './views/lottery/LotteryResultsEleven'
 import LotteryResultsFast3 from './views/lottery/LotteryResultsFast3'
+import LotteryOpen from './views/lottery/LotteryOpen'
+import LotteryStatistics from './views/lottery/LotteryStatistics'
+import LotteryKillrate from './views/lottery/LotteryKillrate'
+import LotteryWithdraw from './views/lottery/LotteryWithdraw'
+import LotteryBets from './views/lottery/LotteryBets'
 
-import GamesList from './views/others/GamesList'
-import GamePreview from './views/others/GamePreview'
-import GameUpdate from './views/others/GameUpdate'
+/* 财务管理 */
+import FinanceManage from './views/finance/FinanceManage'
+import FinanceBalanceChange from './views/finance/FinanceBalanceChange'
+import FinanceDepositForm from './views/finance/FinanceDepositForm'
+import FinanceDepositOnline from './views/finance/FinanceDepositOnline'
+import FinanceWithdrawApply from './views/finance/FinanceWithdrawApply'
+import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
+import FinanceLimitChange from './views/finance/FinanceLimitChange'
+import FinanceBalanceSheet from './views/finance/FinanceBalanceSheet'
+
+/* 代理管理 */
+import AgentManage from './views/agent/AgentManage'
+import AgentList from './views/agent/AgentList'
+import AgentCreate from './views/agent/AgentCreate'
+import AgentInvitationCode from './views/agent/AgentInvitationCode'
+import AgentAchievementUsers from './views/agent/AgentAchievementUsers'
+import AgentAchievementLinear from './views/agent/AgentAchievementLinear'
+import AgentInterestGames from './views/agent/AgentInterestGames'
+import AgentInterestDivision from './views/agent/AgentInterestDivision'
+import AgentInterestUsersDivision from './views/agent/AgentInterestUsersDivision'
 
 import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 
@@ -186,6 +221,13 @@ const router = new Router({
           component: UsersAccountCheck,
           meta: { title: '会员账户核查' }
         },
+        // 会员关键信息修改
+        {
+          name: 'UsersKeyInfo',
+          path: '/users/keyinfo',
+          component: UsersKeyInfo,
+          meta: { title: '会员关键信息修改', keepAlive: true }
+        },
         /* 系统管理 */
         // 系统管理 - 侧边栏菜单模块
         {
@@ -262,23 +304,92 @@ const router = new Router({
             }
           ]
         },
-        /* 用户管理 */
+        // 系统管理 - 用户模块
         {
-          path: '/admin/users',
-          component: AdminUsers,
-          meta: { title: '全部用户信息列表' }
+          name: 'SystemUsers',
+          path: '/system/users',
+          redirect: '/system/users/list',
+          component: SystemUsers,
+          children: [
+            {
+              name: 'SystemUsersList',
+              path: 'list',
+              component: SystemUsersList,
+              meta: { title: '全部用户信息列表' }
+            },
+            {
+              name: 'SystemUserCreate',
+              path: '/system/user/create',
+              component: SystemUserCreate,
+              meta: { title: '创建新用户', keepAlive: true }
+            },
+            {
+              name: 'SystemUserUpdate',
+              path: ':id/update',
+              component: SystemUserUpdate,
+              meta: { title: '修改用户信息' }
+            }
+          ]
         },
+        // 系统管理 - 彩票设置模块
         {
-          path: '/admin/user/create',
-          component: AdminUserCreate,
-          meta: { title: '创建新用户' }
-        },
-        {
-          path: '/admin/user/:id/update',
-          component: AdminUserUpdate,
-          meta: { title: '修改用户信息' }
+          name: 'SystemLottery',
+          path: '/system/lottery',
+          redirect: '/system/lottery/list',
+          component: SystemLottery,
+          children: [
+            {
+              name: 'SystemLotteryList',
+              path: 'list',
+              component: SystemLotteryList,
+              meta: { title: '彩票种类列表', keepAlive: true }
+            },
+            {
+              name: 'SystemLotteryInfo',
+              path: ':gameId',
+              component: SystemLotteryInfo,
+              meta: { title: '游戏配置详情' }
+            },
+            {
+              name: 'SystemLotteryUpdate',
+              path: ':gameId/update',
+              component: SystemLotteryUpdate,
+              meta: { title: '修改游戏配置' }
+            }
+          ]
         },
         /* 彩票管理模块 */
+        // 彩票会员报表
+        {
+          name: 'LotteryUsersInfo',
+          path: '/lottery/users/info',
+          component: LotteryUsersInfo,
+          meta: { title: '彩票会员报表', keepAlive: true }
+        },
+        {
+          name: 'LotteryStatistics',
+          path: '/lottery/statistics',
+          component: LotteryStatistics,
+          meta: { title: '彩票总报表', keepAlive: true }
+        },
+        {
+          name: 'LotteryKillrate',
+          path: '/lottery/killrate',
+          component: LotteryKillrate,
+          meta: { title: '彩票杀率配置', keepAlive: true }
+        },
+        {
+          name: 'LotteryWithdraw',
+          path: '/lottery/withdraw',
+          component: LotteryWithdraw,
+          meta: { title: '彩票未结撤单', keepAlive: true }
+        },
+        {
+          name: 'LotteryBets',
+          path: '/lottery/bets',
+          component: LotteryBets,
+          meta: { title: '彩票注单', keepAlive: true }
+        },
         {
           name: 'LotteryManage',
           path: '/lottery',
@@ -309,24 +420,123 @@ const router = new Router({
               path: '/lottery/odds/fast3/:gameId',
               component: LotteryOddsFast3,
               meta: { title: '快3赔率设置', keepAlive: true }
+            },
+            // 彩票开盘
+            {
+              name: 'LotteryOpen',
+              path: '/lottery/open/eleven/:gameId',
+              component: LotteryOpen,
+              meta: { title: '彩票开奖', keepAlive: true }
             }
           ]
         },
-        /* 游戏设置 */
+        /* 财务管理 */
         {
-          path: '/games/list',
-          component: GamesList,
-          meta: { title: '游戏列表' }
+          name: 'FinanceManage',
+          path: '/finance',
+          redirect: '/finance/blalance/sheet',
+          component: FinanceManage,
+          children: [
+            {
+              name: 'FinanceBalanceChange',
+              path: 'balance/change',
+              component: FinanceBalanceChange,
+              meta: { title: '加减款操作', keepAlive: true }
+            },
+            {
+              name: 'FinanceDepositForm',
+              path: 'deposit/form',
+              component: FinanceDepositForm,
+              meta: { title: '填单存款管理', keepAlive: true }
+            },
+            {
+              name: 'FinanceDepositOnline',
+              path: 'deposit/online',
+              component: FinanceDepositOnline,
+              meta: { title: '在线存款管理', keepAlive: true }
+            },
+            {
+              name: 'FinanceWithdrawApply',
+              path: 'withdraw/apply',
+              component: FinanceWithdrawApply,
+              meta: { title: '提款申请管理', keepAlive: true }
+            },
+            {
+              name: 'FinanceUsersAssets',
+              path: 'users/assets',
+              component: FinanceUsersAssets,
+              meta: { title: '会员资金管理', keepAlive: true }
+            },
+            {
+              name: 'FinanceLimitChange',
+              path: 'limit/change',
+              component: FinanceLimitChange,
+              meta: { title: '额度转换管理', keepAlive: true }
+            },
+            {
+              name: 'FinanceBalanceSheet',
+              path: 'balance/sheet',
+              component: FinanceBalanceSheet,
+              meta: { title: '会员财务报表', keepAlive: true }
+            }
+          ]
         },
+        /* 代理管理 */
         {
-          path: '/game/:id',
-          component: GamePreview,
-          meta: { title: '游戏配置详情' }
-        },
-        {
-          path: '/game/:id/update',
-          component: GameUpdate,
-          meta: { title: '修改游戏配置' }
+          name: 'AgentManage',
+          path: '/agent',
+          redirect: '/agent/list',
+          component: AgentManage,
+          children: [
+            {
+              name: 'AgentList',
+              path: 'list',
+              component: AgentList,
+              meta: { title: '代理会员列表' }
+            },
+            {
+              name: 'AgentCreate',
+              path: 'create',
+              component: AgentCreate,
+              meta: { title: '创建代理会员' }
+            },
+            {
+              name: 'AgentInvitationCode',
+              path: 'invitationcode',
+              component: AgentInvitationCode,
+              meta: { title: '邀请号码管理' }
+            },
+            {
+              name: 'AgentAchievementUsers',
+              path: 'achievement/users',
+              component: AgentAchievementUsers,
+              meta: { title: '代理个人业绩' }
+            },
+            {
+              name: 'AgentAchievementLinear',
+              path: 'achievement/linear',
+              component: AgentAchievementLinear,
+              meta: { title: '代理线条业绩' }
+            },
+            {
+              name: 'AgentInterestGames',
+              path: 'interest/games',
+              component: AgentInterestGames,
+              meta: { title: '游戏分润基数' }
+            },
+            {
+              name: 'AgentInterestDivision',
+              path: 'interest/division',
+              component: AgentInterestDivision,
+              meta: { title: '代理一键分润' }
+            },
+            {
+              name: 'AgentInterestUsersDivision',
+              path: 'interest/usersdivision',
+              component: AgentInterestUsersDivision,
+              meta: { title: '会员一键分润' }
+            }
+          ]
         },
         /* 短信验证码日志 */
         {
