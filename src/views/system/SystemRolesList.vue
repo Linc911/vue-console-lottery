@@ -23,7 +23,7 @@
         <el-table-column prop="name" label="角色名"></el-table-column>
         <el-table-column prop="createTime" label="创建时间" >
           <template slot-scope="scope">
-            <span v-localtime="scope.row.createTime"></span>
+            <span>{{scope.row.createTime | time}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="operations" label="操作" min-width="300px">

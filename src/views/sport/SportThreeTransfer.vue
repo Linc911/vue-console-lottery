@@ -1,11 +1,5 @@
 <template lang="html">
   <section class="lottery-users">
-    <el-tabs v-model="activeName">
-      <el-tab-pane label="User" name="first">User</el-tab-pane>
-      <el-tab-pane label="Config" name="second">Config</el-tab-pane>
-      <el-tab-pane label="Role" name="third">Role</el-tab-pane>
-      <el-tab-pane label="Task" name="fourth">Task</el-tab-pane>
-    </el-tabs>
     <!-- 条件筛选 -->
     <FilterArea />
     <!-- 表格数据 -->
@@ -21,18 +15,17 @@
 
         <el-table-column prop="username" label="会员账号" />
 
-        <!-- <el-table-column prop="nickname" label="会员姓名" /> -->
+        <el-table-column prop="" label="真人账号" />
 
-        <el-table-column prop="groupNames" label="会员分组" />
+        <el-table-column prop="unknown" label="转换单号" />
 
-        <el-table-column prop="unknown" label="存款单号" />
-        <el-table-column prop="banlance" label="存款金额" />
-        <el-table-column prop="unknown" label="优惠金额" />
-        <el-table-column prop="unknown" label="存款时间" />
-        <el-table-column prop="unknown" label="存款状态" />
-        <el-table-column prop="unknown" label="存款类型" />
-        <el-table-column prop="unknown" label="付款方信息" />
-        <el-table-column prop="unknown" label="收款方信息" />
+        <el-table-column prop="unknown" label="账户类型" />
+        <el-table-column prop="unknown" label="转换动作" />
+        <el-table-column prop="banlance" label="转换金额" />
+        <el-table-column prop="unknown" label="转换前额度" />
+        <el-table-column prop="unknown" label="转换后额度" />
+        <el-table-column prop="unknown" label="转换状态" />
+        <el-table-column prop="createTime" label="转换时间" />
 
         <el-table-column prop="operations" label="操作">
           <template slot-scope="scope">
@@ -58,13 +51,12 @@ export default {
   },
   data () {
     return {
-      activeName: 'second',
       tableData: [],
       pageTotal: 0
     }
   },
   created () {
-    this.fetchBalanceChangeList()
+    this.fetchUsersList()
   },
   mounted () {
     this.$notify({
@@ -82,10 +74,10 @@ export default {
     handlePaginationChange (data) {
       this.tableData = data
     },
-    fetchBalanceChangeList () {
-      this.$httpAPI.fetchBalanceChangeList({ params: { pageNo: 1, pageSize: 10 } }).then(response => {
+    fetchUsersList (page) {
+      this.$httpAPI.fetchUsersList({ params: { pageNo: 1, pageSize: 3 } }).then(response => {
         this.tableData = response.data.data
-        this.pageTotal = response.data.amount
+        this.pageTotal = 3
       }).catch(error => console.log(error))
     }
   }

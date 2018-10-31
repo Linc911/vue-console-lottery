@@ -2,7 +2,8 @@ import axios from './index'
 
 export default {
   /* 公共数据 */
-  fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 游戏菜单
+  fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 彩票游戏菜单
+  fetchGamesList: () => axios.get('/api-g/gameconfig'), // 游戏菜单
 
   /* 登录 */
   postUserLogin: (data, options) => axios.post('/api-u/sys/login', data, options),
@@ -48,6 +49,11 @@ export default {
   postLotteryOddsFast3: data => axios.post('/api-g/oddsset/2/save', data), // 修改单个快3的赔率
 
   /* 财务管理 */
-  fetchBalanceChangeList: options => axios.get('/api-m/changeUserRecharge/list', options), // 全部加减款数据
-  fetchBalanceChangeItem: options => axios.get('/api-m/changeUserRecharge/info', options) // 全部单条加减款详情
+  saveFinanceBalanceChange: data => axios.post('/api-b/changeUserRecharge/save', data), // 提交加减款表单（数据更新到填单存款管理列表中）
+  fetchBalanceChangeList: options => axios.get('/api-b/changeUserRecharge/list', options), // 全部加减款数据（填单存款管理）
+  fetchBalanceChangeItem: options => axios.get('/api-m/changeUserRecharge/info', options), // 全部单条加减款详情
+
+  fetchFinanceLoanList: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
+  createFinanceLoan: data => axios.post('/api-b/dictionary/save', data), // 创建与更新借贷类型数据
+  deleteFinanceLoan: options => axios.get('/api-b/dictionary/delete', options) // 删除借贷类型数据
 }

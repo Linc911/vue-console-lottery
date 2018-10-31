@@ -56,17 +56,18 @@ import SystemLotteryInfo from './views/system/lottery/SystemLotteryInfo'
 import SystemLotteryUpdate from './views/system/lottery/SystemLotteryUpdate'
 
 /* 彩票管理 */
-import LotteryUsersInfo from './views/lottery/LotteryUsersInfo'
+import LotteryOpen from './views/lottery/LotteryOpen'
+import LotteryResultsEleven from './views/lottery/LotteryResultsEleven'
+import LotteryResultsFast3 from './views/lottery/LotteryResultsFast3'
 import LotteryManage from './views/lottery/LotteryManage'
 import LotteryOddsEleven from './views/lottery/LotteryOddsEleven'
 import LotteryOddsFast3 from './views/lottery/LotteryOddsFast3'
-import LotteryResultsEleven from './views/lottery/LotteryResultsEleven'
-import LotteryResultsFast3 from './views/lottery/LotteryResultsFast3'
-import LotteryOpen from './views/lottery/LotteryOpen'
-import LotteryStatistics from './views/lottery/LotteryStatistics'
-import LotteryKillrate from './views/lottery/LotteryKillrate'
 import LotteryWithdraw from './views/lottery/LotteryWithdraw'
+import LotteryKillrate from './views/lottery/LotteryKillrate'
+import LotteryCheckout from './views/lottery/LotteryCheckout'
 import LotteryBets from './views/lottery/LotteryBets'
+import LotteryStatistics from './views/lottery/LotteryStatistics'
+import LotteryUsersInfo from './views/lottery/LotteryUsersInfo'
 
 /* 财务管理 */
 import FinanceManage from './views/finance/FinanceManage'
@@ -77,6 +78,11 @@ import FinanceWithdrawApply from './views/finance/FinanceWithdrawApply'
 import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
 import FinanceLimitChange from './views/finance/FinanceLimitChange'
 import FinanceBalanceSheet from './views/finance/FinanceBalanceSheet'
+// 常规配置
+import FinanceSetting from './views/finance/setting/FinanceSetting'
+import FinanceSettingList from './views/finance/setting/FinanceSettingList'
+import FinanceSettingLoan from './views/finance/setting/loan'
+// import FinanceSettingLoanCreate from './views/finance/setting/FinanceSettingLoanCreate'
 
 /* 代理管理 */
 import AgentManage from './views/agent/AgentManage'
@@ -88,6 +94,17 @@ import AgentAchievementLinear from './views/agent/AgentAchievementLinear'
 import AgentInterestGames from './views/agent/AgentInterestGames'
 import AgentInterestDivision from './views/agent/AgentInterestDivision'
 import AgentInterestUsersDivision from './views/agent/AgentInterestUsersDivision'
+
+/* 优惠活动 */
+import PromotionManage from './views/promotion/PromotionManage'
+import PromotionList from './views/promotion/PromotionList'
+import PromotionCreate from './views/promotion/PromotionCreate'
+
+/* 体育管理 */
+import SportManage from './views/sport/SportManage'
+import SportThreeBets from './views/sport/SportThreeBets'
+import SportThreeTransfer from './views/sport/SportThreeTransfer'
+import SportStatistics from './views/sport/SportStatistics'
 
 import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 
@@ -379,6 +396,12 @@ const router = new Router({
           meta: { title: '彩票杀率配置', keepAlive: true }
         },
         {
+          name: 'LotteryCheckout',
+          path: '/lottery/checkout',
+          component: LotteryCheckout,
+          meta: { title: '彩票开奖校对', keepAlive: true }
+        },
+        {
           name: 'LotteryWithdraw',
           path: '/lottery/withdraw',
           component: LotteryWithdraw,
@@ -478,6 +501,26 @@ const router = new Router({
               path: 'balance/sheet',
               component: FinanceBalanceSheet,
               meta: { title: '会员财务报表', keepAlive: true }
+            },
+            {
+              name: 'FinanceSetting',
+              path: 'setting',
+              redirect: 'setting/list',
+              component: FinanceSetting,
+              children: [
+                {
+                  name: 'FinanceSettingList',
+                  path: 'list',
+                  component: FinanceSettingList,
+                  meta: { title: '常规配置列表', keepAlive: true }
+                },
+                {
+                  name: 'FinanceSettingLoan',
+                  path: 'loan',
+                  component: FinanceSettingLoan,
+                  meta: { title: '借贷类型列表' }
+                }
+              ]
             }
           ]
         },
@@ -535,6 +578,54 @@ const router = new Router({
               path: 'interest/usersdivision',
               component: AgentInterestUsersDivision,
               meta: { title: '会员一键分润' }
+            }
+          ]
+        },
+        /* 优惠活动 */
+        {
+          name: 'PromotionManage',
+          path: '/promotion',
+          redirect: '/promotion/list',
+          component: PromotionManage,
+          children: [
+            {
+              name: 'PromotionList',
+              path: 'list',
+              component: PromotionList,
+              meta: { title: '优惠活动图片管理' }
+            },
+            {
+              name: 'PromotionCreate',
+              path: 'create',
+              component: PromotionCreate,
+              meta: { title: '优惠活动图片管理', keepAlive: true }
+            }
+          ]
+        },
+        /* 体育管理 */
+        {
+          name: 'SportManage',
+          path: '/sport',
+          redirect: '/sport/statistics',
+          component: SportManage,
+          children: [
+            {
+              name: 'SportThreeBets',
+              path: 'three/bets',
+              component: SportThreeBets,
+              meta: { title: '三昇体育注单列表' }
+            },
+            {
+              name: 'SportThreeTransfer',
+              path: 'three/transfer',
+              component: SportThreeTransfer,
+              meta: { title: '三昇额度转换列表' }
+            },
+            {
+              name: 'SportStatistics',
+              path: 'statistics',
+              component: SportStatistics,
+              meta: { title: '体育总报表' }
             }
           ]
         },

@@ -1,11 +1,5 @@
 <template lang="html">
   <section class="lottery-users">
-    <el-tabs v-model="activeName">
-      <el-tab-pane label="User" name="first">User</el-tab-pane>
-      <el-tab-pane label="Config" name="second">Config</el-tab-pane>
-      <el-tab-pane label="Role" name="third">Role</el-tab-pane>
-      <el-tab-pane label="Task" name="fourth">Task</el-tab-pane>
-    </el-tabs>
     <!-- 条件筛选 -->
     <FilterArea />
     <!-- 表格数据 -->
@@ -19,26 +13,29 @@
       >
         <el-table-column type="index" />
 
+        <el-table-column prop="unknown" label="数据日期" />
+
+        <el-table-column prop="unknown" label="注单号" />
+
+        <el-table-column prop="unknown" label="滚球/过关" />
+
         <el-table-column prop="username" label="会员账号" />
+        <el-table-column prop="unknown" label="玩法" />
+        <el-table-column prop="unknown" label="赔率类型" />
+        <el-table-column prop="unknown" label="下注赔率" />
+        <el-table-column prop="banlance" label="下注金额" />
+        <el-table-column prop="unknown" label="输赢金额" />
+        <el-table-column prop="unknown" label="注单状态" />
+        <el-table-column prop="unknown" label="结算状态" />
+        <el-table-column prop="createTime" label="注单时间" />
+        <el-table-column prop="unknown" label="结算时间" />
+        <el-table-column prop="unknown" label="注单详情" />
 
-        <!-- <el-table-column prop="nickname" label="会员姓名" /> -->
-
-        <el-table-column prop="groupNames" label="会员分组" />
-
-        <el-table-column prop="unknown" label="存款单号" />
-        <el-table-column prop="banlance" label="存款金额" />
-        <el-table-column prop="unknown" label="优惠金额" />
-        <el-table-column prop="unknown" label="存款时间" />
-        <el-table-column prop="unknown" label="存款状态" />
-        <el-table-column prop="unknown" label="存款类型" />
-        <el-table-column prop="unknown" label="付款方信息" />
-        <el-table-column prop="unknown" label="收款方信息" />
-
-        <el-table-column prop="operations" label="操作">
+        <!-- <el-table-column prop="operations" label="操作">
           <template slot-scope="scope">
             <el-button type="primary" @click="showTip"  size="mini">相关操作</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <!-- 分页 -->
       <BasePagination @on-change="handlePaginationChange" :pageTotal="pageTotal" httpURL="nuknown" />
@@ -58,13 +55,12 @@ export default {
   },
   data () {
     return {
-      activeName: 'second',
       tableData: [],
       pageTotal: 0
     }
   },
   created () {
-    this.fetchBalanceChangeList()
+    this.fetchUsersList()
   },
   mounted () {
     this.$notify({
@@ -82,10 +78,10 @@ export default {
     handlePaginationChange (data) {
       this.tableData = data
     },
-    fetchBalanceChangeList () {
-      this.$httpAPI.fetchBalanceChangeList({ params: { pageNo: 1, pageSize: 10 } }).then(response => {
+    fetchUsersList (page) {
+      this.$httpAPI.fetchUsersList({ params: { pageNo: 1, pageSize: 3 } }).then(response => {
         this.tableData = response.data.data
-        this.pageTotal = response.data.amount
+        this.pageTotal = 3
       }).catch(error => console.log(error))
     }
   }

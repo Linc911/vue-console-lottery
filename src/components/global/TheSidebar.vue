@@ -73,7 +73,7 @@ export default {
             { id: 'test0904', name: '彩票注单', path: '/lottery/bets', icon: 'fa-cubes' },
             { id: 'test0905', name: '彩票杀率配置', path: '/lottery/killrate', icon: 'fa-cubes' },
             { id: 'test0906', name: '彩票赔率设置', path: '/lottery/odds/eleven/3', icon: 'fa-cubes' },
-            { id: 'test0907', name: '彩票期数校对', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0907', name: '彩票期数校对', path: '/lottery/checkout', icon: 'fa-cubes' },
             { id: 'test0908', name: '彩票会员报表', path: '/lottery/users/info', icon: 'fa-cubes' },
             { id: 'test0909', name: '彩票注单报表', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test0910', name: '彩票总报表', path: '/lottery/statistics', icon: 'fa-cubes' }
@@ -91,7 +91,8 @@ export default {
             { id: 'test0704', name: '提款申请管理', path: '/finance/withdraw/apply', icon: 'fa-cubes' },
             { id: 'test0705', name: '会员资金管理', path: '/finance/users/assets', icon: 'fa-cubes' },
             { id: 'test0706', name: '额度转换管理', path: '/finance/limit/change', icon: 'fa-cubes' },
-            { id: 'test0707', name: '收支财务总汇', path: '/users/unset', icon: 'fa-cubes' }
+            { id: 'test0707', name: '收支财务总汇', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0708', name: '常规配置', path: '/finance/setting', icon: 'fa-cubes' }
           ]
         },
         {
@@ -154,7 +155,7 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test1301', name: '优惠图片管理', path: '/users/unset', icon: 'fa-cubes' }
+            { id: 'test1301', name: '优惠图片管理', path: '/promotion/list', icon: 'fa-cubes' }
           ]
         },
         {
@@ -164,11 +165,11 @@ export default {
           icon: 'fa-user',
           children: [
             { id: 'test1401', name: '发布公告', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1402', name: '系统消息', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test1403', name: '已发公告', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test1406', name: '系统公告', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test1402', name: '系统消息', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test1404', name: '会员反馈', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1405', name: '意见反馈', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1406', name: '系统公告', path: '/users/unset', icon: 'fa-cubes' }
+            { id: 'test1405', name: '意见反馈', path: '/users/unset', icon: 'fa-cubes' }
           ]
         },
         {
@@ -191,9 +192,9 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test1601', name: '三昇体育注单', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1602', name: '三昇额度转换', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1603', name: '体育总报表', path: '/users/unset', icon: 'fa-cubes' }
+            { id: 'test1601', name: '三昇体育注单', path: '/sport/three/bets', icon: 'fa-cubes' },
+            { id: 'test1602', name: '三昇额度转换', path: '/sport/three/transfer', icon: 'fa-cubes' },
+            { id: 'test1603', name: '体育总报表', path: '/sport/statistics', icon: 'fa-cubes' }
           ]
         },
         {
