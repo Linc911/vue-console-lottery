@@ -76,7 +76,7 @@ import FinanceDepositForm from './views/finance/deposit-form'
 import FinanceDepositOnline from './views/finance/FinanceDepositOnline'
 import FinanceWithdrawApply from './views/finance/FinanceWithdrawApply'
 import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
-import FinanceLimitChange from './views/finance/FinanceLimitChange'
+import FinanceLimitChange from './views/finance/limit-change'
 import FinanceBalanceSheet from './views/finance/FinanceBalanceSheet'
 // 常规配置
 import FinanceSetting from './views/finance/setting/FinanceSetting'
@@ -125,7 +125,8 @@ const router = new Router({
   routes: [
     {
       path: '*',
-      component: NotFound
+      component: NotFound,
+      meta: { title: '404页面', keepAlive: true }
     },
     {
       path: '',
@@ -163,7 +164,7 @@ const router = new Router({
           name: 'HomePage',
           path: '/home',
           component: HomePage,
-          meta: { title: '系统首页' }
+          meta: { title: '系统首页', keepAlive: true }
         },
         /* 登录用户模块 */
         {
@@ -468,6 +469,7 @@ const router = new Router({
           path: '/finance',
           redirect: '/finance/blalance/sheet',
           component: FinanceManage,
+          meta: { title: '财务管理', keepAlive: true },
           children: [
             {
               name: 'FinanceBalanceChange',
@@ -479,13 +481,13 @@ const router = new Router({
               name: 'FinanceDepositForm',
               path: 'deposit/form',
               component: FinanceDepositForm,
-              meta: { title: '填单存款管理', keepAlive: true }
+              meta: { title: '填单存款管理' }
             },
             {
               name: 'FinanceDepositOnline',
               path: 'deposit/online',
               component: FinanceDepositOnline,
-              meta: { title: '在线存款管理', keepAlive: true }
+              meta: { title: '在线存款管理' }
             },
             {
               name: 'FinanceWithdrawApply',

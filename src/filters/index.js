@@ -370,7 +370,7 @@ Vue.filter('depositStatus', value => {
     case 0:
       return '待审批'
     case 1:
-      return '已审批，待确认'
+      return '已查阅，待审批'
     case 2:
       return '审批通过'
     case 3:

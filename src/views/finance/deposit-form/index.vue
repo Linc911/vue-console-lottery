@@ -2,10 +2,10 @@
   <section class="deposit-form">
     <el-tabs v-model="activeTab">
       <el-tab-pane label="会员填单存款未审核列表" name="unchecked">
-        <component :is="DepositFormUnchecked" />
+        <component :is="'DepositFormUnchecked'" />
       </el-tab-pane>
       <el-tab-pane label="会员填单存款列表" name="checked">
-        <component :is="DepositFormChecked" />
+        <component :is="'DepositFormChecked'" />
       </el-tab-pane>
     </el-tabs>
   </section>

@@ -6,9 +6,9 @@
       </el-form-item>
 
       <el-form-item prop="gameType" label="金额类型">
-        <el-select v-model="formData.gameType" placeholder="选择游戏类型">
+        <el-select v-model="formData.gameType" placeholder="选择金额类型">
           <el-option v-for="item in gameTypes" :key="item.value" :label="item.label" :value="item.value" />
-          </el-select>
+        </el-select>
       </el-form-item>
 
       <el-form-item prop="type" label="调整方向">
@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'LoginUsername',
+  name: 'FinanceBalanceChange',
   data () {
     return {
       loanTypes: [],
@@ -74,7 +74,7 @@ export default {
         if (valid) {
           this.$httpAPI.saveFinanceBalanceChange(this.formData).then(() => {
             this.$router.push({ name: 'FinanceDepositForm' })
-            this.$message.warning('创建加减款成功！')
+            this.$message.success('创建加减款成功！')
           }).catch(error => console.log(error))
         } else {
           this.$message.warning('表单填写不正确，请根据提示填写！')

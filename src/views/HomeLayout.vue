@@ -13,10 +13,10 @@
         <el-container>
           <!-- 内容展示区 -->
           <el-main>
-            <keep-alive v-if="$route.meta.keepAlive">
-              <router-view />
+            <keep-alive>
+              <router-view v-if="$route.meta.keepAlive" />
             </keep-alive>
-            <router-view v-else />
+            <router-view v-if="!$route.meta.keepAlive" />
           </el-main>
 
           <!-- 底部栏 -->
