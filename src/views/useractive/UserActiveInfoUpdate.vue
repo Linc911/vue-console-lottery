@@ -4,7 +4,6 @@
       <el-form-item label="用户名">
         <el-input v-model="user.username" disabled />
       </el-form-item>
-
       <el-form-item label="昵称" prop="nickname">
         <el-input v-model="user.nickname" placeholder="用户昵称" />
       </el-form-item>
@@ -15,7 +14,6 @@
           <el-option label="女" :value="0" />
         </el-select>
       </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="submitForm('userInfoForm')">保存</el-button>
       </el-form-item>
