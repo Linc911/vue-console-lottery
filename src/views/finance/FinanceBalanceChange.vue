@@ -14,7 +14,7 @@
       <el-form-item prop="type" label="调整方向">
         <el-radio-group v-model="formData.type">
           <el-radio :label="0">增加</el-radio>
-          <el-radio :label="1">扣减</el-radio>
+          <el-radio :label="1">减少</el-radio>
         </el-radio-group>
       </el-form-item>
 

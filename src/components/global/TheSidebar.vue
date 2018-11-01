@@ -164,12 +164,12 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test1401', name: '发布公告', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1403', name: '已发公告', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1406', name: '系统公告', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1402', name: '系统消息', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1404', name: '会员反馈', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1405', name: '意见反馈', path: '/users/unset', icon: 'fa-cubes' }
+            { id: 'test1401', name: '发布公告', path: '/notice/publish', icon: 'fa-cubes' },
+            { id: 'test1403', name: '已发公告', path: '/notice/publised/list', icon: 'fa-cubes' },
+            { id: 'test1406', name: '系统公告', path: '/notice/system/notifications', icon: 'fa-cubes' },
+            { id: 'test1402', name: '系统消息', path: '/notice/system/messages', icon: 'fa-cubes' },
+            { id: 'test1404', name: '会员反馈', path: '/notice/feedback/users', icon: 'fa-cubes' },
+            { id: 'test1405', name: '意见反馈', path: '/notice/feedback/suggestions', icon: 'fa-cubes' }
           ]
         },
         {

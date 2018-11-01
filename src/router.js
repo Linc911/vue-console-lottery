@@ -72,7 +72,7 @@ import LotteryUsersInfo from './views/lottery/LotteryUsersInfo'
 /* 财务管理 */
 import FinanceManage from './views/finance/FinanceManage'
 import FinanceBalanceChange from './views/finance/FinanceBalanceChange'
-import FinanceDepositForm from './views/finance/FinanceDepositForm'
+import FinanceDepositForm from './views/finance/deposit-form'
 import FinanceDepositOnline from './views/finance/FinanceDepositOnline'
 import FinanceWithdrawApply from './views/finance/FinanceWithdrawApply'
 import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
@@ -105,6 +105,15 @@ import SportManage from './views/sport/SportManage'
 import SportThreeBets from './views/sport/SportThreeBets'
 import SportThreeTransfer from './views/sport/SportThreeTransfer'
 import SportStatistics from './views/sport/SportStatistics'
+
+/* 公告管理 */
+import NoticeManage from './views/notice/NoticeManage'
+import NoticePublish from './views/notice/NoticePublish'
+import NoticePublishedList from './views/notice/NoticePublishedList'
+import NoticeSystemNotifications from './views/notice/NoticeSystemNotifications'
+import NoticeSystemMessages from './views/notice/NoticeSystemMessages'
+import NoticeFeedbackUsers from './views/notice/NoticeFeedbackUsers'
+import NoticeFeedbackSuggestions from './views/notice/NoticeFeedbackSuggestions'
 
 import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 
@@ -626,6 +635,51 @@ const router = new Router({
               path: 'statistics',
               component: SportStatistics,
               meta: { title: '体育总报表' }
+            }
+          ]
+        },
+        /* 公告管理 */
+        {
+          name: 'NoticeManage',
+          path: '/notice',
+          redirect: '/notice/published/list',
+          component: NoticeManage,
+          children: [
+            {
+              name: 'NoticePublish',
+              path: 'publish',
+              component: NoticePublish,
+              meta: { title: '发布公告' }
+            },
+            {
+              name: 'NoticePublishedList',
+              path: 'published/list',
+              component: NoticePublishedList,
+              meta: { title: '已发公告列表' }
+            },
+            {
+              name: 'NoticeSystemNotifications',
+              path: 'system/notifications',
+              component: NoticeSystemNotifications,
+              meta: { title: '系统公告' }
+            },
+            {
+              name: 'NoticeSystemMessages',
+              path: 'system/messages',
+              component: NoticeSystemMessages,
+              meta: { title: '系统消息' }
+            },
+            {
+              name: 'NoticeFeedbackUsers',
+              path: 'feedback/users',
+              component: NoticeFeedbackUsers,
+              meta: { title: '会员反馈' }
+            },
+            {
+              name: 'NoticeFeedbackSuggestions',
+              path: 'feedback/suggestions',
+              component: NoticeFeedbackSuggestions,
+              meta: { title: '意见反馈' }
             }
           ]
         },

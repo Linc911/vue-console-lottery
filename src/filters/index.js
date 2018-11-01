@@ -9,6 +9,7 @@ function addZeroPrefix (n) {
   }
 }
 
+/* 公共过滤器 */
 // 时间格式化
 Vue.filter('time', value => {
   return moment(value).format('YYYY-MM-DD HH:mm:ss')
@@ -20,7 +21,6 @@ Vue.filter('sortTime', second => {
 
   return `${h}:${m}:${s}`
 })
-
 // 货币数值格式化
 Vue.filter('RMB', value => {
   return '￥ ' + parseInt(value).toLocaleString()
@@ -349,5 +349,33 @@ Vue.filter('betResult', value => {
       return '赢'
     default:
       return '未处理'
+  }
+})
+
+/* 财务管理 */
+// 存取款调整方向
+Vue.filter('depositDircetion', value => {
+  switch (value) {
+    case 0:
+      return '增加'
+    case 1:
+      return '减少'
+    default:
+      return '其他'
+  }
+})
+// 存取款调整审核状态
+Vue.filter('depositStatus', value => {
+  switch (value) {
+    case 0:
+      return '待审批'
+    case 1:
+      return '已审批，待确认'
+    case 2:
+      return '审批通过'
+    case 3:
+      return '审批拒绝'
+    default:
+      return '其他'
   }
 })

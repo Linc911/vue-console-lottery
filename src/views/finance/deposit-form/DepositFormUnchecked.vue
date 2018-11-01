@@ -1,13 +1,5 @@
 <template lang="html">
-  <section class="lottery-users">
-    <el-tabs v-model="activeTab">
-      <el-tab-pane label="会员填单存款未审核列表" name="unchecked">
-        <component :is="FinanceBalanceChange" />
-      </el-tab-pane>
-      <el-tab-pane label="会员填单存款列表" name="checked">
-        <component :is="FinanceBalanceSheet" />
-      </el-tab-pane>
-    </el-tabs>
+  <section class="deposit-form-unchecked">
     <!-- 条件筛选 -->
     <FilterArea />
     <!-- 表格数据 -->
@@ -23,22 +15,20 @@
 
         <el-table-column prop="username" label="会员账号" />
 
-        <!-- <el-table-column prop="nickname" label="会员姓名" /> -->
+        <el-table-column prop="nickname" label="会员昵称" />
 
-        <el-table-column prop="groupNames" label="会员分组" />
+        <!-- <el-table-column prop="groupNames" label="会员分组" /> -->
 
-        <el-table-column prop="unknown" label="存款单号" />
-        <el-table-column prop="banlance" label="存款金额" />
-        <el-table-column prop="unknown" label="优惠金额" />
-        <el-table-column prop="unknown" label="存款时间" />
-        <el-table-column prop="unknown" label="存款状态" />
-        <el-table-column prop="unknown" label="存款类型" />
-        <el-table-column prop="unknown" label="付款方信息" />
-        <el-table-column prop="unknown" label="收款方信息" />
+        <el-table-column prop="gameName" label="金额类型" />
+        <el-table-column prop="type" label="调整方向" />
+        <el-table-column prop="money" label="调整金额" />
+        <el-table-column prop="status" label="审核状态" />
+        <el-table-column prop="loanName" label="借贷类型" />
+        <el-table-column prop="remark" label="备注" />
 
         <el-table-column prop="operations" label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" @click="showTip"  size="mini">相关操作</el-button>
+            <el-button type="primary" @click="showTip"  size="mini">审核</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -51,21 +41,15 @@
 <script>
 import FilterArea from '@/components/others/FilterArea'
 import BasePagination from '@/components/base/BasePagination'
-import FinanceBalanceChange from './FinanceBalanceChange'
-import FinanceBalanceSheet from './FinanceBalanceSheet'
 
 export default {
-  name: 'LotteryUsersInfo',
+  name: 'DepositFormUnchecked',
   components: {
     FilterArea,
-    BasePagination,
-    FinanceBalanceChange,
-    FinanceBalanceSheet
+    BasePagination
   },
   data () {
     return {
-      activeTab: 'unchecked',
-      activeComponent: 'FinanceBalanceChange',
       tableData: [],
       pageTotal: 0
     }

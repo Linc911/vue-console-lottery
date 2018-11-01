@@ -1,13 +1,5 @@
 <template lang="html">
-  <section class="lottery-users">
-    <el-tabs v-model="activeTab">
-      <el-tab-pane label="会员填单存款未审核列表" name="unchecked">
-        <component :is="FinanceBalanceChange" />
-      </el-tab-pane>
-      <el-tab-pane label="会员填单存款列表" name="checked">
-        <component :is="FinanceBalanceSheet" />
-      </el-tab-pane>
-    </el-tabs>
+  <section class="deposit-form-unchecked">
     <!-- 条件筛选 -->
     <FilterArea />
     <!-- 表格数据 -->
@@ -51,21 +43,15 @@
 <script>
 import FilterArea from '@/components/others/FilterArea'
 import BasePagination from '@/components/base/BasePagination'
-import FinanceBalanceChange from './FinanceBalanceChange'
-import FinanceBalanceSheet from './FinanceBalanceSheet'
 
 export default {
-  name: 'LotteryUsersInfo',
+  name: 'DepositFormUnchecked',
   components: {
     FilterArea,
-    BasePagination,
-    FinanceBalanceChange,
-    FinanceBalanceSheet
+    BasePagination
   },
   data () {
     return {
-      activeTab: 'unchecked',
-      activeComponent: 'FinanceBalanceChange',
       tableData: [],
       pageTotal: 0
     }
