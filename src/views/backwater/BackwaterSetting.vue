@@ -1,13 +1,7 @@
 <template lang="html">
   <div class="unknown">
-    <el-tabs :tab-position="tabPosition" style="height: 200px;">
-      <el-tab-pane label="皇冠体育">
-        <Child></Child>
-      </el-tab-pane>
-      <el-tab-pane label="真人视讯">
-        <Child></Child>
-      </el-tab-pane>
-      <el-tab-pane label="电子游艺">
+    <el-tabs :tab-position="tabPosition" style="height: 845px;" >
+      <el-tab-pane v-for="item in gameType" :key="item.value" :label="item.name" >
         <Child></Child>
       </el-tab-pane>
     </el-tabs>
@@ -21,7 +15,30 @@ export default {
   },
   data () {
     return {
-      tabPosition: 'left'
+      tabPosition: 'left',
+      gameType: []
+    }
+  },
+  created () {
+    this.fetchGamesList()
+    this.fetchRebateList()
+  },
+  methods: {
+    fetchGamesList () {
+      this.$httpAPI.fetchGamesList().then(response => {
+        this.gameType = response.data.data
+        console.log(this.gameType)
+      }).catch(error => console.log(error))
+    },
+    fetchRebateList () {
+      this.$httpAPI.rebateList({
+        gameConfigId: 1,
+        pageNo: 1,
+        pageSize: 10
+      }).then(response => {
+        this.gameType = response
+        console.log(this.gameType)
+      }).catch(error => console.log(error))
     }
   }
 }

@@ -61,5 +61,11 @@ export default {
 
   fetchFinanceLoanList: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
   createFinanceLoan: data => axios.post('/api-b/dictionary/save', data), // 创建与更新借贷类型数据
-  deleteFinanceLoan: options => axios.get('/api-b/dictionary/delete', options) // 删除借贷类型数据
+  deleteFinanceLoan: options => axios.get('/api-b/dictionary/delete', options), // 删除借贷类型数据
+
+  // 会员返水
+  rebateList: options => axios.get('/api-b/rebate/list', options), // 会员返水设置列表
+  rebateSave: data => axios.post('/api-b/rebate/save', data), // 会员返水设置保存
+  rebateStatus: options => axios.get('/api-b/rebate/status', options), // 会员返水设置修改状态
+  rebateLogList: options => axios.get('/api-b/rebateLog/list', options) //会员返水信息列表
 }

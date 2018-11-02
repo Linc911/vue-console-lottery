@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input v-model="level" placeholder="返水等级" style="width: 130px;margin-bottom: 15px"></el-input>
+    <el-input v-model="level" placeholder="返水等级" style="width: 160px;margin-bottom: 15px"></el-input>
     <el-button type="primary" icon="el-icon-search"></el-button>
     <el-table
       :data="tableData"
