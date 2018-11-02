@@ -10,19 +10,19 @@
             <el-input v-model="systemForm.title" placeholder="请输入消息标题"></el-input>
           </el-form-item>
           <el-form-item label="消息对象">
-            <el-radio v-model="radio" label="1">所有会员</el-radio>
-            <el-radio v-model="radio" label="2">在线会员</el-radio>
-            <el-radio v-model="radio" label="3">新会员组</el-radio>
-            <el-radio v-model="radio" label="4">公司会员组</el-radio>
-            <el-radio v-model="radio" label="5">公司上级组</el-radio>
-            <el-radio v-model="radio" label="6">第1组</el-radio>
-            <el-radio v-model="radio" label="7">垃圾会员组</el-radio>
-            <el-radio v-model="radio" label="8">不给提款组</el-radio>
-            <el-radio v-model="radio" label="9">测试组</el-radio>
-            <el-radio v-model="radio" label="10">指定会员</el-radio>
+            <el-radio v-model="systemForm.radio" label="1">所有会员</el-radio>
+            <el-radio v-model="systemForm.radio" label="2">在线会员</el-radio>
+            <el-radio v-model="systemForm.radio" label="3">新会员组</el-radio>
+            <el-radio v-model="systemForm.radio" label="4">公司会员组</el-radio>
+            <el-radio v-model="systemForm.radio" label="5">公司上级组</el-radio>
+            <el-radio v-model="systemForm.radio" label="6">第1组</el-radio>
+            <el-radio v-model="systemForm.radio" label="7">垃圾会员组</el-radio>
+            <el-radio v-model="systemForm.radio" label="8">不给提款组</el-radio>
+            <el-radio v-model="systemForm.radio" label="9">测试组</el-radio>
+            <el-radio v-model="systemForm.radio" label="10">指定会员</el-radio>
           </el-form-item>
           <el-form-item label="消息内容">
-            <el-input type="textarea" v-model="content"></el-input>
+            <el-input type="textarea" v-model="systemForm.content"></el-input>
           </el-form-item>
           <el-form-item style="text-align: center">
             <el-button type="primary" style="width: 90px" @click="systemSubmit">添加</el-button>
@@ -56,9 +56,10 @@
           range-separator="—"
           start-placeholder="请选择开始日期"
           end-placeholder="请选择结束日期"
-          :picker-options="pickerOptions">
+          :picker-options="agentPicker">
         </el-date-picker>
         <el-button type="primary" icon="el-icon-search"></el-button>
+        <el-button type="primary" icon="el-icon-refresh" style="float: right"></el-button>
         <div class="table-list">
           <!-- 表格 -->
           <el-table
@@ -180,7 +181,8 @@ export default {
       systemForm: {
         author: '',
         title: '',
-        radio: '1'
+        radio: '1',
+        content: ''
       },
       systemMessager: '',
       allMessage: {},
@@ -229,6 +231,7 @@ export default {
       },
       agentMessager: '',
       agentObject: '',
+      time: '',
       agentOptions: [{
         value: '选项1',
         label: '黄金糕'
