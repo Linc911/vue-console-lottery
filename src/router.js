@@ -100,6 +100,11 @@ import PromotionManage from './views/promotion/PromotionManage'
 import PromotionList from './views/promotion/PromotionList'
 import PromotionCreate from './views/promotion/PromotionCreate'
 
+/* 返水管理 */
+import BackwaterManage from './views/backwater/BackwaterManage'
+import BackwaterList from './views/backwater/BackwaterList'
+import BackwaterSetting from './views/backwater/BackwaterSetting'
+
 /* 体育管理 */
 import SportManage from './views/sport/SportManage'
 import SportThreeBets from './views/sport/SportThreeBets'
@@ -610,6 +615,27 @@ const router = new Router({
               path: 'create',
               component: PromotionCreate,
               meta: { title: '优惠活动图片管理', keepAlive: true }
+            }
+          ]
+        },
+        /* 返水管理 */
+        {
+          name: 'BackwaterManage',
+          path: '/backwater',
+          redirect: '/backwater/list',
+          component: BackwaterManage,
+          children: [
+            {
+              name: 'BackwaterList',
+              path: 'list',
+              component: BackwaterList,
+              meta: { title: '会员返水信息' }
+            },
+            {
+              name: 'BackwaterSetting',
+              path: 'setting',
+              component: BackwaterSetting,
+              meta: { title: '会员返水设置' }
             }
           ]
         },

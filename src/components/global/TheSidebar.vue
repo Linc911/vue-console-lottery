@@ -117,8 +117,8 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test1001', name: '会员返水设置', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1002', name: '会员返水信息', path: '/users/unset', icon: 'fa-cubes' }
+            { id: 'test1002', name: '会员返水信息', path: '/backwater/list', icon: 'fa-cubes' },
+            { id: 'test1001', name: '会员返水设置', path: '/backwater/setting', icon: 'fa-cubes' }
           ]
         },
         {
