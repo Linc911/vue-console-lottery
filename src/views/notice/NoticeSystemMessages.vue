@@ -2,12 +2,12 @@
   <div class="unknown">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="发布系统消息" name="first">
-        <el-form ref="form" :model="systemform" label-width="80px">
+        <el-form ref="form" :model="systemForm" label-width="80px">
           <el-form-item label="消息作者">
-            <el-input v-model="author" placeholder="请输入消息作者" style="width: 526px"></el-input>
+            <el-input v-model="systemForm.author" placeholder="请输入消息作者" style="width: 526px"></el-input>
           </el-form-item>
           <el-form-item label="消息标题">
-            <el-input v-model="title" placeholder="请输入消息标题"></el-input>
+            <el-input v-model="systemForm.title" placeholder="请输入消息标题"></el-input>
           </el-form-item>
           <el-form-item label="消息对象">
             <el-radio v-model="radio" label="1">所有会员</el-radio>
@@ -30,7 +30,7 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="查看系统消息" name="second">
-        <el-input v-model="messager" placeholder="消息发送者" style="width: 130px"></el-input>
+        <el-input v-model="systemMessager" placeholder="消息发送者" style="width: 130px"></el-input>
         <el-select v-model="allMessage" placeholder="全部消息" style="width: 110px;margin-left: 10px">
           <el-option
             v-for="item in options"
@@ -40,16 +40,16 @@
           </el-option>
         </el-select>
         <el-input v-model="messageObject" placeholder="消息对象" style="width: 130px;margin-left: 10px"></el-input>
-        <el-select v-model="time" placeholder="发布时间" style="width: 110px;margin-left: 10px">
+        <el-select v-model="releaseTime" placeholder="发布时间" style="width: 110px;margin-left: 10px">
           <el-option
-            v-for="item in options"
+            v-for="item in systemOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value">
           </el-option>
         </el-select>
         <el-date-picker
-          v-model="value1"
+          v-model="systemDate"
           type="daterange"
           align="right"
           unlink-panels
@@ -89,7 +89,7 @@
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page.sync="currentPage2"
+            :current-page.sync="currentPage"
             :page-sizes="[100, 200, 300, 400]"
             :page-size="100"
             layout="sizes, prev, pager, next"
@@ -98,18 +98,18 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="发布代理消息" name="third">
-        <el-form ref="form" :model="agentform" label-width="80px">
+        <el-form ref="form" :model="agentForm" label-width="80px">
           <el-form-item label="消息作者">
-            <el-input v-model="author" placeholder="请输入消息作者" style="width: 526px"></el-input>
+            <el-input v-model="agentForm.author" placeholder="请输入消息作者" style="width: 526px"></el-input>
           </el-form-item>
           <el-form-item label="消息标题">
-            <el-input v-model="title" placeholder="请输入消息标题"></el-input>
+            <el-input v-model="agentForm.title" placeholder="请输入消息标题"></el-input>
           </el-form-item>
           <el-form-item label="指定代理">
-            <el-input v-model="agent" placeholder="请输入代理账号" style="width: 526px"></el-input>
+            <el-input v-model="agentForm.agent" placeholder="请输入代理账号" style="width: 526px"></el-input>
           </el-form-item>
           <el-form-item label="消息内容">
-            <el-input type="textarea" v-model="content"></el-input>
+            <el-input type="textarea" v-model="agentForm.content"></el-input>
           </el-form-item>
           <el-form-item style="text-align: center">
             <el-button type="primary" style="width: 90px" @click="agentSubmit">添加</el-button>
@@ -117,32 +117,32 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="查看代理消息" name="fourth">
-        <el-input v-model="messager" placeholder="消息发送者" style="width: 130px"></el-input>
-        <el-input v-model="messageObject" placeholder="消息对象" style="width: 130px;margin-left: 10px"></el-input>
+        <el-input v-model="agentMessager" placeholder="消息发送者" style="width: 130px"></el-input>
+        <el-input v-model="agentObject" placeholder="消息对象" style="width: 130px;margin-left: 10px"></el-input>
         <el-select v-model="time" placeholder="发布时间" style="width: 110px;margin-left: 10px">
           <el-option
-            v-for="item in options"
+            v-for="item in agentOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value">
           </el-option>
         </el-select>
         <el-date-picker
-          v-model="value1"
+          v-model="agentDate"
           type="daterange"
           align="right"
           unlink-panels
           range-separator="—"
           start-placeholder="请选择开始日期"
           end-placeholder="请选择结束日期"
-          :picker-options="pickerOptions">
+          :picker-options="agentPicker">
         </el-date-picker>
         <el-button type="primary" icon="el-icon-search"></el-button>
         <el-button type="primary" icon="el-icon-refresh" style="float: right"></el-button>
         <div class="table-list">
           <!-- 表格 -->
           <el-table
-            :data="tableData"
+            :data="agenttableData"
             size="small"
             highlight-current-row
             border
@@ -176,20 +176,16 @@
 export default {
   data () {
     return {
-      radio: '1',
       activeName: 'first',
-      systemform: {},
-      allMessage: '',
-      agentform: {
+      systemForm: {
         author: '',
         title: '',
-        agent: ''
+        radio: '1'
       },
-      tableData: [],
-      time: '',
-      messager: '',
-      content: '',
+      systemMessager: '',
+      allMessage: {},
       messageObject: '',
+      releaseTime: '',
       options: [{
         value: '选项1',
         label: '黄金糕'
@@ -206,9 +202,51 @@ export default {
         value: '选项5',
         label: '北京烤鸭'
       }],
-      value: '',
-      value1: '',
-      pickerOptions: {
+      systemOptions: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      systemDate: '',
+      tableData: [],
+      currentPage: 1,
+      agentForm: {
+        author: '',
+        title: '',
+        agent: '',
+        content: ''
+      },
+      agentMessager: '',
+      agentObject: '',
+      agentOptions: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      agentDate: '',
+      agentPicker: {
         shortcuts: [{
           text: '最近一周',
           onClick (picker) {
@@ -234,21 +272,26 @@ export default {
             picker.$emit('pick', [start, end])
           }
         }]
-      }
+      },
+      agenttableData: [],
+      currentPage2: 1
     }
   },
   methods: {
     handleClick (tab, event) {
       console.log(tab, event)
     },
-    handleSizeChange (val) {
-
-    },
     systemSubmit () {
       console.log('submit!')
     },
     agentSubmit () {
       console.log('submit!')
+    },
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
     }
   }
 }

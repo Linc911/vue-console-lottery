@@ -76,7 +76,7 @@ import FinanceDepositForm from './views/finance/deposit-form'
 import FinanceDepositOnline from './views/finance/FinanceDepositOnline'
 import FinanceWithdrawApply from './views/finance/FinanceWithdrawApply'
 import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
-import FinanceLimitChange from './views/finance/FinanceLimitChange'
+import FinanceLimitChange from './views/finance/limit-change'
 import FinanceBalanceSheet from './views/finance/FinanceBalanceSheet'
 // 常规配置
 import FinanceSetting from './views/finance/setting/FinanceSetting'
@@ -99,6 +99,11 @@ import AgentInterestUsersDivision from './views/agent/AgentInterestUsersDivision
 import PromotionManage from './views/promotion/PromotionManage'
 import PromotionList from './views/promotion/PromotionList'
 import PromotionCreate from './views/promotion/PromotionCreate'
+
+/* 返水管理 */
+import BackwaterManage from './views/backwater/BackwaterManage'
+import BackwaterList from './views/backwater/BackwaterList'
+import BackwaterSetting from './views/backwater/BackwaterSetting'
 
 /* 体育管理 */
 import SportManage from './views/sport/SportManage'
@@ -125,7 +130,8 @@ const router = new Router({
   routes: [
     {
       path: '*',
-      component: NotFound
+      component: NotFound,
+      meta: { title: '404页面', keepAlive: true }
     },
     {
       path: '',
@@ -163,7 +169,7 @@ const router = new Router({
           name: 'HomePage',
           path: '/home',
           component: HomePage,
-          meta: { title: '系统首页' }
+          meta: { title: '系统首页', keepAlive: true }
         },
         /* 登录用户模块 */
         {
@@ -468,6 +474,7 @@ const router = new Router({
           path: '/finance',
           redirect: '/finance/blalance/sheet',
           component: FinanceManage,
+          meta: { title: '财务管理', keepAlive: true },
           children: [
             {
               name: 'FinanceBalanceChange',
@@ -479,13 +486,13 @@ const router = new Router({
               name: 'FinanceDepositForm',
               path: 'deposit/form',
               component: FinanceDepositForm,
-              meta: { title: '填单存款管理', keepAlive: true }
+              meta: { title: '填单存款管理' }
             },
             {
               name: 'FinanceDepositOnline',
               path: 'deposit/online',
               component: FinanceDepositOnline,
-              meta: { title: '在线存款管理', keepAlive: true }
+              meta: { title: '在线存款管理' }
             },
             {
               name: 'FinanceWithdrawApply',
@@ -608,6 +615,27 @@ const router = new Router({
               path: 'create',
               component: PromotionCreate,
               meta: { title: '优惠活动图片管理', keepAlive: true }
+            }
+          ]
+        },
+        /* 返水管理 */
+        {
+          name: 'BackwaterManage',
+          path: '/backwater',
+          redirect: '/backwater/list',
+          component: BackwaterManage,
+          children: [
+            {
+              name: 'BackwaterList',
+              path: 'list',
+              component: BackwaterList,
+              meta: { title: '会员返水信息' }
+            },
+            {
+              name: 'BackwaterSetting',
+              path: 'setting',
+              component: BackwaterSetting,
+              meta: { title: '会员返水设置' }
             }
           ]
         },

@@ -56,15 +56,7 @@ export default {
     }
   },
   created () {
-    this.fetchUsersList()
-  },
-  mounted () {
-    this.$notify({
-      title: '提示',
-      message: '页面使用模拟数据，接口正在调试中...',
-      type: 'warning',
-      duration: 8000
-    })
+    this.fetchFinanceLimitChange()
   },
   methods: {
     showTip () {
@@ -74,10 +66,10 @@ export default {
     handlePaginationChange (data) {
       this.tableData = data
     },
-    fetchUsersList (page) {
-      this.$httpAPI.fetchUsersList({ params: { pageNo: 1, pageSize: 3 } }).then(response => {
+    fetchFinanceLimitChange (page) {
+      this.$httpAPI.fetchFinanceLimitChange({ params: { pageNo: 1, pageSize: 10 } }).then(response => {
         this.tableData = response.data.data
-        this.pageTotal = 3
+        this.pageTotal = response.data.amount
       }).catch(error => console.log(error))
     }
   }

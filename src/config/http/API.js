@@ -49,9 +49,15 @@ export default {
   postLotteryOddsFast3: data => axios.post('/api-g/oddsset/2/save', data), // 修改单个快3的赔率
 
   /* 财务管理 */
-  saveFinanceBalanceChange: data => axios.post('/api-b/changeUserRecharge/save', data), // 提交加减款表单（数据更新到填单存款管理列表中）
+  fetchFinanceSheet: options => axios.get('/api-u/backend/finance/statistics', options), // 会员财务报表
   fetchBalanceChangeList: options => axios.get('/api-b/changeUserRecharge/list', options), // 全部加减款数据（填单存款管理）
+  saveFinanceBalanceChange: data => axios.post('/api-b/changeUserRecharge/save', data), // 提交加减款表单（数据更新到填单存款管理列表中）
   fetchBalanceChangeItem: options => axios.get('/api-m/changeUserRecharge/info', options), // 全部单条加减款详情
+  updateDepositFormStatus: options => axios.get('/api-b/changeUserRecharge/audit', options), // 审批加减款操作
+
+  createFinanceLimitChange: data => axios.post('/api-u/convertRecharge/add', data), // 额度转换管理列表
+  fetchFinanceLimitChange: options => axios.get('/api-u/convertRecharge/list', options), // 额度转换每项详情
+  updateFinanceLimitChangeStatus: options => axios.get('/api-u/convertRecharge/audit', options), // 审批额度转换状态
 
   fetchFinanceLoanList: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
   createFinanceLoan: data => axios.post('/api-b/dictionary/save', data), // 创建与更新借贷类型数据

@@ -1,7 +1,11 @@
 <template lang="html">
-  <div class="deposit-form-unchecked">
+  <div class="limit-change">
     <!-- 条件筛选 -->
-    <FilterArea />
+    <!-- <FilterArea /> -->
+    <div class="clearfix">
+      <LimitAdd @on-success="handleCreateLimitChange" />
+    </div>
+
     <!-- 表格数据 -->
     <div class="table-list">
       <!-- 表格 -->
@@ -17,17 +21,23 @@
 
         <el-table-column prop="nickname" label="会员昵称" />
 
-        <el-table-column prop="gameName" label="金额类型" />
+        <el-table-column prop="targetName" label="目标账户" />
 
-        <el-table-column label="调整方向">
+        <el-table-column label="转换金额">
           <template slot-scope="scope">
-            <span>{{scope.row.type | depositDircetion}}</span>
+            <span>{{scope.row.money | RMB}}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="调整金额">
+        <el-table-column label="转换前金额">
           <template slot-scope="scope">
-            <span>{{scope.row.money | RMB}}</span>
+            <span>{{scope.row.beforeMoney | RMB}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="转换后金额">
+          <template slot-scope="scope">
+            <span>{{scope.row.afterMoney | RMB}}</span>
           </template>
         </el-table-column>
 
@@ -36,8 +46,6 @@
             <span>{{scope.row.status | depositStatus}}</span>
           </template>
         </el-table-column>
-
-        <el-table-column prop="loanName" label="借贷类型" />
 
         <el-table-column prop="remark" label="备注" />
 
@@ -48,24 +56,24 @@
         </el-table-column>
       </el-table>
       <!-- 分页 -->
-      <BasePagination @on-change="handlePaginationChange" :pageTotal="pageTotal" httpURL="fetchBalanceChangeList" />
+      <BasePagination @on-change="handlePaginationChange" :pageTotal="pageTotal" httpURL="fetchFinanceLimitChange" />
     </div>
-    <!-- 加减款操作每项详情弹框 -->
-    <DialogDepositForm @on-success="handleStatusChange" :formData="currentItem" ref="dialogDepositForm" />
+    <!-- 额度转换详情弹框 -->
+    <DialogLimitForm @on-success="handleStatusChange" :formData="currentItem" ref="dialogLimitForm" />
   </div>
 </template>
 
 <script>
-import FilterArea from '@/components/others/FilterArea'
+import LimitAdd from './components/LimitAdd'
 import BasePagination from '@/components/base/BasePagination'
-import DialogDepositForm from './components/DialogDepositForm'
+import DialogLimitForm from './components/DialogLimitForm'
 
 export default {
-  name: 'DepositFormUnchecked',
+  name: 'FinanceLimitChange',
   components: {
-    FilterArea,
+    LimitAdd,
     BasePagination,
-    DialogDepositForm
+    DialogLimitForm
   },
   data () {
     return {
@@ -75,25 +83,32 @@ export default {
     }
   },
   created () {
-    this.fetchBalanceChangeList()
+    this.fetchFinanceLimitChange()
   },
   methods: {
+    handleCreateLimitChange () {
+      this.fetchFinanceLimitChange()
+    },
     // 显示审批加减款表单弹框
     showDialog (obj) {
       this.currentItem = obj
-      this.$refs.dialogDepositForm.toggleDialogVisible(true)
+      this.$refs.dialogLimitForm.toggleDialogVisible(true)
     },
     // 审批状态改变时，更新在本地更新页面数据
-    handleStatusChange (id) {
-      this.tableData = this.$_.remove(this.tableData, item => item.changeId !== id)
+    handleStatusChange (payload) {
+      this.$_.forEach(this.tableData, item => {
+        if (item.convertId === payload.convertId) {
+          item.status = payload.status
+        }
+      })
     },
     // 分页变化时，更新数据
     handlePaginationChange (data) {
       this.tableData = data
     },
-    fetchBalanceChangeList () {
-      this.$httpAPI.fetchBalanceChangeList({ params: { status: 0, pageNo: 1, pageSize: 10 } }).then(response => {
-        this.tableData = response.data.data
+    fetchFinanceLimitChange () {
+      this.$httpAPI.fetchFinanceLimitChange({ params: { pageNo: 1, pageSize: 10 } }).then(response => {
+        response.data.data && (this.tableData = response.data.data)
         this.pageTotal = response.data.amount
       }).catch(error => console.log(error))
     }

@@ -1,77 +1,76 @@
 <template lang="html">
-  <div class="chart-container">
-    <DoughnutChart :chart-data="chartDoughnutData" :width="920" />
-  </div>
+  <section class="lottery-users">
+    <!-- 条件筛选 -->
+    <FilterArea />
+    <!-- 表格数据 -->
+    <div class="table-list">
+      <!-- 表格 -->
+      <el-table
+        :data="tableData"
+        size="small"
+        highlight-current-row
+        border
+      >
+        <el-table-column type="index" />
+
+        <el-table-column prop="username" label="会员账号" />
+
+        <el-table-column prop="nickname" label="会员姓名" />
+
+        <el-table-column prop="unknown" label="存款类型" />
+
+        <el-table-column prop="unknown" label="存款单号" />
+        <el-table-column prop="banlance" label="存款金额" />
+        <el-table-column prop="unknown" label="优惠金额" />
+        <el-table-column prop="unknown" label="存款时间" />
+        <el-table-column prop="unknown" label="存款状态" />
+        <el-table-column prop="unknown" label="支付接口名称" />
+        <el-table-column prop="unknown" label="操作账号" />
+
+        <el-table-column prop="operations" label="操作">
+          <template slot-scope="scope">
+            <el-button type="primary" @click="showTip"  size="mini">相关操作</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- 分页 -->
+      <BasePagination @on-change="handlePaginationChange" :pageTotal="pageTotal" httpURL="nuknown" />
+    </div>
+  </section>
 </template>
 
 <script>
-import DoughnutChart from '@/components/vue-chartjs/DoughnutChart'
+import FilterArea from '@/components/others/FilterArea'
+import BasePagination from '@/components/base/BasePagination'
 
 export default {
   name: 'LotteryUsersInfo',
   components: {
-    DoughnutChart
+    FilterArea,
+    BasePagination
   },
   data () {
     return {
-      chartDoughnutData: null
+      tableData: [],
+      pageTotal: 0
     }
   },
   created () {
-    this.fetchUsersDeposit()
-  },
-  mounted () {
-    this.$notify({
-      title: '提示',
-      message: '页面使用模拟数据，接口正在调试中...',
-      type: 'warning',
-      duration: 8000
-    })
+    this.fetchFinanceSheet()
   },
   methods: {
     showTip () {
       this.$message.warning('该功能正在开发中...')
     },
-    // 存款统计
-    fetchUsersDeposit () {
-      this.$axios.get('/api-b/index/statistic/deposit').then(response => {
-        const obj = response.data.data
-        let keys = []
-        let values = []
-
-        // 生成统计表需要的标题数组，和数据数组
-        for (let k in obj) {
-          keys.push(this._transferPayType(k))
-          values.push(obj[k].toFixed(2))
-        }
-
-        this.chartDoughnutData = {
-          labels: keys,
-          datasets: [
-            {
-              backgroundColor: [ '#FC7A6A', '#60A5B5', '#F1C77A', '#8994A8', '#5AC79D' ],
-              data: values
-            }
-          ]
-        }
-      }).catch(error => console.log(error))
+    // 分页变化时，更新数据
+    handlePaginationChange (data) {
+      this.tableData = data
     },
-    // 将支付方式转为中文
-    _transferPayType (type) {
-      switch (type) {
-        case 'ali':
-          return '支付宝'
-        case 'qq':
-          return 'Q币'
-        case 'remittance':
-          return '汇款'
-        case 'unionpay':
-          return '银联'
-        case 'wechat':
-          return '微信'
-        default:
-          return '支付宝'
-      }
+    fetchFinanceSheet (page) {
+      this.$httpAPI.fetchFinanceSheet({ params: { pageNo: 1, pageSize: 3 } }).then(response => {
+        this.tableData = response.data.data
+        this.pageTotal = response.data.amount
+      }).catch(error => console.log(error))
     }
   }
 }

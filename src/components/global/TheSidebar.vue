@@ -91,7 +91,7 @@ export default {
             { id: 'test0704', name: '提款申请管理', path: '/finance/withdraw/apply', icon: 'fa-cubes' },
             { id: 'test0705', name: '会员资金管理', path: '/finance/users/assets', icon: 'fa-cubes' },
             { id: 'test0706', name: '额度转换管理', path: '/finance/limit/change', icon: 'fa-cubes' },
-            { id: 'test0707', name: '收支财务总汇', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0707', name: '会员财务报表', path: '/finance/balance/sheet', icon: 'fa-cubes' },
             { id: 'test0708', name: '常规配置', path: '/finance/setting', icon: 'fa-cubes' }
           ]
         },
@@ -117,8 +117,8 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test1001', name: '会员返水设置', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test1002', name: '会员返水信息', path: '/users/unset', icon: 'fa-cubes' }
+            { id: 'test1002', name: '会员返水信息', path: '/backwater/list', icon: 'fa-cubes' },
+            { id: 'test1001', name: '会员返水设置', path: '/backwater/setting', icon: 'fa-cubes' }
           ]
         },
         {

@@ -22,9 +22,7 @@
         <el-input v-model="form.siteCode" style="width: 695px"></el-input>
       </el-form-item>
       <el-form-item label="截至时间" style="display: inline-block">
-        <el-col :span="11">
           <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 695px"></el-date-picker>
-        </el-col>
       </el-form-item>
       <el-form-item label="排序" style="display: inline-block">
         <el-input v-model="form.sort" style="width: 695px"></el-input>
