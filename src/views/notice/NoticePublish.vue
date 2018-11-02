@@ -4,6 +4,7 @@
       <el-form-item label="公告类型" style="display: inline-block">
         <el-select v-model="form.noticeType" placeholder="请选择公告类型" style="width: 695px">
           <el-option label="站内公告" value="notice1"></el-option>
+          <el-option label="优博平台公告" value="notice1"></el-option>
           <el-option label="内部公告" value="notice2"></el-option>
           <el-option label="支付公告" value="notice2"></el-option>
           <el-option label="彩票公告" value="notice2"></el-option>

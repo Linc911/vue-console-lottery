@@ -190,7 +190,7 @@ export default {
       releaseTime: '',
       options: [{
         value: '选项1',
-        label: '黄金糕'
+        label: '全部消息'
       }, {
         value: '选项2',
         label: '双皮奶'
