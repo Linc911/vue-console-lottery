@@ -24,6 +24,11 @@ export default {
         { label: '审批拒绝', value: 3 }
       ]
     }
+  },
+  methods: {
+    reset () {
+      this.auditStatus = ''
+    }
   }
 }
 </script>

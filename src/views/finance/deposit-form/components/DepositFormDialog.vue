@@ -50,10 +50,10 @@
           </el-col>
         </el-row>
       </el-form>
-      <span v-if="unchecked" slot="footer">
+      <span v-if="formData.status <= 1" slot="footer">
         <el-button @click="changeStatus(2)" type="primary" size="small">审批通过</el-button>
         <el-button @click="changeStatus(3)" type="danger" size="small">审批拒绝</el-button>
-        <el-button @click="changeStatus(1)" size="small">已查阅，待审批</el-button>
+        <el-button v-if="formData.status !== 1" @click="changeStatus(1)" size="small">已查阅，待审批</el-button>
       </span>
     </el-dialog>
   </div>
@@ -61,15 +61,11 @@
 
 <script>
 export default {
-  name: 'DialogDepositForm',
+  name: 'DepositFormDialog',
   props: {
     formData: {
       type: Object,
       required: true
-    },
-    unchecked: {
-      type: Boolean,
-      default: true
     }
   },
   data () {
@@ -85,7 +81,7 @@ export default {
       this.$httpAPI.updateDepositFormStatus({
         params: { changeId: this.formData.changeId, status }
       }).then(() => {
-        this.$emit('on-success', this.formData.changeId)
+        this.$emit('on-success', { changeId: this.formData.changeId, status })
         this.dialogVisible = false
         this.$message.success('修改状态成功！')
       }).catch(error => console.log(error))
@@ -93,6 +89,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

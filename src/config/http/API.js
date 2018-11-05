@@ -3,7 +3,7 @@ import axios from './index'
 export default {
   /* 公共数据 */
   fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 彩票游戏菜单
-  fetchGamesList: () => axios.get('/api-g/gameconfig'), // 游戏菜单
+  fetchGamesList: () => axios.get('/api-g/gameconfig'), // 游戏类型/账户类型
   fetchUserId: options => axios.get('/api-u/users-anon/getUserId', options), // 查询会员ID
 
   /* 登录 */
@@ -51,8 +51,8 @@ export default {
 
   /* 财务管理 */
   fetchBalanceChangeList: options => axios.get('/api-b/changeUserRecharge/list', options), // 全部加减款数据（填单存款管理）
+  fetchBalanceChangeItem: options => axios.get('/api-m/changeUserRecharge/info', options), // 加减款每项详情
   saveFinanceBalanceChange: data => axios.post('/api-b/changeUserRecharge/save', data), // 提交加减款表单（数据更新到填单存款管理列表中）
-  fetchBalanceChangeItem: options => axios.get('/api-m/changeUserRecharge/info', options), // 全部单条加减款详情
   updateDepositFormStatus: options => axios.get('/api-b/changeUserRecharge/audit', options), // 审批加减款操作
 
   createFinanceLimitChange: data => axios.post('/api-u/convertRecharge/add', data), // 额度转换管理列表

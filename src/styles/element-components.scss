@@ -31,3 +31,8 @@
 .el-menu {
   border-right: none;
 }
+
+/* 时间选择组件 */
+.el-date-editor .el-range-separator {
+  min-width: 18px;
+}

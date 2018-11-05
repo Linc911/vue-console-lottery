@@ -11,6 +11,11 @@ export default {
     return {
       username: ''
     }
+  },
+  methods: {
+    reset () {
+      this.username = ''
+    }
   }
 }
 </script>

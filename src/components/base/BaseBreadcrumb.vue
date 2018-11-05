@@ -25,7 +25,9 @@ export default {
 
 <style lang="scss" scoped>
 .el-breadcrumb {
+  padding-bottom: 15px;
   margin-bottom: 20px;
+  border-bottom: 2px solid #ddd;
 }
 .active-link {
   color: #333;

@@ -66,6 +66,13 @@ Vue.filter('auditStatus', value => {
       return '其他'
   }
 })
+Vue.filter('auditTransfer', value => {
+  if (value < 2) {
+    return '审批'
+  } else {
+    return '详情'
+  }
+})
 
 /* 彩票相关 */
 // 彩票球
