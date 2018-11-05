@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="unknown">
-    <el-tabs :tab-position="tabPosition" style="height: 845px;">
-      <el-tab-pane v-for="item in gameType" :key="item.value" :label="item.name">
-        <Child></Child>
+    <el-tabs :tab-position="tabPosition" style="min-height: 845px;">
+      <el-tab-pane v-for="(item,index) in gameType" :key="item.value" :label="item.name">
+        <Child :gameConfigId="index+1"></Child>
       </el-tab-pane>
     </el-tabs>
   </div>

@@ -1,14 +1,15 @@
 <template>
   <div>
     <el-input v-model="level" placeholder="返水等级名称" style="width: 160px;margin-bottom: 15px"></el-input>
-    <el-button type="primary" icon="el-icon-search"></el-button>
+    <el-button type="primary" icon="el-icon-search" style="margin-left: 10px"></el-button>
+    <el-button type="primary" icon="el-icon-refresh" style="float: right">✚ 会员返佣设置</el-button>
     <el-table
       :data="tableData"
       size="small"
       highlight-current-row
       border
     >
-      <el-table-column :min-width="30" />
+      <el-table-column type="index" :min-width="30" />
       <el-table-column prop="name" label="返水等级">
         <template slot-scope="scope">
           <span>{{scope.row.name | returnLevel}}</span>
@@ -48,6 +49,15 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      @size-change="fetchRebateList"
+      @current-change="fetchRebateList"
+      :current-page="currentPage"
+      :page-sizes="[100, 200, 300, 400]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
@@ -58,17 +68,25 @@ export default {
   components: {
     UserStatusSetting
   },
+  props: {
+    gameConfigId: {
+      Number
+    }
+  },
   data () {
     return {
       level: '',
-      tableData: []
+      tableData: [],
+      pageSize: 100,
+      currentPage: 1,
+      total: 1
     }
   },
   created () {
     this.fetchRebateList()
   },
   methods: {
-    // 修改是否启用
+    // 数据变动修改是否启用
     syncGroupData (payload) {
       this.$_.forEach(this.tableData, item => {
         if (String(item.id) === payload.userId) {
@@ -79,11 +97,14 @@ export default {
     // 获取游戏列表
     fetchRebateList () {
       this.$httpAPI.rebateList({
-        gameConfigId: 1,
-        pageNo: 1,
-        pageSize: 10
+        params: {
+          gameConfigId: this.gameConfigId,
+          pageNo: this.currentPage,
+          pageSize: this.pageSize
+        }
       }).then(response => {
         this.tableData = response.data.data
+        this.total = response.data.amount
         // console.log(this.tableData)
       }).catch(error => console.log(error))
     }

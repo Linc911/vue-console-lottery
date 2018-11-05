@@ -11,7 +11,8 @@
       :picker-options="pickerOptions">
     </el-date-picker>
     <el-input v-model="level" placeholder="会员账号" style="width: 130px;margin:0 0 15px 10px"></el-input>
-    <el-button type="primary" icon="el-icon-search"></el-button>
+    <el-button type="primary" icon="el-icon-search" style="margin-left: 10px"></el-button>
+    <el-button type="primary" icon="el-icon-refresh" style="float: right" @click="refresh"></el-button>
     <el-table
       :data="tableData"
       size="small"
@@ -95,19 +96,24 @@ export default {
     }
   },
   created () {
-    this.fetchrRbateLogList()
+    this.fetchRbateLogList()
   },
   methods: {
+    refresh () {
+      this.fetchRbateLogList()
+    },
     handleClick (tab, event) {
       console.log(tab, event)
     },
-    fetchrRbateLogList () {
+    fetchRbateLogList () {
       this.$httpAPI.rebateLogList({
-        pageNo: 1,
-        pageSize: 10
+        params: {
+          pageNo: 1,
+          pageSize: 10
+        }
       }).then(response => {
         this.tableData = response.data.data
-        // console.log(this.tableData)
+        console.log(this.tableData)
       }).catch(error => console.log(error))
     }
   }
