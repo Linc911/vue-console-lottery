@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="unknown">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName" @tab-click="handleClick" style="height: 845px;">
       <el-tab-pane label="发布系统消息" name="first">
         <el-form ref="form" :model="systemForm" label-width="80px">
           <el-form-item label="消息作者">

@@ -10,7 +10,7 @@
       end-placeholder="请选择结束日期"
       :picker-options="pickerOptions">
     </el-date-picker>
-    <el-input v-model="level" placeholder="返水等级名称" style="width: 130px;margin:0 0 15px 10px"></el-input>
+    <el-input v-model="level" placeholder="会员账号" style="width: 130px;margin:0 0 15px 10px"></el-input>
     <el-button type="primary" icon="el-icon-search"></el-button>
     <el-table
       :data="tableData"

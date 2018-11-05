@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input v-model="level" placeholder="返水等级" style="width: 160px;margin-bottom: 15px"></el-input>
+    <el-input v-model="level" placeholder="返水等级名称" style="width: 160px;margin-bottom: 15px"></el-input>
     <el-button type="primary" icon="el-icon-search"></el-button>
     <el-table
       :data="tableData"
@@ -32,6 +32,12 @@
       <el-table-column prop="status" label="是否启用">
         <template slot-scope="scope">
           <span>{{scope.row.status | isEnabled}}</span>
+          <UserStatusSetting
+            @on-change="syncGroupData"
+            :userId="String(scope.row.id)"
+            :groupId="String(scope.row.status)"
+            class="pull-right"
+          />
         </template>
       </el-table-column>
       <el-table-column prop="sysGroupNames" label="会员分组">
@@ -46,7 +52,12 @@
 </template>
 
 <script type="text/javascript">
+import UserStatusSetting from './UserStatusSetting'
+
 export default {
+  components: {
+    UserStatusSetting
+  },
   data () {
     return {
       level: '',
@@ -57,6 +68,15 @@ export default {
     this.fetchRebateList()
   },
   methods: {
+    // 修改是否启用
+    syncGroupData (payload) {
+      this.$_.forEach(this.tableData, item => {
+        if (String(item.id) === payload.userId) {
+          item.status = Number(payload.value)
+        }
+      })
+    },
+    // 获取游戏列表
     fetchRebateList () {
       this.$httpAPI.rebateList({
         gameConfigId: 1,

@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="unknown">
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" style="height: 845px;">
       <el-tab-pane label="六合彩返水日志" name="first">
         <Child></Child>
       </el-tab-pane>
