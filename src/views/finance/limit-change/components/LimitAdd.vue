@@ -72,6 +72,7 @@ export default {
           this.$httpAPI.createFinanceLimitChange(this.formData).then(() => {
             this.$emit('on-success')
             this.dialogVisible = false
+            this.formData = { username: '', money: '', target: '', remark: '' }
             this.$message.success('转换成功！')
           }).catch(error => console.log(error))
         } else {

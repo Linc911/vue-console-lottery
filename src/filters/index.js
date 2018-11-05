@@ -26,9 +26,8 @@ Vue.filter('RMB', value => {
   return '￥ ' + parseInt(value).toLocaleString()
 })
 
-/* 充值相关 */
 // 充值支付类型
-Vue.filter('changedType', value => {
+Vue.filter('paymentType', value => {
   switch (value) {
     case 1:
       return '微信'
@@ -37,7 +36,7 @@ Vue.filter('changedType', value => {
   }
 })
 // 充值订单状态
-Vue.filter('changedStatus', value => {
+Vue.filter('paymentStatus', value => {
   switch (value) {
     case 0:
       return '未支付'
@@ -47,6 +46,22 @@ Vue.filter('changedStatus', value => {
       return '支付成功'
     case 4:
       return '失败'
+    default:
+      return '其他'
+  }
+})
+
+// 审核状态
+Vue.filter('auditStatus', value => {
+  switch (value) {
+    case 0:
+      return '待审批'
+    case 1:
+      return '已查阅，待确认'
+    case 2:
+      return '审批通过'
+    case 3:
+      return '审批拒绝'
     default:
       return '其他'
   }
