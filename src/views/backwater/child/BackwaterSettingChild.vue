@@ -50,28 +50,30 @@
       </el-table-column>
     </el-table>
     <el-dialog title="添加会员返佣设置" :visible.sync="dialogVisible" width="500px">
-      <el-form :model="formData" label-width="100px" ref="limitForm">
-        <el-form-item prop="username" label="返水等级名称">
+      <el-form :model="formData" label-width="120px" ref="limitForm" :rules="rule">
+        <el-form-item prop="name" label="返水等级名称">
           <el-input v-model="formData.name" placeholder="请输入名称" />
         </el-form-item>
 
-        <el-form-item prop="target" label="会员分组">
-          <el-select v-model="formData.groupOptions" placeholder="请选择会员分组" style="width: 100%">
+        <el-form-item prop="rebateUserGroups" label="会员分组">
+          <el-select v-model="formData.rebateUserGroups" placeholder="请选择会员分组" style="width: 100%" multiple>
             <el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
-        <el-form-item prop="target" label="游戏类型">
+        <el-form-item prop="gameConfigId" label="游戏类型">
           <el-select v-model="formData.gameConfigId" placeholder="请选择游戏类型" style="width: 100%">
-            <el-option v-for="item in gameType" :key="item.id" :label="item.name" :value="item.value" />
+            <el-option v-for="item in gameType" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
-
-        <el-form-item prop="money" label="有效投注上限">
+        <el-form-item prop="ratio" label="返佣比率">
+          <el-input v-model="formData.ratio" min="0" placeholder="有请输入返佣比率" />
+        </el-form-item>
+        <el-form-item prop="upperLimit" label="有效投注上限">
           <el-input v-model="formData.upperLimit" type="number" min="0" placeholder="有请输入效投注上限" />
         </el-form-item>
 
-        <el-form-item prop="remark" label="有效投注下限">
-          <el-input v-model="formData.lowerLimit" type="number"  placeholder="请输入有效投注下限" />
+        <el-form-item prop="lowerLimit" label="有效投注下限">
+          <el-input v-model="formData.lowerLimit" type="number" placeholder="请输入有效投注下限" />
         </el-form-item>
 
         <el-form-item>
@@ -115,17 +117,36 @@ export default {
       total: 1,
       dialogVisible: false,
       formData: {
-        name: '', upperLimit: '', lowerLimit: '', gameConfigId: '', groupOptions: []
+        name: '', upperLimit: '', ratio: '', lowerLimit: '', gameConfigId: '', rebateUserGroups: []
       },
-      groupOptions: []
+      groupOptions: [],
+      rule: {
+        name: [{ required: true, message: '返水等级名称不能为空' }],
+        rebateUserGroups: [{ required: true, message: '会员分组不能为空' }],
+        gameConfigId: [{ required: true, message: '游戏类型不能为空' }],
+        ratio: [{ required: true, message: '返佣比率不能为空' }],
+        upperLimit: [{ required: true, message: '投注上限不能为空' }],
+        lowerLimit: [{ required: true, message: '投注下限不能为空' }]
+      }
     }
   },
   created () {
     this.fetchRebateList()
     this.fetchUserGroup()
-    console.log(this.gameType)
   },
   methods: {
+    submitForm (formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.$httpAPI.rebateSave(this.formData).then(() => {
+            this.$router.push({ name: 'BackwaterSetting' })
+            this.$message.success('添加成功！')
+          }).catch(error => console.log(error))
+        } else {
+          this.$message.warning('表单填写不正确，请根据提示填写！')
+        }
+      })
+    },
     // 数据变动修改是否启用
     syncGroupData (payload) {
       this.$_.forEach(this.tableData, item => {
