@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-date-picker
-      v-model="Date"
+      v-model="date"
       type="daterange"
       align="right"
       unlink-panels
@@ -11,7 +11,7 @@
       :picker-options="pickerOptions">
     </el-date-picker>
     <el-input v-model="level" placeholder="会员账号" style="width: 130px;margin:0 0 15px 10px"></el-input>
-    <el-button type="primary" icon="el-icon-search" style="margin-left: 10px"></el-button>
+    <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="search"></el-button>
     <el-button type="primary" icon="el-icon-refresh" style="float: right" @click="refresh"></el-button>
     <el-table
       :data="tableData"
@@ -60,10 +60,15 @@
 
 <script type="text/javascript">
 export default {
+  props: {
+    gameConfigId: {
+      Number
+    }
+  },
   data () {
     return {
       activeName: 'second',
-      Date: '',
+      date: '',
       level: '',
       pickerOptions: {
         shortcuts: [{
@@ -99,6 +104,9 @@ export default {
     this.fetchRbateLogList()
   },
   methods: {
+    search () {
+      console.log(this.date)
+    },
     refresh () {
       this.fetchRbateLogList()
     },
@@ -109,7 +117,8 @@ export default {
       this.$httpAPI.rebateLogList({
         params: {
           pageNo: 1,
-          pageSize: 10
+          pageSize: 10,
+          gameConfigId: this.gameConfigId
         }
       }).then(response => {
         this.tableData = response.data.data

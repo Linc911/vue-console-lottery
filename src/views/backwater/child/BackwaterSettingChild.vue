@@ -2,7 +2,7 @@
   <div>
     <el-input v-model="level" placeholder="返水等级名称" style="width: 160px;margin-bottom: 15px"></el-input>
     <el-button type="primary" icon="el-icon-search" style="margin-left: 10px"></el-button>
-    <el-button type="primary" icon="el-icon-refresh" style="float: right">✚ 会员返佣设置</el-button>
+    <el-button type="primary" icon="el-icon-plus" style="float: right" @click="dialogVisible = true">会员返佣设置</el-button>
     <el-table
       :data="tableData"
       size="small"
@@ -49,6 +49,36 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="添加会员返佣设置" :visible.sync="dialogVisible" width="500px">
+      <el-form :model="formData" label-width="100px" ref="limitForm">
+        <el-form-item prop="username" label="返水等级名称">
+          <el-input v-model="formData.name" placeholder="会员账号" />
+        </el-form-item>
+
+        <el-form-item prop="target" label="会员分组">
+          <el-select v-model="formData.rebateUserGroups" placeholder="请选择会员分组" style="width: 100%">
+            <el-option v-for="item in memberTypes" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="target" label="游戏类型">
+          <el-select v-model="formData.gameConfigId" placeholder="请选择会员分组" style="width: 100%">
+            <el-option v-for="item in gameTypes" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item prop="money" label="有效投注上限">
+          <el-input v-model="formData.upperLimit" type="number" min="0" placeholder="调整金额" />
+        </el-form-item>
+
+        <el-form-item prop="remark" label="有效投注下限">
+          <el-input v-model="formData.lowerLimit" type="textarea" :rows="3" placeholder="备注" />
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('limitForm')">确认</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
     <el-pagination
       @size-change="fetchRebateList"
       @current-change="fetchRebateList"
@@ -79,7 +109,13 @@ export default {
       tableData: [],
       pageSize: 100,
       currentPage: 1,
-      total: 1
+      total: 1,
+      dialogVisible: false,
+      formData: {
+        name: '', upperLimit: '', lowerLimit: '', gameConfigId: '', rebateUserGroups: []
+      },
+      memberTypes: [],
+      gameTypes: []
     }
   },
   created () {
