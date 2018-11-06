@@ -6,7 +6,7 @@
       <div>
         <el-select v-model="innerGroupId" placeholder="是否启用" size="small">
           <el-option
-            v-for="item in groupOptions"
+            v-for="item in enableOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -42,8 +42,9 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      groupOptions: [{ label: '启用', value: '0' }, { label: '禁用', value: '1' }],
-      innerGroupId: this.groupId
+      enableOptions: [{ label: '启用', value: '0' }, { label: '禁用', value: '1' }],
+      innerGroupId: this.groupId,
+      groupOptions: []
     }
   },
   methods: {
@@ -57,11 +58,33 @@ export default {
         this.$httpAPI.rebateStatus({
           params: { rebateId: this.userId, status: this.innerGroupId }
         }).then(() => {
-          const groupObject = this.$_.find(this.groupOptions, item => item.value === this.innerGroupId)
+          const groupObject = this.$_.find(this.enableOptions, item => item.value === this.innerGroupId)
           this.$emit('on-change', Object.assign({ userId: this.userId }, groupObject))
         }).catch(error => console.log(error))
       }
       this.dialogVisible = false
+    },
+    fetchUserGroup () {
+      const length = this.$store.state.user.usersGroup.length
+
+      // 如果在vuex中已经有选择项数据，直接用现有数据；否则发起请求
+      if (!length) {
+        this.$httpAPI.getSystemGroup({ params: { pageNo: 1, pageSize: 100 } })
+          .then(response => {
+            // 把数据处理UI组件要求的格式
+            this.$_.forEach(response.data.data, item => {
+              this.groupOptions.push({
+                value: String(item.groupId),
+                label: item.name
+              })
+            })
+
+            this.$store.dispatch('addUsersGoup', this.groupOptions) // 将数据存入vuex中，减少http请求
+          })
+          .catch(error => console.log(error))
+      } else {
+        this.groupOptions = this.$store.state.user.usersGroup
+      }
     }
   }
 }

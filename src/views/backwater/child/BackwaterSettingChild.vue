@@ -52,30 +52,30 @@
     <el-dialog title="添加会员返佣设置" :visible.sync="dialogVisible" width="500px">
       <el-form :model="formData" label-width="100px" ref="limitForm">
         <el-form-item prop="username" label="返水等级名称">
-          <el-input v-model="formData.name" placeholder="会员账号" />
+          <el-input v-model="formData.name" placeholder="请输入名称" />
         </el-form-item>
 
         <el-form-item prop="target" label="会员分组">
-          <el-select v-model="formData.rebateUserGroups" placeholder="请选择会员分组" style="width: 100%">
-            <el-option v-for="item in memberTypes" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select v-model="formData.groupOptions" placeholder="请选择会员分组" style="width: 100%">
+            <el-option v-for="item in groupOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item prop="target" label="游戏类型">
-          <el-select v-model="formData.gameConfigId" placeholder="请选择会员分组" style="width: 100%">
-            <el-option v-for="item in gameTypes" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select v-model="formData.gameConfigId" placeholder="请选择游戏类型" style="width: 100%">
+            <el-option v-for="item in gameType" :key="item.id" :label="item.name" :value="item.value" />
           </el-select>
         </el-form-item>
 
         <el-form-item prop="money" label="有效投注上限">
-          <el-input v-model="formData.upperLimit" type="number" min="0" placeholder="调整金额" />
+          <el-input v-model="formData.upperLimit" type="number" min="0" placeholder="有请输入效投注上限" />
         </el-form-item>
 
         <el-form-item prop="remark" label="有效投注下限">
-          <el-input v-model="formData.lowerLimit" type="textarea" :rows="3" placeholder="备注" />
+          <el-input v-model="formData.lowerLimit" type="number"  placeholder="请输入有效投注下限" />
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="submitForm('limitForm')">确认</el-button>
+          <el-button type="primary" @click="submitForm('limitForm')" style="margin-left: 94px">确认</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -100,7 +100,10 @@ export default {
   },
   props: {
     gameConfigId: {
-      Number
+      type: Number
+    },
+    gameType: {
+      type: Array
     }
   },
   data () {
@@ -112,14 +115,15 @@ export default {
       total: 1,
       dialogVisible: false,
       formData: {
-        name: '', upperLimit: '', lowerLimit: '', gameConfigId: '', rebateUserGroups: []
+        name: '', upperLimit: '', lowerLimit: '', gameConfigId: '', groupOptions: []
       },
-      memberTypes: [],
-      gameTypes: []
+      groupOptions: []
     }
   },
   created () {
     this.fetchRebateList()
+    this.fetchUserGroup()
+    console.log(this.gameType)
   },
   methods: {
     // 数据变动修改是否启用
@@ -130,7 +134,7 @@ export default {
         }
       })
     },
-    // 获取游戏列表
+    // 获取返水列表
     fetchRebateList () {
       this.$httpAPI.rebateList({
         params: {
@@ -141,8 +145,27 @@ export default {
       }).then(response => {
         this.tableData = response.data.data
         this.total = response.data.amount
-        // console.log(this.tableData)
       }).catch(error => console.log(error))
+    },
+    fetchUserGroup () {
+      const length = this.$store.state.user.usersGroup.length
+      // 如果在vuex中已经有选择项数据，直接用现有数据；否则发起请求
+      if (!length) {
+        this.$httpAPI.getSystemGroup({ params: { pageNo: 1, pageSize: 100 } })
+          .then(response => {
+            // 把数据处理UI组件要求的格式
+            this.$_.forEach(response.data.data, item => {
+              this.groupOptions.push({
+                value: String(item.groupId),
+                label: item.name
+              })
+            })
+            this.$store.dispatch('addUsersGoup', this.groupOptions) // 将数据存入vuex中，减少http请求
+          })
+          .catch(error => console.log(error))
+      } else {
+        this.groupOptions = this.$store.state.user.usersGroup
+      }
     }
   }
 }

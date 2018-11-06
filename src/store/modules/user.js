@@ -2,7 +2,8 @@ import { ADD_USERS_GROUP, INIT_USERS_GROUP } from '../mutation-types'
 
 const userManage = {
   state: {
-    usersGroup: []
+    usersGroup: [],
+    gamesList: []
   },
   getters: {
   },
