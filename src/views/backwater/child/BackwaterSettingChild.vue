@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-input v-model="level" placeholder="返水等级名称" style="width: 160px;margin-bottom: 15px"></el-input>
-    <el-button type="primary" icon="el-icon-search" style="margin-left: 10px"></el-button>
+    <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="sumbit"></el-button>
     <el-button type="primary" icon="el-icon-plus" style="float: right" @click="dialogVisible = true">会员返佣设置</el-button>
     <el-table
       :data="tableData"
@@ -135,6 +135,9 @@ export default {
     this.fetchUserGroup()
   },
   methods: {
+    sumbit () {
+      this.fetchRebateList()
+    },
     handleSizeChange (val) {
       this.pageSize = val
       this.fetchRebateList()
@@ -168,6 +171,7 @@ export default {
     fetchRebateList () {
       this.$httpAPI.rebateList({
         params: {
+          name: this.level,
           gameConfigId: this.gameConfigId,
           pageNo: this.currentPage,
           pageSize: this.pageSize
@@ -177,6 +181,7 @@ export default {
         this.total = response.data.amount
       }).catch(error => console.log(error))
     },
+    // 获取用户分组
     fetchUserGroup () {
       const length = this.$store.state.user.usersGroup.length
       // 如果在vuex中已经有选择项数据，直接用现有数据；否则发起请求
