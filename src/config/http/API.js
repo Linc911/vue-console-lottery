@@ -73,5 +73,13 @@ export default {
   updateFinanceWithdrawApplyStatus: options => axios.get('/api-u/withdrawOrder/audit', options), // 审批提款申请
 
   fetchFinanceDepositOnline: options => axios.get('/api-p/UserOrder/list', options), // 在线存款列表
-  fetchFinanceSheet: options => axios.get('/api-u/backend/finance/statistics', options) // 会员财务报表
+  fetchFinanceSheet: options => axios.get('/api-u/backend/finance/statistics', options), // 会员财务报表
+
+  // 会员返水
+  rebateList: options => axios.get('/api-b/rebate/list', options), // 会员返水设置列表
+  rebateSave: data => axios.post('/api-b/rebate/save', data), // 会员返水设置保存
+  rebateStatus: options => axios.get('/api-b/rebate/status', options), // 会员返水设置修改状态
+  rebateLogList: options => axios.get('/api-b/rebateLog/list', options), // 会员返水信息列表
+  statistic: options => axios.get('/api-b/rebateLog/statistic', options) // 会员返水信息列表
+
 }
