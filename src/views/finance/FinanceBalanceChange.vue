@@ -9,8 +9,8 @@
         <el-input v-model="formData.username" placeholder="会员账号" />
       </el-form-item>
 
-      <el-form-item prop="gameType" label="金额类型">
-        <el-select v-model="formData.gameType" placeholder="选择金额类型">
+      <el-form-item prop="gameType" label="账户类型">
+        <el-select v-model="formData.gameType" placeholder="选择账户类型">
           <el-option v-for="item in gameTypes" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>

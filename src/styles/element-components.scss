@@ -13,6 +13,12 @@
   color: #999;
 }
 
+/* button 组件 */
+// mini button
+.el-button--mini {
+  padding: 7px 7px;
+}
+
 /* card 组件 */
 // 头部标题
 .el-card__header {
@@ -32,7 +38,7 @@
   border-right: none;
 }
 
-/* 时间选择组件 */
+/* datapicker 组件 */
 .el-date-editor .el-range-separator {
   min-width: 18px;
 }

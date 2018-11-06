@@ -59,7 +59,7 @@ export default {
   methods: {
     // 接收搜索信息，触发搜索
     handleSearch (obj) {
-      this.requestParams = Object.assign(this.requestParams, obj)
+      this.requestParams = Object.assign(this.requestParams, obj, { pageNo: 1 })
       this.fetchFinanceWithdrawApply()
     },
     // 显示审批加减款表单弹框

@@ -9,8 +9,6 @@
 
     <el-table-column prop="username" label="会员账号" />
 
-    <el-table-column prop="nickname" label="会员昵称" />
-
     <el-table-column prop="gameName" label="账户类型" />
 
     <el-table-column prop="loanName" label="借贷类型" />
@@ -40,6 +38,7 @@
         <el-button
           @click="showDialogAudit(scope.row)"
           type="primary"
+          size="mini"
         >{{scope.row.status | auditTransfer}}</el-button>
       </template>
     </el-table-column>

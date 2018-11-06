@@ -9,8 +9,6 @@
 
     <el-table-column prop="username" label="会员账号" />
 
-    <el-table-column prop="nickname" label="会员昵称" />
-
     <el-table-column prop="orderID" label="订单流水号" :width="170" />
 
     <el-table-column label="支付时间" :width="140">

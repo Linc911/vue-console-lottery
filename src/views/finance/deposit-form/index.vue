@@ -17,6 +17,7 @@
     <div class="table-list">
       <!-- 表格 -->
       <DepositFormTable :data="tableData" @on-show="showDialogAudit" />
+
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
@@ -25,6 +26,7 @@
         httpURL="fetchBalanceChangeList"
       />
     </div>
+
     <!-- 审核弹框 -->
     <DepositFormDialog @on-success="handleStatusChange" :formData="currentItem" ref="dialogDepositForm" />
   </div>
@@ -38,7 +40,7 @@ import BasePagination from '@/components/base/BasePagination'
 import DepositFormDialog from './components/DepositFormDialog'
 
 export default {
-  name: 'LimintchangeUnchecked',
+  name: 'FinanceDepositForm',
   components: {
     BaseBreadcrumb,
     DepositFormSearch,
@@ -84,7 +86,7 @@ export default {
     },
     // 触发检索
     handleSearch (params) {
-      this.requestParams = Object.assign(this.requestParams, params)
+      this.requestParams = Object.assign(this.requestParams, params, { pageNo: 1 })
       this.fetchBalanceChangeList()
     },
     // 显示审批加减款表单弹框

@@ -1,5 +1,5 @@
 <template lang="html">
-  <el-form-item label="时间查询">
+  <el-form-item :label="label">
     <el-date-picker
       v-model="value"
       @change="handleDatePickerChange"
@@ -18,6 +18,10 @@
 <script>
 export default {
   name: 'SearchUsername',
+  props: {
+    label: String,
+    default: '时间查询'
+  },
   data () {
     return {
       value: '',
@@ -62,7 +66,6 @@ export default {
         payload = { startTime: '', endTime: '' }
       }
 
-      console.log(this.value)
       this.$emit('on-change', payload)
     },
     reset () {

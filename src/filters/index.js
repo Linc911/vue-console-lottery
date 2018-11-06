@@ -76,6 +76,19 @@ Vue.filter('auditTransfer', value => {
 
 /* 彩票相关 */
 // 彩票球
+Vue.filter('lotteryStatus', value => {
+  switch (value) {
+    case 0:
+      return '未开奖'
+    case 1:
+      return '未结算'
+    case 2:
+      return '已结算'
+    default:
+      return '其他'
+  }
+})
+// 彩票球
 Vue.filter('lotteryBall', value => {
   if (value === 11) {
     return '和 和'

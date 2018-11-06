@@ -43,6 +43,11 @@ export default {
   fetchLotteryResultsEleven: options => axios.get('/api-g/result/1', options),
   fetchLotteryResultsFast3: options => axios.get('/api-g/result/2', options),
 
+  updateLotteryResultEleven: options => axios.get('/api-g/result/1/settlement', options), // 手动修改开奖结果
+  updateLotteryResultFast3: options => axios.get('/api-g/result/2/settlement', options),
+
+  cancelLotteryResultEleven: options => axios.get('/api-g/result/1/cancel', options), // 撤单
+  cancelLotteryResultFast3: options => axios.get('/api-g/result/2/cancel', options),
   // 赔率设置
   fetchLotteryOddsEleven: options => axios.get('/api-g/oddsset/1', options), // 赔率11选5列表
   fetchLotteryOddsFast3: options => axios.get('/api-g/oddsset/2', options), // 赔率快3列表
