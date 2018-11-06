@@ -12,7 +12,7 @@
       <el-table-column type="index" :min-width="30" />
       <el-table-column prop="name" label="返水等级">
         <template slot-scope="scope">
-          <span>{{scope.row.name | returnLevel}}</span>
+          <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="upperLimit" label="有效投注上限">
