@@ -82,11 +82,11 @@
       </el-form>
     </el-dialog>
     <el-pagination
-      @size-change="fetchRebateList"
-      @current-change="fetchRebateList"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="pageSize"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
@@ -112,9 +112,9 @@ export default {
     return {
       level: '',
       tableData: [],
-      pageSize: 100,
+      pageSize: 10,
       currentPage: 1,
-      total: 1,
+      total: 0,
       dialogVisible: false,
       formData: {
         name: '', upperLimit: '', ratio: '', lowerLimit: '', gameConfigId: '', rebateUserGroups: []
@@ -135,6 +135,15 @@ export default {
     this.fetchUserGroup()
   },
   methods: {
+    handleSizeChange (val) {
+      this.pageSize = val
+      this.fetchRebateList()
+    },
+    handleCurrentChange (val) {
+      console.log(val)
+      this.currentPage = val
+      this.fetchRebateList()
+    },
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {

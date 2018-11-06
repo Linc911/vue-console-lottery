@@ -1,16 +1,17 @@
 <template>
   <div>
     <el-date-picker
-      v-model="date"
+      v-model="timestamp"
       type="daterange"
       align="right"
       unlink-panels
       range-separator="—"
       start-placeholder="请选择开始日期"
       end-placeholder="请选择结束日期"
+      value-format="timestamp"
       :picker-options="pickerOptions">
     </el-date-picker>
-    <el-input v-model="level" placeholder="会员账号" style="width: 130px;margin:0 0 15px 10px"></el-input>
+    <el-input v-model="name" placeholder="会员账号" style="width: 130px;margin:0 0 15px 10px"></el-input>
     <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="search"></el-button>
     <el-button type="primary" icon="el-icon-refresh" style="float: right" @click="refresh"></el-button>
     <el-table
@@ -55,10 +56,20 @@
       <el-table-column prop="rebateTypeDesc" label="返水类型">
       </el-table-column>
     </el-table>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="10"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
 <script type="text/javascript">
+
 export default {
   props: {
     gameConfigId: {
@@ -68,8 +79,8 @@ export default {
   data () {
     return {
       activeName: 'second',
-      date: '',
-      level: '',
+      timestamp: '',
+      name: '',
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -97,15 +108,30 @@ export default {
           }
         }]
       },
-      tableData: []
+      tableData: [],
+      pageSize: 100,
+      currentPage: 1,
+      total: 0
     }
   },
   created () {
     this.fetchRbateLogList()
   },
   methods: {
+    handleSizeChange (val) {
+      this.pageSize = val
+      this.fetchRbateLogList()
+    },
+    handleCurrentChange (val) {
+      console.log(val)
+      this.currentPage = val
+      this.fetchRbateLogList()
+    },
     search () {
-      console.log(this.date)
+      if (!this.name && !this.timestamp) {
+        return
+      }
+      this.fetchRbateLogList()
     },
     refresh () {
       this.fetchRbateLogList()
@@ -116,13 +142,16 @@ export default {
     fetchRbateLogList () {
       this.$httpAPI.rebateLogList({
         params: {
-          pageNo: 1,
-          pageSize: 10,
-          gameConfigId: this.gameConfigId
+          pageNo: this.currentPage,
+          pageSize: this.pageSize,
+          gameConfigId: this.gameConfigId,
+          beginDate: this.timestamp[0],
+          endDate: this.timestamp[1],
+          userName: this.name
         }
       }).then(response => {
         this.tableData = response.data.data
-        console.log(this.tableData)
+        this.total = response.data.amount
       }).catch(error => console.log(error))
     }
   }
