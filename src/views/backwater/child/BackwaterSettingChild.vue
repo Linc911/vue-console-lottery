@@ -85,8 +85,8 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
+      :page-sizes="[20,40,60,80,100]"
+      :page-size="20"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
@@ -220,7 +220,6 @@ export default {
         }
       }).then(response => {
         this.statistic = response.data.data
-        console.log(this.statistic)
       }).catch(error => console.log(error))
     }
   }
@@ -228,6 +227,7 @@ export default {
 </script>
 <style type="text/css">
   .statistics {
+    width: 800px;
     position: relative;
     top: -25px;
     color: #666666;
