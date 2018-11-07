@@ -118,27 +118,29 @@ export default {
     this.fetchRbateLogList()
   },
   methods: {
+    // 改变显示数量
     handleSizeChange (val) {
       this.pageSize = val
       this.fetchRbateLogList()
     },
+    // 改变当前页
     handleCurrentChange (val) {
       console.log(val)
       this.currentPage = val
       this.fetchRbateLogList()
     },
+    // 搜索
     search () {
       if (!this.name && !this.timestamp) {
         return
       }
       this.fetchRbateLogList()
     },
+    // 刷新
     refresh () {
       this.fetchRbateLogList()
     },
-    handleClick (tab, event) {
-      console.log(tab, event)
-    },
+    // 获取返水信息
     fetchRbateLogList () {
       this.$httpAPI.rebateLogList({
         params: {

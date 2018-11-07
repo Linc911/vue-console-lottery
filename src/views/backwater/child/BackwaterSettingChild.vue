@@ -160,9 +160,14 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$httpAPI.rebateSave(this.formData).then(() => {
-            this.$router.push({ name: 'BackwaterSetting' })
-            this.$message.success('添加成功！')
+          this.$httpAPI.rebateSave(this.formData).then((response) => {
+            console.log(response)
+            if (response.data.status === 200) {
+              this.$router.push({ name: 'BackwaterSetting' })
+              this.$message.success('添加成功！')
+            } else {
+              this.$message.error(response.data.msg)
+            }
           }).catch(error => console.log(error))
         } else {
           this.$message.warning('表单填写不正确，请根据提示填写！')
