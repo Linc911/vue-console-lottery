@@ -234,7 +234,7 @@ export default {
   .statistics {
     width: 1000px;
     position: relative;
-    top: -25px;
+    top: -26px;
     color: #666666;
     font-size: 14px;
     font-weight: bold;
