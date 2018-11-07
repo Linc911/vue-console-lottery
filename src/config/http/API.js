@@ -3,7 +3,8 @@ import axios from './index'
 export default {
   /* 公共数据 */
   fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 彩票游戏菜单
-  fetchGamesList: () => axios.get('/api-g/gameconfig'), // 游戏菜单
+  fetchGamesList: () => axios.get('/api-g/gameconfig'), // 游戏类型/账户类型
+  fetchUserId: options => axios.get('/api-u/users-anon/getUserId', options), // 查询会员ID
 
   /* 登录 */
   postUserLogin: (data, options) => axios.post('/api-u/sys/login', data, options),
@@ -42,6 +43,11 @@ export default {
   fetchLotteryResultsEleven: options => axios.get('/api-g/result/1', options),
   fetchLotteryResultsFast3: options => axios.get('/api-g/result/2', options),
 
+  updateLotteryResultEleven: options => axios.get('/api-g/result/1/settlement', options), // 手动修改开奖结果
+  updateLotteryResultFast3: options => axios.get('/api-g/result/2/settlement', options),
+
+  cancelLotteryResultEleven: options => axios.get('/api-g/result/1/cancel', options), // 撤单
+  cancelLotteryResultFast3: options => axios.get('/api-g/result/2/cancel', options),
   // 赔率设置
   fetchLotteryOddsEleven: options => axios.get('/api-g/oddsset/1', options), // 赔率11选5列表
   fetchLotteryOddsFast3: options => axios.get('/api-g/oddsset/2', options), // 赔率快3列表
@@ -49,10 +55,9 @@ export default {
   postLotteryOddsFast3: data => axios.post('/api-g/oddsset/2/save', data), // 修改单个快3的赔率
 
   /* 财务管理 */
-  fetchFinanceSheet: options => axios.get('/api-u/backend/finance/statistics', options), // 会员财务报表
   fetchBalanceChangeList: options => axios.get('/api-b/changeUserRecharge/list', options), // 全部加减款数据（填单存款管理）
+  fetchBalanceChangeItem: options => axios.get('/api-m/changeUserRecharge/info', options), // 加减款每项详情
   saveFinanceBalanceChange: data => axios.post('/api-b/changeUserRecharge/save', data), // 提交加减款表单（数据更新到填单存款管理列表中）
-  fetchBalanceChangeItem: options => axios.get('/api-m/changeUserRecharge/info', options), // 全部单条加减款详情
   updateDepositFormStatus: options => axios.get('/api-b/changeUserRecharge/audit', options), // 审批加减款操作
 
   createFinanceLimitChange: data => axios.post('/api-u/convertRecharge/add', data), // 额度转换管理列表
@@ -62,6 +67,13 @@ export default {
   fetchFinanceLoanList: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
   createFinanceLoan: data => axios.post('/api-b/dictionary/save', data), // 创建与更新借贷类型数据
   deleteFinanceLoan: options => axios.get('/api-b/dictionary/delete', options), // 删除借贷类型数据
+
+  fetchFinanceWithdrawApply: options => axios.get('/api-u/withdrawOrder/list', options), // 提款申请管理列表
+  fetchFinanceWithdrawApplyItem: options => axios.get('/api-u/withdrawOrder/info', options), // 提款申请管理每项详情
+  updateFinanceWithdrawApplyStatus: options => axios.get('/api-u/withdrawOrder/audit', options), // 审批提款申请
+
+  fetchFinanceDepositOnline: options => axios.get('/api-p/UserOrder/list', options), // 在线存款列表
+  fetchFinanceSheet: options => axios.get('/api-u/backend/finance/statistics', options), // 会员财务报表
 
   // 会员返水
   rebateList: options => axios.get('/api-b/rebate/list', options), // 会员返水设置列表

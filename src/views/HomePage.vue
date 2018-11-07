@@ -7,12 +7,19 @@
           <span> 关键数据实时指标</span>
         </div>
         <ul class="clearfix">
-          <li v-for="item in summary" :key="item.identifier" :class="item.color" class="data-summary-item" >
+          <router-link
+            v-for="item in summary"
+            :key="item.identifier"
+            :to="item.path"
+            :class="item.color"
+            class="data-summary-item"
+            tag="li"
+          >
             <p class="data-summary-number">
               <AnimatedNumber :value="statisticData[item.identifier]" :formatValue="formatValue" :duration="600" />
             </p>
             <p class="data-summary-title">{{item.title}}</p>
-          </li>
+          </router-link>
         </ul>
       </el-card>
     </section>
@@ -105,11 +112,11 @@ export default {
       chartDoughnutData: null,
       statisticData: {},
       summary: [
-        { title: '在线会员数量', identifier: 'onlineuseramount', color: 'red' },
-        { title: '今日新增会员数量', identifier: 'todayuseramount', color: 'blue' },
-        { title: '总会员数量', identifier: 'useramount', color: 'orange' },
-        { title: '今日注单笔数', identifier: 'todayorderamount', color: 'purple' },
-        { title: '今日注单总额', identifier: 'todayordermoney', color: 'green' }
+        { title: '在线会员数量', identifier: 'onlineuseramount', color: 'red', path: {} },
+        { title: '今日新增会员数量', identifier: 'todayuseramount', color: 'blue', path: {} },
+        { title: '总会员数量', identifier: 'useramount', color: 'orange', path: { name: 'UsersList' } },
+        { title: '今日注单笔数', identifier: 'todayorderamount', color: 'purple', path: {} },
+        { title: '今日注单总额', identifier: 'todayordermoney', color: 'green', path: {} }
       ]
     }
   },
@@ -206,6 +213,7 @@ export default {
   height: 80px;
   padding: 15px;
   margin: 0 1%;
+  cursor: pointer;
   &.red {
     background-color: #FC7A6A;
   }

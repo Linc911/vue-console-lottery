@@ -1,12 +1,16 @@
 <template lang="html">
   <div class="balance-change">
+    <!-- 面包屑导航 -->
+    <BaseBreadcrumb :breadcrumb="breadcrumb" />
+
+    <!-- 主要内容 -->
     <el-form :model="formData" :rules="rules" ref="balanceForm" label-width="120px">
       <el-form-item prop="username" label="会员账号">
         <el-input v-model="formData.username" placeholder="会员账号" />
       </el-form-item>
 
-      <el-form-item prop="gameType" label="金额类型">
-        <el-select v-model="formData.gameType" placeholder="选择金额类型">
+      <el-form-item prop="gameType" label="账户类型">
+        <el-select v-model="formData.gameType" placeholder="选择账户类型">
           <el-option v-for="item in gameTypes" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
@@ -40,10 +44,29 @@
 </template>
 
 <script>
+import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
+
 export default {
   name: 'FinanceBalanceChange',
+  components: {
+    BaseBreadcrumb
+  },
   data () {
+    var validateUsername = (rule, value, callback) => {
+      this.$httpAPI.fetchUserId({ params: { username: value } }).then(response => {
+        if (response.data.data === null) {
+          callback(new Error('系统中没有找到匹配的会员帐号！'))
+        } else {
+          callback()
+        }
+      }).catch(error => console.log(error))
+    }
+
     return {
+      breadcrumb: [
+        { name: '财务管理' },
+        { name: '加减款操作' }
+      ],
       loanTypes: [],
       gameTypes: [],
       formData: {
@@ -52,7 +75,7 @@ export default {
       rules: {
         username: [
           { required: true, message: '用户名不能为空' },
-          { min: 2, max: 20, message: '用户名长度在 2 - 20 字符之间' }
+          { validator: validateUsername, trigger: 'blur' }
         ],
         gameType: { required: true, message: '必须选择其中一个游戏类型' },
         type: { required: true, message: '必须选择其中一个调整方向' },

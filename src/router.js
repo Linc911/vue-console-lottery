@@ -15,17 +15,6 @@ import UserActiveInfoUpdate from './views/useractive/UserActiveInfoUpdate'
 import UserActiveAvatarUpdate from './views/useractive/UserActiveAvatarUpdate'
 import UserActivePhoneUpdate from './views/useractive/UserActivePhoneUpdate'
 
-import UsersInfo from './views/user/info/UsersInfo'
-import UsersList from './views/user/info/users-list'
-import UserBets from './views/user/all/UserBets'
-import UserBetsStatistics from './views/user/all/UserBetsStatistics'
-import UserRechargeLogs from './views/user/all/UserRechargeLogs'
-import UserAccountDeposit from './views/user/all/UserAccountDeposit'
-import UserHttpLogs from './views/user/all/UserHttpLogs'
-import UsersLogs from './views/user/UsersLogs'
-import UsersAccountCheck from './views/user/UsersAccountCheck'
-import UsersKeyInfo from './views/user/UsersKeyInfo'
-
 /* 系统设置 */
 // 菜单
 import SystemMenuList from './views/system/SystemMenuList'
@@ -55,6 +44,18 @@ import SystemLotteryList from './views/system/lottery/SystemLotteryList'
 import SystemLotteryInfo from './views/system/lottery/SystemLotteryInfo'
 import SystemLotteryUpdate from './views/system/lottery/SystemLotteryUpdate'
 
+/* 系统设置 */
+import UsersManage from './views/users/UsersManage'
+import UsersList from './views/users/users-list'
+import UserBets from './views/users/UserBets'
+import UserBetsStatistics from './views/users/UserBetsStatistics'
+import UserRechargeLogs from './views/users/UserRechargeLogs'
+// import UserAccountDeposit from './views/users/UserAccountDeposit'
+import UserHttpLogs from './views/users/UserHttpLogs'
+import UsersLogs from './views/users/UsersLogs'
+import UsersAccount from './views/users/UsersAccount'
+import UsersKeyword from './views/users/UsersKeyword'
+
 /* 彩票管理 */
 import LotteryOpen from './views/lottery/LotteryOpen'
 import LotteryResultsEleven from './views/lottery/LotteryResultsEleven'
@@ -73,11 +74,11 @@ import LotteryUsersInfo from './views/lottery/LotteryUsersInfo'
 import FinanceManage from './views/finance/FinanceManage'
 import FinanceBalanceChange from './views/finance/FinanceBalanceChange'
 import FinanceDepositForm from './views/finance/deposit-form'
-import FinanceDepositOnline from './views/finance/FinanceDepositOnline'
-import FinanceWithdrawApply from './views/finance/FinanceWithdrawApply'
+import FinanceDepositOnline from './views/finance/deposit-online'
+import FinanceWithdrawApply from './views/finance/withdraw-apply'
 import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
 import FinanceLimitChange from './views/finance/limit-change'
-import FinanceBalanceSheet from './views/finance/FinanceBalanceSheet'
+import FinanceBalanceSheet from './views/finance/balance-sheet'
 // 常规配置
 import FinanceSetting from './views/finance/setting/FinanceSetting'
 import FinanceSettingList from './views/finance/setting/FinanceSettingList'
@@ -201,16 +202,34 @@ const router = new Router({
         /* 会员管理模块 */
         // 会员信息
         {
-          name: 'UserInfo',
-          path: '/users/info',
+          name: 'UsersManage',
+          path: '/users',
           redirect: '/users/list',
-          component: UsersInfo,
+          component: UsersManage,
           children: [
             {
               name: 'UsersList',
-              path: '/users/list',
+              path: 'list',
               component: UsersList,
-              meta: { title: '全部会员信息列表' }
+              meta: { title: '会员信息列表' }
+            },
+            {
+              name: 'UsersLogs',
+              path: 'logs',
+              component: UsersLogs,
+              meta: { title: '会员日志记录' }
+            },
+            {
+              name: 'UsersAccount',
+              path: 'account',
+              component: UsersAccount,
+              meta: { title: '会员账户核查' }
+            },
+            {
+              name: 'UsersKeyword',
+              path: 'keyword',
+              component: UsersKeyword,
+              meta: { title: '会员关键信息修改', keepAlive: true }
             }
           ]
         },
@@ -229,36 +248,15 @@ const router = new Router({
           component: UserRechargeLogs,
           meta: { title: '会员个人充值记录' }
         },
-        {
-          path: '/users/:id/depositStatistics',
-          component: UserAccountDeposit,
-          meta: { title: '存款历史统计' }
-        },
+        // {
+        //   path: '/users/:id/depositStatistics',
+        //   component: UserAccountDeposit,
+        //   meta: { title: '存款历史统计' }
+        // },
         {
           path: '/users/:id/httpLogs',
           component: UserHttpLogs,
           meta: { title: '会员个人HTTP请求日志列表' }
-        },
-        // 会员日志
-        {
-          name: 'UsersLogs',
-          path: '/users/logs',
-          component: UsersLogs,
-          meta: { title: '全部会员日志记录' }
-        },
-        // 会员账户核查
-        {
-          name: 'UsersAccountCheck',
-          path: '/users/account/check',
-          component: UsersAccountCheck,
-          meta: { title: '会员账户核查' }
-        },
-        // 会员关键信息修改
-        {
-          name: 'UsersKeyInfo',
-          path: '/users/keyinfo',
-          component: UsersKeyInfo,
-          meta: { title: '会员关键信息修改', keepAlive: true }
         },
         /* 系统管理 */
         // 系统管理 - 侧边栏菜单模块
@@ -501,16 +499,16 @@ const router = new Router({
               meta: { title: '提款申请管理', keepAlive: true }
             },
             {
-              name: 'FinanceUsersAssets',
-              path: 'users/assets',
-              component: FinanceUsersAssets,
-              meta: { title: '会员资金管理', keepAlive: true }
-            },
-            {
               name: 'FinanceLimitChange',
               path: 'limit/change',
               component: FinanceLimitChange,
               meta: { title: '额度转换管理', keepAlive: true }
+            },
+            {
+              name: 'FinanceUsersAssets',
+              path: 'users/assets',
+              component: FinanceUsersAssets,
+              meta: { title: '会员资金管理', keepAlive: true }
             },
             {
               name: 'FinanceBalanceSheet',
