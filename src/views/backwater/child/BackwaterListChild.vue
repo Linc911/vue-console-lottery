@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!--搜索表单-->
+    <div>
     <el-date-picker
       v-model="timestamp"
       type="daterange"
@@ -11,9 +13,11 @@
       value-format="timestamp"
       :picker-options="pickerOptions">
     </el-date-picker>
-    <el-input v-model="name" placeholder="会员账号" style="width: 130px;margin:0 0 15px 10px"></el-input>
-    <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="search"></el-button>
-    <el-button type="primary" icon="el-icon-refresh" style="float: right" @click="refresh"></el-button>
+      <el-input v-model="name" placeholder="会员账号" style="width: 130px;margin:0 0 15px 10px"></el-input>
+      <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="search"></el-button>
+      <el-button type="primary" icon="el-icon-refresh" style="float: right" @click="refresh"></el-button>
+    </div>
+    <!--表格-->
     <el-table
       :data="tableData"
       size="small"
@@ -56,6 +60,7 @@
       <el-table-column prop="rebateTypeDesc" label="返水类型">
       </el-table-column>
     </el-table>
+    <!--分页-->
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
