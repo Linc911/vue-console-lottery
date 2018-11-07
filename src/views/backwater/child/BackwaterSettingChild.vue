@@ -232,7 +232,7 @@ export default {
 </script>
 <style type="text/css">
   .statistics {
-    width: 800px;
+    width: 1000px;
     position: relative;
     top: -25px;
     color: #666666;
