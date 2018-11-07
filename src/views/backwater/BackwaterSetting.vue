@@ -2,7 +2,7 @@
   <div class="unknown">
     <el-tabs :tab-position="tabPosition" style="min-height: 845px;">
       <el-tab-pane v-for="(item,index) in gameType" :key="item.value" :label="item.name">
-        <Child :gameConfigId="index+1" :gameType="gameType"></Child>
+        <Child :gameConfigId="index" :gameType="gameType"></Child>
       </el-tab-pane>
     </el-tabs>
   </div>

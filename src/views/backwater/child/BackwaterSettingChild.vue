@@ -120,7 +120,7 @@ export default {
     return {
       level: '',
       tableData: [],
-      pageSize: 10,
+      pageSize: 20,
       currentPage: 1,
       total: 0,
       dialogVisible: false,
@@ -161,7 +161,6 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$httpAPI.rebateSave(this.formData).then((response) => {
-            console.log(response)
             if (response.data.status === 200) {
               this.$router.push({ name: 'BackwaterSetting' })
               this.$message.success('添加成功！')

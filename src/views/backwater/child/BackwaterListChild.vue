@@ -109,7 +109,7 @@ export default {
         }]
       },
       tableData: [],
-      pageSize: 100,
+      pageSize: 20,
       currentPage: 1,
       total: 0
     }
