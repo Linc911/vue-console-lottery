@@ -68,6 +68,6 @@ export default {
   rebateSave: data => axios.post('/api-b/rebate/save', data), // 会员返水设置保存
   rebateStatus: options => axios.get('/api-b/rebate/status', options), // 会员返水设置修改状态
   rebateLogList: options => axios.get('/api-b/rebateLog/list', options), // 会员返水信息列表
-  statistic: options => axios.get('/api-b/rebateLog/statistic', options) // 会员返水信息列表
+  statistic: options => axios.get('/api-b/rebateLog/statistic', options) // 会员返水信息统计
 
 }

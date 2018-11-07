@@ -90,6 +90,14 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+    <div class="statistics">
+      返水概况：总投注笔数[{{statistic.bettingAmount |
+      zero}}]，总投注金额:[￥{{statistic.totalBetting |
+      zero}}],有效投注金额：[￥{{statistic.validBetting |
+      zero}}]，网站盈利：[￥{{statistic.gainMoney |
+      zero}}]，返水总额：[￥{{statistic.rebateMoney |
+      zero}}]
+    </div>
   </div>
 </template>
 
@@ -127,12 +135,14 @@ export default {
         ratio: [{ required: true, message: '返佣比率不能为空' }],
         upperLimit: [{ required: true, message: '投注上限不能为空' }],
         lowerLimit: [{ required: true, message: '投注下限不能为空' }]
-      }
+      },
+      statistic: []
     }
   },
   created () {
     this.fetchRebateList()
     this.fetchUserGroup()
+    this.fetchStatistic()
   },
   methods: {
     sumbit () {
@@ -201,7 +211,27 @@ export default {
       } else {
         this.groupOptions = this.$store.state.user.usersGroup
       }
+    },
+    // 获取会员返水信息统计
+    fetchStatistic () {
+      this.$httpAPI.statistic({
+        params: {
+          gameConfigId: this.gameConfigId
+        }
+      }).then(response => {
+        this.statistic = response.data.data
+        console.log(this.statistic)
+      }).catch(error => console.log(error))
     }
   }
 }
 </script>
+<style type="text/css">
+  .statistics {
+    position: relative;
+    top: -25px;
+    color: #666666;
+    font-size: 14px;
+    font-weight: bold;
+  }
+</style>
