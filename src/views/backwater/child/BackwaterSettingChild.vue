@@ -10,7 +10,7 @@
       border
     >
       <el-table-column type="index" :min-width="30" />
-      <el-table-column prop="name" label="返水等级">
+      <el-table-column prop="name" label="返水等级名称">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
         </template>
@@ -164,6 +164,7 @@ export default {
             if (response.data.status === 200) {
               this.$router.push({ name: 'BackwaterSetting' })
               this.$message.success('添加成功！')
+              this.dialogVisible = false
             } else {
               this.$message.error(response.data.msg)
             }
