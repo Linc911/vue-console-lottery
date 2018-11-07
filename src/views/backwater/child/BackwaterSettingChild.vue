@@ -237,6 +237,6 @@ export default {
     top: -26px;
     color: #666666;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
   }
 </style>
