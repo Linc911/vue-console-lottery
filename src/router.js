@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import store from './store/index'
 import Router from 'vue-router'
 
 import NotFound from './views/NotFound'
@@ -76,8 +77,9 @@ import FinanceBalanceChange from './views/finance/FinanceBalanceChange'
 import FinanceDepositForm from './views/finance/deposit-form'
 import FinanceDepositOnline from './views/finance/deposit-online'
 import FinanceWithdrawApply from './views/finance/withdraw-apply'
-import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
 import FinanceLimitChange from './views/finance/limit-change'
+import FinanceDepositWithdrawList from './views/finance/deposit-withdraw'
+import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
 import FinanceBalanceSheet from './views/finance/balance-sheet'
 // 常规配置
 import FinanceSetting from './views/finance/setting/FinanceSetting'
@@ -496,19 +498,25 @@ const router = new Router({
               name: 'FinanceWithdrawApply',
               path: 'withdraw/apply',
               component: FinanceWithdrawApply,
-              meta: { title: '提款申请管理', keepAlive: true }
+              meta: { title: '提款申请管理' }
             },
             {
               name: 'FinanceLimitChange',
               path: 'limit/change',
               component: FinanceLimitChange,
-              meta: { title: '额度转换管理', keepAlive: true }
+              meta: { title: '额度转换管理' }
             },
             {
               name: 'FinanceUsersAssets',
               path: 'users/assets',
               component: FinanceUsersAssets,
-              meta: { title: '会员资金管理', keepAlive: true }
+              meta: { title: '会员资金管理' }
+            },
+            {
+              name: 'FinanceDepositWithdrawList',
+              path: 'depositwithdraw/list',
+              component: FinanceDepositWithdrawList,
+              meta: { title: '存/取款记录' }
             },
             {
               name: 'FinanceBalanceSheet',
@@ -732,6 +740,28 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   // 每次跳转路由，修改页签标题
   document.title = to.meta.title
+
+  // 每次跳转路由，将浏览记录压入 vuex 中的对象
+  const routes = store.state.app.historyRoutes
+  const existed = routes.some(route => route.path === to.path)
+
+  // 跳转主页时，不存储记录；检验是否已经存储过，不存储重复的路由; 最多为8个
+  if (to.path !== '/home' && to.path !== '/login/username') {
+    if (!existed) {
+      store.dispatch('initHistoryRoutesStatus')
+      store.dispatch('addHistoryRoutes', {
+        name: to.meta.title,
+        path: to.path,
+        active: true
+      })
+
+      if (routes.length >= 8) {
+        store.dispatch('removeHistoryRoutes', 0)
+      }
+    } else {
+      store.dispatch('highlightHistoryRoutes', to.path)
+    }
+  }
 
   const tokenExisted = !!localStorage.getItem('access_token')
 

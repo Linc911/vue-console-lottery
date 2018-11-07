@@ -42,7 +42,7 @@ export default {
 .aside-menu {
   position: fixed;
   left: 240px;
-  top: 80px;
+  top: 120px;
   z-index: 3;
   width: 200px;
   height: 100%;

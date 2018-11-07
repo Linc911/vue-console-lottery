@@ -6,8 +6,8 @@
     <!-- 条件筛选 -->
     <WithdrawApplySearch @on-search="handleSearch" />
 
-    <!-- 表格数据 -->
-    <div class="table-list">
+    <!-- 主要内容 -->
+    <div>
       <!-- 表格 -->
       <WithdrawApplyTable :data="tableData" @on-show="showDialogAudit" />
 

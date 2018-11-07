@@ -29,6 +29,8 @@ Vue.filter('RMB', value => {
 // 充值支付类型
 Vue.filter('paymentType', value => {
   switch (value) {
+    case -1:
+      return '客服填单'
     case 1:
       return '微信'
     default:
@@ -42,6 +44,8 @@ Vue.filter('paymentStatus', value => {
       return '未支付'
     case 1:
       return '未确认'
+    case 2:
+      return '审批成功'
     case 3:
       return '支付成功'
     case 4:

@@ -28,6 +28,7 @@
         <el-table-column prop="operations" label="操作">
           <template slot-scope="scope">
             <el-button
+              v-if="scope.row.groupId"
               @click="$router.push({ name: 'SystemGroupUpdate', params: { groupId: scope.row.groupId } })"
               icon="el-icon-edit"
               type="primary"
@@ -61,15 +62,15 @@ export default {
     }
   },
   created () {
-    this.getGroupList()
+    this.fetchUserGroups()
   },
   methods: {
     // 分页变化时，更新数据
     handlePaginationChange (payload) {
       this.tableData = payload
     },
-    getGroupList () {
-      this.$httpAPI.fetchSystemGroup({
+    fetchUserGroups () {
+      this.$httpAPI.fetchUserGroups({
         params: { pageNo: 1, pageSize: 10 }
       }).then(response => {
         this.tableData = response.data.data

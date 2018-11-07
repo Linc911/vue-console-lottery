@@ -85,7 +85,7 @@ export default {
       this.fetchUserLogs({ current: this.page.current = 1, size: this.page.size = pageSize })
     },
     fetchUserLogs (page) {
-      this.$httpAPI.fetchUsersLogs( {
+      this.$httpAPI.fetchUsersLogs({
         params: { userId: 2, pageNo: this.page.current, pageSize: this.page.size }
       }).then(response => {
         // 表格对象赋值

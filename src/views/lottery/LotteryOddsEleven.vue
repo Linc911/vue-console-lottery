@@ -9,6 +9,8 @@
     >
       <el-table-column type="index" />
 
+      <el-table-column prop="gameName" label="彩票类型" />
+
       <el-table-column
         prop="parentType"
         label="第一类类型"

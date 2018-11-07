@@ -57,11 +57,14 @@ export default {
 
 <style lang="scss" scoped>
 .el-input__inner {
-  width: 240px;
+  width: 200px;
   height: 32px;
+  padding: 0;
   line-height: 32px;
 }
 .el-range-editor .el-range-input {
+  width: 45%;
   height: 28px;
+  padding-left: 10px;
 }
 </style>

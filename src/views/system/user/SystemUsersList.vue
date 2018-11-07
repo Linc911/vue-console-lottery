@@ -24,6 +24,7 @@
 
         <div class="input-group">
           <el-button
+            @click="$message.warning('接口异常，正在调试中...')"
             type="primary"
             size="small"
           >
@@ -32,7 +33,7 @@
       </div>
       <!-- 右侧 添加新权限 -->
       <div class="search-right">
-        <router-link to="/admin/user/create">
+        <router-link to="/system/user/create">
           <el-button icon="el-icon-circle-plus-outline" size="small" type="primary">添加</el-button>
         </router-link>
       </div>
@@ -46,19 +47,25 @@
         highlight-current-row
         border
       >
-        <el-table-column type="index" :width="40"></el-table-column>
+        <el-table-column type="index" :width="40" />
 
-        <el-table-column prop="id" label="ID" :min-width="90"></el-table-column>
+        <el-table-column label="ID" :width="150">
+          <template slot-scope="scope">
+            <span>{{String(scope.row.id)}}</span>
+          </template>
+        </el-table-column>
 
-        <el-table-column prop="createTime" label="创建时间" :min-width="140">
+        <el-table-column prop="createTime" label="创建时间" :width="140">
           <template slot-scope="scope">
             <span>{{scope.row.createTime | time}}</span>
           </template>
         </el-table-column>
 
-        <el-table-column prop="username" label="名称"></el-table-column>
-        <el-table-column prop="nickname" label="昵称"></el-table-column>
-        <el-table-column prop="type" label="类型"></el-table-column>
+        <el-table-column prop="username" label="名称" :min-width="160" />
+
+        <el-table-column prop="nickname" label="昵称" :min-width="100" />
+
+        <el-table-column prop="type" label="类型" />
 
         <el-table-column prop="banlance" label="账号余额" :min-width="120">
           <template slot-scope="scope">
@@ -141,11 +148,13 @@ export default {
   methods: {
     // 分页跳转时
     handleCurrentChange (currentPage) {
-      this.fetchUserList({ start: (this.page.current = currentPage) - 1, length: this.page.size })
+      this.$message.warning('接口异常，正在调试中...')
+      // this.fetchUserList({ start: (this.page.current = currentPage) - 1, length: this.page.size })
     },
     // 分页调整每页显示条数时
     handleSizeChange (pageSize) {
-      this.fetchUserList({ start: (this.page.current = 1) - 1, length: this.page.size = pageSize })
+      this.$message.warning('接口异常，正在调试中...')
+      // this.fetchUserList({ start: (this.page.current = 1) - 1, length: this.page.size = pageSize })
     },
     // 弹框 $emit 事件处理
     handleDialogConfirm () {

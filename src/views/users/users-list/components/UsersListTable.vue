@@ -1,12 +1,13 @@
 <template lang="html">
   <div class="table-container">
-    <el-table
-    :data="data"
-    size="small"
-    highlight-current-row
-    border
-    >
+    <el-table :data="data" :max-height="735" size="small" highlight-current-row border>
       <el-table-column type="index" :width="36" />
+
+      <el-table-column label="注册时间" :width="140">
+        <template slot-scope="scope">
+          <span>{{scope.row.createTime | time}}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column label="会员账号" :min-width="120">
         <template slot-scope="scope">
@@ -19,12 +20,6 @@
         <template slot-scope="scope">
           <span>{{scope.row.groupNames}}</span>
           <BaseSetting @click.native="showGroupSetting(scope.row.id, scope.row.groupIds)" class="pull-right" />
-          <!-- <UserGroupSetting
-          @on-change="syncGroupData"
-          :userId="String(scope.row.id)"
-          :groupId="String(scope.row.groupIds)"
-          class="pull-right"
-          /> -->
         </template>
       </el-table-column>
 
@@ -39,7 +34,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="账户余额" :min-width="110">
+      <el-table-column label="会员余额" :min-width="110">
         <template slot-scope="scope">
           <span>{{scope.row.banlance | RMB}}</span>
         </template>
