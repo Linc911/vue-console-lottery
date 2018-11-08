@@ -123,7 +123,7 @@ import NoticeFeedbackSuggestions from './views/notice/NoticeFeedbackSuggestions'
 
 import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 
-/*收款出款*/
+/* 收款出款 */
 import ReceiptManage from './views/receipt/ReceiptManage'
 import Route from './views/receipt/Route'
 import Commercial from './views/receipt/Commercial'

@@ -22,12 +22,12 @@ export default {
     }
   },
   created () {
-    this.fetchGamesList()
+    this.fetchConfigPayTypeList()
   },
   methods: {
     // 获取游戏列表
-    fetchGamesList () {
-      this.$httpAPI.fetchGamesList().then(response => {
+    fetchConfigPayTypeList () {
+      this.$httpAPI.configPayTypeList().then(response => {
         this.gameType = response.data.data
       }).catch(error => console.log(error))
     }
@@ -35,6 +35,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>
