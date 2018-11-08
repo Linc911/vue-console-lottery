@@ -51,6 +51,11 @@ export default {
       }
     }
   },
+  watch: {
+    data () {
+      this.formData = Object.assign({}, this.data)
+    }
+  },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {

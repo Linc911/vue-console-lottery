@@ -65,6 +65,7 @@ export default {
   updateFinanceLimitChangeStatus: options => axios.get('/api-u/convertRecharge/audit', options), // 审批额度转换状态
 
   fetchFinanceLoanList: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
+  fetchFinanceLoanType: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
   createFinanceLoan: data => axios.post('/api-b/dictionary/save', data), // 创建与更新借贷类型数据
   deleteFinanceLoan: options => axios.get('/api-b/dictionary/delete', options), // 删除借贷类型数据
 
@@ -73,7 +74,9 @@ export default {
   updateFinanceWithdrawApplyStatus: options => axios.get('/api-u/withdrawOrder/audit', options), // 审批提款申请
 
   fetchFinanceDepositOnline: options => axios.get('/api-p/UserOrder/list', options), // 在线存款列表
+
   fetchFinanceSheet: options => axios.get('/api-u/backend/finance/statistics', options), // 会员财务报表
+  fetchFinanceStatistics: options => axios.get('/api-p/statistics/finance', options), // 财务统计汇总
 
   fetchFinanceDepoistLogs: options => axios.get('/api-p/UserOrder/orderAndRecharge', options), // 所有存款记录
 

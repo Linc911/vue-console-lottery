@@ -59,7 +59,7 @@ import UsersKeyword from './views/users/UsersKeyword'
 
 /* 彩票管理 */
 import LotteryOpen from './views/lottery/LotteryOpen'
-import LotteryResultsEleven from './views/lottery/LotteryResultsEleven'
+import LotteryResultsEleven from './views/lottery/results-eleven'
 import LotteryResultsFast3 from './views/lottery/LotteryResultsFast3'
 import LotteryManage from './views/lottery/LotteryManage'
 import LotteryOddsEleven from './views/lottery/LotteryOddsEleven'
@@ -81,6 +81,7 @@ import FinanceLimitChange from './views/finance/limit-change'
 import FinanceDepositWithdrawList from './views/finance/deposit-withdraw'
 import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
 import FinanceBalanceSheet from './views/finance/balance-sheet'
+import FinanceStatistics from './views/finance/FinanceStatistics'
 // 常规配置
 import FinanceSetting from './views/finance/setting/FinanceSetting'
 import FinanceSettingList from './views/finance/setting/FinanceSettingList'
@@ -439,7 +440,14 @@ const router = new Router({
               name: 'LotteryResultsEleven',
               path: 'results/eleven/:gameId',
               component: LotteryResultsEleven,
-              meta: { title: '11选5开奖结果' }
+              meta: {
+                title: '11选5开奖结果',
+                breadcrumb: [
+                  { name: '彩票管理' },
+                  { name: '彩票开奖' },
+                  { name: '11选5' }
+                ]
+              }
             },
             {
               name: 'LotteryResultsFast3',
@@ -480,13 +488,26 @@ const router = new Router({
               name: 'FinanceBalanceChange',
               path: 'balance/change',
               component: FinanceBalanceChange,
-              meta: { title: '加减款操作', keepAlive: true }
+              meta: {
+                title: '加减款操作',
+                breadcrumb: [
+                  { name: '财务管理' },
+                  { name: '加减款操作' }
+                ],
+                keepAlive: true
+              }
             },
             {
               name: 'FinanceDepositForm',
               path: 'deposit/form',
               component: FinanceDepositForm,
-              meta: { title: '填单存款管理' }
+              meta: {
+                title: '填单存款管理',
+                breadcrumb: [
+                  { name: '财务管理' },
+                  { name: '填单存款管理' }
+                ]
+              }
             },
             {
               name: 'FinanceDepositOnline',
@@ -522,7 +543,13 @@ const router = new Router({
               name: 'FinanceBalanceSheet',
               path: 'balance/sheet',
               component: FinanceBalanceSheet,
-              meta: { title: '会员财务报表', keepAlive: true }
+              meta: { title: '会员财务报表' }
+            },
+            {
+              name: 'FinanceStatistics',
+              path: 'statistics',
+              component: FinanceStatistics,
+              meta: { title: '平台收支汇总', keepAlive: true }
             },
             {
               name: 'FinanceSetting',
@@ -748,15 +775,18 @@ router.beforeEach((to, from, next) => {
   // 跳转主页时，不存储记录；检验是否已经存储过，不存储重复的路由; 最多为8个
   if (to.path !== '/home' && to.path !== '/login/username') {
     if (!existed) {
-      store.dispatch('initHistoryRoutesStatus')
-      store.dispatch('addHistoryRoutes', {
-        name: to.meta.title,
-        path: to.path,
-        active: true
-      })
+      const titleRepeated = routes.some(route => route.name === to.meta.title)
+      if (!titleRepeated) {
+        store.dispatch('initHistoryRoutesStatus')
+        store.dispatch('addHistoryRoutes', {
+          name: to.meta.title,
+          path: to.path,
+          active: true
+        })
 
-      if (routes.length >= 8) {
-        store.dispatch('removeHistoryRoutes', 0)
+        if (routes.length >= 8) {
+          store.dispatch('removeHistoryRoutes', 0)
+        }
       }
     } else {
       store.dispatch('highlightHistoryRoutes', to.path)

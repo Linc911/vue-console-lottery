@@ -85,12 +85,12 @@ export default {
       this.$httpAPI.fetchUsersList({
         params: Object.assign({ pageNo: 1, pageSize: 10 }, this.requestParams)
       }).then(response => {
-        if (response.data.data) {
-          this.tableData = response.data.data
+        if (response.data.data.data) {
+          this.tableData = response.data.data.data
         } else {
           this.tableData = []
         }
-        this.pageTotal = response.data.amount
+        this.pageTotal = response.data.data.amount
       }).catch(error => console.log(error))
     }
   }

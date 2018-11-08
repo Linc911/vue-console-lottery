@@ -43,7 +43,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :min-width="240">
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button @click="CheckoutManual(scope.row)" type="primary" size="mini">手动结算</el-button>
           <!-- <el-button @click="showTip" type="primary" size="mini">开奖详情</el-button>

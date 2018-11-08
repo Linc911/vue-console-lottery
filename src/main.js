@@ -11,9 +11,10 @@ import ElementUI from 'element-ui'
 import './directives'
 import './filters'
 
-// HTTP拦截处理文件
-import axios from './config/http'
+// 公共模块
+import axios from './config/http' // HTTP拦截处理文件
 import API from './config/http/API'
+import utils from './config/utils'
 
 /* CSS 文件引入 */
 // ElementUI；样式引入必须在其他CSS引入文件之前引入，以便后续的样式覆盖原ElementUI的初始样式
@@ -31,6 +32,7 @@ Vue.use(ElementUI)
 Vue.prototype.$axios = axios
 Vue.prototype.$httpAPI = API
 Vue.prototype.$_ = _
+Vue.prototype.$utils = utils
 Vue.prototype.myWindow = window
 
 Vue.config.productionTip = false

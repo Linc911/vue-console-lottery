@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="deposit-form">
     <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="breadcrumb" />
+    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
 
     <!-- 检索栏 -->
     <DepositFormSearch @on-search="handleSearch" />
@@ -50,10 +50,6 @@ export default {
   },
   data () {
     return {
-      breadcrumb: [
-        { name: '财务管理' },
-        { name: '填单存款管理' }
-      ],
       activeTab: 'unchecked', // 当前活动菜单
       tableData: [],
       pageTotal: 0,
@@ -104,7 +100,12 @@ export default {
     },
     fetchBalanceChangeList () {
       this.$httpAPI.fetchBalanceChangeList({ params: Object.assign({ pageNo: 1, pageSize: 10 }, this.requestParams) }).then(response => {
-        response.data.data ? (this.tableData = response.data.data) : (this.tableData = [])
+        if (response.data.data) {
+          this.tableData = response.data.data
+        } else {
+          this.tableData = []
+        }
+
         this.pageTotal = response.data.amount
       }).catch(error => console.log(error))
     }

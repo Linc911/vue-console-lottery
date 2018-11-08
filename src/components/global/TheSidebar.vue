@@ -92,8 +92,8 @@ export default {
             { id: 'test0706', name: '额度转换管理', path: '/finance/limit/change', icon: 'fa-cubes' },
             { id: 'test0705', name: '会员资金管理', path: '/finance/users/assets', icon: 'fa-cubes' },
             { id: 'test0709', name: '存/取款记录', path: '/finance/depositwithdraw/list', icon: 'fa-cubes' },
-            { id: 'test0710', name: '平台收支汇总', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test0707', name: '会员财务报表', path: '/finance/balance/sheet', icon: 'fa-cubes' },
+            { id: 'test0710', name: '平台收支汇总', path: '/finance/statistics', icon: 'fa-cubes' },
             { id: 'test0708', name: '常规配置', path: '/finance/setting', icon: 'fa-cubes' }
           ]
         },

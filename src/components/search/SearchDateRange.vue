@@ -19,8 +19,10 @@
 export default {
   name: 'SearchUsername',
   props: {
-    label: String,
-    default: '时间查询'
+    label: {
+      type: String,
+      default: '时间查询'
+    }
   },
   data () {
     return {
