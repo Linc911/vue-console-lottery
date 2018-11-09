@@ -1,9 +1,13 @@
 <template lang="html">
   <section class="users-list">
-    <!-- 条件筛选 -->
+    <!-- 面包屑导航 -->
+    <BaseBreadcrumb :breadcrumb="breadcrumb" />
 
-    <!-- 表格数据 -->
-    <div class="table-list">
+    <!-- 条件筛选 -->
+    <UsersListSearch @on-search="handleSearch" />
+
+    <!-- 主要内容 -->
+    <div>
       <!-- 表格 -->
       <UsersListTable :data="tableData" />
 
@@ -11,6 +15,7 @@
       <BasePagination
         @on-change="handlePaginationChange"
         :pageTotal="pageTotal"
+        :requestParams="requestParams"
         httpURL="fetchUsersList"
       />
     </div>
@@ -18,19 +23,28 @@
 </template>
 
 <script>
+import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
+import UsersListSearch from './components/UsersListSearch'
 import UsersListTable from './components/UsersListTable'
 import BasePagination from '@/components/base/BasePagination'
 
 export default {
   name: 'UsersList',
   components: {
+    BaseBreadcrumb,
+    UsersListSearch,
     UsersListTable,
     BasePagination
   },
   data () {
     return {
+      breadcrumb: [
+        { name: '会员管理' },
+        { name: '会员信息管理' }
+      ],
       tableData: [],
-      pageTotal: 0
+      pageTotal: 0,
+      requestParams: {}
     }
   },
   created () {
@@ -40,6 +54,11 @@ export default {
     this.$store.dispatch('deleteUsersGroup')
   },
   methods: {
+    // 接收搜索信息，触发搜索
+    handleSearch (obj) {
+      this.requestParams = Object.assign(this.requestParams, obj, { pageNo: 1 })
+      this.fetchUsersList()
+    },
     // 改变分组选择项时，同步数据到列表
     syncGroupData (payload) {
       this.$_.forEach(this.tableData, item => {
@@ -63,9 +82,15 @@ export default {
       this.tableData = payload
     },
     fetchUsersList () {
-      this.$httpAPI.fetchUsersList({ params: { pageNo: 1, pageSize: 10 } }).then(response => {
-        this.tableData = response.data.data
-        this.pageTotal = response.data.amount
+      this.$httpAPI.fetchUsersList({
+        params: Object.assign({ pageNo: 1, pageSize: 10 }, this.requestParams)
+      }).then(response => {
+        if (response.data.data.data) {
+          this.tableData = response.data.data.data
+        } else {
+          this.tableData = []
+        }
+        this.pageTotal = response.data.data.amount
       }).catch(error => console.log(error))
     }
   }

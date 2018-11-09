@@ -35,7 +35,7 @@ export default {
     }
   },
   created () {
-    this.fetchUserGroup()
+    this.fetchUserGroups()
   },
   methods: {
     // 显示修改分组弹框；获取分组数据
@@ -55,8 +55,8 @@ export default {
 
       this.dialogVisible = false
     },
-    fetchUserGroup () {
-      this.$httpAPI.getSystemGroup({
+    fetchUserGroups () {
+      this.$httpAPI.fetchUserGroups({
         params: { pageNo: 1, pageSize: 100 }
       }).then(response => {
         // 把数据处理UI组件要求的格式

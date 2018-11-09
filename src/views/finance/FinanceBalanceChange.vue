@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="balance-change">
     <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="breadcrumb" />
+    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
 
     <!-- 主要内容 -->
     <el-form :model="formData" :rules="rules" ref="balanceForm" label-width="120px">
@@ -9,11 +9,7 @@
         <el-input v-model="formData.username" placeholder="会员账号" />
       </el-form-item>
 
-      <el-form-item prop="gameType" label="账户类型">
-        <el-select v-model="formData.gameType" placeholder="选择账户类型">
-          <el-option v-for="item in gameTypes" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
-      </el-form-item>
+      <FormAccountType @on-change="formData.gameType = $event" ref="formAccountType" />
 
       <el-form-item prop="type" label="调整方向">
         <el-radio-group v-model="formData.type">
@@ -22,18 +18,14 @@
         </el-radio-group>
       </el-form-item>
 
-      <el-form-item prop="loanType" label="借贷类型">
-        <el-select v-model="formData.loanType" placeholder="选择借贷类型">
-            <el-option v-for="item in loanTypes" :key="item.value" :label="item.label" :value="item.value" />
-          </el-select>
-      </el-form-item>
+      <FormLoanType @on-change="formData.loanType = $event" ref="formLoanType" />
 
       <el-form-item prop="money" label="调整金额">
         <el-input v-model="formData.money" type="number" min="0" placeholder="调整金额" />
       </el-form-item>
 
       <el-form-item prop="remark" label="调整理由">
-        <el-input v-model="formData.remark" type="textarea" :rows="3" placeholder="调整理由" />
+        <el-input v-model="formData.remark" @keyup.native.enter="submitForm('balanceForm')" type="textarea" :rows="3" placeholder="调整理由" />
       </el-form-item>
 
       <el-form-item>
@@ -45,11 +37,15 @@
 
 <script>
 import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
+import FormLoanType from '@/components/form/FormLoanType'
+import FormAccountType from '@/components/form/FormAccountType'
 
 export default {
   name: 'FinanceBalanceChange',
   components: {
-    BaseBreadcrumb
+    BaseBreadcrumb,
+    FormLoanType,
+    FormAccountType
   },
   data () {
     var validateUsername = (rule, value, callback) => {
@@ -63,14 +59,10 @@ export default {
     }
 
     return {
-      breadcrumb: [
-        { name: '财务管理' },
-        { name: '加减款操作' }
-      ],
       loanTypes: [],
       gameTypes: [],
       formData: {
-        username: '', gameType: '', type: '', loanType: '', money: 0, remark: ''
+        username: '', gameType: '', type: '', loanType: '', money: '', remark: ''
       },
       rules: {
         username: [
@@ -87,42 +79,23 @@ export default {
       }
     }
   },
-  created () {
-    this.fetchGamesList()
-    this.fetchFinanceLoanList()
-  },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$httpAPI.saveFinanceBalanceChange(this.formData).then(() => {
-            this.$router.push({ name: 'FinanceDepositForm' })
+            // 成功提交数据后，将表格属性初始化（本页面已缓存）
+            this.$utils.initializeObjectProperties(this.formData)
+            this.$refs.formLoanType.reset()
+            this.$refs.formAccountType.reset()
+
             this.$message.success('创建加减款成功！')
+            this.$router.push({ name: 'FinanceDepositForm' })
           }).catch(error => console.log(error))
         } else {
           this.$message.warning('表单填写不正确，请根据提示填写！')
         }
       })
-    },
-    fetchGamesList () {
-      this.$httpAPI.fetchGamesList().then(response => {
-        this.$_.forEach(response.data.data, item => {
-          this.gameTypes.push({
-            label: item.name,
-            value: item.id
-          })
-        })
-      }).catch(error => console.log(error))
-    },
-    fetchFinanceLoanList () {
-      this.$httpAPI.fetchFinanceLoanList({ params: { type: 0 } }).then(response => {
-        this.$_.forEach(response.data.data, item => {
-          this.loanTypes.push({
-            label: item.name,
-            value: item.dictionaryId
-          })
-        })
-      }).catch(error => console.log(error))
     }
   }
 }

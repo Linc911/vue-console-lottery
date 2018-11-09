@@ -5,24 +5,33 @@
       <el-header>
         <TheHeader />
       </el-header>
+
       <el-container>
         <!-- 侧边栏导航 -->
         <el-aside width="220px">
           <TheSidebar />
         </el-aside>
+
         <el-container>
-          <!-- 内容展示区 -->
+          <!-- 内容区 -->
           <el-main>
-            <keep-alive>
-              <router-view v-if="$route.meta.keepAlive" />
-            </keep-alive>
-            <router-view v-if="!$route.meta.keepAlive" />
+            <!-- 浏览历史记录栈 -->
+            <TapPanel />
+
+            <!-- 主要内容 -->
+            <div class="content-container">
+              <keep-alive>
+                <router-view v-if="$route.meta.keepAlive" />
+              </keep-alive>
+              <router-view v-if="!$route.meta.keepAlive" />
+            </div>
           </el-main>
 
           <!-- 底部栏 -->
           <el-footer height="auto">
             <TheFooter />
           </el-footer>
+
         </el-container>
       </el-container>
     </el-container>
@@ -32,6 +41,7 @@
 <script type="text/javascript">
 import TheHeader from '@/components/global/TheHeader'
 import TheSidebar from '@/components/global/TheSidebar'
+import TapPanel from '@/components/global/TabPanel'
 import TheFooter from '@/components/global/TheFooter'
 
 export default {
@@ -39,6 +49,7 @@ export default {
   components: {
     TheHeader,
     TheSidebar,
+    TapPanel,
     TheFooter
   }
 }
@@ -65,8 +76,13 @@ export default {
   background-color: #324057;
 }
 .el-main {
+  padding: 0;
   margin: 60px 0 30px 220px;
   background-color: #f8f8f8;
+}
+.content-container {
+  padding: 20px;
+  margin-top: 40px;
 }
 .el-footer {
   position: fixed;

@@ -9,6 +9,8 @@
     >
       <el-table-column type="index" />
 
+      <el-table-column prop="gameName" label="彩票类型" />
+
       <el-table-column prop="drawno" label="期号" />
 
       <el-table-column label="骰子点数" :min-width="200">

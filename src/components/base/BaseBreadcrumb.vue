@@ -17,7 +17,9 @@ export default {
   props: {
     breadcrumb: {
       type: Array,
-      required: true
+      default () {
+        return []
+      }
     }
   }
 }
@@ -27,7 +29,7 @@ export default {
 .el-breadcrumb {
   padding-bottom: 15px;
   margin-bottom: 20px;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 1px solid #e5e5e5;
 }
 .active-link {
   color: #333;

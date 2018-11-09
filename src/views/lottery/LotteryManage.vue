@@ -1,23 +1,31 @@
 <template lang="html">
-  <section class="lottery-manage">
+  <div class="lottery-manage">
+    <!-- 面包屑导航 -->
+    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
+
+    <!-- 彩票分类菜单 -->
     <aside class="aside-menu">
-      <GamesMenu v-if="menu.length" :menu="menu" :activeItemId="$route.params.id" />
+      <GamesMenu v-if="menu.length" :menu="menu" :activeItemId="$route.params.gameId" />
     </aside>
+
+    <!-- 主要内容 -->
     <main class="content-container">
-      <keep-alive v-if="$route.meta.keepAlive">
-        <router-view />
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive" />
       </keep-alive>
-      <router-view v-else />
+      <router-view v-if="!$route.meta.keepAlive" />
     </main>
-  </section>
+  </div>
 </template>
 
 <script>
+import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import GamesMenu from '@/components/global/GamesMenu'
 
 export default {
   name: 'LotteryManage',
   components: {
+    BaseBreadcrumb,
     GamesMenu
   },
   data () {
@@ -40,12 +48,13 @@ export default {
 
 <style lang="scss" scoped>
 .aside-menu {
-  position: fixed;
-  left: 240px;
-  top: 80px;
-  z-index: 3;
+  float: left;
+  // left: 240px;
+  // top: 171px;
+  // z-index: 3;
   width: 200px;
   height: 100%;
+  margin-top: 51px;
   background-color: #fff;
 }
 .content-container {

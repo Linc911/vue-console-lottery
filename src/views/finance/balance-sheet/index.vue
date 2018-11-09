@@ -61,6 +61,7 @@ export default {
       this.tableData = data
     },
     fetchFinanceSheet () {
+      console.log('fetchFinanceSheet ...')
       this.$httpAPI.fetchFinanceSheet({
         params: Object.assign({ pageNo: 1, pageSize: 10 }, this.requestParams)
       }).then(response => {

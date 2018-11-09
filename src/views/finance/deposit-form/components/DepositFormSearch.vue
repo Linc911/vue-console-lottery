@@ -1,14 +1,14 @@
 <template lang="html">
   <!-- 条件筛选 -->
   <div class="search">
-    <el-form  @keyup.native.enter="search" :model="formData" size="small" label-width="80px" inline>
-      <SearchUsername @on-change="handleUsernameChange" ref="username" />
+    <el-form :model="formData" size="small" label-width="80px" inline>
+      <SearchUsername @keyup.native.enter="search" @on-change="formData.username = $event" ref="username" />
 
-      <SearchGames @on-change="handleGameChange" ref="games" />
+      <SearchAccountType @on-change="formData.gameType = $event" ref="gameType" />
 
-      <SearchLoanType @on-change="handleLoanTypeChange" ref="loanType" />
+      <SearchLoanType @on-change="formData.loanType = $event" ref="loanType" />
 
-      <SearchLoanDirection @on-change="handleLoanDirectionChange" ref="loanDirection" />
+      <SearchLoanDirection @on-change="formData.type = $event" ref="type" />
 
       <SearchIcon @click.native="search" />
 
@@ -19,7 +19,7 @@
 
 <script type="text/javascript">
 import SearchUsername from '@/components/search/SearchUsername'
-import SearchGames from '@/components/search/SearchGames'
+import SearchAccountType from '@/components/search/SearchAccountType'
 import SearchLoanType from '@/components/search/SearchLoanType'
 import SearchLoanDirection from '@/components/search/SearchLoanDirection'
 import SearchIcon from '@/components/search/SearchIcon'
@@ -29,7 +29,7 @@ export default {
   name: 'DepositFormSearch',
   components: {
     SearchUsername,
-    SearchGames,
+    SearchAccountType,
     SearchLoanType,
     SearchLoanDirection,
     SearchIcon,
@@ -46,33 +46,15 @@ export default {
     }
   },
   methods: {
-    handleUsernameChange (value) {
-      this.formData.username = value
-    },
-    handleGameChange (value) {
-      this.formData.gameType = value
-    },
-    handleLoanTypeChange (value) {
-      this.formData.loanType = value
-    },
-    handleLoanDirectionChange (value) {
-      this.formData.type = value
-    },
     search () {
       this.$emit('on-search', this.formData)
     },
     reset () {
-      this.$refs.username.reset()
-      this.$refs.games.reset()
-      this.$refs.loanType.reset()
-      this.$refs.loanDirection.reset()
-
-      this.formData = {
-        username: '',
-        gameType: '',
-        loanType: '',
-        type: ''
+      for (let key in this.$refs) {
+        this.$refs[key].reset()
       }
+
+      this.$utils.initializeObjectProperties(this.formData)
     }
   }
 }

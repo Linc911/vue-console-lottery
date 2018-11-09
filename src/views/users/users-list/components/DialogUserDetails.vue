@@ -38,7 +38,7 @@
       </el-form-item>
 
       <el-form-item label="会员输赢">
-        <el-input :value="user.win | RMB" disabled />
+        <el-input :value="user.win" disabled />
       </el-form-item>
 
       <el-form-item label="充值状态">

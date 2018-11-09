@@ -9,6 +9,8 @@
     >
       <el-table-column type="index" />
 
+      <el-table-column prop="gameName" label="彩票类型" />
+
       <el-table-column prop="drawno" label="期号" :min-width="90" />
 
       <el-table-column prop="dateTime" label="开奖时间" :min-width="140" />
@@ -41,7 +43,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :min-width="240">
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button @click="CheckoutManual(scope.row)" type="primary" size="mini">手动结算</el-button>
           <!-- <el-button @click="showTip" type="primary" size="mini">开奖详情</el-button>

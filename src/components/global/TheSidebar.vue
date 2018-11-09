@@ -52,8 +52,8 @@ export default {
           icon: 'fa-user',
           children: [
             { id: 'test0201', name: '会员信息管理', path: '/users/list', icon: 'fa-cubes' },
-            { id: 'test0202', name: '会员账户核查', path: '/users/account/check', icon: 'fa-cubes' },
-            { id: 'test0203', name: '关键信息修改', path: '/users/keyinfo', icon: 'fa-cubes' },
+            { id: 'test0202', name: '会员账户核查', path: '/users/account', icon: 'fa-cubes' },
+            { id: 'test0203', name: '关键信息修改', path: '/users/keyword', icon: 'fa-cubes' },
             // { id: 'test0204', name: '会员分组管理', path: '/users/group', icon: 'fa-cubes' },
             { id: 'test0205', name: '会员资料管理', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test0206', name: '会员报表统计', path: '/users/unset', icon: 'fa-cubes' },
@@ -91,9 +91,9 @@ export default {
             { id: 'test0704', name: '提款申请管理', path: '/finance/withdraw/apply', icon: 'fa-cubes' },
             { id: 'test0706', name: '额度转换管理', path: '/finance/limit/change', icon: 'fa-cubes' },
             { id: 'test0705', name: '会员资金管理', path: '/finance/users/assets', icon: 'fa-cubes' },
-            { id: 'test0709', name: '存/取款记录', path: '/users/unset', icon: 'fa-cubes' },
-            { id: 'test0710', name: '平台收支汇总', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test0709', name: '存/取款记录', path: '/finance/depositwithdraw/list', icon: 'fa-cubes' },
             { id: 'test0707', name: '会员财务报表', path: '/finance/balance/sheet', icon: 'fa-cubes' },
+            { id: 'test0710', name: '平台收支汇总', path: '/finance/statistics', icon: 'fa-cubes' },
             { id: 'test0708', name: '常规配置', path: '/finance/setting', icon: 'fa-cubes' }
           ]
         },

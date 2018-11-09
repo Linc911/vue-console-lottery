@@ -15,7 +15,7 @@ export default {
 
   /* 系统管理 */
   // 会员分组
-  getSystemGroup: options => axios.get('/api-u/group/list', options), // 全部列表
+  fetchUserGroups: options => axios.get('/api-u/group/list', options), // 全部列表
   fetchSystemGroupItem: options => axios.get('/api-u/group/info', options), // 单个详情
   postSystemGroupChange: data => axios.post('/api-u/group/save', data), // 创建或修改单个分组
   postUserGroupSetting: options => axios.get('/api-u/group/saveRelation', options), // 设置单个会员分组
@@ -55,16 +55,17 @@ export default {
   postLotteryOddsFast3: data => axios.post('/api-g/oddsset/2/save', data), // 修改单个快3的赔率
 
   /* 财务管理 */
-  fetchBalanceChangeList: options => axios.get('/api-b/changeUserRecharge/list', options), // 全部加减款数据（填单存款管理）
-  fetchBalanceChangeItem: options => axios.get('/api-m/changeUserRecharge/info', options), // 加减款每项详情
-  saveFinanceBalanceChange: data => axios.post('/api-b/changeUserRecharge/save', data), // 提交加减款表单（数据更新到填单存款管理列表中）
-  updateDepositFormStatus: options => axios.get('/api-b/changeUserRecharge/audit', options), // 审批加减款操作
+  fetchBalanceChangeList: options => axios.get('/api-p/changeUserRecharge/list', options), // 全部加减款数据（填单存款管理）
+  fetchBalanceChangeItem: options => axios.get('/api-p/changeUserRecharge/info', options), // 加减款每项详情
+  saveFinanceBalanceChange: data => axios.post('/api-p/changeUserRecharge/save', data), // 提交加减款表单（数据更新到填单存款管理列表中）
+  updateDepositFormStatus: options => axios.get('/api-p/changeUserRecharge/audit', options), // 审批加减款操作
 
   createFinanceLimitChange: data => axios.post('/api-u/convertRecharge/add', data), // 额度转换管理列表
   fetchFinanceLimitChange: options => axios.get('/api-u/convertRecharge/list', options), // 额度转换每项详情
   updateFinanceLimitChangeStatus: options => axios.get('/api-u/convertRecharge/audit', options), // 审批额度转换状态
 
   fetchFinanceLoanList: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
+  fetchFinanceLoanType: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
   createFinanceLoan: data => axios.post('/api-b/dictionary/save', data), // 创建与更新借贷类型数据
   deleteFinanceLoan: options => axios.get('/api-b/dictionary/delete', options), // 删除借贷类型数据
 
@@ -73,7 +74,11 @@ export default {
   updateFinanceWithdrawApplyStatus: options => axios.get('/api-u/withdrawOrder/audit', options), // 审批提款申请
 
   fetchFinanceDepositOnline: options => axios.get('/api-p/UserOrder/list', options), // 在线存款列表
+
   fetchFinanceSheet: options => axios.get('/api-u/backend/finance/statistics', options), // 会员财务报表
+  fetchFinanceStatistics: options => axios.get('/api-p/statistics/finance', options), // 财务统计汇总
+
+  fetchFinanceDepoistLogs: options => axios.get('/api-p/UserOrder/orderAndRecharge', options), // 所有存款记录
 
   // 会员返水
   rebateList: options => axios.get('/api-b/rebate/list', options), // 会员返水设置列表

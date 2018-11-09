@@ -4,7 +4,7 @@
     <el-form :model="formData" size="small" label-width="80px" inline>
       <SearchUsername @keyup.native.enter="search" @on-change="handleUsernameChange" ref="username" />
 
-      <SearchGames @on-change="handleGamesChange" ref="games" />
+      <SearchAccountType @on-change="handleGamesChange" ref="games" />
 
       <SearchIcon @click.native="search" />
 
@@ -15,7 +15,7 @@
 
 <script type="text/javascript">
 import SearchUsername from '@/components/search/SearchUsername'
-import SearchGames from '@/components/search/SearchGames'
+import SearchAccountType from '@/components/search/SearchAccountType'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
@@ -23,7 +23,7 @@ export default {
   name: 'DepositOnlineSearch',
   components: {
     SearchUsername,
-    SearchGames,
+    SearchAccountType,
     SearchIcon,
     SearchReset
   },
