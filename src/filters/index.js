@@ -436,7 +436,11 @@ Vue.filter('percentage', value => {
 
 // 加.00
 Vue.filter('zero', value => {
-  return value + '.00'
+  if (!value) {
+    return '0'
+  } else {
+    return value + '.00'
+  }
 })
 
 // 返水等级名称

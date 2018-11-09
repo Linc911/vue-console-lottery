@@ -85,6 +85,11 @@ export default {
   rebateSave: data => axios.post('/api-b/rebate/save', data), // 会员返水设置保存
   rebateStatus: options => axios.get('/api-b/rebate/status', options), // 会员返水设置修改状态
   rebateLogList: options => axios.get('/api-b/rebateLog/list', options), // 会员返水信息列表
-  statistic: options => axios.get('/api-b/rebateLog/statistic', options) // 会员返水信息列表
+  statistic: options => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计
 
+  // 收款出款
+  configPayTypeList: options => axios.get('/api-b/configPayType/list', options), // 支付描述配置列表
+  configPayTypeUpdate: data => axios.post('/api-b/configPayType/update', data), // 支付描述配置修改
+  configPayTypeSave: data => axios.post('/api-b/configPayType/save', data), // 支付描述配置保存
+  dictionaryList: options => axios.get('/api-b/dictionary/list', options)// 收款出款接口类型列表
 }

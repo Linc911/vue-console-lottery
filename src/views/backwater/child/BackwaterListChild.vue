@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!--搜索表单-->
+    <div>
     <el-date-picker
       v-model="timestamp"
       type="daterange"
@@ -11,9 +13,11 @@
       value-format="timestamp"
       :picker-options="pickerOptions">
     </el-date-picker>
-    <el-input v-model="name" placeholder="会员账号" style="width: 130px;margin:0 0 15px 10px"></el-input>
-    <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="search"></el-button>
-    <el-button type="primary" icon="el-icon-refresh" style="float: right" @click="refresh"></el-button>
+      <el-input v-model="name" placeholder="会员账号" style="width: 130px;margin:0 0 15px 10px"></el-input>
+      <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="search"></el-button>
+      <el-button type="primary" icon="el-icon-refresh" style="float: right" @click="refresh"></el-button>
+    </div>
+    <!--表格-->
     <el-table
       :data="tableData"
       size="small"
@@ -56,12 +60,13 @@
       <el-table-column prop="rebateTypeDesc" label="返水类型">
       </el-table-column>
     </el-table>
+    <!--分页-->
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
+      :page-sizes="[20,40,60,80,100]"
+      :page-size="20"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
@@ -109,7 +114,7 @@ export default {
         }]
       },
       tableData: [],
-      pageSize: 100,
+      pageSize: 20,
       currentPage: 1,
       total: 0
     }
@@ -118,27 +123,29 @@ export default {
     this.fetchRbateLogList()
   },
   methods: {
+    // 改变显示数量
     handleSizeChange (val) {
       this.pageSize = val
       this.fetchRbateLogList()
     },
+    // 改变当前页
     handleCurrentChange (val) {
       console.log(val)
       this.currentPage = val
       this.fetchRbateLogList()
     },
+    // 搜索
     search () {
       if (!this.name && !this.timestamp) {
         return
       }
       this.fetchRbateLogList()
     },
+    // 刷新
     refresh () {
       this.fetchRbateLogList()
     },
-    handleClick (tab, event) {
-      console.log(tab, event)
-    },
+    // 获取返水信息
     fetchRbateLogList () {
       this.$httpAPI.rebateLogList({
         params: {

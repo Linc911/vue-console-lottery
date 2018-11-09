@@ -10,7 +10,7 @@
       border
     >
       <el-table-column type="index" :min-width="30" />
-      <el-table-column prop="name" label="返水等级">
+      <el-table-column prop="name" label="返水等级名称">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
         </template>
@@ -85,11 +85,19 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
+      :page-sizes="[20,40,60,80,100]"
+      :page-size="20"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+    <div class="statistics">
+      返水概况：总投注笔数[{{statistic.bettingAmount |
+      zero}}]，总投注金额:[￥{{statistic.totalBetting |
+      zero}}],有效投注金额：[￥{{statistic.validBetting |
+      zero}}]，网站盈利：[￥{{statistic.gainMoney |
+      zero}}]，返水总额：[￥{{statistic.rebateMoney |
+      zero}}]
+    </div>
   </div>
 </template>
 
@@ -112,7 +120,7 @@ export default {
     return {
       level: '',
       tableData: [],
-      pageSize: 10,
+      pageSize: 20,
       currentPage: 1,
       total: 0,
       dialogVisible: false,
@@ -127,12 +135,14 @@ export default {
         ratio: [{ required: true, message: '返佣比率不能为空' }],
         upperLimit: [{ required: true, message: '投注上限不能为空' }],
         lowerLimit: [{ required: true, message: '投注下限不能为空' }]
-      }
+      },
+      statistic: []
     }
   },
   created () {
     this.fetchRebateList()
     this.fetchUserGroup()
+    this.fetchStatistic()
   },
   methods: {
     sumbit () {
@@ -150,9 +160,14 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$httpAPI.rebateSave(this.formData).then(() => {
-            this.$router.push({ name: 'BackwaterSetting' })
-            this.$message.success('添加成功！')
+          this.$httpAPI.rebateSave(this.formData).then((response) => {
+            if (response.data.status === 200) {
+              this.$router.push({ name: 'BackwaterSetting' })
+              this.$message.success('添加成功！')
+              this.dialogVisible = false
+            } else {
+              this.$message.error(response.data.msg)
+            }
           }).catch(error => console.log(error))
         } else {
           this.$message.warning('表单填写不正确，请根据提示填写！')
@@ -201,7 +216,27 @@ export default {
       } else {
         this.groupOptions = this.$store.state.user.usersGroup
       }
+    },
+    // 获取会员返水信息统计
+    fetchStatistic () {
+      this.$httpAPI.statistic({
+        params: {
+          gameConfigId: this.gameConfigId
+        }
+      }).then(response => {
+        this.statistic = response.data.data
+      }).catch(error => console.log(error))
     }
   }
 }
 </script>
+<style type="text/css">
+  .statistics {
+    width: 1000px;
+    position: relative;
+    top: -26px;
+    color: #666666;
+    font-size: 14px;
+    font-weight: 600;
+  }
+</style>

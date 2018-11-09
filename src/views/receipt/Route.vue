@@ -1,5 +1,5 @@
-<template lang="html">
-  <div class="unknown">
+<template>
+  <div>
     <el-tabs :tab-position="tabPosition" style="min-height: 845px;">
       <el-tab-pane v-for="(item,index) in gameType" :key="item.value" :label="item.name">
         <Child :gameConfigId="index" :gameType="gameType"></Child>
@@ -8,9 +8,10 @@
   </div>
 </template>
 <script>
-import Child from './child/BackwaterSettingChild'
+import Child from './child/routeChild'
 
 export default {
+  name: 'route',
   components: {
     Child
   },
@@ -21,15 +22,19 @@ export default {
     }
   },
   created () {
-    this.fetchGamesList()
+    this.fetchConfigPayTypeList()
   },
   methods: {
     // 获取游戏列表
-    fetchGamesList () {
-      this.$httpAPI.fetchGamesList().then(response => {
+    fetchConfigPayTypeList () {
+      this.$httpAPI.configPayTypeList().then(response => {
         this.gameType = response.data.data
       }).catch(error => console.log(error))
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -126,6 +126,15 @@ import NoticeFeedbackSuggestions from './views/notice/NoticeFeedbackSuggestions'
 
 import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 
+/* 收款出款 */
+import ReceiptManage from './views/receipt/ReceiptManage'
+import Route from './views/receipt/Route'
+import Commercial from './views/receipt/Commercial'
+import Port from './views/receipt/Port'
+import Remittance from './views/receipt/Remittance'
+import Shortcut from './views/receipt/Shortcut'
+import Describe from './views/receipt/Describe'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -669,6 +678,51 @@ const router = new Router({
               path: 'setting',
               component: BackwaterSetting,
               meta: { title: '会员返水设置' }
+            }
+          ]
+        },
+        /* 收款出款管理 */
+        {
+          name: 'ReceiptManage',
+          path: '/receipt',
+          redirect: '/receipt/list',
+          component: ReceiptManage,
+          children: [
+            {
+              name: 'Route',
+              path: 'route',
+              component: Route,
+              meta: { title: '支付路线配置' }
+            },
+            {
+              name: 'Commercial',
+              path: 'commercial',
+              component: Commercial,
+              meta: { title: '出款商户配置' }
+            },
+            {
+              name: 'port',
+              path: 'Port',
+              component: Port,
+              meta: { title: '支付接口配置' }
+            },
+            {
+              name: 'Remittance',
+              path: 'remittance',
+              component: Remittance,
+              meta: { title: '出款商户配置' }
+            },
+            {
+              name: 'Shortcut',
+              path: 'shortcut',
+              component: Shortcut,
+              meta: { title: '汇款捷径配置' }
+            },
+            {
+              name: 'Describe',
+              path: 'describe',
+              component: Describe,
+              meta: { title: '支付描述配置' }
             }
           ]
         },
