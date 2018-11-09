@@ -87,9 +87,12 @@ export default {
   rebateLogList: options => axios.get('/api-b/rebateLog/list', options), // 会员返水信息列表
   statistic: options => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计
 
-  // 收款出款
-  configPayTypeList: options => axios.get('/api-b/configPayType/list', options), // 支付描述配置列表
+  /* 收款出款 */
+  fetchTransactionPaymentType: options => axios.get('/api-b/configPayType/list', options), // 支付类型列表
+  createTransactionPaymentType: data => axios.post('/api-b/configPayType/save', data), // 创建新支付类型
+  updateTransactionPaymentType: data => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
   configPayTypeUpdate: data => axios.post('/api-b/configPayType/update', data), // 支付描述配置修改
+
   configPayTypeSave: data => axios.post('/api-b/configPayType/save', data), // 支付描述配置保存
   dictionaryList: options => axios.get('/api-b/dictionary/list', options)// 收款出款接口类型列表
 }

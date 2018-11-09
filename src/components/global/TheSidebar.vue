@@ -180,12 +180,12 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test1501', name: '支付路线配置', path: '/receipt/route', icon: 'fa-cubes' },
-            { id: 'test1502', name: '出款商户配置', path: '/receipt/commercial', icon: 'fa-cubes' },
-            { id: 'test1503', name: '支付接口配置', path: '/receipt/port', icon: 'fa-cubes' },
-            { id: 'test1504', name: '会员汇款设置', path: '/receipt/remittance', icon: 'fa-cubes' },
-            { id: 'test1505', name: '汇款快捷设置', path: '/receipt/shortcut', icon: 'fa-cubes' },
-            { id: 'test1506', name: '支付描述配置', path: '/receipt/describe', icon: 'fa-cubes' }
+            { id: 'test1506', name: '支付类型配置', path: '/transaction/payment/type', icon: 'fa-cubes' },
+            { id: 'test1503', name: '支付接口配置', path: '/transaction/payment/port', icon: 'fa-cubes' },
+            { id: 'test1501', name: '支付路线配置', path: '/transaction/payment/line', icon: 'fa-cubes' },
+            { id: 'test1502', name: '出款商户配置', path: '/transaction/commercial', icon: 'fa-cubes' },
+            { id: 'test1504', name: '会员汇款设置', path: '/transaction/remittance', icon: 'fa-cubes' },
+            { id: 'test1505', name: '汇款快捷设置', path: '/transaction/shortcut', icon: 'fa-cubes' }
           ]
         },
         {

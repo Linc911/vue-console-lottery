@@ -127,13 +127,13 @@ import NoticeFeedbackSuggestions from './views/notice/NoticeFeedbackSuggestions'
 import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 
 /* 收款出款 */
-import ReceiptManage from './views/receipt/ReceiptManage'
-import Route from './views/receipt/Route'
-import Commercial from './views/receipt/Commercial'
-import Port from './views/receipt/Port'
-import Remittance from './views/receipt/Remittance'
-import Shortcut from './views/receipt/Shortcut'
-import Describe from './views/receipt/Describe'
+import TransactionManage from './views/transaction/TransactionManage'
+import TransactionPaymentType from './views/transaction/payment-type'
+import TransactionPaymentPort from './views/transaction/TransactionPaymentPort'
+import TransactionPaymentLine from './views/transaction/TransactionPaymentLine'
+import Commercial from './views/transaction/Commercial'
+import Remittance from './views/transaction/Remittance'
+import Shortcut from './views/transaction/Shortcut'
 
 Vue.use(Router)
 
@@ -683,28 +683,52 @@ const router = new Router({
         },
         /* 收款出款管理 */
         {
-          name: 'ReceiptManage',
-          path: '/receipt',
-          redirect: '/receipt/list',
-          component: ReceiptManage,
+          name: 'TransactionManage',
+          path: '/transaction',
+          redirect: '/transaction/payment/type',
+          component: TransactionManage,
           children: [
             {
-              name: 'Route',
-              path: 'route',
-              component: Route,
-              meta: { title: '支付路线配置' }
+              name: 'TransactionPaymentType',
+              path: 'payment/type',
+              component: TransactionPaymentType,
+              meta: {
+                title: '支付类型配置',
+                breadcrumb: [
+                  { name: '收款出款' },
+                  { name: '支付类型配置' }
+                ]
+              }
+            },
+            {
+              name: 'TransactionPaymentPort',
+              path: 'payment/port',
+              component: TransactionPaymentPort,
+              meta: {
+                title: '支付接口配置',
+                breadcrumb: [
+                  { name: '收款出款' },
+                  { name: '支付接口配置' }
+                ]
+              }
+            },
+            {
+              name: 'TransactionPaymentLine',
+              path: 'payment/line',
+              component: TransactionPaymentLine,
+              meta: {
+                title: '支付路线配置',
+                breadcrumb: [
+                  { name: '收款出款' },
+                  { name: '支付路线配置' }
+                ]
+              }
             },
             {
               name: 'Commercial',
               path: 'commercial',
               component: Commercial,
               meta: { title: '出款商户配置' }
-            },
-            {
-              name: 'port',
-              path: 'Port',
-              component: Port,
-              meta: { title: '支付接口配置' }
             },
             {
               name: 'Remittance',
@@ -717,12 +741,6 @@ const router = new Router({
               path: 'shortcut',
               component: Shortcut,
               meta: { title: '汇款捷径配置' }
-            },
-            {
-              name: 'Describe',
-              path: 'describe',
-              component: Describe,
-              meta: { title: '支付描述配置' }
             }
           ]
         },
