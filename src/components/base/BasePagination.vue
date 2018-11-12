@@ -19,29 +19,25 @@ export default {
       type: String,
       required: true
     },
-    pageTotal: {
-      type: Number,
-      default: 10
-    },
     requestParams: {
       type: Object,
       default () {
         return {}
       }
-    }
-  },
-  data () {
-    return {
-      page: {
-        current: 1,
-        size: 10,
-        total: 10
+    },
+    pageTotal: {
+      type: Number,
+      default: 10
+    },
+    page: {
+      type: Object,
+      default () {
+        return {
+          current: 1,
+          size: 10,
+          total: 10
+        }
       }
-    }
-  },
-  watch: {
-    pageTotal () {
-      this.page.total = this.pageTotal
     }
   },
   methods: {

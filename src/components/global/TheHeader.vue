@@ -71,18 +71,7 @@ export default {
           this.$router.push({ name: 'UserActivePhoneUpdate' })
           break
         case 'logout':
-          this.$httpAPI.fetchLogoutInfo().then(response => {
-            // 清除本地缓存的 token 信息
-            localStorage.removeItem('access_token')
-            localStorage.removeItem('refresh_token')
-            localStorage.removeItem('token_type')
-            // 将http headers的登录验证属性去掉，防止在登录过程中验证过期的token
-            this.$axios.defaults.headers.common['Authorization'] = ''
-            this.$router.push({ name: 'User' })
-          }).catch(error => {
-            console.log(error)
-            this.$message.error('登出账号异常!')
-          })
+          this.$store.dispatch('logout')
           break
         default:
           this.$message.error('操作异常，请检查代码！')

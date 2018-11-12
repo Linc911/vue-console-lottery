@@ -129,8 +129,8 @@ import ValidationCodeLogs from './views/others/ValidationCodeLogs'
 /* 收款出款 */
 import TransactionManage from './views/transaction/TransactionManage'
 import TransactionPaymentType from './views/transaction/payment-type'
-import TransactionPaymentPort from './views/transaction/TransactionPaymentPort'
-import TransactionPaymentLine from './views/transaction/TransactionPaymentLine'
+import TransactionPaymentPort from './views/transaction/payment-port'
+import TransactionPaymentLine from './views/transaction/payment-line'
 import Commercial from './views/transaction/Commercial'
 import Remittance from './views/transaction/Remittance'
 import Shortcut from './views/transaction/Shortcut'
@@ -865,25 +865,26 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  const tokenExisted = !!localStorage.getItem('access_token')
+  next()
+  // const tokenExisted = !!localStorage.getItem('access_token')
 
-  if (to.path === '/login/username' || to.path === '/login/phone') {
-    // 当访问的地址是登录模块且access_token存在时
-    // 用户必须通过点击退出登录，才能跳转到登记模块界面，否则默认跳转到主页面
-    if (tokenExisted) {
-      next('/home')
-    } else {
-      next()
-    }
-  } else {
-    // 当访问的地址不是登录模块且access_token不存在时
-    // 用户无法访问内部页面，默认跳转到用户账号登录页面
-    if (tokenExisted) {
-      next()
-    } else {
-      next('/login/username')
-    }
-  }
+  // if (to.path === '/login/username' || to.path === '/login/phone') {
+  //   // 当访问的地址是登录模块且access_token存在时
+  //   // 用户必须通过点击退出登录，才能跳转到登记模块界面，否则默认跳转到主页面
+  //   if (tokenExisted) {
+  //     next('/home')
+  //   } else {
+  //     next()
+  //   }
+  // } else {
+  //   // 当访问的地址不是登录模块且access_token不存在时
+  //   // 用户无法访问内部页面，默认跳转到用户账号登录页面
+  //   if (tokenExisted) {
+  //     next()
+  //   } else {
+  //     next('/login/username')
+  //   }
+  // }
 })
 
 export default router

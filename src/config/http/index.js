@@ -1,6 +1,7 @@
 import axios from 'axios'
 import router from '@/router'
-import { Loading } from 'element-ui'
+import store from '@/store'
+import { Loading, Message } from 'element-ui'
 
 let loading
 function startLoading () {
@@ -16,10 +17,11 @@ function endLoading () {
 
 /* 设置axios全局配置 */
 axios.defaults.baseURL = 'http://192.168.5.182:8080'
-// 处理页面刷新时，设置Token; Token的初始设置在登录模块;
-if (localStorage.getItem('access_token')) {
-  const AUTO_TOKEN = `${localStorage.getItem('token_type')} ${localStorage.getItem('access_token')}`
-  axios.defaults.headers.common['Authorization'] = AUTO_TOKEN
+
+// 处理页面刷新时，重新设置Token;
+if (store.state.app.token) {
+  const { type, access } = store.state.app.token
+  axios.defaults.headers.common['Authorization'] = `${type} ${access}`
 }
 
 // 请求拦截
@@ -39,25 +41,21 @@ axios.interceptors.response.use(response => {
 }, error => {
   endLoading() // 停止加载动画
 
-  if (error.error === 'invalid_token') {
-    localStorage.removeItem('access_token')
-    localStorage.removeItem('refresh_token')
-    localStorage.removeItem('token_type')
-
+  // token验证后台有两种不同验证，分别要处理
+  if (error.response.status === 401) {
+    store.dispatch('CLEAR_TOKEN')
     axios.defaults.headers.common['Authorization'] = ''
-    console.log('Token已过期，请重新登录。')
+    router.push({ name: 'LoginUsername' })
+    Message.warning('登录Token已过期，请重新登录。')
     return
   }
 
-  switch (error.toString().substr(-3)) {
+  switch (error.status) {
     case '401':
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('refresh_token')
-      localStorage.removeItem('token_type')
-
-      router.push('/login/username')
+      store.dispatch('CLEAR_TOKEN')
       axios.defaults.headers.common['Authorization'] = ''
-      console.log('Token已过期，请重新登录。')
+      router.push({ name: 'LoginUsername' })
+      Message.warning('登录Token已过期，请重新登录。')
       break
     case '403':
       console.log('未授权，请检查HTTP请求头是否携带Token。')

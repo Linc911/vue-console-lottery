@@ -12,7 +12,7 @@
 
     <el-table-column prop="status" label="是否推荐">
       <template slot-scope="scope">
-        <i :class="scope.row.status ? 'el-icon-error' : 'el-icon-success'"></i>
+        <BaseIndicator :status="scope.row.status" opposite />
       </template>
     </el-table-column>
 
@@ -33,11 +33,13 @@
 </template>
 
 <script>
+import BaseIndicator from '@/components/base/BaseIndicator'
 import PaymentTypeDialogUpdate from './PaymentTypeDialogUpdate'
 
 export default {
   name: 'PaymentTypeTable',
   components: {
+    BaseIndicator,
     PaymentTypeDialogUpdate
   },
   props: {
@@ -59,9 +61,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .el-icon-success {
-    color: #189F92;
-  }
-</style>

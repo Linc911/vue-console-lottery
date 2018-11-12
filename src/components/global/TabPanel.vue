@@ -56,6 +56,15 @@ export default {
   z-index: 10;
   overflow: scroll;
 }
+.el-tag {
+  height: 39px;
+  line-height: 39px;
+  font-size: 14px;
+  border-radius: 0;
+  border: none;
+  border-right: 1px solid #e5e5e5;
+  cursor: pointer;
+}
 .el-tag.current {
   background-color: #fff;
 }

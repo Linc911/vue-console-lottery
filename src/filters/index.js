@@ -25,6 +25,10 @@ Vue.filter('sortTime', second => {
 Vue.filter('RMB', value => {
   return '￥ ' + parseInt(value).toLocaleString()
 })
+// 百分比
+Vue.filter('percent', value => {
+  return Number(value).toFixed(2) + '%'
+})
 
 // 充值支付类型
 Vue.filter('paymentType', value => {

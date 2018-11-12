@@ -11,7 +11,7 @@
       </el-form-item>
 
       <el-form-item props="remark" label="备注">
-        <el-input v-model="formData.remark" @keypu.native.enter="submitForm('formCreate')" type="textarea" rows="3" placeholder="备注" />
+        <el-input v-model="formData.remark" type="textarea" rows="3" placeholder="备注" />
       </el-form-item>
     </el-form>
 

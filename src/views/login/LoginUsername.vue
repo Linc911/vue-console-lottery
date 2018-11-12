@@ -41,31 +41,11 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.login()
+          this.$store.dispatch('login', this._generatePairKeys(this.formData))
         } else {
           this.$message.warning('用户名或密码格式不正确，无法登录！')
           return false
         }
-      })
-    },
-    login () {
-      this.$httpAPI.postUserLogin(this._generatePairKeys(this.formData), {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
-      }).then(response => {
-        // 将access_token和refresh_token写入本地
-        localStorage.setItem('token_type', response.data.token_type)
-        localStorage.setItem('access_token', response.data.access_token)
-        localStorage.setItem('refresh_token', response.data.refresh_token)
-
-        // 设置axios全局配置
-        const AUTO_TOKEN = `${response.data.token_type} ${response.data.access_token}`
-        this.$axios.defaults.headers.common['Authorization'] = AUTO_TOKEN
-
-        // 跳转到首页
-        this.$router.push({ name: 'HomePage' })
-      }).catch(error => {
-        console.log(error)
-        this.$message.error('登录出现异常，请尝试刷新页面后再登录。')
       })
     },
     _generatePairKeys (obj) {
@@ -73,6 +53,7 @@ export default {
       for (let k in obj) {
         result += `&${k}=${obj[k]}`
       }
+
       return result.substr(1)
     }
   }

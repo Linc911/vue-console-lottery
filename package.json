@@ -46,7 +46,9 @@
       "plugin:vue/essential",
       "@vue/standard"
     ],
-    "rules": {},
+    "rules": {
+      "camelcase": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

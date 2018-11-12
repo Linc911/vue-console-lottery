@@ -1,5 +1,5 @@
 export default {
-  initializeObjectProperties: obj => {
+  initializeObjectProperties (obj) {
     for (let k in obj) {
       switch (typeof obj[k]) {
         case 'string':
@@ -13,5 +13,10 @@ export default {
           break
       }
     }
+  },
+  invokeRefResetMothod (refs) {
+    const refsArray = Object.keys(refs).filter(item => !item.includes('form'))
+
+    refsArray.forEach(ref => refs[ref].reset())
   }
 }
