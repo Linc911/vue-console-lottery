@@ -10,7 +10,7 @@
         <el-input v-model="formData.sort" type="number" min="0" placeholder="排序" />
       </el-form-item>
 
-      <el-form-item label="备注">
+      <el-form-item prop="remark" label="备注">
         <el-input v-model="formData.remark" type="textarea" rows="3" placeholder="备注" />
       </el-form-item>
     </el-form>
@@ -23,11 +23,14 @@
 </template>
 
 <script>
+import { createMixin } from '@/mixins'
+
 export default {
   name: 'PaymentTypeDialogCreate',
+  mixins: [ createMixin ],
   data () {
     return {
-      dialogVisible: false,
+      createHttpAPI: 'createTransactionPaymentType',
       formData: { name: '', sort: '', remark: '' },
       rules: {
         name: [
@@ -36,30 +39,6 @@ export default {
         ],
         sort: { required: true, message: '排列顺序不能为空' }
       }
-    }
-  },
-  methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$httpAPI.createTransactionPaymentType(this.formData).then(response => {
-            if (response.data.status === 200) {
-              this.$utils.initializeObjectProperties(this.formData)
-              this.$emit('on-success')
-              this.$message.success('创建支付类型成功！')
-            } else {
-              this.$message.error(`创建支付类型失败（${response.data.msg}）！`)
-            }
-          }).catch(error => console.log(error))
-
-          this.dialogVisible = false
-        } else {
-          this.$message.warning('支付类型名称填写不正确，请按提示填写！')
-        }
-      })
-    },
-    toggleDialogVisible (status) {
-      this.dialogVisible = status
     }
   }
 }

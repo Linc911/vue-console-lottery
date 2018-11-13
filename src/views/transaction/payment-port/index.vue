@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { breadcrumbMixin, searchMixin, tableWithPaginationPostMixin } from '@/mixins'
+import { breadcrumbMixin, searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import PaymentPortSearch from './components/PaymentPortSearch'
@@ -50,7 +50,7 @@ export default {
     PaymentPortTable,
     PaymentPortDialogCreate
   },
-  mixins: [ breadcrumbMixin, searchMixin, tableWithPaginationPostMixin ],
+  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationPostMixin ],
   data () {
     return {
       tableData: [],

@@ -42,13 +42,13 @@ axios.interceptors.response.use(response => {
   endLoading() // 停止加载动画
 
   // token验证后台有两种不同验证，分别要处理
-  if (error.response.status === 401) {
-    store.dispatch('CLEAR_TOKEN')
-    axios.defaults.headers.common['Authorization'] = ''
-    router.push({ name: 'LoginUsername' })
-    Message.warning('登录Token已过期，请重新登录。')
-    return
-  }
+  // if (error.response.status === 401) {
+  //   store.dispatch('CLEAR_TOKEN')
+  //   axios.defaults.headers.common['Authorization'] = ''
+  //   router.push({ name: 'LoginUsername' })
+  //   Message.warning('登录Token已过期，请重新登录。')
+  //   return
+  // }
 
   switch (error.status) {
     case '401':
@@ -64,10 +64,10 @@ axios.interceptors.response.use(response => {
       console.log('没有找到对应的请求，请核对HTTP请求地址。')
       break
     case '500':
-      console.log(`系统错误：${error.data.messge}，请刷新页面或联系管理员。`)
+      console.log(`系统错误：请刷新页面或联系管理员。`)
       break
     default:
-      console.log(`获取数据异常：${error.data.messge}。`)
+      console.log(`获取数据异常。`)
   }
   return Promise.reject(error)
 })

@@ -4,9 +4,11 @@
     <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
 
     <!-- 条件筛选 -->
-    <div style="margin-bottom: 20px; text-align: right">
-      <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
-    </div>
+    <SearchLayout>
+      <template slot="right">
+        <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
+      </template>
+    </SearchLayout>
 
     <!-- 主要内容 -->
     <div class="table-list">
@@ -23,13 +25,14 @@
     </div>
 
     <!-- 创建新支付类型弹框 -->
-    <PaymentTypeDialogCreate @on-success="fetchTableData()" ref="dialogCreate" />
+    <PaymentTypeDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
 <script>
 import { breadcrumbMixin, tableWithPaginationMixin } from '@/mixins'
 
+import SearchLayout from '@/components/layout/SearchLayout'
 import BaseAdd from '@/components/base/BaseAdd'
 import PaymentTypeTable from './components/PaymentTypeTable'
 import PaymentTypeDialogCreate from './components/PaymentTypeDialogCreate'
@@ -37,6 +40,7 @@ import PaymentTypeDialogCreate from './components/PaymentTypeDialogCreate'
 export default {
   name: 'TransactionPaymentType',
   components: {
+    SearchLayout,
     BaseAdd,
     PaymentTypeTable,
     PaymentTypeDialogCreate

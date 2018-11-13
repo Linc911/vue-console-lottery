@@ -112,7 +112,7 @@ export default {
           this.$emit('on-success', { remitInfoId: this.formData.remitInfoId, status })
           this.$message.success('修改状态成功！')
         } else {
-          this.$message.warning('修改状态失败！') 
+          this.$message.warning('修改状态失败！')
         }
       }).catch(error => console.log(error))
     }

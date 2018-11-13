@@ -19,6 +19,7 @@ export default {
 <style lang="scss" scoped>
 .search-container {
   position: relative;
+  min-height: 51px;
 }
 .search-left-part {
   display: inline-block;

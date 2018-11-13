@@ -53,7 +53,7 @@ export default {
           this.currentTabComponent = 'BalanceManipulationListUnchecked'
           break
         case 'checked':
-        this.currentTabComponent = 'BalanceManipulationListChecked'
+          this.currentTabComponent = 'BalanceManipulationListChecked'
           break
         default:
           this.currentTabComponent = 'BalanceManipulationForm'

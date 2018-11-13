@@ -52,36 +52,23 @@
 </template>
 
 <script type="text/javascript">
+import { searchInnerMixin } from '@/mixins'
+
 import FormInput from '@/components/form/FormInput'
 import FormSelect from '@/components/form/FormSelect'
 import FormSelectStatic from '@/components/form/FormSelectStatic'
-import SearchIcon from '@/components/search/SearchIcon'
-import SearchReset from '@/components/search/SearchReset'
 
 export default {
   name: 'PaymentPortSearch',
   components: {
     FormInput,
     FormSelect,
-    FormSelectStatic,
-    SearchIcon,
-    SearchReset
+    FormSelectStatic
   },
+  mixins: [ searchInnerMixin ],
   data () {
     return {
       formData: {}
-    }
-  },
-  methods: {
-    search () {
-      this.$emit('on-search', this.formData)
-    },
-    reset () {
-      for (let key in this.$refs) {
-        this.$refs[key].reset()
-      }
-
-      this.formData = {}
     }
   }
 }

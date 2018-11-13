@@ -93,7 +93,7 @@ export default {
   /* 收款出款 */
   fetchTransactionPaymentType: options => axios.get('/api-b/configPayType/list', options), // 支付类型列表
   createTransactionPaymentType: data => axios.post('/api-b/configPayType/save', data), // 创建新支付类型
-  TransactionPaymentType: data => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
+  updateTransactionPaymentType: data => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
 
   fetchTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/list', data), // 支付接口列表
   createTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/save', data), // 支付接口列表

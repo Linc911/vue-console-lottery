@@ -1,5 +1,5 @@
 <template lang="html">
-  <el-form-item :label="label">
+  <el-form-item :prop="prop" :label="label">
     <el-select
       v-model="selectedOption"
       @change="$emit('on-change', selectedOption)"
@@ -21,6 +21,10 @@
 export default {
   name: 'FormSelectStatic',
   props: {
+    value: {
+      type: [ String, Number ],
+      default: ''
+    },
     options: {
       type: Array,
       required: true
@@ -29,6 +33,10 @@ export default {
       type: String,
       default: '状态'
     },
+    prop: {
+      type: String,
+      default: ''
+    },
     width: {
       type: String,
       default: ''
@@ -36,7 +44,12 @@ export default {
   },
   data () {
     return {
-      selectedOption: ''
+      selectedOption: this.value
+    }
+  },
+  watch: {
+    value () {
+      this.selectedOption = this.value
     }
   },
   methods: {

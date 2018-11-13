@@ -17,7 +17,7 @@
     <div class="content-container">
       <!-- 表格 -->
       <UserRemittanceTable
-        @on-updated="fetchTableData()" 
+        @on-updated="fetchTableData()"
         @on-deleted="fetchTableData()"
         :data="tableData"
       />
