@@ -6,11 +6,11 @@
         <el-input v-model="formData.name" placeholder="类型名称" />
       </el-form-item>
 
-      <el-form-item props="sort" label="排序">
+      <el-form-item prop="sort" label="排序">
         <el-input v-model="formData.sort" type="number" min="0" placeholder="排序" />
       </el-form-item>
 
-      <el-form-item props="remark" label="备注">
+      <el-form-item label="备注">
         <el-input v-model="formData.remark" type="textarea" rows="3" placeholder="备注" />
       </el-form-item>
     </el-form>
@@ -33,7 +33,8 @@ export default {
         name: [
           { required: true, message: '类型名称不能为空' },
           { min: 2, max: 20, message: '类型名称长度在 2 - 20 字符之间' }
-        ]
+        ],
+        sort: { required: true, message: '排列顺序不能为空' }
       }
     }
   },

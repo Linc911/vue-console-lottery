@@ -23,7 +23,7 @@
         @on-change="handlePaginationChange"
         :page="page"
         :requestParams="requestParams"
-        httpURL="tableHttpAPI"
+        :httpURL="tableHttpAPI"
       />
     </div>
 

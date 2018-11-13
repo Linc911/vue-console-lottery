@@ -55,10 +55,13 @@ export default {
   postLotteryOddsFast3: data => axios.post('/api-g/oddsset/2/save', data), // 修改单个快3的赔率
 
   /* 财务管理 */
-  fetchBalanceChangeList: options => axios.get('/api-p/remitInfo/list', options), // 填单存款管理列表
+  fetchFinanceBalanceManipulation: options => axios.get('/api-p/changeUserRecharge/list', options), // 加减款列表
   fetchBalanceChangeItem: options => axios.get('/api-p/changeUserRecharge/info', options), // 加减款每项详情
-  saveFinanceBalanceChange: data => axios.post('/api-p/changeUserRecharge/save', data), // 提交加减款表单（数据更新到填单存款管理列表中）
+  saveFinanceBalanceChange: data => axios.post('/api-p/changeUserRecharge/save', data), // 提交加减款表单
   updateDepositFormStatus: options => axios.get('/api-p/changeUserRecharge/audit', options), // 审批加减款操作
+
+  fetchFinanceDepositForm: options => axios.get('/api-p/remitInfo/list', options), // 填单存款管理列表
+  updateFinanceDepositFormStatus: options => axios.get('/api-p/remitInfo/audit', options), // 审批填单存款
 
   createFinanceLimitChange: data => axios.post('/api-u/convertRecharge/add', data), // 额度转换管理列表
   fetchFinanceLimitChange: options => axios.get('/api-u/convertRecharge/list', options), // 额度转换每项详情
@@ -90,7 +93,7 @@ export default {
   /* 收款出款 */
   fetchTransactionPaymentType: options => axios.get('/api-b/configPayType/list', options), // 支付类型列表
   createTransactionPaymentType: data => axios.post('/api-b/configPayType/save', data), // 创建新支付类型
-  updateTransactionPaymentType: data => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
+  TransactionPaymentType: data => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
 
   fetchTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/list', data), // 支付接口列表
   createTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/save', data), // 支付接口列表
@@ -98,5 +101,10 @@ export default {
 
   fetchTransactionPortLine: options => axios.get('/api-b/configPayRoute/list', options), // 支付路线类型列表
   createTransactionPortLine: data => axios.post('/api-b/configPayRoute/save', data), // 创建新支付路线（可一对多）
-  deleteTransactionPortLine: data => axios.post('/api-b/configPayRoute/deleteMany', data) // 删除路线配置
+  deleteTransactionPortLine: data => axios.post('/api-b/configPayRoute/deleteMany', data), // 删除路线配置
+
+  fetchTransactionRemittance: options => axios.get('/api-b/configRemit/list', options), // 会员汇款设置列表
+  createTransactionRemittance: data => axios.post('/api-b/configRemit/save', data), // 创建新会员汇款设置
+  updateTransactionRemittance: data => axios.post('/api-b/configRemit/updateById', data), // 创建新会员汇款设置
+  deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options) // 删除会员汇款设置
 }

@@ -9,7 +9,6 @@
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
       <el-tab-pane label="填单存款待审核列表" name="unchecked" />
-      <el-tab-pane label="填单存款待确定列表" name="unconfirmed" />
       <el-tab-pane label="填单存款已审核列表" name="checked" />
     </el-tabs>
 
@@ -21,9 +20,9 @@
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
-        :pageTotal="pageTotal"
+        :page="page"
         :requestParams="requestParams"
-        httpURL="fetchBalanceChangeList"
+        httpURL="fetchFinanceDepositForm"
       />
     </div>
 
@@ -52,13 +51,13 @@ export default {
     return {
       activeTab: 'unchecked', // 当前活动菜单
       tableData: [],
-      pageTotal: 0,
+      page: { current: 0, size: 10, total: 10 },
       requestParams: { status: 0 },
       currentItem: {} // 当前选中的数据
     }
   },
   created () {
-    this.fetchBalanceChangeList()
+    this.fetchFinanceDepositForm()
   },
   methods: {
     // 菜单切换；根据不同的菜单更新对应数据
@@ -66,15 +65,11 @@ export default {
       switch (tab.name) {
         case 'unchecked':
           this.requestParams.status = 0
-          this.fetchBalanceChangeList()
-          break
-        case 'unconfirmed':
-          this.requestParams.status = 1
-          this.fetchBalanceChangeList()
+          this.fetchFinanceDepositForm()
           break
         case 'checked':
-          this.requestParams.status = '2,3'
-          this.fetchBalanceChangeList()
+          this.requestParams = Object.assign(this.requestParams, { pageNo: 1, status: '2,3' })
+          this.fetchFinanceDepositForm()
           break
         default:
           this.requestParams = {}
@@ -83,7 +78,7 @@ export default {
     // 触发检索
     handleSearch (params) {
       this.requestParams = Object.assign(this.requestParams, params, { pageNo: 1 })
-      this.fetchBalanceChangeList()
+      this.fetchFinanceDepositForm()
     },
     // 显示审批加减款表单弹框
     showDialogAudit (payload) {
@@ -91,22 +86,22 @@ export default {
       this.$refs.dialogDepositForm.toggleDialogVisible(true)
     },
     // 审批状态改变时，更新在本地更新页面数据
-    handleStatusChange (payload) {
-      this.tableData = this.$_.filter(this.tableData, item => item.changeId !== payload.changeId)
+    handleStatusChange () {
+      this.fetchFinanceDepositForm()
     },
     // 分页变化时，更新数据
     handlePaginationChange (data) {
       this.tableData = data
     },
-    fetchBalanceChangeList () {
-      this.$httpAPI.fetchBalanceChangeList({ params: Object.assign({ pageNo: 1, pageSize: 10 }, this.requestParams) }).then(response => {
+    fetchFinanceDepositForm () {
+      this.$httpAPI.fetchFinanceDepositForm({ params: Object.assign({ pageNo: 1, pageSize: 10 }, this.requestParams) }).then(response => {
         if (response.data.data) {
           this.tableData = response.data.data
         } else {
           this.tableData = []
         }
 
-        this.pageTotal = response.data.amount
+        this.page.total = response.data.amount
       }).catch(error => console.log(error))
     }
   }

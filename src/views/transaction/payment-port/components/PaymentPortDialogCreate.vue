@@ -134,9 +134,9 @@ export default {
     },
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
-        this.dialogVisible = false
-
         if (valid) {
+          this.dialogVisible = false
+
           this.$httpAPI.createTransactionPaymentPort(this.formData).then(response => {
             if (response.data.status === 200) {
               // this.$utils.initializeObjectProperties(this.formData)

@@ -4,7 +4,11 @@
     <el-form :model="formData" size="small" label-width="80px" inline>
       <SearchUsername @keyup.native.enter="search" @on-change="formData.username = $event" ref="username" />
 
-      <SearchDateRange @on-change="handleDateRangeChange" ref="dateRange" />
+      <SearchAccountType @on-change="formData.gameType = $event" ref="gameType" />
+
+      <SearchLoanType @on-change="formData.loanType = $event" ref="loanType" />
+
+      <SearchLoanDirection @on-change="formData.type = $event" ref="type" />
 
       <SearchIcon @click.native="search" />
 
@@ -15,7 +19,9 @@
 
 <script type="text/javascript">
 import SearchUsername from '@/components/search/SearchUsername'
-import SearchDateRange from '@/components/search/SearchDateRange'
+import SearchAccountType from '@/components/search/SearchAccountType'
+import SearchLoanType from '@/components/search/SearchLoanType'
+import SearchLoanDirection from '@/components/search/SearchLoanDirection'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
@@ -23,7 +29,9 @@ export default {
   name: 'DepositFormSearch',
   components: {
     SearchUsername,
-    SearchDateRange,
+    SearchAccountType,
+    SearchLoanType,
+    SearchLoanDirection,
     SearchIcon,
     SearchReset
   },
@@ -31,17 +39,15 @@ export default {
     return {
       formData: {
         username: '',
-        startTime: '',
-        endTime: ''
+        gameType: '',
+        loanType: '',
+        type: ''
       }
     }
   },
   methods: {
     search () {
       this.$emit('on-search', this.formData)
-    },
-    handleDateRangeChange ({ startTime, endTime }) {
-      this.formData = Object.assign(this.formData, { startTime, endTime })
     },
     reset () {
       for (let key in this.$refs) {

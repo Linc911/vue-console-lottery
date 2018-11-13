@@ -85,7 +85,7 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test0701', name: '加减款操作', path: '/finance/balance/change', icon: 'fa-cubes' },
+            { id: 'test0701', name: '加减款操作', path: '/finance/balance/manipulation', icon: 'fa-cubes' },
             { id: 'test0702', name: '填单存款管理', path: '/finance/deposit/form', icon: 'fa-cubes' },
             { id: 'test0703', name: '在线存款管理', path: '/finance/deposit/online', icon: 'fa-cubes' },
             { id: 'test0704', name: '提款申请管理', path: '/finance/withdraw/apply', icon: 'fa-cubes' },

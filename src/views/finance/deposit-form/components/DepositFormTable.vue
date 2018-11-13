@@ -7,29 +7,29 @@
   >
     <el-table-column type="index" />
 
-    <el-table-column prop="username" label="会员账号" />
+    <el-table-column prop="createUsername" label="汇款人账号" />
 
-    <el-table-column prop="gameName" label="账户类型" />
+    <el-table-column prop="bankUsername" label="支付户名" />
 
-    <el-table-column prop="loanName" label="借贷类型" />
+    <el-table-column prop="configPayTypeName" label="支付方式" />
 
-    <el-table-column label="调整方向">
+    <el-table-column label="汇款金额">
       <template slot-scope="scope">
-        <span>{{scope.row.type | depositDircetion}}</span>
+        <span>{{scope.row.remitMoney | RMB}}</span>
       </template>
     </el-table-column>
 
-    <el-table-column label="调整金额">
-      <template slot-scope="scope">
-        <span>{{scope.row.money | RMB}}</span>
-      </template>
-    </el-table-column>
+    <el-table-column prop="bankAccount" label="银行账户" />
 
-    <el-table-column label="审核状态" :min-width="110">
+    <el-table-column prop="bankName" label="银行名称" />
+
+    <el-table-column prop="bankAddress" label="银行地址" />
+
+    <!-- <el-table-column label="审核状态" :min-width="110">
       <template slot-scope="scope">
         <span>{{scope.row.status | depositStatus}}</span>
       </template>
-    </el-table-column>
+    </el-table-column> -->
 
     <el-table-column prop="remark" label="备注" />
 

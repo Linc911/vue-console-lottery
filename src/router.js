@@ -73,7 +73,7 @@ import LotteryUsersInfo from './views/lottery/LotteryUsersInfo'
 
 /* 财务管理 */
 import FinanceManage from './views/finance/FinanceManage'
-import FinanceBalanceChange from './views/finance/FinanceBalanceChange'
+import FinanceBalanceManipulation from './views/finance/balance-manipulation'
 import FinanceDepositForm from './views/finance/deposit-form'
 import FinanceDepositOnline from './views/finance/deposit-online'
 import FinanceWithdrawApply from './views/finance/withdraw-apply'
@@ -132,7 +132,7 @@ import TransactionPaymentType from './views/transaction/payment-type'
 import TransactionPaymentPort from './views/transaction/payment-port'
 import TransactionPaymentLine from './views/transaction/payment-line'
 import Commercial from './views/transaction/Commercial'
-import Remittance from './views/transaction/Remittance'
+import TransactionUserRemittance from './views/transaction/user-remittance'
 import Shortcut from './views/transaction/Shortcut'
 
 Vue.use(Router)
@@ -494,16 +494,15 @@ const router = new Router({
           meta: { title: '财务管理', keepAlive: true },
           children: [
             {
-              name: 'FinanceBalanceChange',
-              path: 'balance/change',
-              component: FinanceBalanceChange,
+              name: 'FinanceBalanceManipulation',
+              path: 'balance/manipulation',
+              component: FinanceBalanceManipulation,
               meta: {
                 title: '加减款操作',
                 breadcrumb: [
                   { name: '财务管理' },
                   { name: '加减款操作' }
-                ],
-                keepAlive: true
+                ]
               }
             },
             {
@@ -731,10 +730,16 @@ const router = new Router({
               meta: { title: '出款商户配置' }
             },
             {
-              name: 'Remittance',
+              name: 'TransactionUserRemittance',
               path: 'remittance',
-              component: Remittance,
-              meta: { title: '出款商户配置' }
+              component: TransactionUserRemittance,
+              meta: {
+                title: '会员汇款设置',
+                breadcrumb: [
+                  { name: '收款出款' },
+                  { name: '会员汇款设置' }
+                ]
+              }
             },
             {
               name: 'Shortcut',
