@@ -105,9 +105,9 @@ import PromotionList from './views/promotion/PromotionList'
 import PromotionCreate from './views/promotion/PromotionCreate'
 
 /* 返水管理 */
-import BackwaterManage from './views/backwater/BackwaterManage'
-import BackwaterList from './views/backwater/BackwaterList'
-import BackwaterSetting from './views/backwater/BackwaterSetting'
+import RebateManage from './views/rebate/RebateManage'
+import RebateList from './views/rebate/rebate-list'
+import RebateSetting from './views/rebate/rebate-setting'
 
 /* 体育管理 */
 import SportManage from './views/sport/SportManage'
@@ -131,9 +131,9 @@ import TransactionManage from './views/transaction/TransactionManage'
 import TransactionPaymentType from './views/transaction/payment-type'
 import TransactionPaymentPort from './views/transaction/payment-port'
 import TransactionPaymentLine from './views/transaction/payment-line'
-import Commercial from './views/transaction/Commercial'
-import TransactionUserRemittance from './views/transaction/user-remittance'
-import Shortcut from './views/transaction/Shortcut'
+// import Commercial from './views/transaction/Commercial'
+import TransactionRemittanceUser from './views/transaction/remittance-user'
+import TransactionRemittanceShortcut from './views/transaction/remittance-shortcut'
 
 Vue.use(Router)
 
@@ -661,22 +661,34 @@ const router = new Router({
         },
         /* 返水管理 */
         {
-          name: 'BackwaterManage',
-          path: '/backwater',
-          redirect: '/backwater/list',
-          component: BackwaterManage,
+          name: 'RebateManage',
+          path: '/rebate',
+          redirect: '/rebate/list',
+          component: RebateManage,
           children: [
             {
-              name: 'BackwaterList',
+              name: 'RebateList',
               path: 'list',
-              component: BackwaterList,
-              meta: { title: '会员返水信息' }
+              component: RebateList,
+              meta: {
+                title: '会员返水信息',
+                breadcrumb: [
+                  { name: '返水管理' },
+                  { name: '会员返水信息' }
+                ]
+              }
             },
             {
-              name: 'BackwaterSetting',
+              name: 'RebateSetting',
               path: 'setting',
-              component: BackwaterSetting,
-              meta: { title: '会员返水设置' }
+              component: RebateSetting,
+              meta: {
+                title: '会员返水设置',
+                breadcrumb: [
+                  { name: '返水管理' },
+                  { name: '会员返水设置' }
+                ]
+              }
             }
           ]
         },
@@ -723,16 +735,16 @@ const router = new Router({
                 ]
               }
             },
+            // {
+            //   name: 'Commercial',
+            //   path: 'commercial',
+            //   component: Commercial,
+            //   meta: { title: '出款商户配置' }
+            // },
             {
-              name: 'Commercial',
-              path: 'commercial',
-              component: Commercial,
-              meta: { title: '出款商户配置' }
-            },
-            {
-              name: 'TransactionUserRemittance',
-              path: 'remittance',
-              component: TransactionUserRemittance,
+              name: 'TransactionRemittanceUser',
+              path: 'remittance/user',
+              component: TransactionRemittanceUser,
               meta: {
                 title: '会员汇款设置',
                 breadcrumb: [
@@ -742,10 +754,16 @@ const router = new Router({
               }
             },
             {
-              name: 'Shortcut',
-              path: 'shortcut',
-              component: Shortcut,
-              meta: { title: '汇款捷径配置' }
+              name: 'TransactionRemittanceShortcut',
+              path: 'remittance/shortcut',
+              component: TransactionRemittanceShortcut,
+              meta: {
+                title: '汇款捷径配置',
+                breadcrumb: [
+                  { name: '收款出款' },
+                  { name: '汇款快捷设置' }
+                ]
+              }
             }
           ]
         },

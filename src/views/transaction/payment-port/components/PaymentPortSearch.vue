@@ -12,7 +12,7 @@
 
       <FormSelect
         @on-change="$set(formData, 'interfaceTypeId', $event)"
-        httpAPIName="fetchTransactionPortType"
+        httpAPIName="fetchTransactionPaymentPortType"
         :httpAPIParams="{ params: { type: 1 } }"
         labelAttr="name"
         valueAttr="dictionaryId"
@@ -65,11 +65,6 @@ export default {
     FormSelect,
     FormSelectStatic
   },
-  mixins: [ searchInnerMixin ],
-  data () {
-    return {
-      formData: {}
-    }
-  }
+  mixins: [ searchInnerMixin ]
 }
 </script>

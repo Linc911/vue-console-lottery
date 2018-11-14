@@ -5,7 +5,11 @@
 
       <el-table-column prop="name" label="接口名称" :min-width="100" />
 
+      <el-table-column prop="interfaceTypeDesc" label="接口类型" />
+
       <el-table-column prop="payTypeName" label="支付类型" />
+
+      <el-table-column prop="payAddress" label="支付地址" />
 
       <el-table-column prop="merchantId" label="商户号" />
 
@@ -14,10 +18,6 @@
           <span>{{ scope.row.discountRatio | percent }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column prop="payAddress" label="支付地址" />
-
-      <el-table-column prop="sysGroupNames" label="会员分组" />
 
       <el-table-column prop="status" label="是否启用" :width="45">
         <template slot-scope="scope">
@@ -51,7 +51,7 @@
 
       <el-table-column prop="sort" label="排列顺序" :width="45" />
 
-      <el-table-column prop="remark" label="备注" :min-width="120" />
+      <!-- <el-table-column prop="remark" label="备注" :min-width="120" /> -->
 
       <el-table-column prop="operations" label="操作">
         <template slot-scope="scope">

@@ -2,7 +2,9 @@ import axios from './index'
 
 export default {
   /* 公共数据 */
-  fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 彩票游戏菜单
+  fetchGameClasses: () => axios.get('/api-g/gameconfig/parent'), // 游戏菜单(大类)
+  fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 游戏菜单（细分）
+
   fetchGamesList: () => axios.get('/api-g/gameconfig'), // 游戏类型/账户类型
   fetchUserId: options => axios.get('/api-u/users-anon/getUserId', options), // 查询会员ID
 
@@ -84,9 +86,10 @@ export default {
   fetchFinanceDepoistLogs: options => axios.get('/api-p/UserOrder/orderAndRecharge', options), // 所有存款记录
 
   // 会员返水
-  rebateList: options => axios.get('/api-b/rebate/list', options), // 会员返水设置列表
+  fetchRebateSettingList: options => axios.get('/api-b/rebate/list', options), // 会员返水设置列表
   rebateSave: data => axios.post('/api-b/rebate/save', data), // 会员返水设置保存
   rebateStatus: options => axios.get('/api-b/rebate/status', options), // 会员返水设置修改状态
+
   rebateLogList: options => axios.get('/api-b/rebateLog/list', options), // 会员返水信息列表
   statistic: options => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计
 
@@ -96,8 +99,9 @@ export default {
   updateTransactionPaymentType: data => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
 
   fetchTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/list', data), // 支付接口列表
-  createTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/save', data), // 支付接口列表
-  fetchTransactionPortType: options => axios.get('/api-b/dictionary/list', options), // 接口类型列表
+  fetchTransactionPaymentPortType: options => axios.get('/api-b/dictionary/list', options), // 支付接口类型列表
+  createTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/save', data), // 创建新支付接口
+  updateTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/update', data), // 接口类型列表
 
   fetchTransactionPortLine: options => axios.get('/api-b/configPayRoute/list', options), // 支付路线类型列表
   createTransactionPortLine: data => axios.post('/api-b/configPayRoute/save', data), // 创建新支付路线（可一对多）
@@ -106,5 +110,11 @@ export default {
   fetchTransactionRemittance: options => axios.get('/api-b/configRemit/list', options), // 会员汇款设置列表
   createTransactionRemittance: data => axios.post('/api-b/configRemit/save', data), // 创建新会员汇款设置
   updateTransactionRemittance: data => axios.post('/api-b/configRemit/updateById', data), // 创建新会员汇款设置
-  deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options) // 删除会员汇款设置
+  deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置
+
+  fetchRemittanceShortcutType: options => axios.get('/api-b/dictionary/list', options), // 汇款快捷支付设置类型列表
+  fetchTransactionRemittanceShortcut: options => axios.get('/api-b/configQuickPay/list', options), // 汇款快捷列表
+  createTransactionRemittanceShortcut: data => axios.post('/api-b/configQuickPay/save', data), // 创建新会员汇款设置
+  updateTransactionRemittanceShortcut: data => axios.post('/api-b/configQuickPay/save', data) // 创建新会员汇款设置
+  // deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options) // 删除会员汇款设置
 }

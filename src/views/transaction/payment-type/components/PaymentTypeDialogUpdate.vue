@@ -47,6 +47,7 @@ export default {
   mixins: [ updateMixin ],
   data () {
     return {
+      idObject: {}, // 必须携带的参数
       updateHttpAPI: 'updateTransactionPaymentType',
       // 要设置初始值，否则表单无法验证
       formData: { sort: '', status: '' },
@@ -54,6 +55,11 @@ export default {
         sort: { required: true, message: '排序顺序不能为空' },
         status: { required: true, message: '推荐状态必须选择其中一个', trigger: 'change' }
       }
+    }
+  },
+  watch: {
+    data () {
+      this.idObject = { id: this.data.id }
     }
   }
 }

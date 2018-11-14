@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="user-remittance">
+  <div class="remittance-user">
     <!-- 面包屑导航 -->
     <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
 
@@ -46,7 +46,7 @@ import UserRemittanceTable from './components/UserRemittanceTable'
 import UserRemittanceDialogCreate from './components/UserRemittanceDialogCreate'
 
 export default {
-  name: 'TransactionUserRemittance',
+  name: 'TransactionRemittanceUser',
   components: {
     SearchLayout,
     PaymentLineSearch,

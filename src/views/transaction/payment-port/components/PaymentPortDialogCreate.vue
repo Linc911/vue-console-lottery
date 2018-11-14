@@ -6,7 +6,7 @@
         :rules="rules"
         label-width="100px"
         size="small"
-        ref="formPaymentPortCreate"
+        ref="formCreate"
         class="clearfix"
       >
         <el-form-item prop="name" label="接口名称">
@@ -15,7 +15,7 @@
 
         <FormSelect
           @on-change="$set(formData, 'interfaceTypeId', $event)"
-          httpAPIName="fetchTransactionPortType"
+          httpAPIName="fetchTransactionPaymentPortType"
           :httpAPIParams="{ params: { type: 1 } }"
           labelAttr="name"
           valueAttr="dictionaryId"
@@ -86,19 +86,21 @@
           <el-input v-model="formData.ipWhiteList" placeholder="ip白名单，多个用逗号分隔" />
         </el-form-item>
 
-        <el-form-item label="备注" class="custom-block">
+        <el-form-item prop="remark" label="备注" class="custom-block">
           <el-input v-model="formData.remark" type="textarea" rows="3" placeholder="" />
         </el-form-item>
       </el-form>
 
       <span slot="footer">
-        <el-button @click="submitForm('formPaymentPortCreate')" type="primary" size="small">确定</el-button>
+        <el-button @click="submitForm('formCreate')" type="primary" size="small">确定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { createMixin } from '@/mixins'
+
 import FormSelect from '@/components/form/FormSelect'
 import FormRadio from '@/components/form/FormRadio'
 
@@ -108,48 +110,25 @@ export default {
     FormSelect,
     FormRadio
   },
+  mixins: [ createMixin ],
   data () {
     return {
-      dialogVisible: false,
-      formData: { status: 0, sort: 0 },
+      createHttpAPI: 'createTransactionPaymentPort',
+      formData: {},
       rules: {
         name: { required: true, message: '接口名称不能为空' },
         interfaceTypeId: { required: true, message: '接口类型必须选择一个' },
         payTypeId: { required: true, message: '支付类型须必须选择一个' },
         discountRatio: { required: true, message: '优惠比例不能为空' },
-        status: { required: true, message: '启用状态必须选择一个' },
+        status: { required: true, message: '启用状态必须选择一个', trigger: 'blur' },
         sort: { required: true, message: '排序顺序不能为空' },
-        userGroups: { type: 'array', required: true, message: '会员分组至少选择一个', trigger: 'change' },
+        userGroups: { required: true, message: '会员分组至少选择一个', trigger: 'change' },
         merchantId: { required: true, message: '商家账号不能为空' },
         payAddress: { required: true, message: '支付地址不能为空' },
         publicKey: { required: true, message: '秘钥(公钥)不能为空' },
         privateKey: { required: true, message: '秘钥(私钥)不能为空' },
         ipWhiteList: { required: true, message: 'IP白名单不能为空' }
       }
-    }
-  },
-  methods: {
-    toggleDialogVisible (status) {
-      this.dialogVisible = status
-    },
-    submitForm (formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.dialogVisible = false
-
-          this.$httpAPI.createTransactionPaymentPort(this.formData).then(response => {
-            if (response.data.status === 200) {
-              // this.$utils.initializeObjectProperties(this.formData)
-              // this.$utils.invokeRefResetMothod(this.$refs)
-
-              this.$emit('on-created')
-              this.$message.success('创建新支付接口成功！')
-            }
-          }).catch(error => console.log(error))
-        } else {
-          this.$message.warning('表单填写不正确，请根据提示填写！')
-        }
-      })
     }
   }
 }

@@ -90,7 +90,7 @@ export default {
             { id: 'test0703', name: '在线存款管理', path: '/finance/deposit/online', icon: 'fa-cubes' },
             { id: 'test0704', name: '提款申请管理', path: '/finance/withdraw/apply', icon: 'fa-cubes' },
             { id: 'test0706', name: '额度转换管理', path: '/finance/limit/change', icon: 'fa-cubes' },
-            { id: 'test0705', name: '会员资金管理', path: '/finance/users/assets', icon: 'fa-cubes' },
+            { id: 'test0705', name: '会员资金管理', path: '/users/unset', icon: 'fa-cubes' },
             { id: 'test0709', name: '存/取款记录', path: '/finance/depositwithdraw/list', icon: 'fa-cubes' },
             { id: 'test0707', name: '会员财务报表', path: '/finance/balance/sheet', icon: 'fa-cubes' },
             { id: 'test0710', name: '平台收支汇总', path: '/finance/statistics', icon: 'fa-cubes' },
@@ -119,8 +119,8 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test1002', name: '会员返水信息', path: '/backwater/list', icon: 'fa-cubes' },
-            { id: 'test1001', name: '会员返水设置', path: '/backwater/setting', icon: 'fa-cubes' }
+            { id: 'test1002', name: '会员返水信息', path: '/rebate/list', icon: 'fa-cubes' },
+            { id: 'test1001', name: '会员返水设置', path: '/rebate/setting', icon: 'fa-cubes' }
           ]
         },
         {
@@ -183,9 +183,9 @@ export default {
             { id: 'test1506', name: '支付类型配置', path: '/transaction/payment/type', icon: 'fa-cubes' },
             { id: 'test1503', name: '支付接口配置', path: '/transaction/payment/port', icon: 'fa-cubes' },
             { id: 'test1501', name: '支付路线配置', path: '/transaction/payment/line', icon: 'fa-cubes' },
-            { id: 'test1502', name: '出款商户配置', path: '/transaction/commercial', icon: 'fa-cubes' },
-            { id: 'test1504', name: '会员汇款设置', path: '/transaction/remittance', icon: 'fa-cubes' },
-            { id: 'test1505', name: '汇款快捷设置', path: '/transaction/shortcut', icon: 'fa-cubes' }
+            { id: 'test1502', name: '出款商户配置', path: '/users/unset', icon: 'fa-cubes' },
+            { id: 'test1504', name: '会员汇款设置', path: '/transaction/remittance/user', icon: 'fa-cubes' },
+            { id: 'test1505', name: '汇款快捷设置', path: '/transaction/remittance/shortcut', icon: 'fa-cubes' }
           ]
         },
         {

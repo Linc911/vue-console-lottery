@@ -16,7 +16,7 @@
         <FormSelect
           @on-change="$set(formData, 'interfaceTypeId', $event)"
           :value="formData.interfaceTypeId"
-          httpAPIName="fetchTransactionPortType"
+          httpAPIName="fetchTransactionPaymentPortType"
           :httpAPIParams="{ params: { type: 1 } }"
           labelAttr="name"
           valueAttr="dictionaryId"
@@ -103,6 +103,8 @@
 </template>
 
 <script>
+import { updateMixin } from '@/mixins'
+
 import FormSelect from '@/components/form/FormSelect'
 import FormRadio from '@/components/form/FormRadio'
 
@@ -112,16 +114,12 @@ export default {
     FormSelect,
     FormRadio
   },
-  props: {
-    data: {
-      type: Object,
-      required: true
-    }
-  },
+  mixins: [ updateMixin ],
   data () {
     return {
+      idObject: { id: this.data.id }, // 必须携带的参数
+      updateHttpAPI: 'updateTransactionPaymentPort',
       formData: this.data,
-      dialogVisible: false,
       rules: {
         name: { required: true, message: '接口名称不能为空' },
         interfaceTypeId: { required: true, message: '接口类型必须选择一个' },
@@ -129,7 +127,7 @@ export default {
         discountRatio: { required: true, message: '优惠比例不能为空' },
         status: { required: true, message: '启用状态必须选择一个' },
         sort: { required: true, message: '排序顺序不能为空' },
-        rebateUserGroups: { type: 'array', required: true, message: '会员分组至少选择一个', trigger: 'change' },
+        // rebateUserGroups: { required: true, message: '会员分组至少选择一个' },
         merchantId: { required: true, message: '商家账号不能为空' },
         payAddress: { required: true, message: '支付地址不能为空' },
         publicKey: { required: true, message: '秘钥(公钥)不能为空' },
@@ -140,31 +138,7 @@ export default {
   },
   watch: {
     data () {
-      this.formData = this.data
-    }
-  },
-  methods: {
-    toggleDialogVisible (status) {
-      this.dialogVisible = status
-    },
-    submitForm (formName) {
-      this.$refs[formName].validate(valid => {
-        this.dialogVisible = false
-
-        if (!valid) {
-          this.$httpAPI.createFinanceLimitChange(this.formData).then(response => {
-            if (response.data.status === 200) {
-              this.$utils.initializeObjectProperties(this.formData)
-              this.$utils.invokeRefResetMothod(this.$refs)
-
-              this.$emit('on-created')
-              this.$message.success('创建新支付接口成功！')
-            }
-          }).catch(error => console.log(error))
-        } else {
-          this.$message.warning('表单填写不正确，请根据提示填写！')
-        }
-      })
+      this.idObject = { id: this.data.id }
     }
   }
 }

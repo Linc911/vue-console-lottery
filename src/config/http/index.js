@@ -37,18 +37,26 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   // http响应完成时，停止动画； 返回获取的对象
   endLoading()
+
+  if (response.status === 401) {
+    store.dispatch('CLEAR_TOKEN')
+    axios.defaults.headers.common['Authorization'] = ''
+    router.push({ name: 'LoginUsername' })
+    Message.warning('登录Token已过期，请重新登录。')
+  }
   return response
 }, error => {
   endLoading() // 停止加载动画
 
   // token验证后台有两种不同验证，分别要处理
-  // if (error.response.status === 401) {
-  //   store.dispatch('CLEAR_TOKEN')
-  //   axios.defaults.headers.common['Authorization'] = ''
-  //   router.push({ name: 'LoginUsername' })
-  //   Message.warning('登录Token已过期，请重新登录。')
-  //   return
-  // }
+
+  if (error.response && error.response.status === 401) {
+    store.dispatch('CLEAR_TOKEN')
+    axios.defaults.headers.common['Authorization'] = ''
+    router.push({ name: 'LoginUsername' })
+    Message.warning('登录Token已过期，请重新登录。')
+    return
+  }
 
   switch (error.status) {
     case '401':

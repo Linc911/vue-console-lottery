@@ -1,4 +1,5 @@
 import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
+
 import BasePagination from '@/components/base/BasePagination'
 
 import SearchIcon from '@/components/search/SearchIcon'
@@ -34,6 +35,11 @@ export const searchInnerMixin = {
   components: {
     SearchIcon,
     SearchReset
+  },
+  data () {
+    return {
+      formData: {}
+    }
   },
   methods: {
     search () {
@@ -204,10 +210,12 @@ export const createMixin = {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.dialogVisible = false
-          this.$refs[formName].resetFields()
 
           this.$httpAPI[this.createHttpAPI](this.formData).then(response => {
             if (response.data.status === 200) {
+              this.$utils.invokeRefResetMothod(this.$refs)
+              this.$refs[formName].resetFields()
+
               this.$emit('on-created')
               this.$message.success('创建成功！')
             } else {
@@ -252,10 +260,10 @@ export const updateMixin = {
           // 判断两个对象是否相等（自有属性和属性值一一对应）
           const same = this.$utils.isEquivalentObjects(this.data, this.formData)
           if (!same) {
-            // 生成变动属性组成的对象（两个参数位置要按顺序）
-            const params = this.$utils.generateObjectWithChangedProperties(this.data, this.formData)
-
-            this.$httpAPI[this.updateHttpAPI]({ params }).then(response => {
+            // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置要按顺序）
+            const postData = this.$utils.generateObjectWithChangedProperties(this.data, this.formData)
+            console.log(this.idObject)
+            this.$httpAPI[this.updateHttpAPI](Object.assign(this.idObject, postData)).then(response => {
               if (response.data.status === 200) {
                 this.$emit('on-updated')
                 this.$message.success('修改成功！')

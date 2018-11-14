@@ -12,7 +12,10 @@ function addZeroPrefix (n) {
 /* 公共过滤器 */
 // 时间格式化
 Vue.filter('time', value => {
-  return moment(value).format('YYYY-MM-DD HH:mm:ss')
+  if (value) {
+    return moment(value).format('YYYY-MM-DD HH:mm:ss')
+  }
+  return ''
 })
 Vue.filter('sortTime', second => {
   const s = addZeroPrefix(second % 60)
@@ -21,13 +24,23 @@ Vue.filter('sortTime', second => {
 
   return `${h}:${m}:${s}`
 })
+
 // 货币数值格式化
 Vue.filter('RMB', value => {
   return '￥ ' + parseInt(value).toLocaleString()
 })
+
 // 百分比
 Vue.filter('percent', value => {
   return Number(value).toFixed(2) + '%'
+})
+
+// 百分比
+Vue.filter('separator', (value, separator) => {
+  if (value) {
+    return value.join(separator)
+  }
+  return ''
 })
 
 // 充值支付类型
@@ -41,6 +54,7 @@ Vue.filter('paymentType', value => {
       return '其他'
   }
 })
+
 // 充值订单状态
 Vue.filter('paymentStatus', value => {
   switch (value) {
@@ -72,13 +86,6 @@ Vue.filter('auditStatus', value => {
       return '审批拒绝'
     default:
       return '其他'
-  }
-})
-Vue.filter('auditTransfer', value => {
-  if (value < 2) {
-    return '审批'
-  } else {
-    return '详情'
   }
 })
 

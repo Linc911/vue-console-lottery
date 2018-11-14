@@ -56,16 +56,16 @@ export default {
     return {
       options: [],
       selectedOption: this.value
-      // selectedOption: this.multiple ? [] : ''
+      // selectedOption: this.value || (this.multiple ? [] : '')
     }
-  },
-  created () {
-    this.fetchOptions()
   },
   watch: {
     value () {
       this.selectedOption = this.value
     }
+  },
+  created () {
+    this.fetchOptions()
   },
   methods: {
     reset () {
