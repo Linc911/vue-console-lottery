@@ -87,8 +87,8 @@ export default {
 
   // 会员返水
   fetchRebateSettingList: options => axios.get('/api-b/rebate/list', options), // 会员返水设置列表
-  rebateSave: data => axios.post('/api-b/rebate/save', data), // 会员返水设置保存
-  rebateStatus: options => axios.get('/api-b/rebate/status', options), // 会员返水设置修改状态
+  createRebateSettingList: data => axios.post('/api-b/rebate/save', data), // 会员返水设置保存
+  updateRebateSettingStatus: options => axios.get('/api-b/rebate/status', options), // 会员返水设置修改状态
 
   rebateLogList: options => axios.get('/api-b/rebateLog/list', options), // 会员返水信息列表
   statistic: options => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计

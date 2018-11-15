@@ -7,6 +7,12 @@
   >
     <el-table-column type="index" />
 
+    <el-table-column label="创建时间" :width="140">
+      <template slot-scope="scope">
+        <span>{{scope.row.createTime | time}}</span>
+      </template>
+    </el-table-column>
+
     <el-table-column prop="createUsername" label="汇款人账号" />
 
     <el-table-column prop="bankUsername" label="支付户名" />

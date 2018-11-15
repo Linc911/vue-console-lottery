@@ -12,8 +12,6 @@
         ref="numberRange"
       />
 
-      <SearchAudit @on-change="handleAuditChange" ref="audit" />
-
       <SearchIcon @click.native="search" />
 
       <SearchReset @click.native="reset" />

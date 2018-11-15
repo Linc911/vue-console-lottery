@@ -88,7 +88,6 @@
       <span v-if="formData.status <= 1" slot="footer">
         <el-button @click="changeStatus(2)" type="primary" >审批通过</el-button>
         <el-button @click="changeStatus(3)" type="danger" >审批拒绝</el-button>
-        <el-button v-if="formData.status !== 1" @click="changeStatus(1)" >已查阅，待审批</el-button>
       </span>
     </el-dialog>
   </div>
@@ -113,11 +112,12 @@ export default {
       this.dialogVisible = status
     },
     changeStatus (status) {
+      this.dialogVisible = false
+
       this.$httpAPI.updateFinanceWithdrawApplyStatus({
         params: { withdrawId: this.formData.withdrawId, status }
       }).then(() => {
         this.$emit('on-success', { withdrawId: this.formData.withdrawId, status })
-        this.dialogVisible = false
         this.$message.success('修改状态成功！')
       }).catch(error => console.log(error))
     }

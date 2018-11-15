@@ -119,8 +119,8 @@ export default {
           path: '',
           icon: 'fa-user',
           children: [
-            { id: 'test1002', name: '会员返水信息', path: '/rebate/list', icon: 'fa-cubes' },
-            { id: 'test1001', name: '会员返水设置', path: '/rebate/setting', icon: 'fa-cubes' }
+            { id: 'test1001', name: '设置返水计划', path: '/rebate/setting', icon: 'fa-cubes' },
+            { id: 'test1002', name: '查看返水记录', path: '/rebate/list', icon: 'fa-cubes' }
           ]
         },
         {

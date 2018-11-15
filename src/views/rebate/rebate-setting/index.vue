@@ -11,7 +11,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <RemittanceShortcutSearch @on-search="handleSearch" />
+        <RebateSettingSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -33,7 +33,7 @@
     </div>
 
     <!-- 创建弹框 -->
-    <RebateSettingDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
+    <RebateSettingDialogCreate @on-created="handleCreatedNewItem" ref="dialogCreate" />
   </div>
 </template>
 
@@ -41,16 +41,16 @@
 import { breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
-import RemittanceShortcutSearch from './components/RemittanceShortcutSearch'
+import RebateSettingSearch from './components/RebateSettingSearch'
 import BaseAdd from '@/components/base/BaseAdd'
 import RebateSettingTable from './components/RebateSettingTable'
 import RebateSettingDialogCreate from './components/RebateSettingDialogCreate'
 
 export default {
-  name: 'TransactionRemittanceShortcut',
+  name: 'RebateSettingList',
   components: {
     SearchLayout,
-    RemittanceShortcutSearch,
+    RebateSettingSearch,
     BaseAdd,
     RebateSettingTable,
     RebateSettingDialogCreate
@@ -59,7 +59,7 @@ export default {
   data () {
     return {
       games: [],
-      activeTab: '0',
+      activeTab: '',
       tableData: [],
       tableHttpAPI: 'fetchRebateSettingList',
       requestParams: { gameConfigId: 0, pageNo: 1, pageSize: 10 },
@@ -75,6 +75,13 @@ export default {
       this.activeTab = tab.name
 
       this.requestParams.gameConfigId = tab.name
+      this.requestParams.pageNo = 1
+      this.fetchTableData()
+    },
+    handleCreatedNewItem (payload) {
+      this.activeTab = String(payload.gameConfigId)
+
+      this.requestParams.gameConfigId = this.activeTab
       this.requestParams.pageNo = 1
       this.fetchTableData()
     },

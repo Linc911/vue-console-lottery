@@ -5,10 +5,10 @@
       <FormInput
         @keyup.native.enter="$emit('on-search', formData)"
         @submit.prevent.stop
-        @on-change="$set(formData, 'payName', $event)"
-        label="支付户名"
+        @on-change="$set(formData, 'name', $event)"
+        label="返水名称"
         width="174px"
-        ref="payName"
+        ref="name"
       />
 
       <div style="display: inline-block">

@@ -48,8 +48,14 @@ Vue.filter('paymentType', value => {
   switch (value) {
     case -1:
       return '客服填单'
+    case 0:
+      return '银联'
     case 1:
       return '微信'
+    case 2:
+      return '支付宝'
+    case 3:
+      return 'QQ钱包'
     default:
       return '其他'
   }
@@ -84,6 +90,22 @@ Vue.filter('auditStatus', value => {
       return '审批通过'
     case 3:
       return '审批拒绝'
+    default:
+      return '其他'
+  }
+})
+
+// 审核状态
+Vue.filter('auditTransfer', value => {
+  switch (value) {
+    case 0:
+      return '审批'
+    case 1:
+      return '审批'
+    case 2:
+      return '详情'
+    case 3:
+      return '详情'
     default:
       return '其他'
   }

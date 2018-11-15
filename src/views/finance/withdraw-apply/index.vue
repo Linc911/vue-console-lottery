@@ -3,6 +3,12 @@
     <!-- 面包屑导航 -->
     <BaseBreadcrumb :breadcrumb="breadcrumb" />
 
+    <!-- 菜单切换栏 -->
+    <el-tabs v-model="activeTab" @tab-click="handleTabClick">
+      <el-tab-pane label="填单存款待审核列表" name="unchecked" />
+      <el-tab-pane label="填单存款已审核列表" name="checked" />
+    </el-tabs>
+
     <!-- 条件筛选 -->
     <WithdrawApplySearch @on-search="handleSearch" />
 
@@ -14,7 +20,7 @@
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
-        :pageTotal="pageTotal"
+        :page="page"
         :requestParams="requestParams"
         httpURL="fetchFinanceWithdrawApply"
       />
@@ -43,20 +49,36 @@ export default {
   },
   data () {
     return {
+      activeTab: 'unchecked',
       breadcrumb: [
         { name: '财务管理' },
         { name: '提款申请管理' }
       ],
-      tableData: [],
-      pageTotal: 0,
       currentItem: {},
-      requestParams: {}
+      tableData: [],
+      requestParams: { pageNo: 1, pageSize: 10, status: 0 },
+      page: { current: 1, size: 10, total: 10 }
     }
   },
   created () {
     this.fetchFinanceWithdrawApply()
   },
   methods: {
+    // 菜单切换；根据不同的菜单更新对应数据
+    handleTabClick (tab) {
+      switch (tab.name) {
+        case 'unchecked':
+          this.requestParams.status = 0
+          this.fetchFinanceWithdrawApply()
+          break
+        case 'checked':
+          this.requestParams = Object.assign(this.requestParams, { pageNo: 1, status: '2,3' })
+          this.fetchFinanceWithdrawApply()
+          break
+        default:
+          this.requestParams = {}
+      }
+    },
     // 接收搜索信息，触发搜索
     handleSearch (obj) {
       this.requestParams = Object.assign(this.requestParams, obj, { pageNo: 1 })
@@ -88,7 +110,7 @@ export default {
         } else {
           this.tableData = []
         }
-        this.pageTotal = response.data.amount
+        this.page.total = response.data.amount
       }).catch(error => console.log(error))
     }
   }

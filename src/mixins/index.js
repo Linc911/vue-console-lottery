@@ -17,14 +17,7 @@ export const breadcrumbMixin = {
 export const searchOuterMixin = {
   methods: {
     handleSearch (params) {
-      // 删除为空字符串的属性
-      for (let key in params) {
-        if (params[key] === '') {
-          delete params[key]
-        }
-      }
-
-      this.requestParams = Object.assign(params, { pageNo: 1 })
+      this.requestParams = Object.assign(this.requestParams, params, { pageNo: 1 })
       this.fetchTableData()
     }
   }
@@ -50,7 +43,7 @@ export const searchInnerMixin = {
         this.$refs[key].reset()
       }
 
-      this.formData = {}
+      this.$utils.initializeObjectProperties(this.formData)
     }
   }
 }
@@ -197,9 +190,9 @@ export const listMixin = {
   }
 }
 
-/* 表单提交 */
-// 创建新数据
-export const createMixin = {
+/* 创建新一条表单数据 */
+// 第一类
+export const dialogCreateMixin = {
   data () {
     return {
       dialogVisible: false
@@ -208,15 +201,17 @@ export const createMixin = {
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
+        console.log(this.formData)
         if (valid) {
           this.dialogVisible = false
 
           this.$httpAPI[this.createHttpAPI](this.formData).then(response => {
             if (response.data.status === 200) {
-              this.$utils.invokeRefResetMothod(this.$refs)
-              this.$refs[formName].resetFields()
+              // 清除表单填写记录
+              // this.$utils.invokeRefResetMothod(this.$refs)
+              // this.$refs[formName].resetFields()
 
-              this.$emit('on-created')
+              this.$emit('on-created', this.formData)
               this.$message.success('创建成功！')
             } else {
               this.$message.error('创建失败！')
@@ -233,7 +228,97 @@ export const createMixin = {
   }
 }
 
-// 更新数据
+// 废弃 待删除
+export const createMixin = {
+  data () {
+    return {
+      dialogVisible: false
+    }
+  },
+  methods: {
+    submitForm (formName) {
+      this.$refs[formName].validate(valid => {
+        console.log(this.formData)
+        if (valid) {
+          this.dialogVisible = false
+
+          this.$httpAPI[this.createHttpAPI](this.formData).then(response => {
+            if (response.data.status === 200) {
+              // 清除表单填写记录
+              // this.$utils.invokeRefResetMothod(this.$refs)
+              // this.$refs[formName].resetFields()
+
+              this.$emit('on-created', this.formData)
+              this.$message.success('创建成功！')
+            } else {
+              this.$message.error('创建失败！')
+            }
+          }).catch(error => console.log(error))
+        } else {
+          this.$message.warning('表单填写不正确，请按提示填写！')
+        }
+      })
+    },
+    toggleDialogVisible (status) {
+      this.dialogVisible = status
+    }
+  }
+}
+
+/* 更新表格列表数据 */
+// DialogUpdate 组件
+export const dialogUpdateMixin = {
+  props: {
+    data: {
+      type: Object,
+      required: true
+    }
+  },
+  data () {
+    return {
+      dialogVisible: false
+    }
+  },
+  watch: {
+    data () {
+      this.formData = Object.assign(this.formData, this.data)
+    }
+  },
+  methods: {
+    submitForm (formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.dialogVisible = false
+
+          // 判断两个对象是否相等（自有属性和属性值一一对应）
+          const same = this.$utils.isEquivalentObjects(this.data, this.formData)
+          if (!same) {
+            // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置要按顺序）
+            const postData = this.$utils.generateObjectWithChangedProperties(this.data, this.formData)
+
+            this.$httpAPI[this.updateHttpAPI](Object.assign(this.idParams, postData)).then(response => {
+              if (response.data.status === 200) {
+                this.$emit('on-updated')
+                this.$message.success('修改成功！')
+              } else {
+                this.$message.error('修改失败！')
+              }
+            }).catch(error => console.log(error))
+          } else {
+            this.$message.info('检测数据没有变化，不发送修改请求。')
+          }
+        } else {
+          this.$message.warning('表单填写不正确，请根据提示填写！')
+        }
+      })
+    },
+    toggleDialogVisible (status) {
+      this.dialogVisible = status
+    }
+  }
+}
+
+// 废弃 待删除
 export const updateMixin = {
   props: {
     data: {
@@ -262,7 +347,6 @@ export const updateMixin = {
           if (!same) {
             // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置要按顺序）
             const postData = this.$utils.generateObjectWithChangedProperties(this.data, this.formData)
-            console.log(this.idObject)
             this.$httpAPI[this.updateHttpAPI](Object.assign(this.idObject, postData)).then(response => {
               if (response.data.status === 200) {
                 this.$emit('on-updated')
@@ -281,6 +365,47 @@ export const updateMixin = {
     },
     toggleDialogVisible (status) {
       this.dialogVisible = status
+    }
+  }
+}
+
+// Table 组件
+export const tableComponentMixin = {
+  props: {
+    data: {
+      type: Array,
+      required: true
+    }
+  },
+  data () {
+    return {
+      activeItem: {}
+    }
+  },
+  methods: {
+    showDialog (item, ref) {
+      this.activeItem = item
+      this.$refs[ref].toggleDialogVisible(true)
+    }
+  }
+}
+// 废弃 待删除
+export const updateTableItemMixin = {
+  props: {
+    data: {
+      type: Array,
+      required: true
+    }
+  },
+  data () {
+    return {
+      activeItem: {}
+    }
+  },
+  methods: {
+    showDialogUpdate (item) {
+      this.activeItem = item
+      this.$refs.dialogUpdate.toggleDialogVisible(true)
     }
   }
 }

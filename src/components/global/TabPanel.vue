@@ -63,10 +63,11 @@ export default {
   border-radius: 0;
   border: none;
   border-right: 1px solid #e5e5e5;
+  background-color: #fff;
   cursor: pointer;
 }
 .el-tag.current {
-  background-color: #fff;
+  background-color: rgba(24, 159, 146, 0.1);
 }
 .fa-home {
   padding-right: 5px;

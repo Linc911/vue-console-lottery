@@ -1,10 +1,14 @@
 <template lang="html">
-  <div class="deposit-form">
+  <div>
     <!-- 面包屑导航 -->
     <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
 
     <!-- 条件筛选 -->
     <SearchLayout>
+      <template slot="left">
+        <PaymentTypeSearch @on-search="handleSearch" />
+      </template>
+
       <template slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
       </template>
@@ -13,7 +17,11 @@
     <!-- 主要内容 -->
     <div class="table-list">
       <!-- 表格 -->
-      <PaymentTypeTable @on-updated="fetchTableData()" :data="tableData" />
+      <PaymentTypeTable
+        :data="tableData"
+        @on-updated="fetchTableData()"
+        @on-status-change="fetchTableData()"
+      />
 
       <!-- 分页 -->
       <BasePagination
@@ -24,15 +32,16 @@
       />
     </div>
 
-    <!-- 创建新支付类型弹框 -->
+    <!-- 创建弹框 -->
     <PaymentTypeDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
 <script>
-import { breadcrumbMixin, tableWithPaginationMixin } from '@/mixins'
+import { breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
+import PaymentTypeSearch from './components/PaymentTypeSearch'
 import BaseAdd from '@/components/base/BaseAdd'
 import PaymentTypeTable from './components/PaymentTypeTable'
 import PaymentTypeDialogCreate from './components/PaymentTypeDialogCreate'
@@ -41,17 +50,18 @@ export default {
   name: 'TransactionPaymentType',
   components: {
     SearchLayout,
+    PaymentTypeSearch,
     BaseAdd,
     PaymentTypeTable,
     PaymentTypeDialogCreate
   },
-  mixins: [ breadcrumbMixin, tableWithPaginationMixin ],
+  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],
       tableHttpAPI: 'fetchTransactionPaymentType',
-      requestParams: {},
-      page: { current: 1, size: 10, total: 10 }
+      requestParams: { pageNo: 1, pageSize: 20 },
+      page: { current: 1, size: 20, total: 10 }
     }
   }
 }

@@ -9,24 +9,42 @@
         class="clearfix"
         ref="formCreate"
       >
-        <el-form-item prop="username" label="支付户名">
-          <el-input v-model.trim="formData.username" placeholder="支付户名" />
+        <el-form-item prop="username" label="收款户名">
+          <el-input v-model.trim="formData.username" placeholder="收款户名" />
         </el-form-item>
 
-        <el-form-item prop="bank" label="收款银行">
-          <el-input v-model.trim="formData.bank" placeholder="收款银行" />
+        <el-form-item label="收款方式">
+          <el-radio-group v-model="receiptWay">
+            <el-radio :label="0">二维码</el-radio>
+            <el-radio :label="1">银行</el-radio>
+          </el-radio-group>
         </el-form-item>
 
-        <el-form-item prop="codeUrl" label="二维码地址">
-          <el-input v-model.trim="formData.codeUrl" placeholder="二维码地址" />
-        </el-form-item>
+        <template v-if="!receiptWay">
+          <el-form-item prop="codeUrl" label="二维码地址" class="custom-block">
+            <el-input v-model.trim="formData.codeUrl" placeholder="二维码地址" />
+          </el-form-item>
+        </template>
+        <template v-else>
+          <el-form-item prop="bank" label="收款银行">
+            <el-input v-model.trim="formData.bank" placeholder="收款银行" />
+          </el-form-item>
 
-        <el-form-item prop="discountRatio" label="优惠比例%">
-          <el-input v-model.trim="formData.discountRatio" type="number" placeholder="优惠比例" />
-        </el-form-item>
+          <el-form-item prop="userAccount" label="收款账号" class="custom-block">
+            <el-input v-model.trim="formData.userAccount" placeholder="收款账号" />
+          </el-form-item>
+
+          <el-form-item prop="bankAddress" label="银行地址" class="custom-block">
+            <el-input v-model.trim="formData.bankAddress" placeholder="银行地址" />
+          </el-form-item>
+        </template>
 
         <el-form-item prop="sort" label="排列顺序">
           <el-input v-model.trim="formData.sort" type="number" placeholder="排列顺序" />
+        </el-form-item>
+
+        <el-form-item prop="discountRatio" label="赠送比例%">
+          <el-input v-model.trim="formData.discountRatio" type="number" placeholder="赠送比例" />
         </el-form-item>
 
         <FormSelect
@@ -39,14 +57,6 @@
           label="会员分组"
           multiple
         />
-
-        <el-form-item prop="userAccount" label="收款账号" class="custom-block">
-          <el-input v-model.trim="formData.userAccount" placeholder="收款账号" />
-        </el-form-item>
-
-        <el-form-item prop="bankAddress" label="银行地址" class="custom-block">
-          <el-input v-model.trim="formData.bankAddress" placeholder="银行地址" />
-        </el-form-item>
       </el-form>
 
       <span slot="footer">
@@ -66,6 +76,7 @@ export default {
   },
   data () {
     return {
+      receiptWay: 0,
       dialogVisible: false,
       formData: {},
       rules: {

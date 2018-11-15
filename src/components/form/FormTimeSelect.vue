@@ -2,15 +2,13 @@
   <el-form-item :prop="prop" :label="label">
     <el-date-picker
       v-model="value"
-      @change="handleDatePickerChange"
-      type="daterange"
+      @change="$emit('on-change', Date.parse($event))"
       :picker-options="pickerOptions"
-      :default-time="['00:00:00', '23:59:59']"
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      size="small"
+      :default-time="defaltTime"
+      type="datetime"
+      placeholder="选择日期时间"
       align="right"
+      style="width: 100%"
     />
   </el-form-item>
 </template>
@@ -19,6 +17,10 @@
 export default {
   name: 'SearchUsername',
   props: {
+    time: {
+      props: Number,
+      default: ''
+    },
     prop: {
       type: String,
       default: ''
@@ -26,63 +28,52 @@ export default {
     label: {
       type: String,
       default: '时间查询'
+    },
+    placeholder: {
+      type: String,
+      default: '选择日期时间'
+    },
+    defaltTime: {
+      type: String,
+      default: '00:00:00'
     }
   },
   data () {
     return {
-      value: '',
+      value: this.time,
       pickerOptions: {
         shortcuts: [{
-          text: '最近一周',
+          text: '今天',
           onClick (picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, end])
+            picker.$emit('pick', new Date())
           }
         }, {
-          text: '最近一个月',
+          text: '昨天',
           onClick (picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24)
+            picker.$emit('pick', date)
           }
         }, {
-          text: '最近三个月',
+          text: '一周前',
           onClick (picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            picker.$emit('pick', [start, end])
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', date)
           }
         }]
       }
     }
   },
+  watch: {
+    time () {
+      this.value = this.time
+    }
+  },
   methods: {
-    handleDatePickerChange (timeArray) {
-      let payload
-      if (timeArray) {
-        payload = {
-          startTime: Date.parse(timeArray[0]),
-          endTime: Date.parse(timeArray[1])
-        }
-      } else {
-        payload = { startTime: '', endTime: '' }
-      }
-
-      this.$emit('on-change', payload)
-    },
     reset () {
       this.value = ''
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.el-date-editor--daterange.el-input__inner{
-  width: 240px;
-}
-</style>

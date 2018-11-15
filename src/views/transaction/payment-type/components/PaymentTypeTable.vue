@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="table-container">
+  <div>
     <el-table :data="data" size="small" highlight-current-row border>
       <el-table-column type="index" :min-width="30" />
 
@@ -7,7 +7,11 @@
 
       <el-table-column prop="status" label="是否推荐">
         <template slot-scope="scope">
-          <BaseIndicator :status="scope.row.status" opposite />
+          <BaseSwitch
+            @on-change="handleSwitchChange"
+            :propValue="!scope.row.status"
+            :payload="{ id: scope.row.id }"
+          />
         </template>
       </el-table-column>
 
@@ -17,41 +21,47 @@
 
       <el-table-column prop="operations" label="操作">
         <template slot-scope="scope">
-          <el-button @click="showDialogUpdate(scope.row)" type="primary" icon="el-icon-edit" size="mini" />
+          <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
+          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
+          <el-button @click="$message.warning('接口调试中...')" type="warning" icon="el-icon-delete" size="mini" />
         </template>
       </el-table-column>
     </el-table>
 
-    <!-- 修改支付类型弹框 -->
+    <!-- 详情弹框 -->
+    <PaymentTypeDialogDetail :formData="activeItem" ref="dialogDetail" />
+    <!-- 修改弹框 -->
     <PaymentTypeDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
   </div>
 </template>
 
 <script>
-import BaseIndicator from '@/components/base/BaseIndicator'
+import { tableComponentMixin } from '@/mixins'
+
+import BaseSwitch from '@/components/base/BaseSwitch'
+import PaymentTypeDialogDetail from './PaymentTypeDialogDetail'
 import PaymentTypeDialogUpdate from './PaymentTypeDialogUpdate'
 
 export default {
   name: 'PaymentTypeTable',
   components: {
-    BaseIndicator,
+    BaseSwitch,
+    PaymentTypeDialogDetail,
     PaymentTypeDialogUpdate
   },
-  props: {
-    data: {
-      type: Array,
-      required: true
-    }
-  },
-  data () {
-    return {
-      activeItem: {}
-    }
-  },
+  mixins: [ tableComponentMixin ],
   methods: {
-    showDialogUpdate (item) {
-      this.activeItem = item
-      this.$refs.dialogUpdate.toggleDialogVisible(true)
+    handleSwitchChange (payload) {
+      this.$httpAPI.updateTransactionPaymentType(
+        { id: payload.id, status: Number(!payload.value) }
+      ).then(response => {
+        if (response.data.status === 200) {
+          this.$emit('on-status-change')
+          this.$message.success('修改状态成功！')
+        } else {
+          this.$message.error('修改状态失败！')
+        }
+      }).catch(error => console.log(error))
     }
   }
 }

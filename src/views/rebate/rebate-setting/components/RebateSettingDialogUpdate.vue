@@ -1,13 +1,13 @@
 <template lang="html">
   <div>
-    <el-dialog :visible.sync="dialogVisible" title="创建新返水计划设置" width="760px">
+    <el-dialog :visible.sync="dialogVisible" title="修改返水计划设置" width="760px">
       <el-form
         :model="formData"
         :rules="rules"
         label-width="120px"
         size="small"
         class="clearfix"
-        ref="formCreate"
+        ref="formUpdate"
       >
         <el-form-item prop="name" label="返水计划名称">
           <el-input v-model.trim="formData.name" placeholder="请输入名称" />
@@ -45,6 +45,7 @@
 
         <FormTimeSelect
           @on-change="$set(formData, 'startTime', $event)"
+          :time="formData.startTime"
           prop="startTime"
           label="计划开始时间"
           placeholder="开始时间"
@@ -53,6 +54,7 @@
 
         <FormTimeSelect
           @on-change="$set(formData, 'endTime', $event)"
+          :time="formData.endTime"
           prop="endTime"
           label="计划结束时间"
           placeholder="结束时间"
@@ -74,14 +76,14 @@
       </el-form>
 
       <span slot="footer">
-        <el-button @click="submitForm('formCreate')" type="primary" size="small">确定</el-button>
+        <el-button @click="submitForm('formUpdate')" type="primary" size="small">确定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { dialogCreateMixin } from '@/mixins'
+import { dialogUpdateMixin } from '@/mixins'
 
 import FormSelect from '@/components/form/FormSelect'
 import FormRadio from '@/components/form/FormRadio'
@@ -94,11 +96,12 @@ export default {
     FormRadio,
     FormTimeSelect
   },
-  mixins: [ dialogCreateMixin ],
+  mixins: [ dialogUpdateMixin ],
   data () {
     return {
-      createHttpAPI: 'createRebateSettingList',
-      formData: { rebateUserGroups: [], status: 0 },
+      updateHttpAPI: 'createRebateSettingList',
+      idParams: {}, // 必须携带的Id参数/及其他参数
+      formData: { name: '', gameConfigId: '', upperLimit: '', lowerLimit: '', ratio: '', rebateUserGroups: [], status: 0 },
       rules: {
         name: { required: true, message: '返水名称不能为空' },
         gameConfigId: { required: true, message: '游戏类型必须选择一个' },
@@ -112,10 +115,13 @@ export default {
         ],
         ratio: { required: true, message: '返佣比率不能为空' },
         status: { required: true, message: '启用状态必须选择一个' },
-        // startTime: { required: true, message: '计划开始时间不能为空' },
-        // endTime: { required: true, message: '计划结束时间不能为空' },
         rebateUserGroups: { required: true, message: '会员分组至少选择一个', trigger: 'change' }
       }
+    }
+  },
+  watch: {
+    data () {
+      this.idParams = { id: this.data.id }
     }
   }
 }

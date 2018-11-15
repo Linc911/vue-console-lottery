@@ -2,28 +2,23 @@
 <div class="dialog-update">
   <el-dialog :visible.sync="dialogVisible" title="修改支付类型配置" width="450px">
     <el-form :model="formData" :rules="rules" label-width="80px" size="small" ref="formUpdate">
-      <el-form-item label="类型名称">
-        <el-input :value="formData.name" disabled />
+      <el-form-item prop="name" label="类型名称">
+        <el-input v-model.trim="formData.name" placeholder="类型名称" />
       </el-form-item>
 
-      <FormSelectStatic
-        @on-change="formData.status = $event"
-        :value="formData.status"
-        :options="[
-          { value: 0, label: '推荐' },
-          { value: 1, label: '不推荐' }
-        ]"
-        prop="status"
-        label="是否推荐"
-        width="100%"
-      />
+      <el-form-item prop="status" label="是否推荐">
+        <el-radio-group v-model="formData.status">
+          <el-radio :label="0">推荐</el-radio>
+          <el-radio :label="1">不推荐</el-radio>
+        </el-radio-group>
+      </el-form-item>
 
       <el-form-item prop="sort" label="排序">
-        <el-input v-model="formData.sort" type="number" min="0" placeholder="排序" />
+        <el-input v-model.trim="formData.sort" type="number" min="0" max="99" placeholder="排序" />
       </el-form-item>
 
-      <el-form-item label="备注">
-        <el-input v-model="formData.remark" type="textarea" rows="3" placeholder="备注" />
+      <el-form-item prop="remark" label="备注">
+        <el-input v-model.trim="formData.remark" type="textarea" rows="3" placeholder="备注" />
       </el-form-item>
     </el-form>
 
@@ -35,31 +30,32 @@
 </template>
 
 <script>
-import { updateMixin } from '@/mixins'
-
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import { dialogUpdateMixin } from '@/mixins'
 
 export default {
   name: 'PaymentTypeDialogUpdate',
-  components: {
-    FormSelectStatic
-  },
-  mixins: [ updateMixin ],
+  mixins: [ dialogUpdateMixin ],
   data () {
     return {
-      idObject: {}, // 必须携带的参数
       updateHttpAPI: 'updateTransactionPaymentType',
-      // 要设置初始值，否则表单无法验证
-      formData: { sort: '', status: '' },
+      idParams: {}, // 必须携带的Id参数/及其他参数
+      formData: { name: '', sort: '', status: '' },
       rules: {
-        sort: { required: true, message: '排序顺序不能为空' },
-        status: { required: true, message: '推荐状态必须选择其中一个', trigger: 'change' }
+        name: [
+          { required: true, message: '类型名称不能为空' },
+          { min: 2, max: 20, message: '类型名称长度在 2 - 20 字符之间' }
+        ],
+        status: { required: true, message: '推荐状态至少选择一个' },
+        sort: [
+          { required: true, message: '排列顺序不能为空' },
+          { pattern: /^[0-9]{1,2}$/, message: '排列顺序必须为 0 - 99 整数' }
+        ]
       }
     }
   },
   watch: {
     data () {
-      this.idObject = { id: this.data.id }
+      this.idParams = { id: this.data.id }
     }
   }
 }

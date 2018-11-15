@@ -106,7 +106,7 @@ import PromotionCreate from './views/promotion/PromotionCreate'
 
 /* 返水管理 */
 import RebateManage from './views/rebate/RebateManage'
-import RebateList from './views/rebate/rebate-list'
+import RebateList from './views/rebate/BackwaterList'
 import RebateSetting from './views/rebate/rebate-setting'
 
 /* 体育管理 */
@@ -667,26 +667,26 @@ const router = new Router({
           component: RebateManage,
           children: [
             {
-              name: 'RebateList',
-              path: 'list',
-              component: RebateList,
-              meta: {
-                title: '会员返水信息',
-                breadcrumb: [
-                  { name: '返水管理' },
-                  { name: '会员返水信息' }
-                ]
-              }
-            },
-            {
               name: 'RebateSetting',
               path: 'setting',
               component: RebateSetting,
               meta: {
-                title: '会员返水设置',
+                title: '设置返水计划',
                 breadcrumb: [
                   { name: '返水管理' },
-                  { name: '会员返水设置' }
+                  { name: '设置返水计划' }
+                ]
+              }
+            },
+            {
+              name: 'RebateList',
+              path: 'list',
+              component: RebateList,
+              meta: {
+                title: '查看返水记录',
+                breadcrumb: [
+                  { name: '返水管理' },
+                  { name: '查看返水记录' }
                 ]
               }
             }

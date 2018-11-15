@@ -18,7 +18,7 @@ export default {
   name: 'FormSelect',
   props: {
     value: {
-      type: [ String, Array ],
+      type: [ String, Number, Array ],
       default: ''
     },
     httpAPIName: {

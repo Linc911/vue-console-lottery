@@ -10,6 +10,14 @@
         <el-input v-model="formData.name" placeholder="游戏名称" />
       </el-form-item>
 
+      <el-form-item label="游戏副标题" prop="information">
+        <el-input v-model="formData.information" placeholder="游戏副标题" />
+      </el-form-item>
+
+      <el-form-item label="游戏图标" prop="icon">
+        <el-input v-model="formData.icon" placeholder="游戏图标" />
+      </el-form-item>
+
       <el-form-item label="开始时间" prop="startTime">
         <BaseTimePicker :second="formData.startTime" @on-change="handleTimePickerChange" />
       </el-form-item>
@@ -32,6 +40,10 @@
 
       <el-form-item label="系统封盘的定时器的crontab表达式" prop="myCrontab">
         <el-input v-model="formData.myCrontab" placeholder="系统封盘的定时器的crontab表达式" />
+      </el-form-item>
+
+      <el-form-item label="排列顺序">
+        <el-input v-model="formData.sort" type="number" min="0" placeholder="排列顺序" />
       </el-form-item>
 
       <el-form-item label="备注">
@@ -57,22 +69,25 @@ export default {
     return {
       formData: {
         name: '',
+        information: '',
+        icon: '',
         startTime: 0,
         endTime: 0,
         url: '',
         intervalTime: 0,
         crontab: '',
         myCrontab: '',
+        sort: 0,
         remark: ''
       },
       rules: {
         name: [
           { required: true, message: '游戏名称不能为空' },
           { max: 30, message: '游戏名称长度不能超过30个字符' }
-        ],
-        startTime: { required: true, message: '时间不能为空' },
-        endTime: { required: true, message: '时间不能为空' },
-        intervalTime: { required: true, message: '时间不能为空' }
+        ]
+        // startTime: { required: true, message: '时间不能为空' },
+        // endTime: { required: true, message: '时间不能为空' },
+        // intervalTime: { required: true, message: '时间不能为空' }
         // url: [
         // { required: true, message: '开奖结果的地址不能为空' }
         // { pattern: /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/, message: '开奖结果的地址格式不正确' }
