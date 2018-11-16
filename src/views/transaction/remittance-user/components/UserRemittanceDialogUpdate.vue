@@ -104,7 +104,9 @@ export default {
           this.$httpAPI.updateTransactionRemittance(this.formData).then(response => {
             if (response.data.status === 200) {
               this.$emit('on-updated')
-              this.$message.success('创建新会员汇款设置成功！')
+              this.$message.success('修改成功！')
+            } else {
+              this.$message.error('修改失败！')
             }
           }).catch(error => console.log(error))
         } else {

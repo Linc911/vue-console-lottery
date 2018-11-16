@@ -44,7 +44,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="operations" label="操作">
+      <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
           <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
           <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />

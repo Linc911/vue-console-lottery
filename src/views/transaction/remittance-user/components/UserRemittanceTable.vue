@@ -6,11 +6,11 @@
       highlight-current-row
       border
     >
-      <el-table-column type="index" :min-width="30" />
+      <el-table-column type="index" :width="40" />
 
-      <el-table-column prop="username" label="支付户名" />
+      <el-table-column prop="username" label="收款户名" />
 
-      <el-table-column prop="userAccount" label="收款账号" />
+      <el-table-column prop="userAccount" label="收款账号" :width="130" />
 
       <el-table-column prop="bank" label="收款银行" />
 
@@ -18,13 +18,13 @@
 
       <el-table-column prop="codeUrl" label="二维码地址" />
 
-      <el-table-column prop="sysGroupNames" label="会员分组">
+      <el-table-column prop="sysGroupNames" label="会员分组" :min-width="150">
         <template slot-scope="scope">
-          <span>{{ scope.row.sysGroupNames.join(' / ') }}</span>
+          <span>{{ scope.row.sysGroupNames | separator(' ') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="discountRatio" label="优惠比例%">
+      <el-table-column prop="discountRatio" label="优惠比例%" :width="70">
         <template slot-scope="scope">
           <span>{{ scope.row.discountRatio | percent }}</span>
         </template>
@@ -32,7 +32,7 @@
 
       <el-table-column prop="sort" label="排列顺序" :width="45" />
 
-      <el-table-column prop="operations" label="操作">
+      <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
           <el-button @click="showDialogCreate(scope.row)"  type="primary" icon="el-icon-edit" size="mini" />
           <el-button @click="showDialogDelete(scope.row)" type="primary" icon="el-icon-delete" size="mini" />

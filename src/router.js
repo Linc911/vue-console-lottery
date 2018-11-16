@@ -45,10 +45,10 @@ import SystemLotteryList from './views/system/lottery/SystemLotteryList'
 import SystemLotteryInfo from './views/system/lottery/SystemLotteryInfo'
 import SystemLotteryUpdate from './views/system/lottery/SystemLotteryUpdate'
 
-/* 系统设置 */
+/* 会员管理 */
 import UsersManage from './views/users/UsersManage'
 import UsersList from './views/users/users-list'
-import UserBets from './views/users/UserBets'
+import UserBets from './views/users/user-bets'
 import UserBetsStatistics from './views/users/UserBetsStatistics'
 import UserRechargeLogs from './views/users/UserRechargeLogs'
 // import UserAccountDeposit from './views/users/UserAccountDeposit'
@@ -67,7 +67,7 @@ import LotteryOddsFast3 from './views/lottery/LotteryOddsFast3'
 import LotteryWithdraw from './views/lottery/LotteryWithdraw'
 import LotteryKillrate from './views/lottery/LotteryKillrate'
 import LotteryCheckout from './views/lottery/LotteryCheckout'
-import LotteryBets from './views/lottery/LotteryBets'
+import LotteryBets from './views/lottery/lottery-bets'
 import LotteryStatistics from './views/lottery/LotteryStatistics'
 import LotteryUsersInfo from './views/lottery/LotteryUsersInfo'
 
@@ -77,7 +77,7 @@ import FinanceBalanceManipulation from './views/finance/balance-manipulation'
 import FinanceDepositForm from './views/finance/deposit-form'
 import FinanceDepositOnline from './views/finance/deposit-online'
 import FinanceWithdrawApply from './views/finance/withdraw-apply'
-import FinanceLimitChange from './views/finance/limit-change'
+import FinanceLimitationTransfer from './views/finance/limitation-transfer'
 import FinanceDepositWithdrawList from './views/finance/deposit-withdraw'
 import FinanceUsersAssets from './views/finance/FinanceUsersAssets'
 import FinanceBalanceSheet from './views/finance/balance-sheet'
@@ -246,9 +246,17 @@ const router = new Router({
           ]
         },
         {
+          name: 'UserBets',
           path: '/users/:id/bets',
           component: UserBets,
-          meta: { title: '会员个人注单列表' }
+          meta: {
+            title: '会员个人注单列表',
+            breadcrumb: [
+              { name: '会员管理' },
+              { name: '会员信息管理', path: '/users/list' },
+              { name: '会员个人注单列表' }
+            ]
+          }
         },
         {
           path: '/users/:id/betsStatistics',
@@ -436,7 +444,13 @@ const router = new Router({
           name: 'LotteryBets',
           path: '/lottery/bets',
           component: LotteryBets,
-          meta: { title: '彩票注单', keepAlive: true }
+          meta: {
+            title: '彩票注单列表',
+            breadcrumb: [
+              { name: '彩票管理' },
+              { name: '彩票注单列表' }
+            ]
+          }
         },
         {
           name: 'LotteryManage',
@@ -530,10 +544,16 @@ const router = new Router({
               meta: { title: '提款申请管理' }
             },
             {
-              name: 'FinanceLimitChange',
-              path: 'limit/change',
-              component: FinanceLimitChange,
-              meta: { title: '额度转换管理' }
+              name: 'FinanceLimitationTransfer',
+              path: 'limitation/transfer',
+              component: FinanceLimitationTransfer,
+              meta: {
+                title: '额度转换管理',
+                breadcrumb: [
+                  { name: '财务管理' },
+                  { name: '额度转换管理' }
+                ]
+              }
             },
             {
               name: 'FinanceUsersAssets',

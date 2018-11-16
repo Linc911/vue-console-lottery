@@ -44,7 +44,7 @@
 
       <el-table-column label="操作" :min-width="470">
         <template slot-scope="scope">
-          <el-button @click="$router.push(`/users/${scope.row.id}/bets`)" type="primary" size="mini">注单详情</el-button>
+          <el-button @click="$router.push(`/users/${scope.row.id}/bets?user=${scope.row.username}`)" type="primary" size="mini">注单详情</el-button>
           <el-button @click="$router.push(`/users/${scope.row.id}/rechargeLogs`)" type="primary" size="mini">存款详情</el-button>
           <el-button @click="$router.push(`/users/${scope.row.id}/depositStatistics`)" type="primary" size="mini">提款详情</el-button>
           <el-button @click="$router.push(`/users/${scope.row.id}/httpLogs`)" type="primary" size="mini">日志详情</el-button>

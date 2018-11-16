@@ -19,6 +19,10 @@ export default {
       type: String,
       required: true
     },
+    httpMethod: {
+      type: String,
+      default: 'get'
+    },
     requestParams: {
       type: Object,
       default () {
@@ -50,11 +54,16 @@ export default {
       this.getData({ current: this.page.current = 1, size: this.page.size = pageSize })
     },
     getData (page) {
-      this.$httpAPI[this.httpURL]({
-        params: Object.assign(this.requestParams, { pageNo: page.current, pageSize: page.size })
-      }).then(response => {
+      this.$httpAPI[this.httpURL](this._calculateParams(page)).then(response => {
         this.$emit('on-change', response.data.data)
       }).catch(error => console.log(error))
+    },
+    _calculateParams (page) {
+      if (this.httpMethod === 'get') {
+        return { params: Object.assign(this.requestParams, { pageNo: page.current, pageSize: page.size }) }
+      } else {
+        return Object.assign(this.requestParams, { pageNo: page.current, pageSize: page.size })
+      }
     }
   }
 }

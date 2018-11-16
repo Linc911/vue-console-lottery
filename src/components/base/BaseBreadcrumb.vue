@@ -31,8 +31,4 @@ export default {
   margin-bottom: 20px;
   border-bottom: 1px solid #e5e5e5;
 }
-.active-link {
-  color: #333;
-  cursor: pointer;
-}
 </style>

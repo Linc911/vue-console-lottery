@@ -78,10 +78,12 @@ export default {
     },
     fetchOptions () {
       this.$httpAPI[this.httpAPIName](this.httpAPIParams).then(response => {
-        this.$_.forEach(response.data.data, item => {
-          this.options.push({
-            value: item[this.valueAttr],
-            label: item[this.labelAttr]
+        this.$_.forEach(response.data.data, group => {
+          this.$_.forEach(group.children, item => {
+            this.options.push({
+              value: item[this.valueAttr],
+              label: item[this.labelAttr]
+            })
           })
         })
       }).catch(error => console.log(error))

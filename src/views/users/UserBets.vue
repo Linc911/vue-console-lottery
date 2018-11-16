@@ -176,8 +176,8 @@ export default {
       this.dialogVisible = false
     },
     fetchUserList (page) {
-      this.$axios.post('/api-g/getUserBetsInfo', {}, {
-        params: { id: this.$route.params.id, pageNo: this.page.current, pageSize: this.page.size }
+      this.$axios.post('/api-g/getUserBetsInfo', {
+        id: this.$route.params.id, pageNo: this.page.current, pageSize: this.page.size
       }).then(response => {
         this.tableData = response.data.results// 表格对象赋值
         this.page.total = response.data.amount // 分页对象赋值

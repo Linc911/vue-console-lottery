@@ -49,12 +49,14 @@ Vue.filter('paymentType', value => {
     case -1:
       return '客服填单'
     case 0:
-      return '银联'
+      return '其他'
     case 1:
       return '微信'
     case 2:
       return '支付宝'
     case 3:
+      return '银联'
+    case 4:
       return 'QQ钱包'
     default:
       return '其他'

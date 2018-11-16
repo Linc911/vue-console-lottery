@@ -30,6 +30,8 @@ export default {
   fetchUsersList: options => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
   getUserInfo: options => axios.get('/api-u/backend/user', options), // 单个会员信息
 
+  fetchUserBetsList: data => axios.post('/api-g/getUserBetsInfo', data), // 单个会员全部注单记录
+
   // 会员抽点
   getUsersRebate: options => axios.get('/api-u/userRelation/get', options),
   updateUsersRebate: (data, options) => axios.post('/api-u/group/save', data, options),
@@ -65,9 +67,7 @@ export default {
   fetchFinanceDepositForm: options => axios.get('/api-p/remitInfo/list', options), // 填单存款管理列表
   updateFinanceDepositFormStatus: options => axios.get('/api-p/remitInfo/audit', options), // 审批填单存款
 
-  createFinanceLimitChange: data => axios.post('/api-u/convertRecharge/add', data), // 额度转换管理列表
-  fetchFinanceLimitChange: options => axios.get('/api-u/convertRecharge/list', options), // 额度转换每项详情
-  updateFinanceLimitChangeStatus: options => axios.get('/api-u/convertRecharge/audit', options), // 审批额度转换状态
+  fetchFinanceLimitationTransfer: options => axios.get('/api-u/convertRecharge/list', options), // 额度转换管理列表
 
   fetchFinanceLoanList: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
   fetchFinanceLoanType: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表

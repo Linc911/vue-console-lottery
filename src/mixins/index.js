@@ -167,7 +167,7 @@ export const tableWithoutPaginationMixin = {
   }
 }
 
-// 列表数据请求
+// 废弃，待删除
 export const listMixin = {
   created () {
     this.fetchListData()
