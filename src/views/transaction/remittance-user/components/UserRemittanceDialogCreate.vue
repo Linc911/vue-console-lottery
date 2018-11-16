@@ -21,8 +21,19 @@
         </el-form-item>
 
         <template v-if="!receiptWay">
-          <el-form-item prop="codeUrl" label="二维码地址" class="custom-block">
-            <el-input v-model.trim="formData.codeUrl" placeholder="二维码地址" />
+          <el-form-item label="二维码上传" class="custom-block">
+            <el-upload
+              action="http://192.168.5.182:8080/api-f/files-anon/fdfsupload"
+              list-type="picture-card"
+              :on-preview="handlePictureCardPreview"
+              :on-success="handleUploadSuccess"
+              :disabled="uploadDisabled"
+              >
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogImageVisible">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
           </el-form-item>
         </template>
         <template v-else>
@@ -40,7 +51,7 @@
         </template>
 
         <el-form-item prop="sort" label="排列顺序">
-          <el-input v-model.trim="formData.sort" type="number" placeholder="排列顺序" />
+          <el-input v-model.trim="formData.sort" type="number" min="0" max="99" placeholder="排列顺序" />
         </el-form-item>
 
         <el-form-item prop="discountRatio" label="赠送比例%">
@@ -49,6 +60,7 @@
 
         <FormSelect
           @on-change="$set(formData, 'userGroups', $event)"
+          :value="formData.userGroups"
           httpAPIName="fetchUserGroups"
           :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
           labelAttr="name"
@@ -76,22 +88,37 @@ export default {
   },
   data () {
     return {
+      dialogImageUrl: '',
+      dialogImageVisible: false,
+      uploadDisabled: false,
       receiptWay: 0,
       dialogVisible: false,
-      formData: {},
+      formData: { sort: 0, userGroups: [] },
       rules: {
         username: { required: true, message: '支付户名不能为空' },
-        bank: { required: true, message: '收款银行不能为空' },
         discountRatio: { required: true, message: '优惠比例不能为空' },
-        codeUrl: { required: true, message: '二维码地址不能为空' },
-        sort: { required: true, message: '排序顺序不能为空' },
-        userGroups: { type: 'array', required: true, message: '会员分组至少选择一个', trigger: 'change' },
-        userAccount: { required: true, message: '收款账号不能为空' },
-        bankAddress: { required: true, message: '银行地址不能为空' }
+        // codeUrl: { required: true, message: '二维码地址不能为空' },
+        sort: [
+          { required: true, message: '排列顺序不能为空' },
+          { pattern: /^[0-9]{1,2}$/, message: '排列顺序必须为 0 - 99 整数' }
+        ],
+        // bank: { required: true, message: '收款银行不能为空' },
+        // userAccount: { required: true, message: '收款账号不能为空' },
+        // bankAddress: { required: true, message: '银行地址不能为空' }
+        userGroups: { required: true, message: '会员分组至少选择一个' }
       }
     }
   },
   methods: {
+    handleUploadSuccess (response) {
+      this.formData.codeUrl = response
+      this.uploadDisabled = true
+    },
+    handlePictureCardPreview (file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
+      this.uploadDisabled = true
+    },
     toggleDialogVisible (status) {
       this.dialogVisible = status
     },

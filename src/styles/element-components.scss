@@ -48,3 +48,11 @@
   color: #189F92;
   cursor: pointer;
 }
+
+/* upload 组件 */
+.el-upload-list--picture-card .el-upload-list__item-actions {
+  display: none;
+}
+.el-upload-list--picture-card .el-upload-list__item:hover .el-upload-list__item-status-label {
+  display: block;
+}

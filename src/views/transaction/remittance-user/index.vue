@@ -6,7 +6,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <PaymentLineSearch />
+        <PaymentLineSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { breadcrumbMixin, tableWithPaginationMixin } from '@/mixins'
+import { breadcrumbMixin, searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import PaymentLineSearch from './components/PaymentLineSearch'
@@ -54,7 +54,7 @@ export default {
     UserRemittanceTable,
     UserRemittanceDialogCreate
   },
-  mixins: [ breadcrumbMixin, tableWithPaginationMixin ],
+  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationPostMixin ],
   data () {
     return {
       tableData: [],

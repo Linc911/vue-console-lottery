@@ -107,7 +107,7 @@ export default {
   createTransactionPortLine: data => axios.post('/api-b/configPayRoute/save', data), // 创建新支付路线（可一对多）
   deleteTransactionPortLine: data => axios.post('/api-b/configPayRoute/deleteMany', data), // 删除路线配置
 
-  fetchTransactionRemittance: options => axios.get('/api-b/configRemit/list', options), // 会员汇款设置列表
+  fetchTransactionRemittance: data => axios.post('/api-b/configRemit/list', data), // 会员汇款设置列表
   createTransactionRemittance: data => axios.post('/api-b/configRemit/save', data), // 创建新会员汇款设置
   updateTransactionRemittance: data => axios.post('/api-b/configRemit/updateById', data), // 创建新会员汇款设置
   deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置

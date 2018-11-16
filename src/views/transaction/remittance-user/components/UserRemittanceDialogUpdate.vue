@@ -13,20 +13,28 @@
           <el-input v-model.trim="formData.username" placeholder="支付户名" />
         </el-form-item>
 
-        <el-form-item prop="bank" label="收款银行">
-          <el-input v-model.trim="formData.bank" placeholder="收款银行" />
-        </el-form-item>
-
-        <el-form-item prop="codeUrl" label="二维码地址">
-          <el-input v-model.trim="formData.codeUrl" placeholder="二维码地址" />
-        </el-form-item>
-
         <el-form-item prop="discountRatio" label="优惠比例%">
           <el-input v-model.trim="formData.discountRatio" type="number" placeholder="优惠比例" />
         </el-form-item>
 
         <el-form-item prop="sort" label="排列顺序">
           <el-input v-model.trim="formData.sort" type="number" placeholder="排列顺序" />
+        </el-form-item>
+
+        <el-form-item prop="codeUrl" label="二维码地址" class="custom-block">
+          <el-input v-model.trim="formData.codeUrl" placeholder="二维码地址" />
+        </el-form-item>
+
+        <el-form-item prop="bank" label="收款银行" class="custom-block" >
+          <el-input v-model.trim="formData.bank" placeholder="收款银行"/>
+        </el-form-item>
+
+        <el-form-item prop="userAccount" label="收款账号" class="custom-block">
+          <el-input v-model.trim="formData.userAccount" placeholder="收款账号" />
+        </el-form-item>
+
+        <el-form-item prop="bankAddress" label="银行地址" class="custom-block">
+          <el-input v-model.trim="formData.bankAddress" placeholder="银行地址" />
         </el-form-item>
 
         <FormSelect
@@ -40,14 +48,6 @@
           label="会员分组"
           multiple
         />
-
-        <el-form-item prop="userAccount" label="收款账号" class="custom-block">
-          <el-input v-model.trim="formData.userAccount" placeholder="收款账号" />
-        </el-form-item>
-
-        <el-form-item prop="bankAddress" label="银行地址" class="custom-block">
-          <el-input v-model.trim="formData.bankAddress" placeholder="银行地址" />
-        </el-form-item>
       </el-form>
 
       <span slot="footer">
@@ -77,13 +77,13 @@ export default {
       formData: {},
       rules: {
         username: { required: true, message: '支付户名不能为空' },
-        bank: { required: true, message: '收款银行不能为空' },
+        // bank: { required: true, message: '收款银行不能为空' },
         discountRatio: { required: true, message: '优惠比例不能为空' },
-        codeUrl: { required: true, message: '二维码地址不能为空' },
+        // codeUrl: { required: true, message: '二维码地址不能为空' },
         sort: { required: true, message: '排序顺序不能为空' },
-        userGroups: { type: 'array', required: true, message: '会员分组至少选择一个', trigger: 'change' },
-        userAccount: { required: true, message: '收款账号不能为空' },
-        bankAddress: { required: true, message: '银行地址不能为空' }
+        userGroups: { type: 'array', required: true, message: '会员分组至少选择一个', trigger: 'change' }
+        // userAccount: { required: true, message: '收款账号不能为空' },
+        // bankAddress: { required: true, message: '银行地址不能为空' }
       }
     }
   },

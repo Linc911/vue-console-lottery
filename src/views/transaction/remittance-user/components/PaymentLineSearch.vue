@@ -1,11 +1,11 @@
 <template lang="html">
   <!-- 条件筛选 -->
   <div class="search">
-    <el-form :model="formData" size="small" label-width="80px" inline>
+    <el-form @submit.native.prevent :model="formData" size="small" label-width="80px" inline>
       <FormInput
         @keyup.native.enter="$emit('on-search', formData)"
-        @on-change="$set(formData, 'name', $event)"
-        label="支付户名"
+        @on-change="$set(formData, 'username', $event)"
+        label="收款户名"
         width="174px"
       />
 
@@ -38,8 +38,8 @@ export default {
   },
   methods: {
     search () {
-      this.$message.warning('接口正在调试中...')
-      // this.$emit('on-search', this.formData)
+      // this.$message.warning('接口正在调试中...')
+      this.$emit('on-search', this.formData)
     },
     reset () {
       for (let key in this.$refs) {

@@ -8,15 +8,21 @@
     >
       <el-table-column type="index" :width="40" />
 
-      <el-table-column prop="username" label="收款户名" />
+      <el-table-column prop="username" label="收款户名" :min-width="120" />
 
-      <el-table-column prop="userAccount" label="收款账号" :width="130" />
+      <el-table-column prop="userAccount" label="收款账号" :width="140" />
 
       <el-table-column prop="bank" label="收款银行" />
 
       <el-table-column prop="bankAddress" label="银行地址" />
 
-      <el-table-column prop="codeUrl" label="二维码地址" />
+      <el-table-column prop="codeUrl" label="二维码地址">
+        <template slot-scope="scope">
+          <span v-if="scope.row.codeUrl">
+            查看 <BaseMore @click.native="handleShowDialogTwo(scope.row)" />
+          </span>
+        </template>
+      </el-table-column>
 
       <el-table-column prop="sysGroupNames" label="会员分组" :min-width="150">
         <template slot-scope="scope">
@@ -50,16 +56,28 @@
       :name="activeItem.username"
       ref="dialogDelete"
     />
+
+    <!-- 二维码弹框 -->
+    <el-dialog title="二维码详情" :visible.sync="dialogTwoVisible" width="350px">
+      <el-card :body-style="{ padding: '0px' }">
+        <img :src="activeItem.codeUrl" width="300" height="300" class="image">
+        <div style="padding: 14px;">
+          <p style="word-break: break-all;">{{ activeItem.codeUrl }}</p>
+        </div>
+      </el-card>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import BaseMore from '@/components/base/BaseMore'
 import UserRemittanceDialogUpdate from './UserRemittanceDialogUpdate'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
   name: 'UserRemittanceTable',
   components: {
+    BaseMore,
     UserRemittanceDialogUpdate,
     DialogDeleteConfirm
   },
@@ -71,10 +89,15 @@ export default {
   },
   data () {
     return {
-      activeItem: { username: '' }
+      activeItem: { username: '' },
+      dialogTwoVisible: false
     }
   },
   methods: {
+    handleShowDialogTwo (item) {
+      this.activeItem = item
+      this.dialogTwoVisible = true
+    },
     showDialogCreate (item) {
       this.activeItem = item
       this.$refs.dialogCreate.toggleDialogVisible(true)
