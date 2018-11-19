@@ -19,13 +19,17 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="status" label="是否启用" :width="45">
+      <el-table-column prop="status" label="推荐状态" :width="70">
         <template slot-scope="scope">
-          <BaseIndicator :status="scope.row.status" opposite />
+          <BaseSwitch
+            @on-change="handleSwitchChange"
+            :propValue="!scope.row.status"
+            :payload="{ id: scope.row.id }"
+          />
         </template>
       </el-table-column>
 
-      <el-table-column prop="limitStatus" label="是否限额" :width="45">
+      <!-- <el-table-column prop="limitStatus" label="是否限额" :width="45">
         <template slot-scope="scope">
           <BaseIndicator :status="scope.row.limitStatus" opposite />
         </template>
@@ -47,49 +51,46 @@
         <template slot-scope="scope">
           <BaseIndicator :status="scope.row.pcStatus" opposite />
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column prop="sort" label="排列顺序" :width="45" />
 
-      <!-- <el-table-column prop="remark" label="备注" :min-width="120" /> -->
+      <el-table-column prop="remark" label="备注" :min-width="120" />
 
-      <el-table-column prop="operations" label="操作">
+      <el-table-column prop="operations" label="操作" :width="130">
         <template slot-scope="scope">
-          <el-button @click="showDialogUpdate(scope.row)" type="primary" icon="el-icon-edit" size="mini" />
+          <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
+          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
+          <el-button @click="$message.warning('接口调试中...')" type="warning" icon="el-icon-delete" size="mini" />
         </template>
       </el-table-column>
     </el-table>
 
-    <!-- 修改支付类型弹框 -->
+    <!-- 详情弹框 -->
+    <PaymentPortDialogDetail :data="activeItem" ref="dialogDetail" />
+    <!-- 修改弹框 -->
     <PaymentPortDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
   </div>
 </template>
 
 <script>
+import { tableComponentMixin, statusSwitchMixin } from '@/mixins'
+
 import BaseIndicator from '@/components/base/BaseIndicator'
+import PaymentPortDialogDetail from './PaymentPortDialogDetail'
 import PaymentPortDialogUpdate from './PaymentPortDialogUpdate'
 
 export default {
   name: 'PaymentPortTable',
   components: {
     BaseIndicator,
+    PaymentPortDialogDetail,
     PaymentPortDialogUpdate
   },
-  props: {
-    data: {
-      type: Array,
-      required: true
-    }
-  },
+  mixins: [ tableComponentMixin, statusSwitchMixin ],
   data () {
     return {
-      activeItem: {}
-    }
-  },
-  methods: {
-    showDialogUpdate (item) {
-      this.activeItem = item
-      this.$refs.dialogUpdate.toggleDialogVisible(true)
+      statusSwitchAPI: 'updateTransactionPaymentPort'
     }
   }
 }

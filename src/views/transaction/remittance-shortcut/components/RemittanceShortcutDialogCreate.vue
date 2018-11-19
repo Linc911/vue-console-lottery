@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { createMixin } from '@/mixins'
+import { dialogCreateMixin } from '@/mixins'
 
 import FormSelect from '@/components/form/FormSelect'
 import FormRadio from '@/components/form/FormRadio'
@@ -90,7 +90,7 @@ export default {
     FormSelect,
     FormRadio
   },
-  mixins: [ createMixin ],
+  mixins: [ dialogCreateMixin ],
   data () {
     return {
       createHttpAPI: 'createTransactionPaymentPort',
@@ -103,8 +103,8 @@ export default {
         status: { required: true, message: '启用状态必须选择一个' },
         pcStatus: { required: true, message: '手机端状态必须选择一个' },
         phoneStatus: { required: true, message: '电脑端状态必须选择一个' },
-        sort: { required: true, message: '排序顺序不能为空' },
-        userGroups: { required: true, message: '会员分组至少选择一个', trigger: 'change' }
+        sort: this.$utils.generateFormValidatorInteger('排序顺序'),
+        userGroups: { required: true, message: '会员分组至少选择一个' }
       }
     }
   }

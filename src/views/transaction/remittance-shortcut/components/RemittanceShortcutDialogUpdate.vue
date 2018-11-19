@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { updateMixin } from '@/mixins'
+import { dialogUpdateMixin } from '@/mixins'
 
 import FormSelect from '@/components/form/FormSelect'
 import FormRadio from '@/components/form/FormRadio'
@@ -91,12 +91,22 @@ export default {
     FormSelect,
     FormRadio
   },
-  mixins: [ updateMixin ],
+  mixins: [ dialogUpdateMixin ],
   data () {
     return {
       idObject: {}, // 必须携带的参数
       updateHttpAPI: 'updateTransactionRemittanceShortcut',
-      formData: {},
+      formData: {
+        payName: '',
+        quickPayTypeId: '',
+        payUrl: '',
+        codeUrl: '',
+        status: '',
+        pcStatus: '',
+        phoneStatus: '',
+        sort: '',
+        userGroups: []
+      },
       rules: {
         payName: { required: true, message: '支付户名不能为空' },
         quickPayTypeId: { required: true, message: '汇款快捷类型必须选择一个' },
@@ -105,8 +115,8 @@ export default {
         status: { required: true, message: '启用状态必须选择一个' },
         pcStatus: { required: true, message: '手机端状态必须选择一个' },
         phoneStatus: { required: true, message: '电脑端状态必须选择一个' },
-        sort: { required: true, message: '排序顺序不能为空' },
-        userGroups: { required: true, message: '会员分组至少选择一个', trigger: 'change' }
+        sort: this.$utils.generateFormValidatorInteger('排序顺序'),
+        userGroups: { required: true, message: '会员分组至少选择一个' }
       }
     }
   },

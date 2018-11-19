@@ -454,45 +454,7 @@ Vue.filter('depositStatus', value => {
   }
 })
 
-// 是否启用
-Vue.filter('isEnabled', value => {
-  switch (value) {
-    case 0:
-      return '启用'
-    default:
-      return '禁用'
-  }
-})
-
-// 比例
-Vue.filter('percentage', value => {
-  return value + '%'
-})
-
-// 加.00
-Vue.filter('zero', value => {
-  if (!value) {
-    return '0'
-  } else {
-    return value + '.00'
-  }
-})
-
-// 返水等级名称
-Vue.filter('returnLevel', value => {
-  return value.slice(2) + '元起'
-})
-
-// 输赢
-Vue.filter('winOrLost', value => {
-  switch (value) {
-    case 0:
-      return '赢'
-    default:
-      return '输'
-  }
-})
-
+/* 返水相关 */
 // 返水状态
 Vue.filter('rebateStatus', value => {
   switch (value) {

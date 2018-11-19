@@ -61,7 +61,6 @@ export default {
     return {
       options: [],
       selectedOption: this.value
-      // selectedOption: this.value || (this.multiple ? [] : '')
     }
   },
   watch: {

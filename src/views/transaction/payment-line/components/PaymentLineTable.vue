@@ -1,14 +1,11 @@
 <template lang="html">
-  <div class="table-container">
-    <el-table
-      :data="data"
-      size="small"
-      highlight-current-row
-      border
-    >
+  <div>
+    <el-table :data="data" size="small" highlight-current-row border>
       <el-table-column type="index" :min-width="30" />
 
       <el-table-column prop="name" label="接口名称" :min-width="100" />
+
+      <el-table-column prop="interfaceTypeDesc" label="接口类型" />
 
       <el-table-column prop="payTypeName" label="支付类型" />
 
@@ -30,7 +27,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="limitStatus" label="是否限额" :width="45">
+      <!-- <el-table-column prop="limitStatus" label="是否限额" :width="45">
         <template slot-scope="scope">
           <BaseIndicator :status="scope.row.limitStatus" opposite />
         </template>
@@ -52,7 +49,7 @@
         <template slot-scope="scope">
           <BaseIndicator :status="scope.row.pcStatus" opposite />
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column prop="sort" label="排列顺序" :width="45" />
 
@@ -80,7 +77,7 @@ import BaseIndicator from '@/components/base/BaseIndicator'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
-  name: 'PaymentPortTable',
+  name: 'PaymentLineTable',
   components: {
     BaseIndicator,
     DialogDeleteConfirm

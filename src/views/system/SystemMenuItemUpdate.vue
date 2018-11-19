@@ -25,7 +25,7 @@
 
       <el-form-item label="图标代码" prop="css">
         <el-input v-model="formData.css" placeholder="FontAwesome图标" style="width: 85%;" />
-        <span class="pull-right">图标示例：<i class="fa" :class="formData.css"></i></span>
+        <span class="pull-right">（<i class="fa" :class="formData.css"></i>） 图标示例</span>
       </el-form-item>
 
       <el-form-item label="排列顺序" prop="sort">

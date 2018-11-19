@@ -11,7 +11,7 @@
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
-        :pageTotal="pageTotal"
+        :page="page"
         :requestParams="{ type: this.$route.params.gameId }"
         httpURL="fetchLotteryResultsEleven"
       />
@@ -34,7 +34,7 @@ export default {
   data () {
     return {
       tableData: [],
-      pageTotal: 0,
+      page: { current: 1, size: 10, total: 10 },
       requestParams: {}
     }
   },
@@ -67,7 +67,7 @@ export default {
           this.tableData = []
         }
 
-        this.pageTotal = response.data.amount
+        this.page.total = response.data.amount
       }).catch(error => console.log(error))
     }
   }

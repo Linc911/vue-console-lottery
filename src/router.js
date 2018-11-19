@@ -106,7 +106,7 @@ import PromotionCreate from './views/promotion/PromotionCreate'
 
 /* 返水管理 */
 import RebateManage from './views/rebate/RebateManage'
-import RebateList from './views/rebate/BackwaterList'
+import RebateList from './views/rebate/rebate-list'
 import RebateSetting from './views/rebate/rebate-setting'
 
 /* 体育管理 */

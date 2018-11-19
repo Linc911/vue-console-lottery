@@ -50,5 +50,13 @@ export default {
     }
 
     return result
+  },
+  /* Form Validator */
+  // 整数检验
+  generateFormValidatorInteger (title) {
+    return [
+      { required: true, message: `${title}不能为空` },
+      { pattern: /^[0-9]+$/, message: `${title}必须为整数` }
+    ]
   }
 }

@@ -5,25 +5,16 @@
 
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
-      <el-tab-pane label="创建加减款请求" name="creating" />
-      <el-tab-pane label="加减款待审核列表" name="unchecked" />
-      <el-tab-pane label="加减款已审核列表" name="checked" />
+      <el-tab-pane v-for="game in games" :key="game.name" :label="game.name" :name="String(game.id)" />
     </el-tabs>
 
     <!-- 条件筛选 -->
-    <SearchLayout>
-      <div slot="left">
-        <RemittanceShortcutSearch @on-search="handleSearch" />
-      </div>
-      <div slot="right">
-        <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
-      </div>
-    </SearchLayout>
+    <RebateListSearch @on-search="handleSearch" />
 
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <RemittanceShortcutTable :data="tableData" />
+      <RebateListTable :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -33,38 +24,29 @@
         :httpURL="tableHttpAPI"
       />
     </div>
-
-    <!-- 创建弹框 -->
-    <RemittanceShortcutDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
 <script>
 import { breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import RemittanceShortcutSearch from './components/RemittanceShortcutSearch'
-import BaseAdd from '@/components/base/BaseAdd'
-import RemittanceShortcutTable from './components/RemittanceShortcutTable'
-import RemittanceShortcutDialogCreate from './components/RemittanceShortcutDialogCreate'
+import RebateListSearch from './components/RebateListSearch'
+import RebateListTable from './components/RebateListTable'
 
 export default {
-  name: 'TransactionRemittanceShortcut',
+  name: 'RebateList',
   components: {
-    SearchLayout,
-    RemittanceShortcutSearch,
-    BaseAdd,
-    RemittanceShortcutTable,
-    RemittanceShortcutDialogCreate
+    RebateListSearch,
+    RebateListTable
   },
   mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       games: [],
-      activeTab: 'creating',
+      activeTab: '',
       tableData: [],
-      tableHttpAPI: 'fetchTransactionRemittanceShortcut',
-      requestParams: {},
+      tableHttpAPI: 'fetchRebateLogsList',
+      requestParams: { gameConfigId: 0, pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }
   },
@@ -74,19 +56,19 @@ export default {
   methods: {
     // 菜单切换；根据不同的菜单更新对应数据
     handleTabClick (tab) {
-      // switch (tab.name) {
-      //   case 'creating':
-      //     this.currentTabComponent = 'BalanceManipulationForm'
-      //     break
-      //   case 'unchecked':
-      //     this.currentTabComponent = 'BalanceManipulationListUnchecked'
-      //     break
-      //   case 'checked':
-      //     this.currentTabComponent = 'BalanceManipulationListChecked'
-      //     break
-      //   default:
-      //     this.currentTabComponent = 'BalanceManipulationForm'
-      // }
+      this.activeTab = tab.name
+
+      this.requestParams.gameConfigId = tab.name
+      this.requestParams.pageNo = 1
+      this.fetchTableData()
+    },
+    // 创建新数据时，切换到对应的游戏列表中
+    handleCreatedNewItem (payload) {
+      this.activeTab = String(payload.gameConfigId)
+
+      this.requestParams.gameConfigId = this.activeTab
+      this.requestParams.pageNo = 1
+      this.fetchTableData()
     },
     fetchGameClasses () {
       this.$httpAPI.fetchGameClasses().then(response => {

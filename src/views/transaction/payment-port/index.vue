@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="payment-port">
+  <div>
     <!-- 面包屑导航 -->
     <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
 
@@ -14,9 +14,13 @@
     </SearchLayout>
 
     <!-- 主要内容 -->
-    <div class="table-list">
+    <div>
       <!-- 表格 -->
-      <PaymentPortTable :data="tableData" />
+      <PaymentPortTable
+        :data="tableData"
+        @on-updated="fetchTableData()"
+        @on-status-change="fetchTableData()"
+      />
 
       <!-- 分页 -->
       <BasePagination
@@ -27,7 +31,7 @@
       />
     </div>
 
-    <!-- 创建新支付类型弹框 -->
+    <!-- 创建弹框 -->
     <PaymentPortDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>

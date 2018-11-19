@@ -37,8 +37,8 @@
 
       <el-table-column prop="operations" label="操作">
         <template slot-scope="scope">
-          <el-button @click="showDialogUpdate(scope.row)"  type="primary" icon="el-icon-edit" size="mini" />
-          <!-- <el-button @click="showDialogDelete(scope.row)" type="primary" icon="el-icon-delete" size="mini" /> -->
+          <el-button @click="showDialog(scope.row, 'dialogUpdate')"  type="primary" icon="el-icon-edit" size="mini" />
+          <el-button @click="$message.warning('接口调试中...')" type="warning" icon="el-icon-delete" size="mini" />
         </template>
       </el-table-column>
     </el-table>
@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import { tableComponentMixin } from '@/mixins'
+
 import BaseIndicator from '@/components/base/BaseIndicator'
 import RemittanceShortcutDialogUpdate from './RemittanceShortcutDialogUpdate'
 
@@ -58,22 +60,6 @@ export default {
     BaseIndicator,
     RemittanceShortcutDialogUpdate
   },
-  props: {
-    data: {
-      type: Array,
-      required: true
-    }
-  },
-  data () {
-    return {
-      activeItem: {}
-    }
-  },
-  methods: {
-    showDialogUpdate (item) {
-      this.activeItem = item
-      this.$refs.dialogUpdate.toggleDialogVisible(true)
-    }
-  }
+  mixins: [ tableComponentMixin ]
 }
 </script>

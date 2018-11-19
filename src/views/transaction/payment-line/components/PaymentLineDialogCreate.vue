@@ -1,6 +1,11 @@
 <template lang="html">
-  <div class="line-create">
-    <el-dialog :visible.sync="dialogVisible" :title="`【${tab.name}】 创建新支付接口`" width="80%" style="min-width: 760px">
+  <div>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      :title="`【${tab.name}】 创建新支付接口`"
+      width="80%"
+      style="min-width: 760px"
+    >
       <div>
         <!-- 表格数据 -->
         <el-table

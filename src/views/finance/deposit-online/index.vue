@@ -13,7 +13,7 @@
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
-        :pageTotal="pageTotal"
+        :page="page"
         :requestParams="requestParams"
         httpURL="fetchFinanceDepositOnline"
       />
@@ -42,7 +42,7 @@ export default {
         { name: '在线存款管理' }
       ],
       tableData: [],
-      pageTotal: 0,
+      page: { current: 0, size: 10, total: 10 },
       requestParams: {}
     }
   },
@@ -68,7 +68,7 @@ export default {
         } else {
           this.tableData = []
         }
-        this.pageTotal = response.data.amount
+        this.page.total = response.data.amount
       }).catch(error => console.log(error))
     }
   }

@@ -1,12 +1,11 @@
 <template lang="html">
-  <div class="port-create">
-    <el-dialog :visible.sync="dialogVisible" title="创建新支付接口" width="760px">
+  <div>
+    <el-dialog :visible.sync="dialogVisible" title="修改支付接口配置" width="760px">
       <el-form
         :model="formData"
-        :rules="rules"
         label-width="100px"
         size="small"
-        ref="formCreate"
+        disabled
         class="clearfix"
       >
         <el-form-item prop="name" label="接口名称">
@@ -15,6 +14,7 @@
 
         <FormSelect
           @on-change="$set(formData, 'interfaceTypeId', $event)"
+          :value="formData.interfaceTypeId"
           httpAPIName="fetchTransactionPaymentPortType"
           :httpAPIParams="{ params: { type: 1 } }"
           labelAttr="name"
@@ -26,6 +26,7 @@
 
         <FormSelect
           @on-change="$set(formData, 'payTypeId', $event)"
+          :value="formData.payTypeId"
           httpAPIName="fetchTransactionPaymentType"
           :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
           labelAttr="name"
@@ -51,16 +52,16 @@
         </el-form-item>
 
         <FormSelect
-          @on-change="$set(formData, 'userGroups', $event)"
+          @on-change="$set(formData, 'rebateUserGroups', $event)"
           :value="formData.userGroups"
           httpAPIName="fetchUserGroups"
           :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
           labelAttr="name"
           valueAttr="groupId"
-          prop="userGroups"
+          prop="rebateUserGroups"
           label="会员分组"
           multiple
-          ref="userGroups"
+          ref="rebateUserGroups"
         />
 
         <el-form-item prop="merchantId" label="商家账号" class="custom-block">
@@ -83,51 +84,69 @@
           <el-input v-model="formData.ipWhiteList" placeholder="ip白名单，多个用逗号分隔" />
         </el-form-item>
 
-        <el-form-item prop="remark" label="备注" class="custom-block">
-          <el-input v-model="formData.remark" type="textarea" rows="3" placeholder="备注" />
+        <el-form-item label="备注" class="custom-block">
+          <el-input v-model="formData.remark" type="textarea" rows="3" placeholder="" />
+        </el-form-item>
+
+        <el-form-item prop="createTime" label="创建时间">
+          <el-input :value="formData.createTime | time" />
+        </el-form-item>
+
+        <el-form-item prop="createId" label="创建用户">
+          <el-input :value="formData.createId" />
+        </el-form-item>
+
+        <el-form-item prop="updateTime" label="上次修改时间">
+          <el-input :value="formData.updateTime | time" />
+        </el-form-item>
+
+        <el-form-item prop="updateId" label="修改用户">
+          <el-input :value="formData.updateId" />
+        </el-form-item>
+
+        <el-form-item prop="limitStatus" label="限额状态">
+          <el-radio-group v-model="formData.limitStatus">
+            <el-radio :label="0">限额</el-radio>
+            <el-radio :label="1">不限额</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item prop="fineTuningStatus" label="微调状态">
+          <el-radio-group v-model="formData.fineTuningStatus">
+            <el-radio :label="0">微调</el-radio>
+            <el-radio :label="1">不能微调</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item prop="pcStatus" label="是否 电脑端">
+          <el-radio-group v-model="formData.pcStatus">
+            <el-radio :label="0">电脑端</el-radio>
+            <el-radio :label="1">不是电脑端</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item prop="phoneStatus" label="是否 手机端">
+          <el-radio-group v-model="formData.phoneStatus">
+            <el-radio :label="0">手机端</el-radio>
+            <el-radio :label="1">不是手机端</el-radio>
+          </el-radio-group>
         </el-form-item>
       </el-form>
-
-      <span slot="footer">
-        <el-button @click="submitForm('formCreate')" type="primary" size="small">确定</el-button>
-      </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { dialogCreateMixin } from '@/mixins'
+import { dialogDetailMixin } from '@/mixins'
 
 import FormSelect from '@/components/form/FormSelect'
-import FormRadio from '@/components/form/FormRadio'
 
 export default {
-  name: 'PaymentPortDialogCreate',
+  name: 'PaymentPortDialogDetail',
   components: {
-    FormSelect,
-    FormRadio
+    FormSelect
   },
-  mixins: [ dialogCreateMixin ],
-  data () {
-    return {
-      createHttpAPI: 'createTransactionPaymentPort',
-      formData: { userGroups: [], sort: 0, status: 0 },
-      rules: {
-        name: { required: true, message: '接口名称不能为空' },
-        interfaceTypeId: { required: true, message: '接口类型必须选择一个' },
-        payTypeId: { required: true, message: '支付类型须必须选择一个' },
-        discountRatio: { required: true, message: '优惠比例不能为空' },
-        status: { required: true, message: '启用状态必须选择一个' },
-        sort: this.$utils.generateFormValidatorInteger('排列顺序'),
-        userGroups: { required: true, message: '会员分组至少选择一个', trigger: 'blur' },
-        merchantId: { required: true, message: '商家账号不能为空' },
-        payAddress: { required: true, message: '支付地址不能为空' },
-        publicKey: { required: true, message: '秘钥(公钥)不能为空' },
-        privateKey: { required: true, message: '秘钥(私钥)不能为空' },
-        ipWhiteList: { required: true, message: 'IP白名单不能为空' }
-      }
-    }
-  }
+  mixins: [ dialogDetailMixin ]
 }
 </script>
 

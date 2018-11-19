@@ -7,9 +7,8 @@
       </router-link>
     </div>
     <!-- 表格数据 -->
-    <el-table :data="tableData" size="small" highlight-current-row border>
+    <el-table :data="tableData" height="730px" size="small" highlight-current-row border>
       <el-table-column type="index"></el-table-column>
-      <el-table-column prop="id" label="ID" :width="50"></el-table-column>
 
       <el-table-column prop="createTime" label="创建时间" :min-width="120">
         <template slot-scope="scope">

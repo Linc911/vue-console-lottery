@@ -2,6 +2,10 @@ import axios from './index'
 
 export default {
   /* 公共数据 */
+  // 侧边栏菜单
+  fetchSidebarMenuList: () => axios.get('/api-b/menus/all'), // 页面侧边栏菜单列表
+
+  // 游戏类
   fetchGameClasses: () => axios.get('/api-g/gameconfig/parent'), // 游戏菜单(大类)
   fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 游戏菜单（细分）
 
@@ -90,7 +94,7 @@ export default {
   createRebateSettingList: data => axios.post('/api-b/rebate/save', data), // 会员返水设置保存
   updateRebateSettingStatus: options => axios.get('/api-b/rebate/status', options), // 会员返水设置修改状态
 
-  rebateLogList: options => axios.get('/api-b/rebateLog/list', options), // 会员返水信息列表
+  fetchRebateLogsList: options => axios.get('/api-b/rebateLog/list', options), // 查看返水记录列表
   statistic: options => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计
 
   /* 收款出款 */

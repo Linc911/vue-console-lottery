@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="port-create">
+  <div>
     <el-dialog :visible.sync="dialogVisible" title="修改支付接口配置" width="760px">
       <el-form
         :model="formData"
@@ -45,17 +45,12 @@
           <el-input v-model="formData.sort" placeholder="排列顺序" type="number" />
         </el-form-item>
 
-        <FormRadio
-          @on-change="$set(formData, 'status', $event)"
-          :value="formData.status"
-          :options="[
-            { label: 0, title: '启用' },
-            { label: 1, title: '不启用' }
-          ]"
-          prop="status"
-          label="是否启用"
-          ref="status"
-        />
+        <el-form-item prop="status" label="启用状态">
+          <el-radio-group v-model="formData.status">
+            <el-radio :label="0">启用</el-radio>
+            <el-radio :label="1">禁用</el-radio>
+          </el-radio-group>
+        </el-form-item>
 
         <FormSelect
           @on-change="$set(formData, 'rebateUserGroups', $event)"
@@ -103,23 +98,34 @@
 </template>
 
 <script>
-import { updateMixin } from '@/mixins'
+import { dialogUpdateMixin } from '@/mixins'
 
 import FormSelect from '@/components/form/FormSelect'
-import FormRadio from '@/components/form/FormRadio'
 
 export default {
-  name: 'PaymentPortDialogCreate',
+  name: 'PaymentPortDialogUpdate',
   components: {
-    FormSelect,
-    FormRadio
+    FormSelect
   },
-  mixins: [ updateMixin ],
+  mixins: [ dialogUpdateMixin ],
   data () {
     return {
       idObject: { id: this.data.id }, // 必须携带的参数
       updateHttpAPI: 'updateTransactionPaymentPort',
-      formData: this.data,
+      formData: {
+        name: '',
+        interfaceTypeId: '',
+        payTypeId: '',
+        discountRatio: '',
+        status: '',
+        sort: '',
+        rebateUserGroups: this.data.rebateUserGroups,
+        merchantId: '',
+        payAddress: '',
+        publicKey: '',
+        privateKey: '',
+        ipWhiteList: ''
+      },
       rules: {
         name: { required: true, message: '接口名称不能为空' },
         interfaceTypeId: { required: true, message: '接口类型必须选择一个' },
@@ -127,7 +133,7 @@ export default {
         discountRatio: { required: true, message: '优惠比例不能为空' },
         status: { required: true, message: '启用状态必须选择一个' },
         sort: { required: true, message: '排序顺序不能为空' },
-        // rebateUserGroups: { required: true, message: '会员分组至少选择一个' },
+        rebateUserGroups: { required: true, message: '会员分组至少选择一个' },
         merchantId: { required: true, message: '商家账号不能为空' },
         payAddress: { required: true, message: '支付地址不能为空' },
         publicKey: { required: true, message: '秘钥(公钥)不能为空' },

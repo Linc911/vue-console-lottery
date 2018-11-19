@@ -14,7 +14,7 @@
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
-        :pageTotal="pageTotal"
+        :page="page"
         :requestParams="requestParams"
         httpURL="fetchUsersList"
       />
@@ -43,7 +43,7 @@ export default {
         { name: '会员信息管理' }
       ],
       tableData: [],
-      pageTotal: 0,
+      page: { current: 1, size: 10, total: 10 },
       requestParams: {}
     }
   },
@@ -90,7 +90,7 @@ export default {
         } else {
           this.tableData = []
         }
-        this.pageTotal = response.data.data.amount
+        this.page.total = response.data.data.amount
       }).catch(error => console.log(error))
     }
   }

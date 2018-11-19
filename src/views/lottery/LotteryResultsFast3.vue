@@ -53,7 +53,7 @@
     <!-- 分页 -->
     <BasePagination
       @on-change="handlePaginationChange"
-      :pageTotal="pageTotal"
+      :page="page"
       :requestParams="{ type: this.$route.params.gameId }"
       httpURL="fetchLotteryResultsFast3"
     />
@@ -111,7 +111,7 @@ export default {
   data () {
     return {
       tableData: [],
-      pageTotal: 0,
+      page: { current: 1, size: 10, total: 10 },
       dialogVisible: false,
       dialogFormData: {
         drawno: '', ball1: '', ball2: '', ball3: ''
@@ -176,7 +176,7 @@ export default {
         params: { type: this.$route.params.gameId, pageNo: 1, pageSize: 10 }
       }).then(response => {
         this.tableData = response.data.data
-        this.pageTotal = response.data.amount
+        this.page.total = response.data.amount
       }).catch(error => console.log(error))
     }
   }

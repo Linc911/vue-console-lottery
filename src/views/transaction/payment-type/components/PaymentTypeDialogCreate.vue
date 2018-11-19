@@ -14,7 +14,7 @@
       </el-form-item>
 
       <el-form-item prop="sort" label="排序">
-        <el-input v-model.trim="formData.sort" type="number" min="0" max="99" placeholder="排序" />
+        <el-input v-model.trim="formData.sort" type="number" min="0" placeholder="排序" />
       </el-form-item>
 
       <el-form-item prop="remark" label="备注">
@@ -45,10 +45,7 @@ export default {
           { min: 2, max: 20, message: '类型名称长度在 2 - 20 字符之间' }
         ],
         status: { required: true, message: '推荐状态至少选择一个' },
-        sort: [
-          { required: true, message: '排列顺序不能为空' },
-          { pattern: /^[0-9]{1,2}$/, message: '排列顺序必须为 0 - 99 整数' }
-        ]
+        sort: this.$utils.generateFormValidatorInteger('排列顺序')
       }
     }
   }

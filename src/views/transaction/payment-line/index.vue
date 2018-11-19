@@ -1,12 +1,12 @@
 <template lang="html">
-  <div class="payment-line" style="min-height: 600px">
+  <div>
     <!-- 面包屑导航 -->
     <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
 
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <PaymentLineSearch />
+        <PaymentLineSearch @on-search="handleSearch" style="margin-left: 150px" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -14,15 +14,15 @@
     </SearchLayout>
 
     <!-- 主要内容 -->
-    <div class="content-container" style="position: relative">
+    <div class="clearfix" style="">
       <!-- 侧边支付类型菜单 -->
-      <PaymentLineMenu @on-change="handleTabSwitch" style="position: absolute; width: 150px; z-index: 3" />
+      <PaymentLineMenu @on-change="handleTabSwitch" style="float:left; width: 150px" />
 
       <!-- 表格 -->
       <PaymentLineTable
         :data="tableData"
         @on-deleted="fetchTableData()"
-        style="margin-left: 150px;"
+        style="float: right; width: calc(100% - 150px)"
       />
     </div>
 
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { breadcrumbMixin, tableWithoutPaginationMixin } from '@/mixins'
+import { breadcrumbMixin, searchOuterMixin, tableWithoutPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import PaymentLineMenu from './components/PaymentLineMenu'
@@ -42,7 +42,7 @@ import PaymentLineTable from './components/PaymentLineTable'
 import PaymentLineDialogCreate from './components/PaymentLineDialogCreate'
 
 export default {
-  name: 'TransactionPaymentPort',
+  name: 'TransactionPaymentLine',
   components: {
     SearchLayout,
     PaymentLineMenu,
@@ -51,7 +51,7 @@ export default {
     PaymentLineTable,
     PaymentLineDialogCreate
   },
-  mixins: [ breadcrumbMixin, tableWithoutPaginationMixin ],
+  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithoutPaginationMixin ],
   data () {
     return {
       tableData: [],

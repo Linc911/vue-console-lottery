@@ -36,7 +36,7 @@
           <el-input v-model.trim="formData.ratio" type="number" min="0" placeholder="返佣比率" />
         </el-form-item>
 
-        <el-form-item prop="status" label="是否启用">
+        <el-form-item prop="status" label="启用状态">
           <el-radio-group v-model="formData.status">
             <el-radio :label="0">启用</el-radio>
             <el-radio :label="1">禁用</el-radio>
@@ -102,14 +102,8 @@ export default {
       rules: {
         name: { required: true, message: '返水名称不能为空' },
         gameConfigId: { required: true, message: '游戏类型必须选择一个' },
-        upperLimit: [
-          { required: true, message: '投注上限不能为空' },
-          { pattern: /^[0-9]+$/, message: '投注上限必须为整数' }
-        ],
-        lowerLimit: [
-          { required: true, message: '投注下限不能为空' },
-          { pattern: /^[0-9]+$/, message: '投注下限必须为整数' }
-        ],
+        upperLimit: this.$utils.generateFormValidatorInteger('投注上限'),
+        lowerLimit: this.$utils.generateFormValidatorInteger('投注下限'),
         ratio: { required: true, message: '返佣比率不能为空' },
         status: { required: true, message: '启用状态必须选择一个' },
         // startTime: { required: true, message: '计划开始时间不能为空' },
