@@ -1,8 +1,5 @@
 <template lang="html">
   <div class="deposit-form">
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
-
     <!-- 检索栏 -->
     <DepositFormSearch @on-search="handleSearch" />
 
@@ -32,7 +29,6 @@
 </template>
 
 <script>
-import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import DepositFormSearch from './components/DepositFormSearch'
 import DepositFormTable from './components/DepositFormTable'
 import BasePagination from '@/components/base/BasePagination'
@@ -41,7 +37,6 @@ import DepositFormDialog from './components/DepositFormDialog'
 export default {
   name: 'FinanceDepositForm',
   components: {
-    BaseBreadcrumb,
     DepositFormSearch,
     DepositFormTable,
     BasePagination,

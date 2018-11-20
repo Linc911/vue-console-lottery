@@ -1,8 +1,5 @@
 <template lang="html">
   <div>
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
-
     <!-- 条件筛选 -->
     <UserBetsSearch @on-search="handleSearch" />
 
@@ -24,7 +21,7 @@
 </template>
 
 <script>
-import { breadcrumbMixin, searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
+import { searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
 
 import UserBetsSearch from './components/UserBetsSearch'
 import UserBetsTable from './components/UserBetsTable'
@@ -35,7 +32,7 @@ export default {
     UserBetsSearch,
     UserBetsTable
   },
-  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationPostMixin ],
+  mixins: [ searchOuterMixin, tableWithPaginationPostMixin ],
   data () {
     return {
       tableData: [],

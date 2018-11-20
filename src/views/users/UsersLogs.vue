@@ -13,7 +13,7 @@
       >
         <el-table-column type="index" />
 
-        <el-table-column prop="createTime" label="请求时间" :min-width="140">
+        <el-table-column prop="createTime" label="请求时间" :width="140">
           <template slot-scope="scope">
             <span>{{scope.row.createTime | time}}</span>
           </template>
@@ -21,15 +21,15 @@
 
         <el-table-column prop="username" label="用户名称" />
 
-        <el-table-column prop="ip" label="ip地址" :min-width="100" />
+        <el-table-column prop="ip" label="ip地址" :width="120" />
 
-        <el-table-column prop="params" label="请求参数" :min-width="160" />
+        <el-table-column prop="params" label="请求参数" :min-width="180" />
 
         <el-table-column prop="module" label="请求模块" />
 
         <el-table-column prop="area" label="所属区域" />
 
-        <el-table-column prop="remark" label="备注" :min-width="180" />
+        <el-table-column prop="remark" label="备注" :width="160" />
       </el-table>
       <!-- 分页 -->
       <el-pagination
@@ -66,14 +66,6 @@ export default {
   },
   created () {
     this.fetchUserLogs({ current: this.page.current = 1, size: this.page.size = 10 })
-  },
-  mounted () {
-    this.$notify({
-      title: '提示',
-      message: '页面使用模拟数据，接口正在调试中...',
-      type: 'warning',
-      duration: 8000
-    })
   },
   methods: {
     // 分页跳转时

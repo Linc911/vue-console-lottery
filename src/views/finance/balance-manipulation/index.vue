@@ -1,8 +1,5 @@
 <template lang="html">
   <div class="balance-manipulation">
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
-
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
       <el-tab-pane label="创建加减款请求" name="creating" />
@@ -18,8 +15,6 @@
 </template>
 
 <script>
-import { breadcrumbMixin } from '@/mixins'
-
 import BalanceManipulationForm from './components/BalanceManipulationForm'
 import BalanceManipulationListUnchecked from './components/BalanceManipulationListUnchecked'
 import BalanceManipulationListChecked from './components/BalanceManipulationListChecked'
@@ -31,7 +26,6 @@ export default {
     BalanceManipulationListUnchecked,
     BalanceManipulationListChecked
   },
-  mixins: [ breadcrumbMixin ],
   data () {
     return {
       activeTab: 'creating', // 当前活动菜单

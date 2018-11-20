@@ -1,8 +1,5 @@
 <template lang="html">
   <div class="remittance-user">
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
-
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
@@ -37,7 +34,7 @@
 </template>
 
 <script>
-import { breadcrumbMixin, searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
+import { searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import PaymentLineSearch from './components/PaymentLineSearch'
@@ -54,7 +51,7 @@ export default {
     UserRemittanceTable,
     UserRemittanceDialogCreate
   },
-  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationPostMixin ],
+  mixins: [ searchOuterMixin, tableWithPaginationPostMixin ],
   data () {
     return {
       tableData: [],

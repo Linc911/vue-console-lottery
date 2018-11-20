@@ -1,8 +1,5 @@
 <template lang="html">
   <div>
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
-
     <!-- 条件筛选 -->
     <SearchLayout>
       <template slot="left">
@@ -38,7 +35,7 @@
 </template>
 
 <script>
-import { breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import PaymentTypeSearch from './components/PaymentTypeSearch'
@@ -55,7 +52,7 @@ export default {
     PaymentTypeTable,
     PaymentTypeDialogCreate
   },
-  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],

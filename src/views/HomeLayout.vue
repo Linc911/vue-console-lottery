@@ -18,6 +18,9 @@
             <!-- 浏览历史记录栈 -->
             <TapPanel />
 
+            <!-- 面包屑导航 -->
+            <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
+
             <!-- 主要内容 -->
             <div class="content-container">
               <keep-alive>
@@ -42,6 +45,7 @@
 import TheHeader from '@/components/global/TheHeader'
 import TheSidebar from '@/components/global/TheSidebar'
 import TapPanel from '@/components/global/TabPanel'
+import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import TheFooter from '@/components/global/TheFooter'
 
 export default {
@@ -50,6 +54,7 @@ export default {
     TheHeader,
     TheSidebar,
     TapPanel,
+    BaseBreadcrumb,
     TheFooter
   }
 }
@@ -81,8 +86,7 @@ export default {
   background-color: #f8f8f8;
 }
 .content-container {
-  padding: 20px;
-  margin-top: 40px;
+  padding: 15px;
 }
 .el-footer {
   position: fixed;

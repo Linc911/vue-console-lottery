@@ -1,8 +1,5 @@
 <template lang="html">
   <div>
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
-
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
       <el-tab-pane v-for="game in games" :key="game.name" :label="game.name" :name="String(game.id)" />
@@ -38,7 +35,7 @@
 </template>
 
 <script>
-import { breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import RebateSettingSearch from './components/RebateSettingSearch'
@@ -55,7 +52,7 @@ export default {
     RebateSettingTable,
     RebateSettingDialogCreate
   },
-  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       games: [],

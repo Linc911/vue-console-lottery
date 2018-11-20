@@ -1,8 +1,5 @@
 <template lang="html">
   <section class="users-list">
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="breadcrumb" />
-
     <!-- 条件筛选 -->
     <UsersListSearch @on-search="handleSearch" />
 
@@ -23,7 +20,6 @@
 </template>
 
 <script>
-import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import UsersListSearch from './components/UsersListSearch'
 import UsersListTable from './components/UsersListTable'
 import BasePagination from '@/components/base/BasePagination'
@@ -31,17 +27,12 @@ import BasePagination from '@/components/base/BasePagination'
 export default {
   name: 'UsersList',
   components: {
-    BaseBreadcrumb,
     UsersListSearch,
     UsersListTable,
     BasePagination
   },
   data () {
     return {
-      breadcrumb: [
-        { name: '会员管理' },
-        { name: '会员信息管理' }
-      ],
       tableData: [],
       page: { current: 1, size: 10, total: 10 },
       requestParams: {}
@@ -85,12 +76,12 @@ export default {
       this.$httpAPI.fetchUsersList({
         params: Object.assign({ pageNo: 1, pageSize: 10 }, this.requestParams)
       }).then(response => {
-        if (response.data.data.data) {
-          this.tableData = response.data.data.data
+        if (response.data.data) {
+          this.tableData = response.data.data
         } else {
           this.tableData = []
         }
-        this.page.total = response.data.data.amount
+        this.page.total = response.data.amount
       }).catch(error => console.log(error))
     }
   }

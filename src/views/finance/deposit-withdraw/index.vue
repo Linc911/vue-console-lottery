@@ -1,8 +1,5 @@
 <template lang="html">
   <div class="Limit-change">
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="breadcrumb" />
-
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
       <el-tab-pane label="所有存款记录" name="deposit" />
@@ -29,7 +26,6 @@
 </template>
 
 <script>
-import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import DepositWithdrawSearch from './components/DepositWithdrawSearch'
 import DepositWithdrawTable from './components/DepositWithdrawTable'
 import BasePagination from '@/components/base/BasePagination'
@@ -37,17 +33,12 @@ import BasePagination from '@/components/base/BasePagination'
 export default {
   name: 'FinanceLimintChange',
   components: {
-    BaseBreadcrumb,
     DepositWithdrawSearch,
     DepositWithdrawTable,
     BasePagination
   },
   data () {
     return {
-      breadcrumb: [
-        { name: '财务管理' },
-        { name: '存/取款记录' }
-      ],
       activeTab: 'deposit',
       tableData: [],
       depositData: [],

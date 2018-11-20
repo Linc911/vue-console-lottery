@@ -1,8 +1,5 @@
 <template lang="html">
   <section class="deposit-online">
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="breadcrumb" />
-
     <!-- 检索栏 -->
     <DepositOnlineSearch @on-search="handleSearch" />
 
@@ -22,7 +19,6 @@
 </template>
 
 <script>
-import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import DepositOnlineSearch from './components/DepositOnlineSearch'
 import DepositOnlineTable from './components/DepositOnlineTable'
 import BasePagination from '@/components/base/BasePagination'
@@ -30,17 +26,12 @@ import BasePagination from '@/components/base/BasePagination'
 export default {
   name: 'FinanceDepositOnline',
   components: {
-    BaseBreadcrumb,
     DepositOnlineSearch,
     DepositOnlineTable,
     BasePagination
   },
   data () {
     return {
-      breadcrumb: [
-        { name: '财务管理' },
-        { name: '在线存款管理' }
-      ],
       tableData: [],
       page: { current: 0, size: 10, total: 10 },
       requestParams: {}

@@ -1,8 +1,5 @@
 <template lang="html">
   <div class="remittance-shortcut">
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
-
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
@@ -33,7 +30,7 @@
 </template>
 
 <script>
-import { breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import RemittanceShortcutSearch from './components/RemittanceShortcutSearch'
@@ -50,7 +47,7 @@ export default {
     RemittanceShortcutTable,
     RemittanceShortcutDialogCreate
   },
-  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],

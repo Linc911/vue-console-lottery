@@ -58,10 +58,10 @@ import UsersAccount from './views/users/UsersAccount'
 import UsersKeyword from './views/users/UsersKeyword'
 
 /* 彩票管理 */
-import LotteryOpen from './views/lottery/LotteryOpen'
-import LotteryResultsEleven from './views/lottery/results-eleven'
-import LotteryResultsFast3 from './views/lottery/LotteryResultsFast3'
 import LotteryManage from './views/lottery/LotteryManage'
+import LotteryOpen from './views/lottery/LotteryOpen'
+import LotteryResults from './views/lottery/lottery-results'
+// import LotteryResultsFast3 from './views/lottery/LotteryResultsFast3'
 import LotteryOddsEleven from './views/lottery/LotteryOddsEleven'
 import LotteryOddsFast3 from './views/lottery/LotteryOddsFast3'
 import LotteryWithdraw from './views/lottery/LotteryWithdraw'
@@ -223,13 +223,25 @@ const router = new Router({
               name: 'UsersList',
               path: 'list',
               component: UsersList,
-              meta: { title: '会员信息列表' }
+              meta: {
+                title: '会员信息管理',
+                breadcrumb: [
+                  { name: '会员管理' },
+                  { name: '会员信息管理' }
+                ]
+              }
             },
             {
               name: 'UsersLogs',
               path: 'logs',
               component: UsersLogs,
-              meta: { title: '会员日志记录' }
+              meta: {
+                title: '会员日志记录',
+                breadcrumb: [
+                  { name: '会员管理' },
+                  { name: '会员日志记录' }
+                ]
+              }
             },
             {
               name: 'UsersAccount',
@@ -409,7 +421,50 @@ const router = new Router({
           ]
         },
         /* 彩票管理模块 */
-        // 彩票会员报表
+        {
+          name: 'LotteryManage',
+          path: '/lottery',
+          direct: '/lottery/open',
+          component: LotteryManage,
+          children: [
+            {
+              name: 'LotteryOpen',
+              path: 'open',
+              component: LotteryOpen,
+              meta: {
+                title: '彩票开盘记录',
+                breadcrumb: [
+                  { name: '彩票管理' },
+                  { name: '彩票开盘记录' }
+                ]
+              }
+            },
+            {
+              name: 'LotteryResults',
+              path: 'results',
+              component: LotteryResults,
+              meta: {
+                title: '彩票开奖记录',
+                breadcrumb: [
+                  { name: '彩票管理' },
+                  { name: '彩票开奖记录' }
+                ]
+              }
+            },
+            // 赔率设置
+            {
+              name: 'lotteryOddsEleven',
+              path: '/lottery/odds/eleven/:gameId',
+              component: LotteryOddsEleven,
+              meta: { title: '11选5赔率设置', keepAlive: true }
+            },
+            {
+              path: '/lottery/odds/fast3/:gameId',
+              component: LotteryOddsFast3,
+              meta: { title: '快3赔率设置', keepAlive: true }
+            }
+          ]
+        },
         {
           name: 'LotteryUsersInfo',
           path: '/lottery/users/info',
@@ -452,70 +507,22 @@ const router = new Router({
             ]
           }
         },
-        {
-          name: 'LotteryManage',
-          path: '/lottery',
-          redirect: '/lottery/results/eleven/3',
-          component: LotteryManage,
-          children: [
-            // 开奖结果
-            {
-              name: 'LotteryResultsEleven',
-              path: 'results/eleven/:gameId',
-              component: LotteryResultsEleven,
-              meta: {
-                title: '11选5开奖结果',
-                breadcrumb: [
-                  { name: '彩票管理' },
-                  { name: '彩票开奖' },
-                  { name: '11选5' }
-                ]
-              }
-            },
-            {
-              name: 'LotteryResultsFast3',
-              path: 'results/fast3/:gameId',
-              component: LotteryResultsFast3,
-              meta: { title: '快3开奖结果' }
-            },
-            // 赔率设置
-            {
-              name: 'lotteryOddsEleven',
-              path: '/lottery/odds/eleven/:gameId',
-              component: LotteryOddsEleven,
-              meta: { title: '11选5赔率设置', keepAlive: true }
-            },
-            {
-              path: '/lottery/odds/fast3/:gameId',
-              component: LotteryOddsFast3,
-              meta: { title: '快3赔率设置', keepAlive: true }
-            },
-            // 彩票开盘
-            {
-              name: 'LotteryOpen',
-              path: '/lottery/open/eleven/:gameId',
-              component: LotteryOpen,
-              meta: { title: '彩票开奖', keepAlive: true }
-            }
-          ]
-        },
         /* 财务管理 */
         {
           name: 'FinanceManage',
           path: '/finance',
           redirect: '/finance/blalance/sheet',
           component: FinanceManage,
-          meta: { title: '财务管理', keepAlive: true },
           children: [
             {
               name: 'FinanceBalanceManipulation',
               path: 'balance/manipulation',
               component: FinanceBalanceManipulation,
               meta: {
-                title: '加减款操作',
+                title: '操作 - 给客户加减款',
                 breadcrumb: [
                   { name: '财务管理' },
-                  { name: '加减款操作' }
+                  { name: '操作 - 给客户加减款' }
                 ]
               }
             },
@@ -524,10 +531,10 @@ const router = new Router({
               path: 'deposit/form',
               component: FinanceDepositForm,
               meta: {
-                title: '填单存款管理',
+                title: '存款 - 客户汇款管理',
                 breadcrumb: [
                   { name: '财务管理' },
-                  { name: '填单存款管理' }
+                  { name: '存款 - 客户汇款管理' }
                 ]
               }
             },
@@ -535,23 +542,35 @@ const router = new Router({
               name: 'FinanceDepositOnline',
               path: 'deposit/online',
               component: FinanceDepositOnline,
-              meta: { title: '在线存款管理' }
+              meta: {
+                title: '存款 - 客户在线存款',
+                breadcrumb: [
+                  { name: '财务管理' },
+                  { name: '存款 - 客户在线存款' }
+                ]
+              }
             },
             {
               name: 'FinanceWithdrawApply',
               path: 'withdraw/apply',
               component: FinanceWithdrawApply,
-              meta: { title: '提款申请管理' }
+              meta: {
+                title: '提款 - 客户提款审批',
+                breadcrumb: [
+                  { name: '财务管理' },
+                  { name: '提款 - 客户提款审批' }
+                ]
+              }
             },
             {
               name: 'FinanceLimitationTransfer',
               path: 'limitation/transfer',
               component: FinanceLimitationTransfer,
               meta: {
-                title: '额度转换管理',
+                title: '额度转换记录查询',
                 breadcrumb: [
                   { name: '财务管理' },
-                  { name: '额度转换管理' }
+                  { name: '额度转换记录查询' }
                 ]
               }
             },
@@ -559,25 +578,49 @@ const router = new Router({
               name: 'FinanceUsersAssets',
               path: 'users/assets',
               component: FinanceUsersAssets,
-              meta: { title: '会员资金管理' }
+              meta: {
+                title: '会员资金管理',
+                breadcrumb: [
+                  { name: '财务管理' },
+                  { name: '会员资金管理' }
+                ]
+              }
             },
             {
               name: 'FinanceDepositWithdrawList',
               path: 'depositwithdraw/list',
               component: FinanceDepositWithdrawList,
-              meta: { title: '存/取款记录' }
+              meta: {
+                title: '存/取款记录查询',
+                breadcrumb: [
+                  { name: '财务管理' },
+                  { name: '存/取款记录查询' }
+                ]
+              }
             },
             {
               name: 'FinanceBalanceSheet',
               path: 'balance/sheet',
               component: FinanceBalanceSheet,
-              meta: { title: '会员财务报表' }
+              meta: {
+                title: '会员财务报表',
+                breadcrumb: [
+                  { name: '财务管理' },
+                  { name: '会员财务报表' }
+                ]
+              }
             },
             {
               name: 'FinanceStatistics',
               path: 'statistics',
               component: FinanceStatistics,
-              meta: { title: '平台收支汇总', keepAlive: true }
+              meta: {
+                title: '平台收支汇总',
+                breadcrumb: [
+                  { name: '财务管理' },
+                  { name: '平台收支汇总' }
+                ]
+              }
             },
             {
               name: 'FinanceSetting',
@@ -589,13 +632,27 @@ const router = new Router({
                   name: 'FinanceSettingList',
                   path: 'list',
                   component: FinanceSettingList,
-                  meta: { title: '常规配置列表', keepAlive: true }
+                  meta: {
+                    title: '常规配置列表',
+                    breadcrumb: [
+                      { name: '财务管理' },
+                      { name: '常规配置列表' }
+                    ],
+                    keepAlive: true
+                  }
                 },
                 {
                   name: 'FinanceSettingLoan',
                   path: 'loan',
                   component: FinanceSettingLoan,
-                  meta: { title: '借贷类型列表' }
+                  meta: {
+                    title: '借贷类型列表',
+                    breadcrumb: [
+                      { name: '财务管理' },
+                      { name: '常规配置列表', path: '/finance/setting/list' },
+                      { name: '借贷类型列表' }
+                    ]
+                  }
                 }
               ]
             }
@@ -909,25 +966,6 @@ router.beforeEach((to, from, next) => {
   }
 
   next()
-  // const tokenExisted = !!localStorage.getItem('access_token')
-
-  // if (to.path === '/login/username' || to.path === '/login/phone') {
-  //   // 当访问的地址是登录模块且access_token存在时
-  //   // 用户必须通过点击退出登录，才能跳转到登记模块界面，否则默认跳转到主页面
-  //   if (tokenExisted) {
-  //     next('/home')
-  //   } else {
-  //     next()
-  //   }
-  // } else {
-  //   // 当访问的地址不是登录模块且access_token不存在时
-  //   // 用户无法访问内部页面，默认跳转到用户账号登录页面
-  //   if (tokenExisted) {
-  //     next()
-  //   } else {
-  //     next('/login/username')
-  //   }
-  // }
 })
 
 export default router

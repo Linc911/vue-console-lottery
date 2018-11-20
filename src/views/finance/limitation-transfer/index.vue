@@ -1,8 +1,5 @@
 <template lang="html">
   <div>
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
-
     <!-- 条件筛选 -->
     <LimitationTransferSearch @on-search="handleSearch" />
 
@@ -23,7 +20,7 @@
 </template>
 
 <script>
-import { breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import LimitationTransferSearch from './components/LimitationTransferSearch'
 import LimitationTransferTable from './components/LimitationTransferTable'
@@ -34,7 +31,7 @@ export default {
     LimitationTransferSearch,
     LimitationTransferTable
   },
-  mixins: [ breadcrumbMixin, searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],

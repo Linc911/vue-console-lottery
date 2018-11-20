@@ -27,7 +27,7 @@
       <el-table-column prop="totalBets" label="总投注数" :width="80">
         <template slot-scope="scope">
           <span>{{scope.row.totalBets}}</span>
-          <BaseMore @on-click="showDialog(scope.row.bet, 'dialogDetail')" class="pull-right" />
+          <BaseMore @on-click="showDialog(scope.row.betsForObj, 'dialogDetail')" class="pull-right" />
         </template>
       </el-table-column>
 

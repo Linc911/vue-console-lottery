@@ -1,8 +1,5 @@
 <template lang="html">
   <section class="withdraw-apply">
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="breadcrumb" />
-
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
       <el-tab-pane label="填单存款待审核列表" name="unchecked" />
@@ -32,7 +29,6 @@
 </template>
 
 <script>
-import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import WithdrawApplySearch from './components/WithdrawApplySearch'
 import WithdrawApplyTable from './components/WithdrawApplyTable'
 import BasePagination from '@/components/base/BasePagination'
@@ -41,7 +37,6 @@ import WithdrawApplyDialog from './components/WithdrawApplyDialog'
 export default {
   name: 'FinanceWithdrawApply',
   components: {
-    BaseBreadcrumb,
     WithdrawApplySearch,
     WithdrawApplyTable,
     BasePagination,
@@ -50,10 +45,6 @@ export default {
   data () {
     return {
       activeTab: 'unchecked',
-      breadcrumb: [
-        { name: '财务管理' },
-        { name: '提款申请管理' }
-      ],
       currentItem: {},
       tableData: [],
       requestParams: { pageNo: 1, pageSize: 10, status: 0 },

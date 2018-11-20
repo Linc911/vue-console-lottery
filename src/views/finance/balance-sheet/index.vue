@@ -1,8 +1,5 @@
 <template lang="html">
   <section class="balance-sheet">
-    <!-- 面包屑导航 -->
-    <BaseBreadcrumb :breadcrumb="breadcrumb" />
-
     <!-- 检索栏 -->
     <BalanceSheetSearch @on-search="handleSearch" />
 
@@ -23,7 +20,6 @@
 </template>
 
 <script>
-import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import BalanceSheetSearch from './components/BalanceSheetSearch'
 import BalanceSheetTable from './components/BalanceSheetTable'
 import BasePagination from '@/components/base/BasePagination'
@@ -31,17 +27,12 @@ import BasePagination from '@/components/base/BasePagination'
 export default {
   name: 'FinanceBalanceSheet',
   components: {
-    BaseBreadcrumb,
     BalanceSheetSearch,
     BalanceSheetTable,
     BasePagination
   },
   data () {
     return {
-      breadcrumb: [
-        { name: '财务管理' },
-        { name: '会员财务报表' }
-      ],
       tableData: [],
       page: { current: 0, size: 10, total: 10 },
       requestParams: {}

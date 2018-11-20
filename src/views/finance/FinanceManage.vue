@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="finance-manage">
+  <div>
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive" />
     </keep-alive>

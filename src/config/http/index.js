@@ -39,7 +39,9 @@ axios.interceptors.response.use(response => {
   endLoading()
 
   if (response.status === 401) {
+    store.commit('CLEAR_HISTORY_ROUTES')
     store.dispatch('CLEAR_TOKEN')
+
     axios.defaults.headers.common['Authorization'] = ''
     router.push({ name: 'LoginUsername' })
     Message.warning('登录Token已过期，请重新登录。')
