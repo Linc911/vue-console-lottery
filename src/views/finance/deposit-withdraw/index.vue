@@ -12,7 +12,7 @@
     <!-- 主要内容 -->
     <div class="table-list">
       <!-- 表格 -->
-      <DepositWithdrawTable :data="tableData" />
+      <component :is="activeComponent" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -28,6 +28,7 @@
 <script>
 import DepositWithdrawSearch from './components/DepositWithdrawSearch'
 import DepositWithdrawTable from './components/DepositWithdrawTable'
+import WithdrawTable from './components/WithdrawTable'
 import BasePagination from '@/components/base/BasePagination'
 
 export default {
@@ -35,13 +36,16 @@ export default {
   components: {
     DepositWithdrawSearch,
     DepositWithdrawTable,
+    WithdrawTable,
     BasePagination
   },
   data () {
     return {
       activeTab: 'deposit',
+      activeComponent: 'DepositWithdrawTable',
       tableData: [],
       depositData: [],
+      withdrawData: [],
       page: { current: 0, size: 10, total: 10 },
       requestParams: { status: 0 }
     }
@@ -54,14 +58,24 @@ export default {
     handleTabClick (tab) {
       switch (tab.name) {
         case 'deposit':
+          this.activeComponent = 'DepositWithdrawTable'
+
           if (this.depositData.length) {
             this.tableData = this.depositData
           } else {
+            this.requestParams.status = 0
             this.fetchFinanceDepoistLogs()
           }
           break
         case 'withdraw':
-          this.tableData = []
+          this.activeComponent = 'WithdrawTable'
+
+          if (this.withdrawData.length) {
+            this.tableData = this.withdrawData
+          } else {
+            this.requestParams.status = 2
+            this.fetchFinanceWithDrawLogs()
+          }
           break
         default:
           this.tableData = []
@@ -80,6 +94,16 @@ export default {
       this.$httpAPI.fetchFinanceDepoistLogs({ params: Object.assign({ pageNo: 1, pageSize: 10 }, this.requestParams) }).then(response => {
         if (response.data.data) {
           this.tableData = this.depositData = response.data.data
+        } else {
+          this.tableData = []
+        }
+        this.page.total = response.data.amount
+      }).catch(error => console.log(error))
+    },
+    fetchFinanceWithDrawLogs () {
+      this.$httpAPI.fetchFinanceWithdrawApply({ params: Object.assign({ pageNo: 1, pageSize: 10 }, this.requestParams) }).then(response => {
+        if (response.data.data) {
+          this.tableData = this.withdrawData = response.data.data
         } else {
           this.tableData = []
         }

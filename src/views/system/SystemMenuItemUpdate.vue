@@ -80,6 +80,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios.put('/api-b/menus', this.formData).then(() => {
+            this.$store.dispatch('sidebar/refreshMenu')
             this.$message.success('修改菜单信息成功！')
             this.$router.push('/system/menu')
           }).catch(error => console.log(error))
@@ -90,7 +91,6 @@ export default {
     fetchMenuList () {
       this.$axios.get('/api-b/menus/all').then(response => {
         const { id, parentId, name, url, css, sort } = this.$_.find(response.data, { id: Number(this.$route.params.id) })
-
         this.selectOptions = response.data // 赋值给选择框，先渲染出选择框内容
         Object.assign(this.formData, { id, parentId, name, url, css, sort }) // 赋值给表单对象，用于提交数据
       }).catch(error => console.log(error))

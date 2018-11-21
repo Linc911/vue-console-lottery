@@ -172,13 +172,27 @@ export const tableComponentMixin = {
   },
   data () {
     return {
-      activeItem: {}
+      activeItem: { name: '' }
     }
   },
   methods: {
     showDialog (item, ref) {
       this.activeItem = item
       this.$refs[ref].toggleDialogVisible(true)
+    },
+    handleDeleteConfirm () {
+      this.$refs.dialogDelete.toggleDialogVisible(false)
+
+      this.$httpAPI[this.deleteHttpAPI]({
+        params: { [this.deleteAttrName]: this.activeItem.id }
+      }).then(response => {
+        if (response.data.status === 200) {
+          this.$emit('on-deleted')
+          this.$message.success('删除成功！')
+        } else {
+          this.$message.error('删除失败！')
+        }
+      }).catch(error => console.log(error))
     }
   }
 }

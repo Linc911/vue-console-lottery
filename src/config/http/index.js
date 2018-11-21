@@ -19,8 +19,8 @@ function endLoading () {
 axios.defaults.baseURL = 'http://192.168.5.182:8080'
 
 // 处理页面刷新时，重新设置Token;
-if (store.state.app.token) {
-  const { type, access } = store.state.app.token
+if (store.getters['auth/token']) {
+  const { type, access } = store.getters['auth/token']
   axios.defaults.headers.common['Authorization'] = `${type} ${access}`
 }
 
@@ -39,46 +39,51 @@ axios.interceptors.response.use(response => {
   endLoading()
 
   if (response.status === 401) {
-    store.commit('CLEAR_HISTORY_ROUTES')
-    store.dispatch('CLEAR_TOKEN')
+    store.dispatch('auth/clearToken')
+    store.dispatch('tab/clearRoutes')
 
     axios.defaults.headers.common['Authorization'] = ''
+
     router.push({ name: 'LoginUsername' })
+
     Message.warning('登录Token已过期，请重新登录。')
   }
   return response
 }, error => {
   endLoading() // 停止加载动画
+  console.dir(error)
 
   // token验证后台有两种不同验证，分别要处理
-
   if (error.response && error.response.status === 401) {
-    store.dispatch('CLEAR_TOKEN')
-    axios.defaults.headers.common['Authorization'] = ''
-    router.push({ name: 'LoginUsername' })
-    Message.warning('登录Token已过期，请重新登录。')
-    return
-  }
+    store.dispatch('auth/clearToken')
+    store.dispatch('tab/clearRoutes')
 
-  switch (error.status) {
-    case '401':
-      store.dispatch('CLEAR_TOKEN')
-      axios.defaults.headers.common['Authorization'] = ''
-      router.push({ name: 'LoginUsername' })
-      Message.warning('登录Token已过期，请重新登录。')
-      break
-    case '403':
-      console.log('未授权，请检查HTTP请求头是否携带Token。')
-      break
-    case '404':
-      console.log('没有找到对应的请求，请核对HTTP请求地址。')
-      break
-    case '500':
-      console.log(`系统错误：请刷新页面或联系管理员。`)
-      break
-    default:
-      console.log(`获取数据异常。`)
+    axios.defaults.headers.common['Authorization'] = ''
+
+    router.push({ name: 'LoginUsername' })
+
+    Message.warning('登录Token已过期，请重新登录。')
   }
+  //
+  // switch (error.status) {
+  //   case '401':
+  //     store.dispatch('CLEAR_TOKEN')
+  //     axios.defaults.headers.common['Authorization'] = ''
+  //     router.push({ name: 'LoginUsername' })
+  //     Message.warning('登录Token已过期，请重新登录。')
+  //     break
+  //   case '403':
+  //     console.log('未授权，请检查HTTP请求头是否携带Token。')
+  //     break
+  //   case '404':
+  //     console.log('没有找到对应的请求，请核对HTTP请求地址。')
+  //     break
+  //   case '500':
+  //     console.log(`系统错误：请刷新页面或联系管理员。`)
+  //     break
+  //   default:
+  //     console.log(`获取数据异常。`)
+  // }
   return Promise.reject(error)
 })
 

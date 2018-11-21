@@ -1,7 +1,7 @@
 <template lang="html">
   <!-- 条件筛选 -->
   <div class="search">
-    <el-form @submit.native.prevent :model="formData" size="small" label-width="80px" inline>
+    <el-form :model="formData" size="small" inline>
       <FormInput
         @keyup.native.enter="$emit('on-search', formData)"
         @submit.prevent.stop

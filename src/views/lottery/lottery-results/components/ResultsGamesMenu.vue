@@ -1,6 +1,6 @@
 <template lang="html">
   <section class="games-menu">
-    <el-menu mode="vertical" :default-active="gameType">
+    <el-menu mode="vertical" :default-active="gameType" unique-opened>
       <template v-for="group in menu">
         <el-submenu :index="String(group.id)" :key="group.id">
           <template slot="title">

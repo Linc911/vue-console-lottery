@@ -18,7 +18,11 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <RebateSettingTable @on-updated="fetchTableData()" :data="tableData" />
+      <RebateSettingTable
+        @on-updated="fetchTableData()"
+        @on-deleted="fetchTableData()"
+        :data="tableData"
+      />
 
       <!-- 分页 -->
       <BasePagination

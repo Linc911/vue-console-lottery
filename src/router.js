@@ -295,7 +295,13 @@ const router = new Router({
         {
           path: '/system/menu',
           component: SystemMenuList,
-          meta: { title: '侧边栏菜单列表' }
+          meta: {
+            title: '系统菜单配置',
+            breadcrumb: [
+              { name: '系统设置' },
+              { name: '系统菜单配置' }
+            ]
+          }
         },
         {
           path: '/system/menu/create',
@@ -941,7 +947,7 @@ router.beforeEach((to, from, next) => {
   document.title = to.meta.title
 
   // 每次跳转路由，将浏览记录压入 vuex 中的对象
-  const routes = store.state.app.historyRoutes
+  const routes = store.getters['tab/routes']
   const existed = routes.some(route => route.path === to.path)
 
   // 跳转主页时，不存储记录；检验是否已经存储过，不存储重复的路由; 最多为8个
@@ -949,19 +955,19 @@ router.beforeEach((to, from, next) => {
     if (!existed) {
       const titleRepeated = routes.some(route => route.name === to.meta.title)
       if (!titleRepeated) {
-        store.dispatch('initHistoryRoutesStatus')
-        store.dispatch('addHistoryRoutes', {
+        store.dispatch('tab/initRoutesStatus')
+        store.dispatch('tab/addRoute', {
           name: to.meta.title,
           path: to.path,
           active: true
         })
 
         if (routes.length >= 8) {
-          store.dispatch('removeHistoryRoutes', 0)
+          store.dispatch('tab/removeRoute', 0)
         }
       }
     } else {
-      store.dispatch('highlightHistoryRoutes', to.path)
+      store.dispatch('tab/highlightRoute', to.path)
     }
   }
 

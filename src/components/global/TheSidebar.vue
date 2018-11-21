@@ -26,78 +26,13 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapActions } = createNamespacedHelpers('sidebar')
+
 export default {
   name: 'TheSidebar',
   data () {
     return {
-      menu: []
-      // menu: [
-      //   {
-      //     id: 'test01',
-      //     name: '系统设置',
-      //     path: '',
-      //     icon: 'fa-gears',
-      //     children: [
-      //       { id: 'test0101', name: '菜单', path: '/system/menu', icon: 'fa-windows' },
-      //       { id: 'test0102', name: '角色', path: '/system/roles', icon: 'fa-cubes' },
-      //       { id: 'test0103', name: '权限', path: '/system/permissions', icon: 'fa-align-justify' },
-      //       { id: 'test0105', name: '分组', path: '/system/group', icon: 'fa-align-justify' },
-      //       { id: 'test0104', name: '用户', path: '/system/users', icon: 'fa-cubes' },
-      //       { id: 'test0601', name: '彩票', path: '/system/lottery', icon: 'fa-cubes' }
-      //     ]
-      //   },
-      //   {
-      //     id: 'test02',
-      //     name: '会员管理',
-      //     path: '',
-      //     icon: 'fa-user',
-      //     children: [
-      //       { id: 'test0201', name: '会员信息管理', path: '/users/list', icon: 'fa-cubes' },
-      //       { id: 'test0202', name: '会员账户核查', path: '/users/account', icon: 'fa-cubes' },
-      //       { id: 'test0203', name: '关键信息修改', path: '/users/keyword', icon: 'fa-cubes' },
-      //       // { id: 'test0204', name: '会员分组管理', path: '/users/group', icon: 'fa-cubes' },
-      //       { id: 'test0205', name: '会员资料管理', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test0206', name: '会员报表统计', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test0207', name: '会员日志管理', path: '/users/logs', icon: 'fa-cubes' },
-      //       { id: 'test0208', name: '会员卡片管理', path: '/users/unset', icon: 'fa-cubes' }
-      //     ]
-      //   },
-      //   {
-      //     id: 'test09',
-      //     name: '彩票管理',
-      //     path: '',
-      //     icon: 'fa-user',
-      //     children: [
-      //       { id: 'test0901', name: '彩票开盘', path: '/lottery/open/eleven/3', icon: 'fa-cubes' },
-      //       { id: 'test0902', name: '彩票开奖', path: '/lottery/results/eleven/3', icon: 'fa-cubes' },
-      //       { id: 'test0903', name: '未结彩票撤单', path: '/lottery/withdraw', icon: 'fa-cubes' },
-      //       { id: 'test0904', name: '彩票注单', path: '/lottery/bets', icon: 'fa-cubes' },
-      //       { id: 'test0905', name: '彩票杀率配置', path: '/lottery/killrate', icon: 'fa-cubes' },
-      //       { id: 'test0906', name: '彩票赔率设置', path: '/lottery/odds/eleven/3', icon: 'fa-cubes' },
-      //       { id: 'test0907', name: '彩票期数校对', path: '/lottery/checkout', icon: 'fa-cubes' },
-      //       { id: 'test0908', name: '彩票会员报表', path: '/lottery/users/info', icon: 'fa-cubes' },
-      //       { id: 'test0909', name: '彩票注单报表', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test0910', name: '彩票总报表', path: '/lottery/statistics', icon: 'fa-cubes' }
-      //     ]
-      //   },
-      //   {
-      //     id: 'test07',
-      //     name: '财务管理',
-      //     path: '',
-      //     icon: 'fa-user',
-      //     children: [
-      //       { id: 'test0701', name: '加减款操作', path: '/finance/balance/manipulation', icon: 'fa-cubes' },
-      //       { id: 'test0702', name: '填单存款管理', path: '/finance/deposit/form', icon: 'fa-cubes' },
-      //       { id: 'test0703', name: '在线存款管理', path: '/finance/deposit/online', icon: 'fa-cubes' },
-      //       { id: 'test0704', name: '提款申请管理', path: '/finance/withdraw/apply', icon: 'fa-cubes' },
-      //       { id: 'test0706', name: '额度转换管理', path: '/finance/limitation/transfer', icon: 'fa-cubes' },
-      //       { id: 'test0705', name: '会员资金管理', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test0709', name: '存/取款记录', path: '/finance/depositwithdraw/list', icon: 'fa-cubes' },
-      //       { id: 'test0707', name: '会员财务报表', path: '/finance/balance/sheet', icon: 'fa-cubes' },
-      //       { id: 'test0710', name: '平台收支汇总', path: '/finance/statistics', icon: 'fa-cubes' },
-      //       { id: 'test0708', name: '常规配置', path: '/finance/setting', icon: 'fa-cubes' }
-      //     ]
-      //   },
       //   {
       //     id: 'test08',
       //     name: '代理管理',
@@ -113,18 +48,6 @@ export default {
       //       { id: 'test0807', name: '代理一键分润', path: '/agent/interest/division', icon: 'fa-cubes' },
       //       { id: 'test0808', name: '会员一键分润', path: '/agent/interest/usersdivision', icon: 'fa-cubes' }
       //     ]
-      //   },
-      //   {
-      //     id: 'test10',
-      //     name: '返水管理',
-      //     path: '',
-      //     icon: 'fa-user',
-      //     children: [
-      //       { id: 'test1001', name: '设置返水计划', path: '/rebate/setting', icon: 'fa-cubes' },
-      //       { id: 'test1002', name: '查看返水记录', path: '/rebate/list', icon: 'fa-cubes' }
-      //     ]
-      //   },
-      //   {
       //     id: 'test11',
       //     name: '港彩管理',
       //     path: '',
@@ -176,20 +99,6 @@ export default {
       //     ]
       //   },
       //   {
-      //     id: 'test15',
-      //     name: '收款出款',
-      //     path: '',
-      //     icon: 'fa-user',
-      //     children: [
-      //       { id: 'test1506', name: '支付类型配置', path: '/transaction/payment/type', icon: 'fa-cubes' },
-      //       { id: 'test1503', name: '支付接口配置', path: '/transaction/payment/port', icon: 'fa-cubes' },
-      //       { id: 'test1501', name: '支付路线配置', path: '/transaction/payment/line', icon: 'fa-cubes' },
-      //       { id: 'test1502', name: '出款商户配置', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test1504', name: '会员汇款设置', path: '/transaction/remittance/user', icon: 'fa-cubes' },
-      //       { id: 'test1505', name: '汇款快捷设置', path: '/transaction/remittance/shortcut', icon: 'fa-cubes' }
-      //     ]
-      //   },
-      //   {
       //     id: 'test16',
       //     name: '体育管理',
       //     path: '',
@@ -236,19 +145,16 @@ export default {
   created () {
     this.fetchSidebarMenu()
   },
+  computed: mapGetters([
+    'menu'
+  ]),
   methods: {
+    ...mapActions([
+      'refreshMenu'
+    ]),
     // 获取全部菜单
     fetchSidebarMenu () {
-      this.$httpAPI.fetchSidebarMenuList().then(response => {
-        this.menu = this.$_.groupBy(response.data, 'parentId')
-        // let menuFragment =
-        // this.$_.forEach(response.data, (item) => {
-        //   if (item.parentId) {
-        //     this.$_.find(response.data)
-        //   }
-        // })
-        // this.menu = response.data
-      }).catch(error => console.log(error))
+      this.refreshMenu()
     }
   }
 }

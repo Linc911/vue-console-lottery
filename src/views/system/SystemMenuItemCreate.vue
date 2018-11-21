@@ -73,6 +73,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios.post('/api-b/menus', this.formData).then(() => {
+            this.$store.dispatch('sidebar/refreshMenu')
             this.$router.push('/system/menu')
           }).catch(error => console.log(error))
         }

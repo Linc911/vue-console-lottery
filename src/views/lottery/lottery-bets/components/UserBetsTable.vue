@@ -39,7 +39,7 @@
 
       <el-table-column prop="status" label="注单状态">
         <template slot-scope="scope">
-          <span>{{scope.row.status | betStatus}}</span>
+          <span>{{scope.row.status | lotteryStatus}}</span>
         </template>
       </el-table-column>
     </el-table>

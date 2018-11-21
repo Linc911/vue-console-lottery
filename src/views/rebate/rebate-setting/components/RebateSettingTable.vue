@@ -48,13 +48,20 @@
         <template slot-scope="scope">
           <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
           <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-          <el-button @click="$message.warning('接口调试中...')" type="warning" icon="el-icon-delete" size="mini" />
+          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 修改弹框 -->
     <RebateSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <!-- 删除弹框 -->
+    <DialogDeleteConfirm
+      @on-confirm="handleDeleteConfirm"
+      title="返水计划名称"
+      :name="activeItem.name"
+      ref="dialogDelete"
+    />
   </div>
 </template>
 
@@ -64,15 +71,23 @@ import { tableComponentMixin } from '@/mixins'
 import BaseIndicator from '@/components/base/BaseIndicator'
 import BaseSwitch from '@/components/base/BaseSwitch'
 import RebateSettingDialogUpdate from './RebateSettingDialogUpdate'
+import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
   name: 'RebateSettingTable',
   components: {
     BaseIndicator,
     BaseSwitch,
-    RebateSettingDialogUpdate
+    RebateSettingDialogUpdate,
+    DialogDeleteConfirm
   },
   mixins: [ tableComponentMixin ],
+  data () {
+    return {
+      deleteHttpAPI: 'deleteRebateSettingItem',
+      deleteAttrName: 'rebateId'
+    }
+  },
   methods: {
     handleSwitchChange (payload) {
       this.$httpAPI.updateRebateSettingStatus({

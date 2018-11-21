@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    toggleDialogStatus (status) {
+    toggleDialogVisible (status) {
       this.dialogVisible = status
     }
   }

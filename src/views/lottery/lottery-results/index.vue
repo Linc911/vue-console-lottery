@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <!-- 检索栏 -->
-    <ResultsSearch @on-search="handleSearch" />
+    <ResultsSearch @on-search="handleSearch" ref="resultsSearch" />
 
     <div>
       <!-- 彩票分类菜单 -->
@@ -31,8 +31,8 @@ import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import ResultsSearch from './components/ResultsSearch'
 import ResultsGamesMenu from './components/ResultsGamesMenu'
-import ResultsElevenTable from './components/ResultsElevenTable'
-import ResultsFast3Table from './components/ResultsFast3Table'
+import ResultsElevenTable from './components/table/ResultsElevenTable'
+import ResultsFast3Table from './components/table/ResultsFast3Table'
 
 export default {
   name: 'LotteryResult',
@@ -59,6 +59,7 @@ export default {
   methods: {
     handleMenuChange ({ groupId, itemId }) {
       this.requestParams = { type: itemId, pageNo: 1, pageSize: 10 }
+      this.$refs.resultsSearch.reset()
 
       switch (groupId) {
         case 18:

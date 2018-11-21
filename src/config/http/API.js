@@ -89,10 +89,11 @@ export default {
 
   fetchFinanceDepoistLogs: options => axios.get('/api-p/UserOrder/orderAndRecharge', options), // 所有存款记录
 
-  // 会员返水
-  fetchRebateSettingList: options => axios.get('/api-b/rebate/list', options), // 会员返水设置列表
-  createRebateSettingList: data => axios.post('/api-b/rebate/save', data), // 会员返水设置保存
-  updateRebateSettingStatus: options => axios.get('/api-b/rebate/status', options), // 会员返水设置修改状态
+  /* 返水管理 */
+  fetchRebateSettingList: options => axios.get('/api-b/rebate/list', options), // 设置返水计划列表
+  createRebateSettingList: data => axios.post('/api-b/rebate/save', data), // 会设置返水计划保存
+  updateRebateSettingStatus: options => axios.get('/api-b/rebate/status', options), // 设置返水计划修改
+  deleteRebateSettingItem: options => axios.delete('/api-b/rebate/delete', options), // 删除设置返水计划
 
   fetchRebateLogsList: options => axios.get('/api-b/rebateLog/list', options), // 查看返水记录列表
   statistic: options => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计

@@ -1,1 +1,12 @@
 JS语法采用 ESlint 做语法检查；配置可以根据项目需要做调整；
+
+1.JS 变量和函数使用小驼峰式命名法，例如：username => userName ，首字母小写
+2.禁用var，用let和const代替来声明 ，并且=左右代码至少缩进一个空格 例：let str = 'xxx'， 建议可以不使用分号结束（其实没有关系）
+3.全局变量建议添加window对象点 ， 推荐使用ES6语法
+4.封装功能方法时 ， 需要写明基本信息 ， 注释名	语法	含义	示例
+                                    @param	@param 参数名 {参数类型}
+                                    @return	@return {返回类型} 描述信息	描述返回值的信息	@return {Boolean} true:可执行;false:不可执行
+                                    @author	@author 作者信息 	@author 张三 2015/07/21
+                                    @example
+
+5.使用严格等，总是使用 === 精确的比较操作符

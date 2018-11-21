@@ -18,8 +18,8 @@
     <!-- 右侧用户信息部分 -->
     <div class="head-user">
       <div class="user-info">
-        <img src="https://placehold.it/40x40" class="user-avatar" alt="User avatar">
-        <span class="user-username">{{user.nickname}}</span>
+        <img :src="avatarUrl" class="user-avatar" alt="User avatar">
+        <span class="user-username">{{userInfo.nickname}}</span>
       </div>
       <el-dropdown @command="handleDropdownCommand">
         <span>
@@ -41,7 +41,7 @@ export default {
   name: 'TheHeader',
   data () {
     return {
-      user: { nickname: '' },
+      userInfo: { nickname: '', sex: 0 },
       menuDropdown: [
         { name: '个人信息', icon: 'fa-user-circle', command: 'info' },
         { name: '上传头像', icon: 'fa-drupal', command: 'avatar' },
@@ -50,13 +50,16 @@ export default {
       ]
     }
   },
-  mounted () {
-    this.$nextTick(() => {
-      this.user = this.$store.state.app.user
-    })
-  },
   created () {
     this.getUserInfo()
+  },
+  computed: {
+    avatarUrl () {
+      const male = require('@/assets/images/avatar-male.png')
+      const female = require('@/assets/images/avatar-female.png')
+
+      return this.userInfo.sex ? male : female
+    }
   },
   methods: {
     handleDropdownCommand (command) {
@@ -71,7 +74,7 @@ export default {
           this.$router.push({ name: 'UserActivePhoneUpdate' })
           break
         case 'logout':
-          this.$store.dispatch('logout')
+          this.$store.dispatch('auth/logout')
           break
         default:
           this.$message.error('操作异常，请检查代码！')
@@ -80,8 +83,7 @@ export default {
     // 获取数据后，把数据存到veux中
     getUserInfo () {
       this.$httpAPI.fetchUserInfo().then(response => {
-        const { id, username, nickname, sex, phone } = response.data
-        this.$store.dispatch('fetchUser', { id, username, nickname, sex, phone })
+        this.userInfo = response.data.data
       }).catch(error => console.log(error))
     }
   }

@@ -4,6 +4,8 @@
 
       <el-table-column type="index" :width="40" />
 
+      <el-table-column prop="name" label="返水计划名称" :min-width="120" />
+
       <el-table-column prop="username" label="用户账号" />
 
       <el-table-column prop="rebateBegin" label="开始时间" :width="140">

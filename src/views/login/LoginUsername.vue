@@ -41,7 +41,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store.dispatch('login', this._generatePairKeys(this.formData))
+          this.$store.dispatch('auth/login', this._generatePairKeys(this.formData))
         } else {
           this.$message.warning('用户名或密码格式不正确，无法登录！')
           return false
