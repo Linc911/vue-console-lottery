@@ -12,14 +12,14 @@ export default {
   fetchGamesList: () => axios.get('/api-g/gameconfig'), // 游戏类型/账户类型
   fetchUserId: options => axios.get('/api-u/users-anon/getUserId', options), // 查询会员ID
 
-  /* 登录 */
+  /* ===================================== 登录 ======================================= */
   postUserLogin: (data, options) => axios.post('/api-u/sys/login', data, options),
   fetchLogoutInfo: () => axios.get('/api-u/sys/logout'),
 
   fetchUserInfo: () => axios.get('/api-u/users/current'),
   putUserInfo: data => axios.put('/api-u/users/me', data),
 
-  /* 系统管理 */
+  /* ===================================== 系统管理 ======================================= */
   // 会员分组
   fetchUserGroups: options => axios.get('/api-u/group/list', options), // 全部列表
   fetchSystemGroupItem: options => axios.get('/api-u/group/info', options), // 单个详情
@@ -29,10 +29,11 @@ export default {
   // 彩票设置
   fetchLotterySettingInfo: options => axios.get('/api-g/GameTypeConfig/get', options),
 
-  /* 会员管理 */
-  // 会员信息
+  /* ===================================== 会员管理 ======================================= */
   fetchUsersList: options => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
   getUserInfo: options => axios.get('/api-u/backend/user', options), // 单个会员信息
+
+  updateUserControlStatus: (options) => axios.get('/api-u/backend/updateControl', options), // 修改会员监控状态
 
   fetchUserBetsList: data => axios.post('/api-g/getUserBetsInfo', data), // 单个会员全部注单记录
 
@@ -40,13 +41,10 @@ export default {
   getUsersRebate: options => axios.get('/api-u/userRelation/get', options),
   updateUsersRebate: (data, options) => axios.post('/api-u/group/save', data, options),
 
-  // 修改会员监控状态
-  updateUserControlStatus: (data, options) => axios.post('/api-u/backend/updateControl', data, options),
-
   // 全部会员日志
   fetchUsersLogs: (options) => axios.get('/api-l/logList', options),
 
-  /* 彩票管理 */
+  /* ===================================== 彩票管理 ======================================= */
   // 开奖结果
   fetchLotteryResultsEleven: options => axios.get('/api-g/result/1', options),
   fetchLotteryResultsFast3: options => axios.get('/api-g/result/2', options),
@@ -62,7 +60,7 @@ export default {
   postLotteryOddsEleven: data => axios.post('/api-g/oddsset/1/save', data), // 修改单个11选5的赔率
   postLotteryOddsFast3: data => axios.post('/api-g/oddsset/2/save', data), // 修改单个快3的赔率
 
-  /* 财务管理 */
+  /* ===================================== 财务管理 ======================================= */
   fetchFinanceBalanceManipulation: options => axios.get('/api-p/changeUserRecharge/list', options), // 加减款列表
   fetchBalanceChangeItem: options => axios.get('/api-p/changeUserRecharge/info', options), // 加减款每项详情
   saveFinanceBalanceChange: data => axios.post('/api-p/changeUserRecharge/save', data), // 提交加减款表单
@@ -89,7 +87,7 @@ export default {
 
   fetchFinanceDepoistLogs: options => axios.get('/api-p/UserOrder/orderAndRecharge', options), // 所有存款记录
 
-  /* 返水管理 */
+  /* ===================================== 返水管理 ======================================= */
   fetchRebateSettingList: options => axios.get('/api-b/rebate/list', options), // 设置返水计划列表
   createRebateSettingList: data => axios.post('/api-b/rebate/save', data), // 会设置返水计划保存
   updateRebateSettingStatus: options => axios.get('/api-b/rebate/status', options), // 设置返水计划修改
@@ -98,7 +96,7 @@ export default {
   fetchRebateLogsList: options => axios.get('/api-b/rebateLog/list', options), // 查看返水记录列表
   statistic: options => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计
 
-  /* 收款出款 */
+  /* ===================================== 收款出款 ======================================= */
   fetchTransactionPaymentType: options => axios.get('/api-b/configPayType/list', options), // 支付类型列表
   createTransactionPaymentType: data => axios.post('/api-b/configPayType/save', data), // 创建新支付类型
   updateTransactionPaymentType: data => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置

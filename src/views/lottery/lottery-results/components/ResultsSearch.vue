@@ -50,7 +50,7 @@ export default {
   mixins: [ searchInnerMixin ],
   methods: {
     handleDateRangeChange ({ startTime, endTime }) {
-      this.formData.beginDate = startTime
+      this.formData.startDate = startTime
       this.formData.endDate = endTime
     }
   }

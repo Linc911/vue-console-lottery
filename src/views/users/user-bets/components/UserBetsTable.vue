@@ -4,17 +4,17 @@
 
       <el-table-column type="index" :width="40" />
 
-      <el-table-column prop="createDate" label="投注时间" :width="140">
+      <el-table-column prop="createDate" label="投注时间" :min-width="140">
         <template slot-scope="scope">
           <span>{{scope.row.createDate | time}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="orderId" label="注单ID" :width="150" />
+      <el-table-column prop="orderId" label="注单ID" :min-width="150" />
 
-      <el-table-column prop="currentDrawno" label="当前投注期号" :width="95" />
+      <el-table-column prop="currentDrawno" label="当前投注期号" :min-width="95" />
 
-      <el-table-column prop="gameName" label="彩票类型" :min-width="140" />
+      <el-table-column prop="gameName" label="彩票类型" :min-width="100" />
 
       <el-table-column prop="betsType" label="投注主类型">
         <template slot-scope="scope">
@@ -25,13 +25,19 @@
       <el-table-column prop="totalBets" label="总投注数" :width="80">
         <template slot-scope="scope">
           <span>{{scope.row.totalBets}}</span>
-          <BaseMore @on-click="showDialog(scope.row.betsForObj, 'dialogDetail')" class="pull-right" />
+          <BaseMore @on-click="showDialog(JSON.parse(scope.row.bets), 'dialogDetail')" class="pull-right" />
         </template>
       </el-table-column>
 
-      <el-table-column prop="totalAmount" label="总投注金额" :min-width="60">
+      <el-table-column prop="totalAmount" label="总投注金额" :min-width="80">
         <template slot-scope="scope">
           <span>{{scope.row.totalAmount | RMB}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="totalAwardAmount" label="中奖金额" :min-width="80">
+        <template slot-scope="scope">
+          <span>{{JSON.parse(scope.row.bets).totalAwardAmount | RMB}}</span>
         </template>
       </el-table-column>
 
@@ -43,7 +49,7 @@
     </el-table>
 
     <!-- 详情弹框 -->
-    <BetsDetail :bets="activeItem" ref="dialogDetail" />
+    <DialogBetsDetail :bets="activeItem" ref="dialogDetail" />
   </div>
 </template>
 
@@ -51,13 +57,13 @@
 import { tableComponentMixin } from '@/mixins'
 
 import BaseMore from '@/components/base/BaseMore'
-import BetsDetail from './BetsDetail'
+import DialogBetsDetail from '@/components/dialog/DialogBetsDetail'
 
 export default {
   name: 'UserBetsTable',
   components: {
     BaseMore,
-    BetsDetail
+    DialogBetsDetail
   },
   mixins: [ tableComponentMixin ]
 }

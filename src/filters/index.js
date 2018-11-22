@@ -35,12 +35,30 @@ Vue.filter('percent', value => {
   return Number(value).toFixed(2) + '%'
 })
 
-// 百分比
+// 按传入的连接符，连接数组为字符串
 Vue.filter('separator', (value, separator) => {
   if (value) {
     return value.join(separator)
   }
   return ''
+})
+
+// 将数字转换为中文数字
+Vue.filter('capitalizeNumber', value => {
+  switch (value) {
+    case 1:
+      return '一'
+    case 2:
+      return '二'
+    case 3:
+      return '三'
+    case 4:
+      return '四'
+    case 5:
+      return '五'
+    default:
+      return '其他'
+  }
 })
 
 // 充值支付类型
@@ -370,25 +388,25 @@ Vue.filter('betSubtype', value => {
     case 8:
       return '虎'
     case 9:
-      return '1中1'
+      return '一中一'
     case 10:
-      return '2中2'
+      return '二中二'
     case 11:
-      return '3中3'
+      return '三中三'
     case 12:
-      return '4中4'
+      return '四中四'
     case 13:
-      return '5中5'
+      return '五中五'
     case 14:
-      return '6中5'
+      return '六中五'
     case 15:
-      return '7中5'
+      return '七中五'
     case 16:
-      return '8中5'
+      return '八中五'
     case 17:
-      return '前2'
+      return '前二'
     case 18:
-      return '前3'
+      return '前三'
     case 19:
       return '单号大'
     case 20:
@@ -421,6 +439,8 @@ Vue.filter('betResult', value => {
       return '输'
     case 'WIN':
       return '赢'
+    case 'DRAW':
+      return '和'
     default:
       return '未处理'
   }

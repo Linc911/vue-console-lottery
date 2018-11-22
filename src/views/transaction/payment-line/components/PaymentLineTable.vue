@@ -21,7 +21,7 @@
 
       <el-table-column prop="sysGroupNames" label="会员分组" />
 
-      <el-table-column prop="status" label="是否启用" :width="45">
+      <el-table-column prop="status" label="启用状态" :width="45">
         <template slot-scope="scope">
           <BaseIndicator :status="scope.row.status" opposite />
         </template>

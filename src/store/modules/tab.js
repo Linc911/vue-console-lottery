@@ -1,4 +1,4 @@
-import router from '@/router'
+import router from '@/router/index'
 
 export default {
   namespaced: true,
@@ -67,7 +67,7 @@ export default {
         state.routes[payload - 1].active = true
         router.push(state.routes[payload - 1].path)
       } else {
-        router.push({ name: 'HomePage' })
+        !state.routes.length && router.push({ name: 'HomePage' })
       }
     },
     removeLeftRoutes ({ commit, state }, payload) {

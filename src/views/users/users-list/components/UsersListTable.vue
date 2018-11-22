@@ -1,22 +1,17 @@
 <template lang="html">
   <div class="table-container">
-    <el-table :data="data" :max-height="735" size="small" highlight-current-row border>
+    <el-table :data="data" size="small" highlight-current-row border>
       <el-table-column type="index" :width="36" />
 
-      <el-table-column label="注册时间" :width="140">
+      <el-table-column prop="createTime" label="注册时间" :width="140">
         <template slot-scope="scope">
           <span>{{scope.row.createTime | time}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="会员账号" :min-width="120">
-        <template slot-scope="scope">
-          <span>{{scope.row.username}}</span>
-          <BaseMore @click.native="showUserDetails(scope.row.id)" class="pull-right" />
-        </template>
-      </el-table-column>
+      <el-table-column prop="username" label="会员账号" :min-width="100" />
 
-      <el-table-column label="分组" :width="110">
+      <el-table-column label="分组" :width="120">
         <template slot-scope="scope">
           <span>{{scope.row.groupNames}}</span>
           <BaseSetting @click.native="showGroupSetting(scope.row.id, scope.row.groupIds)" class="pull-right" />
@@ -25,22 +20,45 @@
 
       <el-table-column prop="" label="邀请码" />
 
-      <el-table-column label="监控状态" :width="50">
+      <el-table-column prop="agent" label="代理状态" :width="45">
         <template slot-scope="scope">
-          <i
-          @click="toggleControlStatus(scope.row.id, scope.row.control)"
-          :class="scope.row.control ? 'el-icon-success' : 'el-icon-error'"
-          ></i>
+          <BaseIndicator :status="scope.row.agent"/>
         </template>
       </el-table-column>
 
-      <el-table-column label="会员余额" :min-width="110">
+      <el-table-column prop="recharge" label="充值状态" :width="45">
+        <template slot-scope="scope">
+          <BaseIndicator :status="scope.row.recharge"/>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="enable" label="账号状态" :width="45">
+        <template slot-scope="scope">
+          <span>{{ scope.row.enabled ? '正常': '异常' }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="control" label="监控状态" :width="70">
+        <template slot-scope="scope">
+          <BaseSwitch
+            @on-change="handleSwitchChange"
+            :propValue="Boolean(scope.row.control)"
+            :payload="{ id: scope.row.id }"
+          />
+        </template>
+      </el-table-column>
+
+      <el-table-column label="会员余额" :min-width="100">
         <template slot-scope="scope">
           <span>{{scope.row.banlance | RMB}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="win" label="输赢" />
+      <el-table-column prop="win" label="输赢" :min-width="100">
+        <template slot-scope="scope">
+          <span>{{scope.row.win | RMB}}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column label="操作" :width="250">
         <template slot-scope="scope">
@@ -53,49 +71,47 @@
       </el-table-column>
     </el-table>
 
-    <!-- 用户信息弹框 -->
-    <DialogUserDetails :user="activeUser" ref="userDetails" />
-
     <!-- 修改用户分组弹框 -->
-    <DialogGroupSetting :user="activeUser" @on-success="handleGroupChangeSuccess" ref="groupSetting" />
+    <DialogGroupSetting :user="activeItem" @on-success="handleGroupChangeSuccess" ref="groupSetting" />
   </div>
 </template>
 
 <script>
-import BaseMore from '@/components/base/BaseMore'
-import DialogUserDetails from './DialogUserDetails'
+import { tableComponentMixin } from '@/mixins'
+
 import BaseSetting from '@/components/base/BaseSetting'
+import BaseIndicator from '@/components/base/BaseIndicator'
+import BaseSwitch from '@/components/base/BaseSwitch'
 import DialogGroupSetting from './DialogGroupSetting'
 import UserRebateSetting from './UserRebateSetting'
 
 export default {
   name: 'UsersListTable',
   components: {
-    BaseMore,
-    DialogUserDetails,
     BaseSetting,
+    BaseIndicator,
+    BaseSwitch,
     DialogGroupSetting,
     UserRebateSetting
   },
-  props: {
-    data: {
-      type: Array,
-      required: true
-    }
-  },
-  data () {
-    return {
-      activeUser: {}
-    }
-  },
+  mixins: [ tableComponentMixin ],
   methods: {
-    // 请求用户信息，显示详情弹框
-    showUserDetails (id) {
-      this.fetchUserInfo(id)
+    handleSwitchChange (payload) {
+      this.$httpAPI.updateUserControlStatus({
+        params: { userId: payload.id, control: Number(payload.value) }
+      }
+      ).then(response => {
+        if (response.data.status === 200) {
+          this.$emit('on-status-change')
+          this.$message.success('修改状态成功！')
+        } else {
+          this.$message.error('修改状态失败！')
+        }
+      }).catch(error => console.log(error))
     },
     // 显示用户分组弹框
     showGroupSetting (userId, groupId) {
-      this.activeUser = { userId, groupId }
+      this.activeItem = { userId, groupId }
       this.$refs.groupSetting.toggleDialogVisible(true)
     },
     handleGroupChangeSuccess (payload) {
@@ -105,19 +121,6 @@ export default {
           item.groupNames = payload.groupName
         }
       })
-    },
-    toggleControlStatus () {
-      console.log('toggleControlStatus')
-    },
-    fetchUserInfo (userId) {
-      this.$httpAPI.getUserInfo({ params: { userId } }).then(response => {
-        if (response.data.data) {
-          this.activeUser = response.data.data
-          this.$refs.userDetails.toggleDialogVisible(true)
-        } else {
-          this.$message.error('数据有误，无法正常加载！')
-        }
-      }).catch(error => console.log(error))
     }
   }
 }

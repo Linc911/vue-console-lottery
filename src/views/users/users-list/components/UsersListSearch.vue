@@ -1,10 +1,29 @@
 <template lang="html">
   <!-- 条件筛选 -->
-  <div class="search">
-    <el-form :model="formData" size="small" label-width="80px" inline>
-      <SearchUsername @keyup.native.enter="search" @on-change="handleUsernameChange" ref="username" />
+  <div>
+    <el-form :model="formData" size="small" inline>
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'username', $event)"
+        label="会员账户"
+        width="174px"
+        ref="username"
+      />
 
-      <SearchNumberRange
+      <FormDateRange @on-change="handleDateRangeChange" label="注册时间" ref="dateRange" />
+
+      <FormSelect
+        @on-change="$set(formData, 'groupId', $event)"
+        httpAPIName="fetchUserGroups"
+        :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
+        labelAttr="name"
+        valueAttr="groupId"
+        label="会员分组"
+        filterable
+        ref="groupId"
+      />
+
+      <FormNumberRange
         @on-change="handleNumberRangeChange"
         label="会员余额"
         startPlaceholder="最小金额"
@@ -12,7 +31,7 @@
         ref="numberRange"
       />
 
-      <SearchNumberRange
+      <FormNumberRange
         @on-change="handleWinRangeChange"
         label="输赢金额"
         startPlaceholder="最小金额"
@@ -20,56 +39,47 @@
         ref="winRange"
       />
 
-      <SearchDateRange @on-change="handleDateRangeChange" label="注册时间" ref="dateRange" />
+      <FormSelectStatic
+        @on-change="$set(formData, 'control', $event)"
+        :options="[
+          { value: 0, label: '禁用' },
+          { value: 1, label: '启用' },
+        ]"
+        label="监控状态"
+        width="100px"
+        ref="control"
+      />
 
-      <SearchUserGroup @on-change="handleUserGroupChange" ref="userGroup"/>
-
-      <SearchUserControl @on-change="handleUserControlChange" ref="userControl"/>
-
-      <SearchIcon @click.native="search" />
-
-      <SearchReset @click.native="reset" />
+      <div style="display: inline-block">
+        <SearchIcon @click.native="search" />
+        <SearchReset @click.native="reset" />
+      </div>
     </el-form>
   </div>
 </template>
 
 <script type="text/javascript">
-import SearchUsername from '@/components/search/SearchUsername'
-import SearchNumberRange from '@/components/search/SearchNumberRange'
-import SearchDateRange from '@/components/search/SearchDateRange'
-import SearchUserGroup from '@/components/search/SearchUserGroup'
-import SearchUserControl from '@/components/search/SearchUserControl'
-import SearchIcon from '@/components/search/SearchIcon'
-import SearchReset from '@/components/search/SearchReset'
+import { searchInnerMixin } from '@/mixins'
+
+import FormInput from '@/components/form/FormInput'
+import FormSelect from '@/components/form/FormSelect'
+import FormDateRange from '@/components/form/FormDateRange'
+import FormNumberRange from '@/components/form/FormNumberRange'
+import FormSelectStatic from '@/components/form/FormSelectStatic'
 
 export default {
+  name: 'UsersListSearch',
   components: {
-    SearchUsername,
-    SearchNumberRange,
-    SearchDateRange,
-    SearchUserGroup,
-    SearchUserControl,
-    SearchIcon,
-    SearchReset
+    FormInput,
+    FormSelect,
+    FormDateRange,
+    FormNumberRange,
+    FormSelectStatic
   },
-  data () {
-    return {
-      formData: {
-        username: '',
-        minBanlance: '',
-        maxBanlance: '',
-        startTime: '',
-        endTime: '',
-        groupId: '',
-        control: '',
-        minWin: '',
-        maxWin: ''
-      }
-    }
-  },
+  mixins: [ searchInnerMixin ],
   methods: {
-    handleUsernameChange (value) {
-      this.formData.username = value
+    handleDateRangeChange ({ startTime, endTime }) {
+      this.formData = Object.assign(this.formData, { startTime, endTime })
     },
     handleNumberRangeChange ({ start, end }) {
       this.formData.minBanlance = start
@@ -78,27 +88,6 @@ export default {
     handleWinRangeChange ({ start, end }) {
       this.formData.minWin = start
       this.formData.maxWin = end
-    },
-    handleDateRangeChange ({ startTime, endTime }) {
-      this.formData = Object.assign(this.formData, { startTime, endTime })
-    },
-    handleUserGroupChange (value) {
-      this.formData.groupId = value
-    },
-    handleUserControlChange (value) {
-      this.formData.control = value
-    },
-    search () {
-      this.$emit('on-search', this.formData)
-    },
-    reset () {
-      for (let key in this.$refs) {
-        this.$refs[key].reset()
-      }
-
-      for (let key in this.formData) {
-        this.formData[key] = ''
-      }
     }
   }
 }

@@ -4,7 +4,7 @@
 
       <el-table-column type="index" :width="40" />
 
-      <el-table-column prop="name" label="返水计划名称" :min-width="120" />
+      <el-table-column prop="rebateName" label="返水计划名称" :min-width="120" />
 
       <el-table-column prop="username" label="用户账号" />
 
@@ -25,8 +25,6 @@
           <span>{{ scope.row.rebateDate | time }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column prop="rebateTypeDesc" label="返水类型" />
 
       <el-table-column prop="gameTypeDesc" label="返水账户" />
 
