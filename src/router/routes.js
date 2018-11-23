@@ -32,10 +32,7 @@ const SystemGroupList = resolve => require(['@/views/system/group/SystemGroupLis
 const SystemGroupCreate = resolve => require(['@/views/system/group/SystemGroupCreate'], resolve)
 const SystemGroupUpdate = resolve => require(['@/views/system/group/SystemGroupUpdate'], resolve)
 // 用户
-const SystemUsers = resolve => require(['@/views/system/user/SystemUsers'], resolve)
-const SystemUsersList = resolve => require(['@/views/system/user/SystemUsersList'], resolve)
-const SystemUserCreate = resolve => require(['@/views/system/user/SystemUserCreate'], resolve)
-const SystemUserUpdate = resolve => require(['@/views/system/user/SystemUserUpdate'], resolve)
+const SystemUsers = resolve => require(['@/views/system/users-setting'], resolve)
 // 彩票
 const SystemLottery = resolve => require(['@/views/system/lottery/SystemLottery'], resolve)
 const SystemLotteryList = resolve => require(['@/views/system/lottery/SystemLotteryList'], resolve)
@@ -53,17 +50,15 @@ const UsersLogs = resolve => require(['@/views/users/UsersLogs'], resolve)
 const UsersAccount = resolve => require(['@/views/users/UsersAccount'], resolve)
 const UsersKeyword = resolve => require(['@/views/users/UsersKeyword'], resolve)
 
-/* 彩票管理 */
-/* ========================================== 会员管理 ============================================ */
+/* ========================================== 彩票管理 ============================================ */
 const LotteryManage = resolve => require(['@/views/lottery/LotteryManage'], resolve)
-const LotteryOpen = resolve => require(['@/views/lottery/LotteryOpen'], resolve)
 const LotteryResults = resolve => require(['@/views/lottery/lottery-results'], resolve)
-const LotteryOddsEleven = resolve => require(['@/views/lottery/LotteryOddsEleven'], resolve)
-const LotteryOddsFast3 = resolve => require(['@/views/lottery/LotteryOddsFast3'], resolve)
+const LotteryOdds = resolve => require(['@/views/lottery/lottery-odds'], resolve)
+const LotteryBets = resolve => require(['@/views/lottery/lottery-bets'], resolve)
+const LotteryOpen = resolve => require(['@/views/lottery/LotteryOpen'], resolve)
 const LotteryWithdraw = resolve => require(['@/views/lottery/LotteryWithdraw'], resolve)
 const LotteryKillrate = resolve => require(['@/views/lottery/LotteryKillrate'], resolve)
 const LotteryCheckout = resolve => require(['@/views/lottery/LotteryCheckout'], resolve)
-const LotteryBets = resolve => require(['@/views/lottery/lottery-bets'], resolve)
 const LotteryStatistics = resolve => require(['@/views/lottery/LotteryStatistics'], resolve)
 const LotteryUsersInfo = resolve => require(['@/views/lottery/LotteryUsersInfo'], resolve)
 
@@ -143,7 +138,7 @@ const routes = [
     path: '',
     redirect: '/login/username'
   },
-  // 登录模块
+  /* ========================================== 登录模块 ============================================ */
   {
     name: 'LoginLayout',
     path: '/login',
@@ -204,86 +199,7 @@ const routes = [
           }
         ]
       },
-      /* 会员管理模块 */
-      // 会员信息
-      {
-        name: 'UsersManage',
-        path: '/users',
-        redirect: '/users/list',
-        component: UsersManage,
-        children: [
-          {
-            name: 'UsersList',
-            path: 'list',
-            component: UsersList,
-            meta: {
-              title: '会员信息管理',
-              breadcrumb: [
-                { name: '会员管理' },
-                { name: '会员信息管理' }
-              ]
-            }
-          },
-          {
-            name: 'UsersLogs',
-            path: 'logs',
-            component: UsersLogs,
-            meta: {
-              title: '会员日志记录',
-              breadcrumb: [
-                { name: '会员管理' },
-                { name: '会员日志记录' }
-              ]
-            }
-          },
-          {
-            name: 'UsersAccount',
-            path: 'account',
-            component: UsersAccount,
-            meta: { title: '会员账户核查' }
-          },
-          {
-            name: 'UsersKeyword',
-            path: 'keyword',
-            component: UsersKeyword,
-            meta: { title: '会员关键信息修改', keepAlive: true }
-          }
-        ]
-      },
-      {
-        name: 'UserBets',
-        path: '/users/:id/bets',
-        component: UserBets,
-        meta: {
-          title: '会员个人注单列表',
-          breadcrumb: [
-            { name: '会员管理' },
-            { name: '会员信息管理', path: '/users/list' },
-            { name: '会员个人注单列表' }
-          ]
-        }
-      },
-      {
-        path: '/users/:id/betsStatistics',
-        component: UserBetsStatistics,
-        meta: { title: '投注历史统计' }
-      },
-      {
-        path: '/users/:id/rechargeLogs',
-        component: UserRechargeLogs,
-        meta: { title: '会员个人充值记录' }
-      },
-      // {
-      //   path: '/users/:id/depositStatistics',
-      //   component: UserAccountDeposit,
-      //   meta: { title: '存款历史统计' }
-      // },
-      {
-        path: '/users/:id/httpLogs',
-        component: UserHttpLogs,
-        meta: { title: '会员个人HTTP请求日志列表' }
-      },
-      /* 系统管理 */
+      /* ========================================== 系统管理 ============================================ */
       // 系统管理 - 侧边栏菜单模块
       {
         path: '/system/menu',
@@ -369,28 +285,14 @@ const routes = [
       {
         name: 'SystemUsers',
         path: '/system/users',
-        redirect: '/system/users/list',
         component: SystemUsers,
-        children: [
-          {
-            name: 'SystemUsersList',
-            path: 'list',
-            component: SystemUsersList,
-            meta: { title: '全部用户信息列表' }
-          },
-          {
-            name: 'SystemUserCreate',
-            path: '/system/user/create',
-            component: SystemUserCreate,
-            meta: { title: '创建新用户', keepAlive: true }
-          },
-          {
-            name: 'SystemUserUpdate',
-            path: ':id/update',
-            component: SystemUserUpdate,
-            meta: { title: '修改用户信息' }
-          }
-        ]
+        meta: {
+          title: '系统设置 - 用户',
+          breadcrumb: [
+            { name: '系统设置' },
+            { name: '用户' }
+          ]
+        }
       },
       // 系统管理 - 彩票设置模块
       {
@@ -419,7 +321,86 @@ const routes = [
           }
         ]
       },
-      /* 彩票管理模块 */
+      /* ========================================== 会员管理 ============================================ */
+      // 会员信息
+      {
+        name: 'UsersManage',
+        path: '/users',
+        redirect: '/users/list',
+        component: UsersManage,
+        children: [
+          {
+            name: 'UsersList',
+            path: 'list',
+            component: UsersList,
+            meta: {
+              title: '会员信息管理',
+              breadcrumb: [
+                { name: '会员管理' },
+                { name: '会员信息管理' }
+              ]
+            }
+          },
+          {
+            name: 'UsersLogs',
+            path: 'logs',
+            component: UsersLogs,
+            meta: {
+              title: '会员日志记录',
+              breadcrumb: [
+                { name: '会员管理' },
+                { name: '会员日志记录' }
+              ]
+            }
+          },
+          {
+            name: 'UsersAccount',
+            path: 'account',
+            component: UsersAccount,
+            meta: { title: '会员账户核查' }
+          },
+          {
+            name: 'UsersKeyword',
+            path: 'keyword',
+            component: UsersKeyword,
+            meta: { title: '会员关键信息修改', keepAlive: true }
+          }
+        ]
+      },
+      {
+        name: 'UserBets',
+        path: '/users/:id/bets',
+        component: UserBets,
+        meta: {
+          title: '会员个人注单列表',
+          breadcrumb: [
+            { name: '会员管理' },
+            { name: '会员信息管理', path: '/users/list' },
+            { name: '会员个人注单列表' }
+          ]
+        }
+      },
+      {
+        path: '/users/:id/betsStatistics',
+        component: UserBetsStatistics,
+        meta: { title: '投注历史统计' }
+      },
+      {
+        path: '/users/:id/rechargeLogs',
+        component: UserRechargeLogs,
+        meta: { title: '会员个人充值记录' }
+      },
+      // {
+      //   path: '/users/:id/depositStatistics',
+      //   component: UserAccountDeposit,
+      //   meta: { title: '存款历史统计' }
+      // },
+      {
+        path: '/users/:id/httpLogs',
+        component: UserHttpLogs,
+        meta: { title: '会员个人HTTP请求日志列表' }
+      },
+      /* ========================================== 彩票管理 ============================================ */
       {
         name: 'LotteryManage',
         path: '/lottery',
@@ -452,15 +433,16 @@ const routes = [
           },
           // 赔率设置
           {
-            name: 'lotteryOddsEleven',
-            path: '/lottery/odds/eleven/:gameId',
-            component: LotteryOddsEleven,
-            meta: { title: '11选5赔率设置', keepAlive: true }
-          },
-          {
-            path: '/lottery/odds/fast3/:gameId',
-            component: LotteryOddsFast3,
-            meta: { title: '快3赔率设置', keepAlive: true }
+            name: 'lotteryOdds',
+            path: 'odds',
+            component: LotteryOdds,
+            meta: {
+              title: '彩票赔率设置',
+              breadcrumb: [
+                { name: '彩票管理' },
+                { name: '彩票赔率设置' }
+              ]
+            }
           }
         ]
       },

@@ -9,8 +9,14 @@ function addZeroPrefix (n) {
   }
 }
 
-/* 公共过滤器 */
+/* ======================================= 公共过滤器 =============================================== */
 // 时间格式化
+Vue.filter('date', value => {
+  if (value) {
+    return moment(value).format('YYYY-MM-DD')
+  }
+  return ''
+})
 Vue.filter('time', value => {
   if (value) {
     return moment(value).format('YYYY-MM-DD HH:mm:ss')
@@ -27,12 +33,40 @@ Vue.filter('sortTime', second => {
 
 // 货币数值格式化
 Vue.filter('RMB', value => {
+  if (value === null) {
+    return ''
+  }
   return '￥ ' + parseInt(value).toLocaleString()
 })
 
 // 百分比
 Vue.filter('percent', value => {
   return Number(value).toFixed(2) + '%'
+})
+
+// 性别
+Vue.filter('gender', value => {
+  if (value !== null) {
+    switch (value) {
+      case 0:
+        return '女'
+      case 1:
+        return '男'
+      default:
+        return '其他'
+    }
+  }
+  return ''
+})
+
+// 手机号码格式为 188 8888 8888
+Vue.filter('phoneFormat', value => {
+  if (!value) {
+    return ''
+  }
+
+  const strVal = String(value)
+  return `${strVal.substr(0, 3)} ${strVal.slice(3, 7)} ${strVal.slice(7)}`
 })
 
 // 按传入的连接符，连接数组为字符串
@@ -61,6 +95,22 @@ Vue.filter('capitalizeNumber', value => {
   }
 })
 
+/* ======================================= 用户相关 =============================================== */
+// 将数字转换为中文数字
+Vue.filter('userType', value => {
+  switch (value) {
+    case 'APP':
+      return '前端app用户'
+    case 'BACKEND':
+      return '后端管理用户'
+    case 'TEST':
+      return '游客'
+    default:
+      return '其他'
+  }
+})
+
+/* ======================================= 其   他 =============================================== */
 // 充值支付类型
 Vue.filter('paymentType', value => {
   switch (value) {

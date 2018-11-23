@@ -1,7 +1,7 @@
 import axios from './index'
 
 export default {
-  /* 公共数据 */
+  /* ===================================== 公共数据 ======================================= */
   // 侧边栏菜单
   fetchSidebarMenuList: () => axios.get('/api-b/menus/all'), // 页面侧边栏菜单列表
 
@@ -12,7 +12,7 @@ export default {
   fetchGamesList: () => axios.get('/api-g/gameconfig'), // 游戏类型/账户类型
   fetchUserId: options => axios.get('/api-u/users-anon/getUserId', options), // 查询会员ID
 
-  /* ===================================== 登录 ======================================= */
+  /* ===================================== 登   录 ======================================= */
   postUserLogin: (data, options) => axios.post('/api-u/sys/login', data, options),
   fetchLogoutInfo: () => axios.get('/api-u/sys/logout'),
 
@@ -21,13 +21,17 @@ export default {
 
   /* ===================================== 系统管理 ======================================= */
   // 会员分组
-  fetchUserGroups: options => axios.get('/api-u/group/list', options), // 全部列表
-  fetchSystemGroupItem: options => axios.get('/api-u/group/info', options), // 单个详情
-  postSystemGroupChange: data => axios.post('/api-u/group/save', data), // 创建或修改单个分组
-  postUserGroupSetting: options => axios.get('/api-u/group/saveRelation', options), // 设置单个会员分组
+  fetchUserGroups: (options) => axios.get('/api-u/group/list', options), // 全部列表
+  fetchSystemGroupItem: (options) => axios.get('/api-u/group/info', options), // 单个详情
+  postSystemGroupChange: (data) => axios.post('/api-u/group/save', data), // 创建或修改单个分组
+  postUserGroupSetting: (options) => axios.get('/api-u/group/saveRelation', options), // 设置单个会员分组
+
+  fetchSystemUsersList: (options) => axios.get('/api-u/users', options), // 用户列表
+  createSystemUsersList: (data) => axios.post('/api-u/users-anon/register', data), // 创建新用户
+  updateSystemUsersItem: (data) => axios.post('/api-u/users/update', data), // 更新用户信息
 
   // 彩票设置
-  fetchLotterySettingInfo: options => axios.get('/api-g/GameTypeConfig/get', options),
+  fetchLotterySettingInfo: (options) => axios.get('/api-g/GameTypeConfig/get', options),
 
   /* ===================================== 会员管理 ======================================= */
   fetchUsersList: options => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
@@ -59,6 +63,7 @@ export default {
   fetchLotteryOddsFast3: options => axios.get('/api-g/oddsset/2', options), // 赔率快3列表
   postLotteryOddsEleven: data => axios.post('/api-g/oddsset/1/save', data), // 修改单个11选5的赔率
   postLotteryOddsFast3: data => axios.post('/api-g/oddsset/2/save', data), // 修改单个快3的赔率
+  fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // (新接口)获取所有赔率列表
 
   /* ===================================== 财务管理 ======================================= */
   fetchFinanceBalanceManipulation: options => axios.get('/api-p/changeUserRecharge/list', options), // 加减款列表

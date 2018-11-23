@@ -11,7 +11,7 @@ export const breadcrumbMixin = {
   }
 }
 
-/* 启用状态切换 */
+/* ========================================== 启用状态切换 ========================================== */
 export const statusSwitchMixin = {
   components: {
     BaseSwitch
@@ -20,6 +20,25 @@ export const statusSwitchMixin = {
     handleSwitchChange (payload) {
       this.$httpAPI[this.statusSwitchAPI](
         { id: payload.id, status: Number(!payload.value) }
+      ).then(response => {
+        if (response.data.status === 200) {
+          this.$emit('on-status-change')
+          this.$message.success('修改状态成功！')
+        } else {
+          this.$message.error('修改状态失败！')
+        }
+      }).catch(error => console.log(error))
+    }
+  }
+}
+export const switchMixin = {
+  components: {
+    BaseSwitch
+  },
+  methods: {
+    handleSwitchChange (payload) {
+      this.$httpAPI[this.switchObj.API](
+        { [this.switchObj.attrId]: payload.id, [this.switchObj.attrValue]: Number(payload.value) }
       ).then(response => {
         if (response.data.status === 200) {
           this.$emit('on-status-change')
