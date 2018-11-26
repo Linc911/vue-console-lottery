@@ -63,7 +63,9 @@ export default {
   fetchLotteryOddsFast3: options => axios.get('/api-g/oddsset/2', options), // 赔率快3列表
   postLotteryOddsEleven: data => axios.post('/api-g/oddsset/1/save', data), // 修改单个11选5的赔率
   postLotteryOddsFast3: data => axios.post('/api-g/oddsset/2/save', data), // 修改单个快3的赔率
+
   fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // (新接口)获取所有赔率列表
+  updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // (新接口)修改单个游戏赔率相关数据
 
   /* ===================================== 财务管理 ======================================= */
   fetchFinanceBalanceManipulation: options => axios.get('/api-p/changeUserRecharge/list', options), // 加减款列表
