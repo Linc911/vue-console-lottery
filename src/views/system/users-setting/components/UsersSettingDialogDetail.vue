@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-dialog :visible.sync="dialogVisible" title="返水记录详情" width="760px">
+    <el-dialog :visible.sync="dialogVisible" title="单个用户信息详情" width="760px">
       <el-form :model="formData" label-width="80px" size="small" class="clearfix" disabled>
         <el-form-item label="创建时间">
           <el-input :value="formData.createTime | time" />

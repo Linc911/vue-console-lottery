@@ -1,67 +1,52 @@
 <template lang="html">
-  <!-- 条件筛选 -->
-  <div class="search">
-    <el-form :model="formData" size="small" label-width="80px" inline>
-      <SearchUsername @keyup.native.enter="search" @on-change="handleUsernameChange" ref="username" />
+  <el-form :model="formData" size="small" inline>
+    <FormInput
+      @keyup.native.enter="$emit('on-search', formData)"
+      @on-change="$set(formData, 'username', $event)"
+      label="会员账户"
+      width="174px"
+      ref="username"
+    />
 
-      <SearchPaymentType @on-change="handlePaymentTypeChange" ref="paymentType" />
+    <FormSelect
+      @on-change="$set(formData, 'payType', $event)"
+      httpAPIName="fetchTransactionPaymentType"
+      :httpAPIParams="{ pageNo: 1, pageSize: 100 }"
+      labelAttr="name"
+      valueAttr="id"
+      label="支付类型"
+      filterable
+      ref="payType"
+    />
 
-      <SearchDateRange @on-change="handleDateRangeChange" ref="dateRange" />
+    <FormDateRange @on-change="handleDateRangeChange" label="支付时间" ref="dateRange" />
 
+    <div style="display: inline-block">
       <SearchIcon @click.native="search" />
-
       <SearchReset @click.native="reset" />
-    </el-form>
-  </div>
+    </div>
+  </el-form>
 </template>
 
 <script type="text/javascript">
-import SearchUsername from '@/components/search/SearchUsername'
-import SearchPaymentType from '@/components/search/SearchPaymentType'
-import SearchDateRange from '@/components/search/SearchDateRange'
-import SearchIcon from '@/components/search/SearchIcon'
-import SearchReset from '@/components/search/SearchReset'
+import { searchInnerMixin } from '@/mixins'
+
+import FormInput from '@/components/form/FormInput'
+import FormSelect from '@/components/form/FormSelect'
+import FormDateRange from '@/components/form/FormDateRange'
 
 export default {
-  name: 'DepositWithdrawSearch',
+  name: 'PaymentPortSearch',
   components: {
-    SearchUsername,
-    SearchPaymentType,
-    SearchDateRange,
-    SearchIcon,
-    SearchReset
+    FormInput,
+    FormSelect,
+    FormDateRange
   },
-  data () {
-    return {
-      formData: {
-        username: '',
-        paymentType: '',
-        startTime: '',
-        endTime: ''
-      }
-    }
-  },
+  mixins: [ searchInnerMixin ],
   methods: {
-    handleUsernameChange (value) {
-      this.formData.username = value
-    },
-    handlePaymentTypeChange (value) {
-      this.formData.payType = value
-    },
     handleDateRangeChange ({ startTime, endTime }) {
-      this.formData = Object.assign(this.formData, { startTime, endTime })
-    },
-    search () {
-      this.$emit('on-search', this.formData)
-    },
-    reset () {
-      for (let key in this.$refs) {
-        this.$refs[key].reset()
-      }
-
-      for (let key in this.formData) {
-        this.formData[key] = ''
-      }
+      this.formData.startTime = startTime
+      this.formData.endTime = endTime
     }
   }
 }

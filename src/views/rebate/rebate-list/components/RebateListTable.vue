@@ -34,6 +34,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column prop="validBetting" label="投注金额">
+        <template slot-scope="scope">
+          <span>{{ scope.row.validBetting | RMB }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column prop="rebateStatus" label="返水状态">
         <template slot-scope="scope">
           <span>{{ scope.row.rebateStatus | rebateStatus }}</span>

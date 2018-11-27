@@ -5,9 +5,7 @@
     highlight-current-row
     border
   >
-    <el-table-column type="index" />
-
-    <el-table-column prop="username" label="会员账号" />
+    <el-table-column type="index" :width="36" />
 
     <el-table-column prop="orderId" label="申请单号" :min-width="140" />
 
@@ -16,6 +14,8 @@
         <span>{{scope.row.applyTime | time}}</span>
       </template>
     </el-table-column>
+
+    <el-table-column prop="username" label="会员账号" />
 
     <el-table-column label="取款金额">
       <template slot-scope="scope">
@@ -34,7 +34,7 @@
     <el-table-column prop="operations" label="操作">
       <template slot-scope="scope">
         <el-button @click="showDialog(scope.row)" type="primary" size="mini">
-          {{scope.row.status | auditTransfer}}
+          {{ scope.row.status | auditTransfer }}
         </el-button>
       </template>
     </el-table-column>

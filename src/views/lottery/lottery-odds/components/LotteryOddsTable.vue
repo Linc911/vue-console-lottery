@@ -3,9 +3,21 @@
     <el-table :data="data" size="small" :max-height="590" highlight-current-row border>
       <el-table-column type="index" :width="36" />
 
-      <el-table-column prop="gameName" label="彩票类型" />
+      <el-table-column prop="gameName" label="彩票类型" :min-width="90" />
 
-      <el-table-column prop="name" label="类型名称" />
+      <el-table-column prop="name" label="类型名称" :min-width="120">
+        <template slot-scope="scope">
+          <span v-if="scope.row.remark.includes('三军')">
+            <BaseDice :number="Number(scope.row.name)" />
+          </span>
+          <span v-else-if="scope.row.remark.match(/围骰\/全骰_\d+|长牌|短牌/)">
+            <template v-for="(item, index) in scope.row.name.split('')">
+              <BaseDice :number="Number(item)" :key="index" />
+            </template>
+          </span>
+          <span v-else>{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column prop="odds1" label="赔率" />
 
@@ -28,11 +40,13 @@
 <script>
 import { tableComponentMixin } from '@/mixins'
 
+import BaseDice from '@/components/base/BaseDice'
 import LotteryOddsDialogUpdate from './LotteryOddsDialogUpdate'
 
 export default {
   name: 'ResultsElevenTable',
   components: {
+    BaseDice,
     LotteryOddsDialogUpdate
   },
   mixins: [ tableComponentMixin ]

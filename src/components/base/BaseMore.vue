@@ -1,5 +1,5 @@
 <template lang="html">
-  <i @click="$emit('on-click')" class="el-icon-search"></i>
+  <el-button @click="$emit('on-click')" type="primary" size="mini" icon="el-icon-view"></el-button>
 </template>
 
 <style lang="scss" scoped>
