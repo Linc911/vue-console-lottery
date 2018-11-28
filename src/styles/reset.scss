@@ -29,7 +29,11 @@ ul {
   width: 0;
   height: 0;
 }
-.ctx-menu {
-  width: 130;
+.ctx-menu-container .ctx-menu {
+  width: 130px;
   min-width: auto;
+}
+.context-menu-item {
+  padding-left: 15px !important;
+  text-align: left !important;
 }

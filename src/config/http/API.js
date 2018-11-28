@@ -30,6 +30,11 @@ export default {
   createSystemUsersList: (data) => axios.post('/api-u/users-anon/register', data), // 创建新用户
   updateSystemUsersItem: (data) => axios.post('/api-u/users/update', data), // 更新用户信息
 
+  fetchSystemRolesList: (options) => axios.get('/api-u/roles', options), // 角色列表
+  createSystemRolesItem: (data) => axios.post('/api-u/roles', data), // 创建新角色
+  updateSystemRolesItem: (data) => axios.put('/api-u/roles', data), // 更新角色信息
+  deleteSystemRolesItem: (options) => axios.delete('/api-u/roles', options), // 删除角色
+
   // 彩票设置
   fetchLotterySettingInfo: (options) => axios.get('/api-g/GameTypeConfig/get', options),
 
@@ -125,6 +130,9 @@ export default {
   fetchRemittanceShortcutType: options => axios.get('/api-b/dictionary/list', options), // 汇款快捷支付设置类型列表
   fetchTransactionRemittanceShortcut: options => axios.get('/api-b/configQuickPay/list', options), // 汇款快捷列表
   createTransactionRemittanceShortcut: data => axios.post('/api-b/configQuickPay/save', data), // 创建新会员汇款设置
-  updateTransactionRemittanceShortcut: data => axios.post('/api-b/configQuickPay/save', data) // 创建新会员汇款设置
+  updateTransactionRemittanceShortcut: data => axios.post('/api-b/configQuickPay/save', data), // 创建新会员汇款设置
   // deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options) // 删除会员汇款设置
+
+  /* ===================================== 代理管理 ======================================= */
+  fetchAgentPerformanceLinearList: (options) => axios.get('/api-b/findAgentUserPerformanceList') // 获取代理线条业绩列表
 }

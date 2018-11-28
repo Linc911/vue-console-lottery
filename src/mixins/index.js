@@ -227,7 +227,6 @@ export const dialogCreateMixin = {
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
-        console.log(this.formData)
         if (valid) {
           this.dialogVisible = false
 

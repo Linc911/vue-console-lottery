@@ -14,14 +14,12 @@ const UserActiveAvatarUpdate = resolve => require(['@/views/useractive/UserActiv
 const UserActivePhoneUpdate = resolve => require(['@/views/useractive/UserActivePhoneUpdate'], resolve)
 
 /* ========================================== 系统设置 ============================================ */
+const SystemUsersSetting = resolve => require(['@/views/system/users-setting'], resolve) // 用户设置
+const SystemRolesSetting = resolve => require(['@/views/system/roles-setting'], resolve) // 角色设置
 // 菜单
 const SystemMenuList = resolve => require(['@/views/system/SystemMenuList'], resolve)
 const SystemMenuItemCreate = resolve => require(['@/views/system/SystemMenuItemCreate'], resolve)
 const SystemMenuItemUpdate = resolve => require(['@/views/system/SystemMenuItemUpdate'], resolve)
-// 角色
-const SystemRolesList = resolve => require(['@/views/system/SystemRolesList'], resolve)
-const SystemRoleCreate = resolve => require(['@/views/system/SystemRoleCreate'], resolve)
-const SystemRoleUpdate = resolve => require(['@/views/system/SystemRoleUpdate'], resolve)
 // 权限
 const SystemPermissionsList = resolve => require(['@/views/system/SystemPermissionsList'], resolve)
 const SystemPermissionCreate = resolve => require(['@/views/system/SystemPermissionCreate'], resolve)
@@ -31,8 +29,7 @@ const SystemGroup = resolve => require(['@/views/system/group/SystemGroup'], res
 const SystemGroupList = resolve => require(['@/views/system/group/SystemGroupList'], resolve)
 const SystemGroupCreate = resolve => require(['@/views/system/group/SystemGroupCreate'], resolve)
 const SystemGroupUpdate = resolve => require(['@/views/system/group/SystemGroupUpdate'], resolve)
-// 用户
-const SystemUsers = resolve => require(['@/views/system/users-setting'], resolve)
+
 // 彩票
 const SystemLottery = resolve => require(['@/views/system/lottery/SystemLottery'], resolve)
 const SystemLotteryList = resolve => require(['@/views/system/lottery/SystemLotteryList'], resolve)
@@ -97,7 +94,7 @@ const AgentList = resolve => require(['@/views/agent/AgentList'], resolve)
 const AgentCreate = resolve => require(['@/views/agent/AgentCreate'], resolve)
 const AgentInvitationCode = resolve => require(['@/views/agent/AgentInvitationCode'], resolve)
 const AgentAchievementUsers = resolve => require(['@/views/agent/AgentAchievementUsers'], resolve)
-const AgentAchievementLinear = resolve => require(['@/views/agent/AgentAchievementLinear'], resolve)
+const AgentPerformanceLinear = resolve => require(['@/views/agent/performance-linear'], resolve)
 const AgentInterestGames = resolve => require(['@/views/agent/AgentInterestGames'], resolve)
 const AgentInterestDivision = resolve => require(['@/views/agent/AgentInterestDivision'], resolve)
 const AgentInterestUsersDivision = resolve => require(['@/views/agent/AgentInterestUsersDivision'], resolve)
@@ -200,6 +197,30 @@ const routes = [
         ]
       },
       /* ========================================== 系统管理 ============================================ */
+      {
+        name: 'SystemRolesSetting',
+        path: '/system/roles',
+        component: SystemRolesSetting,
+        meta: {
+          title: '角色设置',
+          breadcrumb: [
+            { name: '系统设置' },
+            { name: '角色设置' }
+          ]
+        }
+      },
+      {
+        name: 'SystemUsersSetting',
+        path: '/system/users',
+        component: SystemUsersSetting,
+        meta: {
+          title: '用户设置',
+          breadcrumb: [
+            { name: '系统设置' },
+            { name: '用户设置' }
+          ]
+        }
+      },
       // 系统管理 - 侧边栏菜单模块
       {
         path: '/system/menu',
@@ -221,22 +242,6 @@ const routes = [
         path: '/system/menu/:id/update',
         component: SystemMenuItemUpdate,
         meta: { title: '修改菜单配置' }
-      },
-      // 系统管理 - 角色模块
-      {
-        path: '/system/roles',
-        component: SystemRolesList,
-        meta: { title: '角色列表' }
-      },
-      {
-        path: '/system/role/create',
-        component: SystemRoleCreate,
-        meta: { title: '创建新角色' }
-      },
-      {
-        path: '/system/role/:id/update',
-        component: SystemRoleUpdate,
-        meta: { title: '修改角色信息' }
       },
       // 系统管理 - 权限模块
       {
@@ -280,19 +285,6 @@ const routes = [
             meta: { title: '修改会员分组' }
           }
         ]
-      },
-      // 系统管理 - 用户模块
-      {
-        name: 'SystemUsers',
-        path: '/system/users',
-        component: SystemUsers,
-        meta: {
-          title: '系统设置 - 用户',
-          breadcrumb: [
-            { name: '系统设置' },
-            { name: '用户' }
-          ]
-        }
       },
       // 系统管理 - 彩票设置模块
       {
@@ -488,7 +480,7 @@ const routes = [
           ]
         }
       },
-      /* 财务管理 */
+      /* ========================================== 财务管理 ============================================ */
       {
         name: 'FinanceManage',
         path: '/finance',
@@ -639,118 +631,7 @@ const routes = [
           }
         ]
       },
-      /* 代理管理 */
-      {
-        name: 'AgentManage',
-        path: '/agent',
-        redirect: '/agent/list',
-        component: AgentManage,
-        children: [
-          {
-            name: 'AgentList',
-            path: 'list',
-            component: AgentList,
-            meta: { title: '代理会员列表' }
-          },
-          {
-            name: 'AgentCreate',
-            path: 'create',
-            component: AgentCreate,
-            meta: { title: '创建代理会员' }
-          },
-          {
-            name: 'AgentInvitationCode',
-            path: 'invitationcode',
-            component: AgentInvitationCode,
-            meta: { title: '邀请号码管理' }
-          },
-          {
-            name: 'AgentAchievementUsers',
-            path: 'achievement/users',
-            component: AgentAchievementUsers,
-            meta: { title: '代理个人业绩' }
-          },
-          {
-            name: 'AgentAchievementLinear',
-            path: 'achievement/linear',
-            component: AgentAchievementLinear,
-            meta: { title: '代理线条业绩' }
-          },
-          {
-            name: 'AgentInterestGames',
-            path: 'interest/games',
-            component: AgentInterestGames,
-            meta: { title: '游戏分润基数' }
-          },
-          {
-            name: 'AgentInterestDivision',
-            path: 'interest/division',
-            component: AgentInterestDivision,
-            meta: { title: '代理一键分润' }
-          },
-          {
-            name: 'AgentInterestUsersDivision',
-            path: 'interest/usersdivision',
-            component: AgentInterestUsersDivision,
-            meta: { title: '会员一键分润' }
-          }
-        ]
-      },
-      /* 优惠活动 */
-      {
-        name: 'PromotionManage',
-        path: '/promotion',
-        redirect: '/promotion/list',
-        component: PromotionManage,
-        children: [
-          {
-            name: 'PromotionList',
-            path: 'list',
-            component: PromotionList,
-            meta: { title: '优惠活动图片管理' }
-          },
-          {
-            name: 'PromotionCreate',
-            path: 'create',
-            component: PromotionCreate,
-            meta: { title: '优惠活动图片管理', keepAlive: true }
-          }
-        ]
-      },
-      /* 返水管理 */
-      {
-        name: 'RebateManage',
-        path: '/rebate',
-        redirect: '/rebate/list',
-        component: RebateManage,
-        children: [
-          {
-            name: 'RebateSetting',
-            path: 'setting',
-            component: RebateSetting,
-            meta: {
-              title: '设置返水计划',
-              breadcrumb: [
-                { name: '返水管理' },
-                { name: '设置返水计划' }
-              ]
-            }
-          },
-          {
-            name: 'RebateList',
-            path: 'list',
-            component: RebateList,
-            meta: {
-              title: '查看返水记录',
-              breadcrumb: [
-                { name: '返水管理' },
-                { name: '查看返水记录' }
-              ]
-            }
-          }
-        ]
-      },
-      /* 收款出款管理 */
+      /* ========================================== 收款出款 ============================================ */
       {
         name: 'TransactionManage',
         path: '/transaction',
@@ -825,7 +706,124 @@ const routes = [
           }
         ]
       },
-      /* 体育管理 */
+      /* ========================================== 返水管理 ============================================ */
+      {
+        name: 'RebateManage',
+        path: '/rebate',
+        redirect: '/rebate/list',
+        component: RebateManage,
+        children: [
+          {
+            name: 'RebateSetting',
+            path: 'setting',
+            component: RebateSetting,
+            meta: {
+              title: '设置返水计划',
+              breadcrumb: [
+                { name: '返水管理' },
+                { name: '设置返水计划' }
+              ]
+            }
+          },
+          {
+            name: 'RebateList',
+            path: 'list',
+            component: RebateList,
+            meta: {
+              title: '查看返水记录',
+              breadcrumb: [
+                { name: '返水管理' },
+                { name: '查看返水记录' }
+              ]
+            }
+          }
+        ]
+      },
+      /* ========================================== 代理管理 ============================================ */
+      {
+        name: 'AgentManage',
+        path: '/agent',
+        redirect: '/agent/list',
+        component: AgentManage,
+        children: [
+          {
+            name: 'AgentList',
+            path: 'list',
+            component: AgentList,
+            meta: { title: '代理会员列表' }
+          },
+          {
+            name: 'AgentCreate',
+            path: 'create',
+            component: AgentCreate,
+            meta: { title: '创建代理会员' }
+          },
+          {
+            name: 'AgentInvitationCode',
+            path: 'invitationcode',
+            component: AgentInvitationCode,
+            meta: { title: '邀请号码管理' }
+          },
+          {
+            name: 'AgentAchievementUsers',
+            path: 'achievement/users',
+            component: AgentAchievementUsers,
+            meta: { title: '代理个人业绩' }
+          },
+          {
+            name: 'AgentPerformanceLinear',
+            path: 'performance/linear',
+            component: AgentPerformanceLinear,
+            meta: {
+              title: '代理线条业绩',
+              breadcrumb: [
+                { name: '代理管理' },
+                { name: '代理线条业绩' }
+              ]
+            }
+          },
+          {
+            name: 'AgentInterestGames',
+            path: 'interest/games',
+            component: AgentInterestGames,
+            meta: { title: '游戏分润基数' }
+          },
+          {
+            name: 'AgentInterestDivision',
+            path: 'interest/division',
+            component: AgentInterestDivision,
+            meta: { title: '代理一键分润' }
+          },
+          {
+            name: 'AgentInterestUsersDivision',
+            path: 'interest/usersdivision',
+            component: AgentInterestUsersDivision,
+            meta: { title: '会员一键分润' }
+          }
+        ]
+      },
+      /* ========================================== 优惠活动 ============================================ */
+      {
+        name: 'PromotionManage',
+        path: '/promotion',
+        redirect: '/promotion/list',
+        component: PromotionManage,
+        children: [
+          {
+            name: 'PromotionList',
+            path: 'list',
+            component: PromotionList,
+            meta: { title: '优惠活动图片管理' }
+          },
+          {
+            name: 'PromotionCreate',
+            path: 'create',
+            component: PromotionCreate,
+            meta: { title: '优惠活动图片管理', keepAlive: true }
+          }
+        ]
+      },
+      /* ========================================== 体育管理 ============================================ */
       {
         name: 'SportManage',
         path: '/sport',
@@ -852,7 +850,7 @@ const routes = [
           }
         ]
       },
-      /* 公告管理 */
+      /* ========================================== 公告管理 ============================================ */
       {
         name: 'NoticeManage',
         path: '/notice',
