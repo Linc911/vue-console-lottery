@@ -54,23 +54,18 @@ export default {
   fetchUsersLogs: (options) => axios.get('/api-l/logList', options),
 
   /* ===================================== 彩票管理 ======================================= */
-  // 开奖结果
+
   fetchLotteryResultsEleven: options => axios.get('/api-g/result/1', options),
   fetchLotteryResultsFast3: options => axios.get('/api-g/result/2', options),
-
   updateLotteryResultEleven: options => axios.get('/api-g/result/1/settlement', options), // 手动修改开奖结果
   updateLotteryResultFast3: options => axios.get('/api-g/result/2/settlement', options),
-
   cancelLotteryResultEleven: options => axios.get('/api-g/result/1/cancel', options), // 撤单
   cancelLotteryResultFast3: options => axios.get('/api-g/result/2/cancel', options),
-  // 赔率设置
-  fetchLotteryOddsEleven: options => axios.get('/api-g/oddsset/1', options), // 赔率11选5列表
-  fetchLotteryOddsFast3: options => axios.get('/api-g/oddsset/2', options), // 赔率快3列表
-  postLotteryOddsEleven: data => axios.post('/api-g/oddsset/1/save', data), // 修改单个11选5的赔率
-  postLotteryOddsFast3: data => axios.post('/api-g/oddsset/2/save', data), // 修改单个快3的赔率
 
-  fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // (新接口)获取所有赔率列表
-  updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // (新接口)修改单个游戏赔率相关数据
+  fetchLotteryResultsList: (data) => axios.post('/api-g/result', data), // (新接口)所有开奖记录列表
+
+  fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // 所有赔率列表
+  updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改单个游戏赔率数据
 
   /* ===================================== 财务管理 ======================================= */
   fetchFinanceBalanceManipulation: options => axios.get('/api-p/changeUserRecharge/list', options), // 加减款列表

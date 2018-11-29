@@ -7,37 +7,53 @@
 
       <el-table-column prop="drawno" label="彩票期号" :width="80" />
 
-      <el-table-column prop="dateTime" label="开奖时间" :width="140" />
-
-      <el-table-column label="彩球号码" :width="200">
+      <el-table-column label="开奖时间" :width="140">
         <template slot-scope="scope">
-          <LotteryBall :number="Number(scope.row.ball1[0])" />
-          <LotteryBall :number="Number(scope.row.ball2[0])" />
-          <LotteryBall :number="Number(scope.row.ball3[0])" />
-          <LotteryBall :number="Number(scope.row.ball4[0])" />
-          <LotteryBall :number="Number(scope.row.ball5[0])" />
+          <span>{{ scope.row.updateTime | time }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="ballSum" label="总和" :min-width="110">
+      <el-table-column label="彩球号码" :min-width="200">
         <template slot-scope="scope">
-          <span>{{scope.row.ballSum.join(' ')}}</span>
+          <template v-for="(ball, index) in scope.row.balls">
+            <LotteryBall :number="Number(ball)" :key="index" />
+          </template>
         </template>
       </el-table-column>
 
-      <el-table-column label="龙虎" :width="45">
+      <el-table-column prop="ballSum" label="总和" :width="45" />
+
+      <el-table-column label="总和大小" :width="45">
         <template slot-scope="scope">
-          <span>{{scope.row.dragonTiger.toString()}}</span>
+          <span>{{ scope.row.sumBigSmall | sumBigSmall }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="结算状态">
+      <el-table-column label="总和单双" :width="45">
+        <template slot-scope="scope">
+          <span>{{ scope.row.sumOddEven | sumOddEven }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="总和尾大尾小" :width="60">
+        <template slot-scope="scope">
+          <span>{{ scope.row.sumLastBigSmall | sumLastBigSmall }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="总和龙虎" :width="45">
+        <template slot-scope="scope">
+          <span>{{ scope.row.sumDragonTiger | sumDragonTiger }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="结算状态" :width="70">
         <template slot-scope="scope">
           <span>{{scope.row.status | lotteryStatus}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :min-width="140">
+      <el-table-column label="操作" >
         <!-- <template slot-scope="scope">
           <el-button
             v-if="scope.row.status !== 2"

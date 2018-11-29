@@ -7,7 +7,7 @@
     <el-tag
       v-for="(tag, index) in routes"
       :key="tag.path"
-      @click.native="openRoute(tag.path)"
+      @click.native="openRoute(tag.path, tag.name)"
       @contextmenu.native.prevent="openContextMenu(index)"
       @close="closeRoute(index)"
       :class="{ current: tag.active }"
@@ -65,9 +65,12 @@ export default {
       this.initRoutesStatus()
       this.$router.push({ name: 'HomePage' })
     },
-    openRoute (path) {
+    openRoute (path, tagName) {
       this.$router.push(path)
       this.highlightRoute(path)
+
+      // 侧边栏跳到响应的标签栏中
+      this.$store.dispatch('sidebar/updateActiveMenu', tagName)
     },
     // 关闭标签，跳转到上一个标签页；直到主页
     closeRoute (index) {

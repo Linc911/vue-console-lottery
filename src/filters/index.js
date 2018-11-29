@@ -181,8 +181,8 @@ Vue.filter('auditTransfer', value => {
   }
 })
 
-/* 彩票相关 */
-// 彩票球
+/* ======================================= 彩票相关 =============================================== */
+// 开奖结算状态
 Vue.filter('lotteryStatus', value => {
   switch (value) {
     case 0:
@@ -191,6 +191,8 @@ Vue.filter('lotteryStatus', value => {
       return '未结算'
     case 2:
       return '已结算'
+    case 3:
+      return '已撤单'
     default:
       return '其他'
   }
@@ -222,6 +224,56 @@ Vue.filter('diceRepeat', value => {
       return '围骰5'
     case 6:
       return '围骰6'
+    default:
+      return '其他'
+  }
+})
+// 开奖结果：总和大小
+Vue.filter('sumBigSmall', (value) => {
+  switch (value) {
+    case 0:
+      return '小'
+    case 1:
+      return '大'
+    case 2:
+      return '和'
+    default:
+      return '其他'
+  }
+})
+// 开奖结果：总和单双
+Vue.filter('sumOddEven', (value) => {
+  switch (value) {
+    case 0:
+      return '单'
+    case 1:
+      return '双'
+    case 2:
+      return '和'
+    default:
+      return '其他'
+  }
+})
+// 开奖结果：总和尾大尾小
+Vue.filter('sumLastBigSmall', (value) => {
+  switch (value) {
+    case 0:
+      return '尾小'
+    case 1:
+      return '尾大'
+    case 2:
+      return '和'
+    default:
+      return '其他'
+  }
+})
+// 开奖结果：总和龙虎
+Vue.filter('sumDragonTiger', (value) => {
+  switch (value) {
+    case 0:
+      return '龙'
+    case 1:
+      return '虎'
     default:
       return '其他'
   }

@@ -4,7 +4,7 @@ import BaseSwitch from '@/components/base/BaseSwitch'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
-/* 面包屑导航 */
+/* ========================================== 面包屑导航 ========================================== */
 export const breadcrumbMixin = {
   components: {
     BaseBreadcrumb
@@ -51,7 +51,28 @@ export const switchMixin = {
   }
 }
 
-/* 条件筛选 */
+/* ========================================== 动态菜单 Tab组件 ========================================== */
+export const menuMixin = {
+  created () {
+    this.fetchMenuData()
+  },
+  methods: {
+    handleTabClick (tab) {
+      this.$emit('on-change', { id: tab.name, name: tab.label })
+    },
+    fetchMenuData () {
+      this.$httpAPI[this.menuHttpAPI]({ params: this.requestParams }).then(response => {
+        if (response.data.data) {
+          this.menu = response.data.data
+        } else {
+          this.menu = []
+        }
+      }).catch(error => console.log(error))
+    }
+  }
+}
+
+/* ========================================== 条件筛选 ========================================== */
 // 顶部筛选 - 搜索组件父级调用
 export const searchOuterMixin = {
   methods: {
@@ -87,28 +108,7 @@ export const searchInnerMixin = {
   }
 }
 
-/* 动态菜单 Tab组件 */
-export const menuMixin = {
-  created () {
-    this.fetchMenuData()
-  },
-  methods: {
-    handleTabClick (tab) {
-      this.$emit('on-change', { id: tab.name, name: tab.label })
-    },
-    fetchMenuData () {
-      this.$httpAPI[this.menuHttpAPI]({ params: this.requestParams }).then(response => {
-        if (response.data.data) {
-          this.menu = response.data.data
-        } else {
-          this.menu = []
-        }
-      }).catch(error => console.log(error))
-    }
-  }
-}
-
-/* 列表请求几种模式 */
+/* ========================================== 列表请求几种模式 ========================================== */
 // 表格数据（带分页）
 export const tableWithPaginationMixin = {
   components: {
@@ -180,8 +180,25 @@ export const tableWithoutPaginationMixin = {
     }
   }
 }
+// 表格数据（带分页）
+export const tableWithoutPaginationPostMixin = {
+  created () {
+    this.fetchTableData()
+  },
+  methods: {
+    fetchTableData () {
+      this.$httpAPI[this.tableHttpAPI](this.requestParams).then(response => {
+        if (response.data.data) {
+          this.tableData = response.data.data
+        } else {
+          this.tableData = []
+        }
+      }).catch(error => console.log(error))
+    }
+  }
+}
 
-/* Table 组件 */
+/* ========================================== Table 组件 ========================================== */
 export const tableComponentMixin = {
   props: {
     data: {
@@ -216,8 +233,7 @@ export const tableComponentMixin = {
   }
 }
 
-/* 创建新一条表单数据 */
-// 第一类
+/* ========================================== DialogCreate 组件 ========================================== */
 export const dialogCreateMixin = {
   data () {
     return {
@@ -253,7 +269,7 @@ export const dialogCreateMixin = {
   }
 }
 
-/*  DialogUpdate 组件 */
+/* ========================================== DialogUpdate 组件 ========================================== */
 export const dialogUpdateMixin = {
   props: {
     data: {
@@ -277,13 +293,21 @@ export const dialogUpdateMixin = {
         if (valid) {
           this.dialogVisible = false
 
-          // 判断两个对象是否相等（自有属性和属性值一一对应）
+          // 判断是否对表单数据进行修改: 没修改 => 提示数据没变化，不发送请求； 进行修改 => 发送修改请求
           const same = this.$utils.isEquivalentObjects(this.data, this.formData)
           if (!same) {
-            // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置要按顺序）
+            // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置必须按要求顺序传入）
             const postData = this.$utils.generateObjectWithChangedProperties(this.data, this.formData)
 
-            this.$httpAPI[this.updateHttpAPI](Object.assign(this.idParams, postData)).then(response => {
+            // 判断接口是否是传支持多个修改： 是 => 生产数组，否 => 生产对象
+            let finalPostData = null
+            if (this.idParams.multiple) {
+              finalPostData = [ Object.assign(this.idParams, postData) ]
+            } else {
+              finalPostData = Object.assign(this.idParams, postData)
+            }
+
+            this.$httpAPI[this.updateHttpAPI](finalPostData).then(response => {
               if (response.data.status === 200) {
                 this.$emit('on-updated')
                 this.$message.success('修改成功！')
@@ -305,7 +329,7 @@ export const dialogUpdateMixin = {
   }
 }
 
-/*  DialogDetail 组件 */
+/* ========================================== DialogDetail 组件 ========================================== */
 export const dialogDetailMixin = {
   props: {
     data: {

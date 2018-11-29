@@ -5,33 +5,45 @@
 
       <el-table-column prop="gameName" label="彩票类型" />
 
-      <el-table-column prop="drawno" label="彩票期号" :width="90" />
+      <el-table-column prop="drawno" label="彩票期号" :min-width="90" />
 
-      <el-table-column prop="dateTime" label="开奖时间" :width="140" />
-
-      <el-table-column label="骰子点数" :width="120">
+      <el-table-column label="开奖时间" :min-width="140">
         <template slot-scope="scope">
-          <BaseDice v-if="scope.row.all[0]" :number="Number(scope.row.ball1[0])" />
-          <BaseDice v-if="scope.row.all[0]" :number="Number(scope.row.ball2[0])" />
-          <BaseDice v-if="scope.row.all[0]" :number="Number(scope.row.ball3[0])" />
+          <span>{{ scope.row.updateTime | time }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="ballSum" label="总和" :width="100">
+      <el-table-column label="骰子点数" :min-width="120">
         <template slot-scope="scope">
-          <span>{{scope.row.ballSum.join(' ')}}</span>
+          <template v-for="(ball, index) in scope.row.balls">
+            <BaseDice :number="Number(ball)" :key="index" />
+          </template>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="ballSum" label="总和" :width="45" />
+
+      <el-table-column label="总和大小" :width="45">
+        <template slot-scope="scope">
+          <span>{{ scope.row.sumBigSmall | sumBigSmall }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="总和单双" :width="45">
+        <template slot-scope="scope">
+          <span>{{ scope.row.sumOddEven | sumOddEven }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="围骰">
         <template slot-scope="scope">
-          <span v-if="scope.row.all[0]">{{Number(scope.row.all[0]) | diceRepeat}}</span>
+          <span>{{ Number(scope.row.all) | diceRepeat}}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="结算状态">
         <template slot-scope="scope">
-          <span>{{scope.row.status | lotteryStatus}}</span>
+          <span>{{ scope.row.status | lotteryStatus }}</span>
         </template>
       </el-table-column>
 

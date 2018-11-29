@@ -6,18 +6,19 @@
     <div>
       <!-- 彩票分类菜单 -->
       <aside class="aside-menu">
-        <ResultsGamesMenu @on-change="handleMenuChange" :menu="menu" :gameType="'3'" />
+        <GamesMenu @on-change="handleMenuChange" :gameType="'3'" />
       </aside>
 
       <!-- 主要内容 -->
       <div class="content-container">
         <!-- 表格 -->
-        <component :is="activeComponent" :data="tableData"></component>
+        <component :is="activeComponent" :data="tableData" />
 
         <!-- 分页 -->
         <BasePagination
           @on-change="handlePaginationChange"
           :page="page"
+          httpMethod="post"
           :requestParams="requestParams"
           :httpURL="tableHttpAPI"
         />
@@ -27,38 +28,34 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
 
 import ResultsSearch from './components/ResultsSearch'
-import ResultsGamesMenu from './components/ResultsGamesMenu'
+import GamesMenu from '@/components/global/GamesMenu'
 import ResultsElevenTable from './components/table/ResultsElevenTable'
 import ResultsFast3Table from './components/table/ResultsFast3Table'
 
 export default {
-  name: 'LotteryResult',
+  name: 'LotteryResults',
   components: {
     ResultsSearch,
-    ResultsGamesMenu,
+    GamesMenu,
     ResultsElevenTable,
     ResultsFast3Table
   },
   data () {
     return {
       activeComponent: 'ResultsElevenTable',
-      menu: [],
       tableData: [],
-      tableHttpAPI: 'fetchLotteryResultsEleven',
-      requestParams: { type: 3, pageNo: 1, pageSize: 10 },
+      tableHttpAPI: 'fetchLotteryResultsList',
+      requestParams: { gameType: 3, pageNo: 1, pageSize: 10 },
       page: { current: 0, size: 10, total: 10 }
     }
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
-  created () {
-    this.getGamesMenu()
-  },
+  mixins: [ searchOuterMixin, tableWithPaginationPostMixin ],
   methods: {
     handleMenuChange ({ groupId, itemId }) {
-      this.requestParams = { type: itemId, pageNo: 1, pageSize: 10 }
+      this.requestParams = { gameType: itemId, pageNo: 1, pageSize: 10 }
       this.$refs.resultsSearch.reset()
 
       switch (groupId) {
@@ -75,12 +72,10 @@ export default {
           this.tableData = []
           break
         case 2:
-          this.tableHttpAPI = 'fetchLotteryResultsFast3'
           this.activeComponent = 'ResultsFast3Table'
           this.fetchTableData()
           break
         case 1:
-          this.tableHttpAPI = 'fetchLotteryResultsEleven'
           this.activeComponent = 'ResultsElevenTable'
           this.fetchTableData()
           break
@@ -90,11 +85,6 @@ export default {
         default:
           this.tableData = []
       }
-    },
-    getGamesMenu () {
-      this.$httpAPI.fetchGamesMenu().then(response => {
-        this.menu = response.data.data
-      }).catch(error => console.log(error))
     }
   }
 }

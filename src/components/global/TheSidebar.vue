@@ -1,7 +1,9 @@
 <template lang="html">
   <div class="the-sidebar">
     <el-menu
+      :default-active="activeMenu"
       mode="vertical"
+      unique-opened
       text-color="#fff"
       background-color="#324057"
       active-text-color="#409eff"
@@ -14,7 +16,7 @@
           </template>
 
           <router-link v-for="item in menu[group.id]" :to="item.url" :key="item.id">
-            <el-menu-item :index="item.name" :class="{ 'unprepared-link': item.url === '/users/unset' }">
+            <el-menu-item @click="handleMenuItemClick" :index="item.name" :class="{ 'unprepared-link': item.url === '/users/unset' }">
               <i :class="`fa ${item.css}`"></i>
               <span>{{item.name}}</span>
             </el-menu-item>
@@ -146,12 +148,17 @@ export default {
     this.fetchSidebarMenu()
   },
   computed: mapGetters([
-    'menu'
+    'menu',
+    'activeMenu'
   ]),
   methods: {
     ...mapActions([
-      'refreshMenu'
+      'refreshMenu',
+      'updateActiveMenu'
     ]),
+    handleMenuItemClick (menu) {
+      this.updateActiveMenu(menu.index)
+    },
     // 获取全部菜单
     fetchSidebarMenu () {
       this.refreshMenu()

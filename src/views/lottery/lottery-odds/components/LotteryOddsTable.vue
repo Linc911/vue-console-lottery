@@ -3,7 +3,7 @@
     <el-table :data="data" size="small" :max-height="590" highlight-current-row border>
       <el-table-column type="index" :width="36" />
 
-      <el-table-column prop="gameName" label="彩票类型" :min-width="90" />
+      <el-table-column prop="gameName" label="彩票类型" :min-width="100" />
 
       <el-table-column prop="name" label="类型名称" :min-width="120">
         <template slot-scope="scope">
