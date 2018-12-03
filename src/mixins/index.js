@@ -1,6 +1,9 @@
 import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import BasePagination from '@/components/base/BasePagination'
+
 import BaseSwitch from '@/components/base/BaseSwitch'
+import BaseTimePicker from '@/components/base/BaseTimePicker'
+
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
@@ -11,7 +14,7 @@ export const breadcrumbMixin = {
   }
 }
 
-/* ========================================== 启用状态切换 ========================================== */
+/* ========================================== BaseSwitch组件 ========================================== */
 export const statusSwitchMixin = {
   components: {
     BaseSwitch
@@ -41,12 +44,25 @@ export const switchMixin = {
         { [this.switchObj.attrId]: payload.id, [this.switchObj.attrValue]: Number(payload.value) }
       ).then(response => {
         if (response.data.status === 200) {
-          this.$emit('on-status-change')
+          this.$emit('on-status-changed', payload.id)
           this.$message.success('修改状态成功！')
         } else {
+          this.$emit('on-status-failed', payload.id)
           this.$message.error('修改状态失败！')
         }
       }).catch(error => console.log(error))
+    }
+  }
+}
+
+/* ========================================== BaseTimePicker组件 ========================================== */
+export const timePickerMixin = {
+  components: {
+    BaseTimePicker
+  },
+  methods: {
+    handleTimePickerChange (payload) {
+      console.log(payload)
     }
   }
 }

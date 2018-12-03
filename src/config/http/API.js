@@ -2,7 +2,6 @@ import axios from './index'
 
 export default {
   /* ===================================== 公共数据 ======================================= */
-  // 侧边栏菜单
   fetchSidebarMenuList: () => axios.get('/api-b/menus/all'), // 页面侧边栏菜单列表
 
   // 游戏类
@@ -20,7 +19,10 @@ export default {
   putUserInfo: data => axios.put('/api-u/users/me', data),
 
   /* ===================================== 系统管理 ======================================= */
-  // 会员分组
+  fetchSystemMenuList: (options) => axios.get('/api-b/menus/all', options), // 菜单列表
+  createSystemMenuItem: (data) => axios.post('/api-b/menus', data), // 创建新菜单
+  updateSystemMenuItem: (data) => axios.put('/api-b/menus', data), // 修改菜单配置
+
   fetchUserGroups: (options) => axios.get('/api-u/group/list', options), // 全部列表
   fetchSystemGroupItem: (options) => axios.get('/api-u/group/info', options), // 单个详情
   postSystemGroupChange: (data) => axios.post('/api-u/group/save', data), // 创建或修改单个分组
@@ -35,8 +37,14 @@ export default {
   updateSystemRolesItem: (data) => axios.put('/api-u/roles', data), // 更新角色信息
   deleteSystemRolesItem: (options) => axios.delete('/api-u/roles', options), // 删除角色
 
-  // 彩票设置
-  fetchLotterySettingInfo: (options) => axios.get('/api-g/GameTypeConfig/get', options),
+  fetchSystemBanksList: (data) => axios.post('/api-b/bankConfig/list', data), // 银行设置列表
+  createSystemBanksItem: (data) => axios.put('/api-b/bankConfig/save', data), // 创建新银行配置
+
+  fetchSystemAreaList: (data) => axios.post('/api-b/area/list', data), // 地区设置列表
+  updateSystemAreaItem: (data) => axios.put('/api-b/area/save', data), // 创建与修改地区配置
+
+  fetchLotterySettingInfo: (options) => axios.get('/api-g/GameTypeConfig/get', options), // 彩票设置列表
+  updateLotterySettingItem: (data) => axios.post('/api-g/GameTypeConfig/save', data), // 修改彩票设置
 
   /* ===================================== 会员管理 ======================================= */
   fetchUsersList: options => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
@@ -54,7 +62,6 @@ export default {
   fetchUsersLogs: (options) => axios.get('/api-l/logList', options),
 
   /* ===================================== 彩票管理 ======================================= */
-
   fetchLotteryResultsEleven: options => axios.get('/api-g/result/1', options),
   fetchLotteryResultsFast3: options => axios.get('/api-g/result/2', options),
   updateLotteryResultEleven: options => axios.get('/api-g/result/1/settlement', options), // 手动修改开奖结果

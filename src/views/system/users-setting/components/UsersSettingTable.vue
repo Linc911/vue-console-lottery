@@ -89,7 +89,7 @@ import UsersSettingDialogUpdate from './UsersSettingDialogUpdate'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
-  name: 'RebateSettingTable',
+  name: 'UsersSettingTable',
   components: {
     BaseIndicator,
     UsersSettingDialogDetail,

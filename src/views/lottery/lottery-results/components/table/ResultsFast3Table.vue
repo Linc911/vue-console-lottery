@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <el-table :data="data" size="small" highlight-current-row border>
-      <el-table-column type="index" :width="40" />
+      <el-table-column type="index" :width="36" />
 
       <el-table-column prop="gameName" label="彩票类型" />
 

@@ -7,7 +7,7 @@ export default {
   name: 'BaseSwitch',
   props: {
     propValue: {
-      type: [ Boolean, Number ],
+      type: [ Boolean, Number, String ],
       required: true
     },
     payload: {

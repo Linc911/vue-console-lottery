@@ -1,6 +1,8 @@
 import axios from 'axios'
 import router from '@/router/index'
 
+import { Message } from 'element-ui'
+
 const state = {
   token: {}
 }
@@ -32,17 +34,26 @@ const actions = {
         'Authorization': ''
       }
     }).then(response => {
-      const { token_type, access_token, refresh_token } = response.data
+      const { token_type, access_token, refresh_token, sessionId } = response.data
       commit('initToken', {
         type: token_type,
         access: access_token,
-        refresh: refresh_token
+        refresh: refresh_token,
+        sessionId
       })
 
       axios.defaults.headers.common['Authorization'] = `${token_type} ${access_token}`
+      axios.defaults.headers.common['sessionId'] = `${sessionId}`
 
       router.push({ name: 'HomePage' })
-    }).catch(error => console.log(error))
+    }).catch((error) => {
+      if (error.message === 'Network Error') {
+        Message.warning('服务器异常，请稍后重试')
+      } else {
+        Message.warning('帐号与密码不匹配')
+      }
+      // console.dir(error)
+    })
   },
   // 登出 -- token设置为空，调整到用户登录页
   logout ({ commit, dispatch, state }) {

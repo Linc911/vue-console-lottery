@@ -14,12 +14,12 @@ const UserActiveAvatarUpdate = resolve => require(['@/views/useractive/UserActiv
 const UserActivePhoneUpdate = resolve => require(['@/views/useractive/UserActivePhoneUpdate'], resolve)
 
 /* ========================================== 系统设置 ============================================ */
-const SystemUsersSetting = resolve => require(['@/views/system/users-setting'], resolve) // 用户设置
-const SystemRolesSetting = resolve => require(['@/views/system/roles-setting'], resolve) // 角色设置
-// 菜单
-const SystemMenuList = resolve => require(['@/views/system/SystemMenuList'], resolve)
-const SystemMenuItemCreate = resolve => require(['@/views/system/SystemMenuItemCreate'], resolve)
-const SystemMenuItemUpdate = resolve => require(['@/views/system/SystemMenuItemUpdate'], resolve)
+const SystemMenuSetting = resolve => require(['@/views/system/menu-setting'], resolve) // 菜单
+const SystemRolesSetting = resolve => require(['@/views/system/roles-setting'], resolve) // 角色
+const SystemUsersSetting = resolve => require(['@/views/system/users-setting'], resolve) // 用户
+const SystemLotterySetting = resolve => require(['@/views/system/lottery-setting'], resolve) // 彩票
+const SystemBanksSetting = resolve => require(['@/views/system/banks-setting'], resolve) // 银行
+const SystemAreaSetting = resolve => require(['@/views/system/area-setting'], resolve) // 地区
 // 权限
 const SystemPermissionsList = resolve => require(['@/views/system/SystemPermissionsList'], resolve)
 const SystemPermissionCreate = resolve => require(['@/views/system/SystemPermissionCreate'], resolve)
@@ -29,12 +29,6 @@ const SystemGroup = resolve => require(['@/views/system/group/SystemGroup'], res
 const SystemGroupList = resolve => require(['@/views/system/group/SystemGroupList'], resolve)
 const SystemGroupCreate = resolve => require(['@/views/system/group/SystemGroupCreate'], resolve)
 const SystemGroupUpdate = resolve => require(['@/views/system/group/SystemGroupUpdate'], resolve)
-
-// 彩票
-const SystemLottery = resolve => require(['@/views/system/lottery/SystemLottery'], resolve)
-const SystemLotteryList = resolve => require(['@/views/system/lottery/SystemLotteryList'], resolve)
-const SystemLotteryInfo = resolve => require(['@/views/system/lottery/SystemLotteryInfo'], resolve)
-const SystemLotteryUpdate = resolve => require(['@/views/system/lottery/SystemLotteryUpdate'], resolve)
 
 /* ========================================== 会员管理 ============================================ */
 const UsersManage = resolve => require(['@/views/users/UsersManage'], resolve)
@@ -127,6 +121,7 @@ const NotFound = resolve => require(['@/views/NotFound'], resolve)
 
 const routes = [
   {
+    name: 'NotFound',
     path: '*',
     component: NotFound,
     meta: { title: '404页面', keepAlive: true }
@@ -198,14 +193,26 @@ const routes = [
       },
       /* ========================================== 系统管理 ============================================ */
       {
+        name: 'SystemMenuSetting',
+        path: '/system/menu',
+        component: SystemMenuSetting,
+        meta: {
+          title: '菜单',
+          breadcrumb: [
+            { name: '系统设置' },
+            { name: '菜单' }
+          ]
+        }
+      },
+      {
         name: 'SystemRolesSetting',
         path: '/system/roles',
         component: SystemRolesSetting,
         meta: {
-          title: '角色设置',
+          title: '角色',
           breadcrumb: [
             { name: '系统设置' },
-            { name: '角色设置' }
+            { name: '角色' }
           ]
         }
       },
@@ -214,34 +221,48 @@ const routes = [
         path: '/system/users',
         component: SystemUsersSetting,
         meta: {
-          title: '用户设置',
+          title: '用户',
           breadcrumb: [
             { name: '系统设置' },
-            { name: '用户设置' }
+            { name: '用户' }
           ]
         }
       },
-      // 系统管理 - 侧边栏菜单模块
       {
-        path: '/system/menu',
-        component: SystemMenuList,
+        name: 'SystemLotterySetting',
+        path: '/system/lottery',
+        component: SystemLotterySetting,
         meta: {
-          title: '系统菜单配置',
+          title: '彩票',
           breadcrumb: [
             { name: '系统设置' },
-            { name: '系统菜单配置' }
+            { name: '彩票' }
           ]
         }
       },
       {
-        path: '/system/menu/create',
-        component: SystemMenuItemCreate,
-        meta: { title: '创建菜单新栏目' }
+        name: 'SystemAreaSetting',
+        path: '/system/area',
+        component: SystemAreaSetting,
+        meta: {
+          title: '地区',
+          breadcrumb: [
+            { name: '系统设置' },
+            { name: '地区' }
+          ]
+        }
       },
       {
-        path: '/system/menu/:id/update',
-        component: SystemMenuItemUpdate,
-        meta: { title: '修改菜单配置' }
+        name: 'SystemBanksSetting',
+        path: '/system/bank',
+        component: SystemBanksSetting,
+        meta: {
+          title: '银行',
+          breadcrumb: [
+            { name: '系统设置' },
+            { name: '银行' }
+          ]
+        }
       },
       // 系统管理 - 权限模块
       {
@@ -283,33 +304,6 @@ const routes = [
             path: ':groupId/update',
             component: SystemGroupUpdate,
             meta: { title: '修改会员分组' }
-          }
-        ]
-      },
-      // 系统管理 - 彩票设置模块
-      {
-        name: 'SystemLottery',
-        path: '/system/lottery',
-        redirect: '/system/lottery/list',
-        component: SystemLottery,
-        children: [
-          {
-            name: 'SystemLotteryList',
-            path: 'list',
-            component: SystemLotteryList,
-            meta: { title: '彩票种类列表', keepAlive: true }
-          },
-          {
-            name: 'SystemLotteryInfo',
-            path: ':gameId',
-            component: SystemLotteryInfo,
-            meta: { title: '游戏配置详情' }
-          },
-          {
-            name: 'SystemLotteryUpdate',
-            path: ':gameId/update',
-            component: SystemLotteryUpdate,
-            meta: { title: '修改游戏配置' }
           }
         ]
       },

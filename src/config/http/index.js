@@ -16,13 +16,14 @@ function endLoading () {
 }
 
 /* 设置axios全局配置 */
-axios.defaults.baseURL = 'http://192.168.5.182:8080'
-// axios.defaults.baseURL = 'http://192.168.5.181:8080'
+axios.defaults.baseURL = 'http://192.168.5.129:8080'
+// axios.defaults.baseURL = 'http://192.168.5.182:8080'
 
 // 处理页面刷新时，重新设置Token;
 if (store.getters['auth/token']) {
-  const { type, access } = store.getters['auth/token']
+  const { type, access, sessionId } = store.getters['auth/token']
   axios.defaults.headers.common['Authorization'] = `${type} ${access}`
+  axios.defaults.headers.common['sessionId'] = `${sessionId}`
 }
 
 // 请求拦截

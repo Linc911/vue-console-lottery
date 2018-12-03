@@ -25,7 +25,7 @@ router.beforeEach((to, from, next) => {
   if (to.path !== '/home' && to.path !== '/login/username') {
     if (!existed) {
       const titleRepeated = routes.some(route => route.name === to.meta.title)
-      if (!titleRepeated) {
+      if (!titleRepeated && to.name !== 'NotFound') {
         store.dispatch('tab/initRoutesStatus')
         store.dispatch('tab/addRoute', {
           name: to.meta.title,

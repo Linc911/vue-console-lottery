@@ -32,6 +32,7 @@ import { searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
 
 import ResultsSearch from './components/ResultsSearch'
 import GamesMenu from '@/components/global/GamesMenu'
+import ResultsPK10Table from './components/table/ResultsPK10Table'
 import ResultsElevenTable from './components/table/ResultsElevenTable'
 import ResultsFast3Table from './components/table/ResultsFast3Table'
 
@@ -40,6 +41,7 @@ export default {
   components: {
     ResultsSearch,
     GamesMenu,
+    ResultsPK10Table,
     ResultsElevenTable,
     ResultsFast3Table
   },
@@ -60,7 +62,9 @@ export default {
 
       switch (groupId) {
         case 18:
-          this.tableData = []
+          console.log('pk10')
+          this.activeComponent = 'ResultsPK10Table'
+          this.fetchTableData()
           break
         case 23:
           this.tableData = []

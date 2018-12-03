@@ -40,7 +40,7 @@ export default {
     },
     transferSecondToTime (second) {
       const s = this.addZeroPrefix(second % 60)
-      const m = second >= 3600 ? this.addZeroPrefix(second % 3600) : this.addZeroPrefix(Math.floor(second / 60))
+      const m = this.addZeroPrefix(Math.floor(second / 60) % 60)
       const h = this.addZeroPrefix(Math.floor(second / 3600))
 
       return `${h}:${m}:${s}`

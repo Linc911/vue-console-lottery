@@ -9,7 +9,8 @@
       class="custom-block"
       clearable
     >
-        <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
+      <el-option v-if="optionRoot" :label="rootLabel" :value="rootValue" />
+      <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
     </el-select>
   </el-form-item>
 </template>
@@ -46,6 +47,18 @@ export default {
     },
     label: {
       type: String,
+      default: ''
+    },
+    optionRoot: {
+      type: Boolean,
+      default: false
+    },
+    rootLabel: {
+      type: String,
+      default: 'root'
+    },
+    rootValue: {
+      type: [ String, Number ],
       default: ''
     },
     multiple: {

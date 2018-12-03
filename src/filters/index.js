@@ -25,7 +25,7 @@ Vue.filter('time', value => {
 })
 Vue.filter('sortTime', second => {
   const s = addZeroPrefix(second % 60)
-  const m = second >= 3600 ? addZeroPrefix(second % 3600) : addZeroPrefix(Math.floor(second / 60))
+  const m = addZeroPrefix(Math.floor(second / 60) % 60)
   const h = addZeroPrefix(Math.floor(second / 3600))
 
   return `${h}:${m}:${s}`
@@ -274,6 +274,23 @@ Vue.filter('sumDragonTiger', (value) => {
       return '龙'
     case 1:
       return '虎'
+    default:
+      return '其他'
+  }
+})
+// 开奖结果：总和龙虎对比
+Vue.filter('sumDragonTigerCompare', (value) => {
+  switch (value) {
+    case 0:
+      return '龙虎相等'
+    case 1:
+      return '龙多'
+    case 2:
+      return '虎多'
+    case 3:
+      return '全龙'
+    case 4:
+      return '全虎'
     default:
       return '其他'
   }
