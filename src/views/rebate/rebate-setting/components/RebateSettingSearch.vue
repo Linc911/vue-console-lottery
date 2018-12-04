@@ -25,7 +25,7 @@ import { searchInnerMixin } from '@/mixins'
 import FormInput from '@/components/form/FormInput'
 
 export default {
-  name: 'RemittanceShortcutSearch',
+  name: 'RebateSettingSearch',
   components: {
     FormInput
   },

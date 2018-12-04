@@ -3,6 +3,7 @@
     <!-- 左侧logo部分 -->
     <div class="head-logo">
       <router-link to="/home" class="head-logo-link">后台管理系统</router-link>
+
       <!-- 页面前进与后退 -->
       <div class="history-go">
         <div @click="myWindow.history.back()" class="history-go-item">
@@ -15,16 +16,15 @@
         </div>
       </div>
     </div>
+
     <!-- 右侧用户信息部分 -->
     <div class="head-user">
-      <div class="user-info">
-        <img :src="avatarUrl" class="user-avatar" alt="User avatar">
-        <span class="user-username">{{userInfo.nickname}}</span>
-      </div>
       <el-dropdown @command="handleDropdownCommand">
-        <span>
+        <div class="user-info">
+          <img :src="avatarUrl" class="user-avatar" alt="User avatar">
+          <span class="user-username">{{userInfo.nickname}}</span>
           <i class="el-icon-caret-bottom el-icon--right"></i>
-        </span>
+        </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item v-for="item in menuDropdown" :key="item.name" :command="item.command">
             <i :class="item.icon" class="fa"></i>
@@ -62,6 +62,7 @@ export default {
     }
   },
   methods: {
+    // 点击不同的用户下拉框，响应不同的状态
     handleDropdownCommand (command) {
       switch (command) {
         case 'info':
@@ -80,7 +81,6 @@ export default {
           this.$message.error('操作异常，请检查代码！')
       }
     },
-    // 获取数据后，把数据存到veux中
     getUserInfo () {
       this.$httpAPI.fetchUserInfo().then(response => {
         this.userInfo = response.data.data

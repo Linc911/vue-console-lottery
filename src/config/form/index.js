@@ -9,6 +9,22 @@ const FormValidation = {
     return { required: true, message: `${title}至少选择其中一个` }
   },
 
+  // 验证手机号码
+  validatePhone (title) {
+    return [
+      { required: true, message: `${title}不能为空` },
+      { pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, message: '请输入有效的11位手机号码' }
+    ]
+  },
+
+  // 验证手机号码
+  validateStringLength (title, min, max) {
+    return [
+      { required: true, message: `${title}不能为空` },
+      { min, max, message: `${title}长度在 ${min} - ${max} 字符之间` }
+    ]
+  },
+
   // 检验为整数: 第二参数为最大整数位数（例：2 => 0 - 99之间）
   validateInteger (title, digit) {
     if (arguments[1]) {

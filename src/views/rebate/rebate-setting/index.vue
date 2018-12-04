@@ -42,8 +42,8 @@
 import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
-import RebateSettingSearch from './components/RebateSettingSearch'
 import BaseAdd from '@/components/base/BaseAdd'
+import RebateSettingSearch from './components/RebateSettingSearch'
 import RebateSettingTable from './components/RebateSettingTable'
 import RebateSettingDialogCreate from './components/RebateSettingDialogCreate'
 
@@ -51,8 +51,8 @@ export default {
   name: 'RebateSettingList',
   components: {
     SearchLayout,
-    RebateSettingSearch,
     BaseAdd,
+    RebateSettingSearch,
     RebateSettingTable,
     RebateSettingDialogCreate
   },

@@ -1,4 +1,3 @@
-import BaseBreadcrumb from '@/components/base/BaseBreadcrumb'
 import BasePagination from '@/components/base/BasePagination'
 
 import BaseSwitch from '@/components/base/BaseSwitch'
@@ -6,13 +5,6 @@ import BaseTimePicker from '@/components/base/BaseTimePicker'
 
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
-
-/* ========================================== 面包屑导航 ========================================== */
-export const breadcrumbMixin = {
-  components: {
-    BaseBreadcrumb
-  }
-}
 
 /* ========================================== BaseSwitch组件 ========================================== */
 export const statusSwitchMixin = {
@@ -236,14 +228,18 @@ export const tableComponentMixin = {
       this.$refs.dialogDelete.toggleDialogVisible(false)
 
       this.$httpAPI[this.deleteHttpAPI]({
-        params: { [this.deleteAttrName]: this.activeItem.id }
+        params: { [this.deleteAttrName]: this.deleteId ? this.activeItem[this.deleteId] : this.activeItem.id }
       }).then(response => {
-        if (response.data.status === 200) {
-          this.$emit('on-deleted')
-          this.$message.success('删除成功！')
-        } else {
-          this.$message.error('删除失败！')
-        }
+        /* 接口没有统一，待接口文档统一后再对相应的返回码做处理 */
+        // if (response.data.status === 200) {
+        //   this.$emit('on-deleted')
+        //   this.$message.success('删除成功！')
+        // } else {
+        //   this.$message.error('删除失败！')
+        // }
+
+        this.$emit('on-deleted')
+        this.$message.success('删除成功！')
       }).catch(error => console.log(error))
     }
   }
@@ -263,16 +259,20 @@ export const dialogCreateMixin = {
           this.dialogVisible = false
 
           this.$httpAPI[this.createHttpAPI](this.formData).then(response => {
-            if (response.data.status === 200) {
-              // 清除表单填写记录
-              // this.$utils.invokeRefResetMothod(this.$refs)
-              // this.$refs[formName].resetFields()
+            /* 接口没有统一，待接口文档统一后再对相应的返回码做处理 */
+            // if (response.data.status === 200) {
+            //   // 清除表单填写记录
+            //   this.$utils.invokeRefResetMothod(this.$refs)
+            //   this.$refs[formName].resetFields()
+            //
+            //   this.$emit('on-created', this.formData)
+            //   this.$message.success('创建成功！')
+            // } else {
+            //   this.$message.error('创建失败！')
+            // }
 
-              this.$emit('on-created', this.formData)
-              this.$message.success('创建成功！')
-            } else {
-              this.$message.error('创建失败！')
-            }
+            this.$emit('on-created', this.formData)
+            this.$message.success('创建成功！')
           }).catch(error => console.log(error))
         } else {
           this.$message.warning('表单填写不正确，请按提示填写！')
@@ -324,12 +324,16 @@ export const dialogUpdateMixin = {
             }
 
             this.$httpAPI[this.updateHttpAPI](finalPostData).then(response => {
-              if (response.data.status === 200) {
-                this.$emit('on-updated')
-                this.$message.success('修改成功！')
-              } else {
-                this.$message.error('修改失败！')
-              }
+              /* 接口没有统一，待接口文档统一后再对相应的返回码做处理 */
+              // if (response.data.status === 200) {
+              //   this.$emit('on-updated')
+              //   this.$message.success('修改成功！')
+              // } else {
+              //   this.$message.error('修改失败！')
+              // }
+
+              this.$emit('on-updated')
+              this.$message.success('修改成功！')
             }).catch(error => console.log(error))
           } else {
             this.$message.info('检测数据没有变化，不发送修改请求。')

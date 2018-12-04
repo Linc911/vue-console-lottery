@@ -1,16 +1,16 @@
 <template>
-  <section class="not_found">
-    <img src="../assets/images/404.gif" class="not_found_img" alt="Not Found Demostration Picture">
+  <section class="not-found">
+    <img src="../assets/images/404.gif" class="not-found-img" alt="Not Found Demostration Picture">
   </section>
 </template>
 
 <style lang="scss" scoped>
-.not_found {
+.not-found {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-.not_found_img {
+.not-found-img {
   width: 100%;
   height: 100%;
 }

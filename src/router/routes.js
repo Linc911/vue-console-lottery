@@ -1,36 +1,34 @@
 /* ========================================== 登   录 ============================================= */
+
 import LoginLayout from '@/views/login/LoginLayout'
 import LoginUsername from '@/views/login/LoginUsername'
 const LoginPhone = resolve => require(['@/views/login/LoginPhone'], resolve)
 
 /* ========================================== 主   页 ============================================ */
+
 const HomeLayout = resolve => require(['@/views/HomeLayout'], resolve)
 const HomePage = resolve => require(['@/views/HomePage'], resolve)
 
 /* ========================================== 用户信息 ============================================ */
+
 const UserActive = resolve => require(['@/views/useractive/UserActive'], resolve)
 const UserActiveInfoUpdate = resolve => require(['@/views/useractive/UserActiveInfoUpdate'], resolve)
 const UserActiveAvatarUpdate = resolve => require(['@/views/useractive/UserActiveAvatarUpdate'], resolve)
 const UserActivePhoneUpdate = resolve => require(['@/views/useractive/UserActivePhoneUpdate'], resolve)
 
 /* ========================================== 系统设置 ============================================ */
+
 const SystemMenuSetting = resolve => require(['@/views/system/menu-setting'], resolve) // 菜单
 const SystemRolesSetting = resolve => require(['@/views/system/roles-setting'], resolve) // 角色
+const SystemPermissionsSetting = resolve => require(['@/views/system/permissions-setting'], resolve) // 权限
+const SystemGroupSetting = resolve => require(['@/views/system/group-setting'], resolve) // 分组
 const SystemUsersSetting = resolve => require(['@/views/system/users-setting'], resolve) // 用户
 const SystemLotterySetting = resolve => require(['@/views/system/lottery-setting'], resolve) // 彩票
 const SystemBanksSetting = resolve => require(['@/views/system/banks-setting'], resolve) // 银行
 const SystemAreaSetting = resolve => require(['@/views/system/area-setting'], resolve) // 地区
-// 权限
-const SystemPermissionsList = resolve => require(['@/views/system/SystemPermissionsList'], resolve)
-const SystemPermissionCreate = resolve => require(['@/views/system/SystemPermissionCreate'], resolve)
-const SystemPermissionUpdate = resolve => require(['@/views/system/SystemPermissionUpdate'], resolve)
-// 分组
-const SystemGroup = resolve => require(['@/views/system/group/SystemGroup'], resolve)
-const SystemGroupList = resolve => require(['@/views/system/group/SystemGroupList'], resolve)
-const SystemGroupCreate = resolve => require(['@/views/system/group/SystemGroupCreate'], resolve)
-const SystemGroupUpdate = resolve => require(['@/views/system/group/SystemGroupUpdate'], resolve)
 
 /* ========================================== 会员管理 ============================================ */
+
 const UsersManage = resolve => require(['@/views/users/UsersManage'], resolve)
 const UsersList = resolve => require(['@/views/users/users-list'], resolve)
 const UserBets = resolve => require(['@/views/users/user-bets'], resolve)
@@ -42,6 +40,7 @@ const UsersAccount = resolve => require(['@/views/users/UsersAccount'], resolve)
 const UsersKeyword = resolve => require(['@/views/users/UsersKeyword'], resolve)
 
 /* ========================================== 彩票管理 ============================================ */
+
 const LotteryManage = resolve => require(['@/views/lottery/LotteryManage'], resolve)
 const LotteryResults = resolve => require(['@/views/lottery/lottery-results'], resolve)
 const LotteryOdds = resolve => require(['@/views/lottery/lottery-odds'], resolve)
@@ -54,6 +53,7 @@ const LotteryStatistics = resolve => require(['@/views/lottery/LotteryStatistics
 const LotteryUsersInfo = resolve => require(['@/views/lottery/LotteryUsersInfo'], resolve)
 
 /* ========================================== 财务管理 ============================================ */
+
 const FinanceManage = resolve => require(['@/views/finance/FinanceManage'], resolve)
 const FinanceBalanceManipulation = resolve => require(['@/views/finance/balance-manipulation'], resolve)
 const FinanceDepositForm = resolve => require(['@/views/finance/deposit-form'], resolve)
@@ -70,6 +70,7 @@ const FinanceSettingList = resolve => require(['@/views/finance/setting/FinanceS
 const FinanceSettingLoan = resolve => require(['@/views/finance/setting/loan'], resolve)
 
 /* ========================================== 返水管理 ============================================ */
+
 const RebateManage = resolve => require(['@/views/rebate/RebateManage'], resolve)
 const RebateList = resolve => require(['@/views/rebate/rebate-list'], resolve)
 const RebateSetting = resolve => require(['@/views/rebate/rebate-setting'], resolve)
@@ -83,6 +84,7 @@ const TransactionRemittanceUser = resolve => require(['@/views/transaction/remit
 const TransactionRemittanceShortcut = resolve => require(['@/views/transaction/remittance-shortcut'], resolve)
 
 /* ========================================== 代理管理 ============================================ */
+
 const AgentManage = resolve => require(['@/views/agent/AgentManage'], resolve)
 const AgentList = resolve => require(['@/views/agent/AgentList'], resolve)
 const AgentCreate = resolve => require(['@/views/agent/AgentCreate'], resolve)
@@ -93,19 +95,21 @@ const AgentInterestGames = resolve => require(['@/views/agent/AgentInterestGames
 const AgentInterestDivision = resolve => require(['@/views/agent/AgentInterestDivision'], resolve)
 const AgentInterestUsersDivision = resolve => require(['@/views/agent/AgentInterestUsersDivision'], resolve)
 
-/* 优惠活动 */
 /* ========================================== 优惠活动 ============================================ */
+
 const PromotionManage = resolve => require(['@/views/promotion/PromotionManage'], resolve)
 const PromotionList = resolve => require(['@/views/promotion/PromotionList'], resolve)
 const PromotionCreate = resolve => require(['@/views/promotion/PromotionCreate'], resolve)
 
 /* ========================================== 体育管理 ============================================ */
+
 const SportManage = resolve => require(['@/views/sport/SportManage'], resolve)
 const SportThreeBets = resolve => require(['@/views/sport/SportThreeBets'], resolve)
 const SportThreeTransfer = resolve => require(['@/views/sport/SportThreeTransfer'], resolve)
 const SportStatistics = resolve => require(['@/views/sport/SportStatistics'], resolve)
 
 /* ========================================== 公告管理 ============================================ */
+
 const NoticeManage = resolve => require(['@/views/notice/NoticeManage'], resolve)
 const NoticePublish = resolve => require(['@/views/notice/NoticePublish'], resolve)
 const NoticePublishedList = resolve => require(['@/views/notice/NoticePublishedList'], resolve)
@@ -115,6 +119,7 @@ const NoticeFeedbackUsers = resolve => require(['@/views/notice/NoticeFeedbackUs
 const NoticeFeedbackSuggestions = resolve => require(['@/views/notice/NoticeFeedbackSuggestions'], resolve)
 
 /* ========================================== 其   他 ============================================ */
+
 const ValidationCodeLogs = resolve => require(['@/views/others/ValidationCodeLogs'], resolve)
 
 const NotFound = resolve => require(['@/views/NotFound'], resolve)
@@ -151,7 +156,7 @@ const routes = [
       }
     ]
   },
-  // 主页
+  /* ========================================== 主页 ============================================ */
   {
     name: 'HomeLayout',
     path: '/homelayout',
@@ -164,7 +169,7 @@ const routes = [
         component: HomePage,
         meta: { title: '系统首页', keepAlive: true }
       },
-      /* 登录用户模块 */
+      /* ========================================== 头像下拉框 ============================================ */
       {
         name: 'UserActive',
         path: '/useractive',
@@ -217,6 +222,30 @@ const routes = [
         }
       },
       {
+        name: 'SystemPermissionsSetting',
+        path: '/system/permissions',
+        component: SystemPermissionsSetting,
+        meta: {
+          title: '权限',
+          breadcrumb: [
+            { name: '系统设置' },
+            { name: '权限' }
+          ]
+        }
+      },
+      {
+        name: 'SystemGroupSetting',
+        path: '/system/group',
+        component: SystemGroupSetting,
+        meta: {
+          title: '分组',
+          breadcrumb: [
+            { name: '系统设置' },
+            { name: '分组' }
+          ]
+        }
+      },
+      {
         name: 'SystemUsersSetting',
         path: '/system/users',
         component: SystemUsersSetting,
@@ -263,49 +292,6 @@ const routes = [
             { name: '银行' }
           ]
         }
-      },
-      // 系统管理 - 权限模块
-      {
-        path: '/system/permissions',
-        component: SystemPermissionsList,
-        meta: { title: '权限列表' }
-      },
-      {
-        path: '/system/permission/create',
-        component: SystemPermissionCreate,
-        meta: { title: '创建新权限' }
-      },
-      {
-        path: '/system/permission/:id/update',
-        component: SystemPermissionUpdate,
-        meta: { title: '修改权限' }
-      },
-      // 系统管理 - 分组模块
-      {
-        name: 'SystemGroup',
-        path: '/system/group',
-        redirect: '/system/group/list',
-        component: SystemGroup,
-        children: [
-          {
-            name: 'SystemGroupList',
-            path: 'list',
-            component: SystemGroupList,
-            meta: { title: '会员分组列表' }
-          },
-          {
-            name: 'SystemGroupCreate',
-            path: 'create',
-            component: SystemGroupCreate,
-            meta: { title: '创建会员新分组', keepAlive: true }
-          },
-          {
-            name: 'SystemGroupUpdate',
-            path: ':groupId/update',
-            component: SystemGroupUpdate,
-            meta: { title: '修改会员分组' }
-          }
-        ]
       },
       /* ========================================== 会员管理 ============================================ */
       // 会员信息
@@ -760,7 +746,7 @@ const routes = [
           },
           {
             name: 'AgentAchievementUsers',
-            path: 'achievement/users',
+            path: 'performance/users',
             component: AgentAchievementUsers,
             meta: { title: '代理个人业绩' }
           },

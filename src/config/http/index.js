@@ -16,8 +16,8 @@ function endLoading () {
 }
 
 /* 设置axios全局配置 */
-axios.defaults.baseURL = 'http://192.168.5.129:8080'
-// axios.defaults.baseURL = 'http://192.168.5.182:8080'
+// axios.defaults.baseURL = 'http://192.168.5.129:8080'
+axios.defaults.baseURL = 'http://192.168.5.182:8080'
 
 // 处理页面刷新时，重新设置Token;
 if (store.getters['auth/token']) {

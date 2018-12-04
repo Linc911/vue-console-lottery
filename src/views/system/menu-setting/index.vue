@@ -49,14 +49,14 @@ export default {
     // 点击一级菜单时，先筛选出需要的数据再渲染到页面上
     handleSubmenuToggleVisible (menu) {
       if (menu.child) {
-        // 每次先把指数标签重置
+        // 每次先把指示标签重置
         this.$_.forEach(this.tableOriginData, (item) => {
           item.child = false
         })
 
         this.tableData = this.$_.filter(this.tableOriginData, (item) => !item.parentId)
       } else {
-        // 每次先把指数标签重置
+        // 每次先把指示标签重置
         this.$_.forEach(this.tableOriginData, (item) => {
           item.child = false
         })

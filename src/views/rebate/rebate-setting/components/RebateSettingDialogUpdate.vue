@@ -1,85 +1,83 @@
 <template lang="html">
-  <div>
-    <el-dialog :visible.sync="dialogVisible" title="修改返水计划设置" width="760px">
-      <el-form
-        :model="formData"
-        :rules="rules"
-        label-width="120px"
-        size="small"
-        class="clearfix"
-        ref="formUpdate"
-      >
-        <el-form-item prop="name" label="返水计划名称">
-          <el-input v-model.trim="formData.name" placeholder="请输入名称" />
-        </el-form-item>
+  <el-dialog :visible.sync="dialogVisible" title="修改返水计划设置" width="760px">
+    <el-form
+      :model="formData"
+      :rules="rules"
+      label-width="120px"
+      size="small"
+      class="clearfix"
+      ref="formUpdate"
+    >
+      <el-form-item prop="name" label="返水计划名称">
+        <el-input v-model.trim="formData.name" placeholder="请输入名称" />
+      </el-form-item>
 
-        <FormSelect
-          @on-change="$set(formData, 'gameConfigId', $event)"
-          :value="formData.gameConfigId"
-          httpAPIName="fetchGameClasses"
-          labelAttr="name"
-          valueAttr="id"
-          prop="gameConfigId"
-          label="游戏类型"
-          ref="gameConfigId"
-        />
+      <FormSelect
+        @on-change="$set(formData, 'gameConfigId', $event)"
+        :value="formData.gameConfigId"
+        httpAPIName="fetchGameClasses"
+        labelAttr="name"
+        valueAttr="id"
+        prop="gameConfigId"
+        label="游戏类型"
+        ref="gameConfigId"
+      />
 
-        <el-form-item prop="upperLimit" label="投注上限">
-          <el-input v-model.trim="formData.upperLimit" type="number" min="0" placeholder="投注上限" />
-        </el-form-item>
+      <el-form-item prop="upperLimit" label="投注上限">
+        <el-input v-model.trim="formData.upperLimit" type="number" min="0" placeholder="投注上限" />
+      </el-form-item>
 
-        <el-form-item prop="lowerLimit" label="投注下限">
-          <el-input v-model.trim="formData.lowerLimit" type="number" min="0" placeholder="投注下限" />
-        </el-form-item>
+      <el-form-item prop="lowerLimit" label="投注下限">
+        <el-input v-model.trim="formData.lowerLimit" type="number" min="0" placeholder="投注下限" />
+      </el-form-item>
 
-        <el-form-item prop="ratio" label="返佣比率%">
-          <el-input v-model.trim="formData.ratio" type="number" min="0" placeholder="返佣比率" />
-        </el-form-item>
+      <el-form-item prop="ratio" label="返佣比率%">
+        <el-input v-model.trim="formData.ratio" type="number" min="0" placeholder="返佣比率" />
+      </el-form-item>
 
-        <el-form-item prop="status" label="是否启用">
-          <el-radio-group v-model="formData.status">
-            <el-radio :label="0">启用</el-radio>
-            <el-radio :label="1">禁用</el-radio>
-          </el-radio-group>
-        </el-form-item>
+      <el-form-item prop="status" label="是否启用">
+        <el-radio-group v-model="formData.status">
+          <el-radio :label="0">启用</el-radio>
+          <el-radio :label="1">禁用</el-radio>
+        </el-radio-group>
+      </el-form-item>
 
-        <FormTimeSelect
-          @on-change="$set(formData, 'startTime', $event)"
-          :time="formData.startTime"
-          prop="startTime"
-          label="计划开始时间"
-          placeholder="开始时间"
-          ref="startTime"
-        />
+      <FormTimeSelect
+        @on-change="$set(formData, 'startTime', $event)"
+        :time="formData.startTime"
+        prop="startTime"
+        label="计划开始时间"
+        placeholder="开始时间"
+        ref="startTime"
+      />
 
-        <FormTimeSelect
-          @on-change="$set(formData, 'endTime', $event)"
-          :time="formData.endTime"
-          prop="endTime"
-          label="计划结束时间"
-          placeholder="结束时间"
-          ref="endTime"
-        />
+      <FormTimeSelect
+        @on-change="$set(formData, 'endTime', $event)"
+        :time="formData.endTime"
+        prop="endTime"
+        label="计划结束时间"
+        placeholder="结束时间"
+        ref="endTime"
+      />
 
-        <FormSelect
-          @on-change="$set(formData, 'rebateUserGroups', $event)"
-          :value="formData.rebateUserGroups"
-          httpAPIName="fetchUserGroups"
-          :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
-          labelAttr="name"
-          valueAttr="groupId"
-          prop="rebateUserGroups"
-          label="会员分组"
-          multiple
-          ref="rebateUserGroups"
-        />
-      </el-form>
+      <FormSelect
+        @on-change="$set(formData, 'rebateUserGroups', $event)"
+        :value="formData.rebateUserGroups"
+        httpAPIName="fetchUserGroups"
+        :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
+        labelAttr="name"
+        valueAttr="groupId"
+        prop="rebateUserGroups"
+        label="会员分组"
+        multiple
+        ref="rebateUserGroups"
+      />
+    </el-form>
 
-      <span slot="footer">
-        <el-button @click="submitForm('formUpdate')" type="primary" size="small">确定</el-button>
-      </span>
-    </el-dialog>
-  </div>
+    <span slot="footer">
+      <el-button @click="submitForm('formUpdate')" type="primary" size="small">确定</el-button>
+    </span>
+  </el-dialog>
 </template>
 
 <script>

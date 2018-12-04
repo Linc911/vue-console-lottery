@@ -10,7 +10,7 @@
       clearable
     >
       <el-option v-if="optionRoot" :label="rootLabel" :value="rootValue" />
-      <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
+      <el-option v-for="option in options" :key="option.label" :label="option.label" :value="option.value" />
     </el-select>
   </el-form-item>
 </template>

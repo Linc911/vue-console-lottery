@@ -93,7 +93,7 @@ export default {
   bottom: 0;
   z-index: 10;
   width: calc(100% - 220px);
-  margin-left: 220px;
   padding: 0;
+  margin-left: 220px;
 }
 </style>

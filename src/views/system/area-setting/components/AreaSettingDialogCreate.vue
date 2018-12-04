@@ -1,5 +1,5 @@
 <template lang="html">
-  <el-dialog :visible.sync="dialogVisible" title="创建新银行卡" width="500px">
+  <el-dialog :visible.sync="dialogVisible" title="创建新地区" width="500px">
     <el-form
       :model="formData"
       :rules="rules"
@@ -16,7 +16,7 @@
         httpAPIName="fetchSystemAreaList"
         :httpAPIParams="{ pageNo: 1, pageSize: 10 }"
         labelAttr="name"
-        valueAttr="parentId"
+        valueAttr="areaId"
         prop="parentId"
         label="所属地区"
         optionRoot
@@ -28,7 +28,7 @@
       </el-form-item>
 
       <el-form-item prop="remark" label="备注">
-        <el-input v-model.trim="formData.wechat" placeholder="中国_广东" />
+        <el-input v-model.trim="formData.remark" placeholder="中国_广东" />
       </el-form-item>
     </el-form>
 
@@ -45,7 +45,7 @@ import { dialogCreateMixin } from '@/mixins'
 import FormValition from '@/config/form'
 
 export default {
-  name: 'BanksSettingDialogCreate',
+  name: 'AreaSettingDialogCreate',
   components: {
     FormSelect
   },

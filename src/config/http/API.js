@@ -2,6 +2,7 @@ import axios from './index'
 
 export default {
   /* ===================================== 公共数据 ======================================= */
+
   fetchSidebarMenuList: () => axios.get('/api-b/menus/all'), // 页面侧边栏菜单列表
 
   // 游戏类
@@ -12,41 +13,49 @@ export default {
   fetchUserId: options => axios.get('/api-u/users-anon/getUserId', options), // 查询会员ID
 
   /* ===================================== 登   录 ======================================= */
-  postUserLogin: (data, options) => axios.post('/api-u/sys/login', data, options),
+
   fetchLogoutInfo: () => axios.get('/api-u/sys/logout'),
+  postUserLogin: (data, options) => axios.post('/api-u/sys/login', data, options),
 
   fetchUserInfo: () => axios.get('/api-u/users/current'),
   putUserInfo: data => axios.put('/api-u/users/me', data),
 
   /* ===================================== 系统管理 ======================================= */
+
   fetchSystemMenuList: (options) => axios.get('/api-b/menus/all', options), // 菜单列表
   createSystemMenuItem: (data) => axios.post('/api-b/menus', data), // 创建新菜单
   updateSystemMenuItem: (data) => axios.put('/api-b/menus', data), // 修改菜单配置
-
-  fetchUserGroups: (options) => axios.get('/api-u/group/list', options), // 全部列表
-  fetchSystemGroupItem: (options) => axios.get('/api-u/group/info', options), // 单个详情
-  postSystemGroupChange: (data) => axios.post('/api-u/group/save', data), // 创建或修改单个分组
-  postUserGroupSetting: (options) => axios.get('/api-u/group/saveRelation', options), // 设置单个会员分组
-
-  fetchSystemUsersList: (options) => axios.get('/api-u/users', options), // 用户列表
-  createSystemUsersList: (data) => axios.post('/api-u/users-anon/register', data), // 创建新用户
-  updateSystemUsersItem: (data) => axios.post('/api-u/users/update', data), // 更新用户信息
 
   fetchSystemRolesList: (options) => axios.get('/api-u/roles', options), // 角色列表
   createSystemRolesItem: (data) => axios.post('/api-u/roles', data), // 创建新角色
   updateSystemRolesItem: (data) => axios.put('/api-u/roles', data), // 更新角色信息
   deleteSystemRolesItem: (options) => axios.delete('/api-u/roles', options), // 删除角色
 
+  fetchSystePermissionsList: (options) => axios.get('/api-u/permissions', options), // 权限列表
+  createSystePermissionsItem: (options) => axios.post('/api-u/permissions', options), // 创建新权限
+  updateSystePermissionsItem: (options) => axios.put('/api-u/permissions', options), // 修改权限信息
+
+  fetchUserGroups: (options) => axios.get('/api-u/group/list', options), // 分组列表
+  postSystemGroupChange: (data) => axios.post('/api-u/group/save', data), // 创建或修改分组信息
+  postUserGroupSetting: (options) => axios.get('/api-u/group/saveRelation', options), // 设置单个会员分组
+
+  fetchSystemUsersList: (options) => axios.get('/api-u/users', options), // 用户列表
+  createSystemUsersList: (data) => axios.post('/api-u/users-anon/register', data), // 创建新用户
+  updateSystemUsersItem: (data) => axios.post('/api-u/users/update', data), // 更新用户信息
+
   fetchSystemBanksList: (data) => axios.post('/api-b/bankConfig/list', data), // 银行设置列表
   createSystemBanksItem: (data) => axios.put('/api-b/bankConfig/save', data), // 创建新银行配置
 
   fetchSystemAreaList: (data) => axios.post('/api-b/area/list', data), // 地区设置列表
+  fetchSystemAreaListTree: (data) => axios.post('/api-b/area/tree', data), // 地区设置列表
   updateSystemAreaItem: (data) => axios.put('/api-b/area/save', data), // 创建与修改地区配置
+  deleteSystemAreaItem: (options) => axios.delete('/api-b/area/delete', options), // 删除地区
 
   fetchLotterySettingInfo: (options) => axios.get('/api-g/GameTypeConfig/get', options), // 彩票设置列表
   updateLotterySettingItem: (data) => axios.post('/api-g/GameTypeConfig/save', data), // 修改彩票设置
 
   /* ===================================== 会员管理 ======================================= */
+
   fetchUsersList: options => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
   getUserInfo: options => axios.get('/api-u/backend/user', options), // 单个会员信息
 
@@ -62,6 +71,7 @@ export default {
   fetchUsersLogs: (options) => axios.get('/api-l/logList', options),
 
   /* ===================================== 彩票管理 ======================================= */
+
   fetchLotteryResultsEleven: options => axios.get('/api-g/result/1', options),
   fetchLotteryResultsFast3: options => axios.get('/api-g/result/2', options),
   updateLotteryResultEleven: options => axios.get('/api-g/result/1/settlement', options), // 手动修改开奖结果
@@ -75,6 +85,7 @@ export default {
   updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改单个游戏赔率数据
 
   /* ===================================== 财务管理 ======================================= */
+
   fetchFinanceBalanceManipulation: options => axios.get('/api-p/changeUserRecharge/list', options), // 加减款列表
   fetchBalanceChangeItem: options => axios.get('/api-p/changeUserRecharge/info', options), // 加减款每项详情
   saveFinanceBalanceChange: data => axios.post('/api-p/changeUserRecharge/save', data), // 提交加减款表单
@@ -102,6 +113,7 @@ export default {
   fetchFinanceDepoistLogs: options => axios.get('/api-p/UserOrder/orderAndRecharge', options), // 所有存款记录
 
   /* ===================================== 返水管理 ======================================= */
+
   fetchRebateSettingList: options => axios.get('/api-b/rebate/list', options), // 设置返水计划列表
   createRebateSettingList: data => axios.post('/api-b/rebate/save', data), // 会设置返水计划保存
   updateRebateSettingStatus: options => axios.get('/api-b/rebate/status', options), // 设置返水计划修改
@@ -111,6 +123,7 @@ export default {
   statistic: options => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计
 
   /* ===================================== 收款出款 ======================================= */
+
   fetchTransactionPaymentType: options => axios.get('/api-b/configPayType/list', options), // 支付类型列表
   createTransactionPaymentType: data => axios.post('/api-b/configPayType/save', data), // 创建新支付类型
   updateTransactionPaymentType: data => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
@@ -136,5 +149,6 @@ export default {
   // deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options) // 删除会员汇款设置
 
   /* ===================================== 代理管理 ======================================= */
+
   fetchAgentPerformanceLinearList: (options) => axios.get('/api-b/findAgentUserPerformanceList') // 获取代理线条业绩列表
 }

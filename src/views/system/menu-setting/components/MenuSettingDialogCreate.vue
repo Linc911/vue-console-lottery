@@ -30,7 +30,7 @@
       </el-form-item>
 
       <el-form-item label="排列顺序" prop="sort">
-        <el-input v-model.trim="formData.sort" @keyup.native.enter="submitForm('itemCreateForm')" type="number" :min="1" :max="100" placeholder="排列顺序" />
+        <el-input v-model.trim="formData.sort" @keyup.native.enter="submitForm('formCreate')" type="number" :min="1" :max="100" placeholder="排列顺序" />
       </el-form-item>
     </el-form>
 

@@ -28,7 +28,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="url" label="访问路由" :min-width="100" />
+      <el-table-column prop="url" label="访问路由" :min-width="140" />
 
       <el-table-column prop="css" label="图标" :min-width="45">
         <template slot-scope="scope">
@@ -36,7 +36,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="sort" label="排列顺序" />
+      <el-table-column prop="sort" label="排序" :min-width="45" />
 
       <el-table-column prop="operations" label="操作" :min-width="90">
         <template slot-scope="scope">
@@ -53,6 +53,7 @@
       :menuOptions="data"
       ref="dialogUpdate"
     />
+
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
       @on-confirm="handleDialogDeleteConfirm"
@@ -114,7 +115,7 @@ export default {
 }
 .item-name {
   display: inline-block;
-  width: 90%;
+  width: 80%;
   height: 100%;
   cursor: pointer;
 }

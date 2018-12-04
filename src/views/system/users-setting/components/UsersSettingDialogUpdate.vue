@@ -66,6 +66,8 @@
 <script>
 import { dialogUpdateMixin } from '@/mixins'
 
+import FormValidation from '@/config/form'
+
 import FormSelect from '@/components/form/FormSelect'
 import FormRadio from '@/components/form/FormRadio'
 import FormTimeSelect from '@/components/form/FormTimeSelect'
@@ -89,14 +91,8 @@ export default {
           { pattern: /^[a-zA-Z]+/, message: '用户名称必须是字母开头' },
           { min: 4, max: 15, message: '用户名称长度在 4 - 15 字符之间' }
         ],
-        password: [
-          { required: true, message: '登录密码不能为空' }
-          // { min: 6, max: 20, message: '登录密码长度在 6 - 20 字符之间' }
-        ],
-        phone: [
-          { required: true, message: '手机号码不能为空' },
-          { pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, message: '请输入有效的11位手机号' }
-        ]
+        password: FormValidation.validateStringLength('登录密码', 6, 20),
+        phone: FormValidation.validatePhone('手机号码')
       }
     }
   },

@@ -9,8 +9,7 @@
 
     <!-- 主要内容 -->
     <component v-bind:is="currentTabComponent" @on-created="handleCreated"></component>
-    <!-- <keep-alive>
-    </keep-alive> -->
+
   </div>
 </template>
 

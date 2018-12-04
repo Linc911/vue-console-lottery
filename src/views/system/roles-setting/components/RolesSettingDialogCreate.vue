@@ -25,6 +25,8 @@
 <script>
 import { dialogCreateMixin } from '@/mixins'
 
+import FormValidation from '@/config/form'
+
 export default {
   name: 'RolesSettingDialogCreate',
   mixins: [ dialogCreateMixin ],
@@ -33,14 +35,8 @@ export default {
       createHttpAPI: 'createSystemRolesItem',
       formData: {},
       rules: {
-        code: [
-          { required: true, message: 'code不能为空' },
-          { max: 20, message: 'code不能超过20位字符' }
-        ],
-        name: [
-          { required: true, message: '角色名称' },
-          { max: 20, message: '角色名称不能超过20位字符' }
-        ]
+        code: FormValidation.validateStringLength('CODE', 1, 20),
+        name: FormValidation.validateStringLength('角色名称', 1, 20)
       }
     }
   }

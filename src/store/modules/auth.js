@@ -56,10 +56,12 @@ const actions = {
     })
   },
   // 登出 -- token设置为空，调整到用户登录页
-  logout ({ commit, dispatch, state }) {
+  logout ({ commit }) {
     axios.get('/api-u/sys/logout').then(response => {
       commit('clearToken')
-      dispatch('auth/tab/clearRoutes')
+      this.commit('tab/clearRoutes')
+
+      router.push({ name: 'LoginUsername' })
     }).catch(error => console.log(error))
   }
 }

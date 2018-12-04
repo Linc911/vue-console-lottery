@@ -25,6 +25,8 @@
 <script>
 import { dialogUpdateMixin } from '@/mixins'
 
+import FormValidation from '@/config/form'
+
 export default {
   name: 'RolesSettingDialogUpdate',
   mixins: [ dialogUpdateMixin ],
@@ -34,10 +36,7 @@ export default {
       idParams: {}, // 必须携带的Id参数/及其他参数
       formData: { name: '' },
       rules: {
-        name: [
-          { required: true, message: '角色名称' },
-          { max: 20, message: '角色名称不能超过20位字符' }
-        ]
+        name: FormValidation.validateStringLength('角色名称', 1, 20)
       }
     }
   },
