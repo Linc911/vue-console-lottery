@@ -15,9 +15,18 @@ function endLoading () {
   loading.close()
 }
 
+function initLoginStatus () {
+  store.dispatch('auth/clearToken')
+  store.dispatch('tab/clearRoutes')
+
+  axios.defaults.headers.common['Authorization'] = ''
+
+  router.push({ name: 'LoginUsername' })
+}
+
 /* 设置axios全局配置 */
-// axios.defaults.baseURL = 'http://192.168.5.129:8080'
-axios.defaults.baseURL = 'http://192.168.5.182:8080'
+axios.defaults.baseURL = process.env.VUE_APP_BASEURL
+// axios.defaults.baseURL = 'http://192.168.5.192:8080'
 
 // 处理页面刷新时，重新设置Token;
 if (store.getters['auth/token']) {
@@ -41,14 +50,13 @@ axios.interceptors.response.use(response => {
   endLoading()
 
   if (response.status === 401) {
-    store.dispatch('auth/clearToken')
-    store.dispatch('tab/clearRoutes')
-
-    axios.defaults.headers.common['Authorization'] = ''
-
-    router.push({ name: 'LoginUsername' })
+    initLoginStatus()
 
     Message.warning('登录Token已过期，请重新登录。')
+  } else if (response.status === -9999) {
+    initLoginStatus()
+
+    Message.warning('该账户已在其他设备登录')
   }
   return response
 }, error => {
@@ -57,12 +65,7 @@ axios.interceptors.response.use(response => {
 
   // token验证后台有两种不同验证，分别要处理
   if (error.response && error.response.status === 401) {
-    store.dispatch('auth/clearToken')
-    store.dispatch('tab/clearRoutes')
-
-    axios.defaults.headers.common['Authorization'] = ''
-
-    router.push({ name: 'LoginUsername' })
+    initLoginStatus()
 
     Message.warning('登录Token已过期，请重新登录。')
   }

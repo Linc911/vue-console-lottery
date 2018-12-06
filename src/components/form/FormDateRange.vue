@@ -9,6 +9,7 @@
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
+      :style="{ width }"
       size="small"
       align="right"
     />
@@ -17,7 +18,7 @@
 
 <script>
 export default {
-  name: 'SearchUsername',
+  name: 'FormDateRange',
   props: {
     prop: {
       type: String,
@@ -26,6 +27,11 @@ export default {
     label: {
       type: String,
       default: '时间查询'
+    },
+    // 内容长度
+    width: {
+      type: String,
+      default: 'auto'
     }
   },
   data () {

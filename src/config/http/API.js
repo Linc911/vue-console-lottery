@@ -150,5 +150,20 @@ export default {
 
   /* ===================================== 代理管理 ======================================= */
 
-  fetchAgentPerformanceLinearList: (options) => axios.get('/api-b/findAgentUserPerformanceList') // 获取代理线条业绩列表
+  fetchAgentPerformanceLinearList: (options) => axios.get('/api-b/findAgentUserPerformanceList'), // 获取代理线条业绩列表
+
+  /* ===================================== 优惠活动 ======================================= */
+
+  fetchActivityList: (options) => axios.get('/api-n/activity', options), // 优惠活动列表
+  updateActivityItem: (data) => axios.post('/api-n/activity/save', data), // 创建与修改优惠活动信息
+
+  /* ===================================== 公告管理 ======================================= */
+  fetchNoticeList: (options) => axios.get('/api-n/notice', options), // 公告列表
+  updateNoticeItem: (data) => axios.post('/api-n/notice/save', data), // 创建与修改公告信息
+
+  fetchSystemNoticeList: (options) => axios.get('/api-n/sysnotice', options), // 系统公告列表
+  updateSystemNoticeItem: (data) => axios.post('/api-n/sysnotice/save', data), // 创建与修改系统公告信息
+
+  fetchSystemMessageList: (options) => axios.get('/api-n/sysmessage', options), // 系统消息列表
+  updateSystemMessageItem: (data) => axios.post('/api-n/sysmessage/save', data) // 创建与修改系统消息
 }

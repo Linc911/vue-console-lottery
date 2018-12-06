@@ -1,8 +1,8 @@
 <template lang="html">
-  <div class="notice-manage">
-    <keep-alive v-if="$route.meta.keepAlive">
-      <router-view />
+  <div>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive" />
     </keep-alive>
-    <router-view v-else />
+    <router-view  v-if="!$route.meta.keepAlive" />
   </div>
 </template>

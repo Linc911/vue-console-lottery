@@ -97,9 +97,8 @@ const AgentInterestUsersDivision = resolve => require(['@/views/agent/AgentInter
 
 /* ========================================== 优惠活动 ============================================ */
 
-const PromotionManage = resolve => require(['@/views/promotion/PromotionManage'], resolve)
-const PromotionList = resolve => require(['@/views/promotion/PromotionList'], resolve)
-const PromotionCreate = resolve => require(['@/views/promotion/PromotionCreate'], resolve)
+const ActivityManage = resolve => require(['@/views/activity/ActivityManage'], resolve)
+const ActivityList = resolve => require(['@/views/activity/activity-list'], resolve)
 
 /* ========================================== 体育管理 ============================================ */
 
@@ -294,7 +293,6 @@ const routes = [
         }
       },
       /* ========================================== 会员管理 ============================================ */
-      // 会员信息
       {
         name: 'UsersManage',
         path: '/users',
@@ -784,22 +782,22 @@ const routes = [
       },
       /* ========================================== 优惠活动 ============================================ */
       {
-        name: 'PromotionManage',
-        path: '/promotion',
-        redirect: '/promotion/list',
-        component: PromotionManage,
+        name: 'ActivityManage',
+        path: '/activity',
+        redirect: '/activity/list',
+        component: ActivityManage,
         children: [
           {
-            name: 'PromotionList',
+            name: 'ActivityList',
             path: 'list',
-            component: PromotionList,
-            meta: { title: '优惠活动图片管理' }
-          },
-          {
-            name: 'PromotionCreate',
-            path: 'create',
-            component: PromotionCreate,
-            meta: { title: '优惠活动图片管理', keepAlive: true }
+            component: ActivityList,
+            meta: {
+              title: '优惠活动',
+              breadcrumb: [
+                { name: '优惠活动' },
+                { name: '图片管理' }
+              ]
+            }
           }
         ]
       },

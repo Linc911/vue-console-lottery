@@ -2,11 +2,6 @@
  * Override ElementUI Default Components Styles
  */
 
-// icon
-// .el-icon {
-//   font-size: 14px;
-// }
-
 /* input 组件 */
 // 设置属性 disabled 时
 .el-input.is-disabled .el-input__inner {
@@ -47,12 +42,4 @@
 .el-breadcrumb__inner.is-link {
   color: #189F92;
   cursor: pointer;
-}
-
-/* upload 组件 */
-.el-upload-list--picture-card .el-upload-list__item-actions {
-  display: none;
-}
-.el-upload-list--picture-card .el-upload-list__item:hover .el-upload-list__item-status-label {
-  display: block;
 }

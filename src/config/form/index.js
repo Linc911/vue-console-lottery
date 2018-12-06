@@ -13,7 +13,10 @@ const FormValidation = {
   validatePhone (title) {
     return [
       { required: true, message: `${title}不能为空` },
-      { pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, message: '请输入有效的11位手机号码' }
+      {
+        pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/,
+        message: '请输入有效的11位手机号码'
+      }
     ]
   },
 
@@ -30,7 +33,10 @@ const FormValidation = {
     if (arguments[1]) {
       return [
         { required: true, message: `${title}不能为空` },
-        { pattern: new RegExp(`^[0-9]{1,${digit}}$`), message: `${title}必须 0 - ${generateHighestInteger(digit)} 为之间整数` }
+        {
+          pattern: new RegExp(`^[0-9]{1,${digit}}$`),
+          message: `${title}必须 0 - ${generateHighestInteger(digit)} 为之间整数`
+        }
       ]
     }
 
