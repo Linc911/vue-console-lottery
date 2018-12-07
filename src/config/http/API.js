@@ -156,6 +156,7 @@ export default {
 
   fetchActivityList: (options) => axios.get('/api-n/activity', options), // 优惠活动列表
   updateActivityItem: (data) => axios.post('/api-n/activity/save', data), // 创建与修改优惠活动信息
+  deleteActivityItem: (options) => axios.delete('/api-n/activity/delete', options), // 删除优惠活动
 
   /* ===================================== 公告管理 ======================================= */
   fetchNoticeList: (options) => axios.get('/api-n/notice', options), // 公告列表
@@ -165,5 +166,11 @@ export default {
   updateSystemNoticeItem: (data) => axios.post('/api-n/sysnotice/save', data), // 创建与修改系统公告信息
 
   fetchSystemMessageList: (options) => axios.get('/api-n/sysmessage', options), // 系统消息列表
-  updateSystemMessageItem: (data) => axios.post('/api-n/sysmessage/save', data) // 创建与修改系统消息
+  updateSystemMessageItem: (data) => axios.post('/api-n/sysmessage/save', data), // 创建与修改系统消息
+
+  /* ===================================== 公告管理 ======================================= */
+
+  fetchWebsiteStandbyList: (options) => axios.get('/api-b/website', options), // 备用网站列表
+  updateWebsiteStandbyItem: (data) => axios.put('/api-b/website/save', data), // 创建与修改备用网站配置
+  deleteWebsiteStandbyItem: (options) => axios.delete('/api-b/website/delete', options) // 删除备用网站
 }

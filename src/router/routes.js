@@ -100,6 +100,13 @@ const AgentInterestUsersDivision = resolve => require(['@/views/agent/AgentInter
 const ActivityManage = resolve => require(['@/views/activity/ActivityManage'], resolve)
 const ActivityList = resolve => require(['@/views/activity/activity-list'], resolve)
 
+/* ========================================== 网站管理 ============================================ */
+
+const WebsiteManage = resolve => require(['@/views/website/WebsiteManage'], resolve)
+const WebsiteStandby = resolve => require(['@/views/website/website-standby'], resolve)
+const WebsiteRegistryUser = resolve => require(['@/views/website/registry-user'], resolve)
+const WebsiteImagePhone = resolve => require(['@/views/website/image-phone'], resolve)
+
 /* ========================================== 体育管理 ============================================ */
 
 const SportManage = resolve => require(['@/views/sport/SportManage'], resolve)
@@ -119,7 +126,7 @@ const NoticeFeedbackSuggestions = resolve => require(['@/views/notice/NoticeFeed
 
 /* ========================================== 其   他 ============================================ */
 
-const ValidationCodeLogs = resolve => require(['@/views/others/ValidationCodeLogs'], resolve)
+// const ValidationCodeLogs = resolve => require(['@/views/others/ValidationCodeLogs'], resolve)
 
 const NotFound = resolve => require(['@/views/NotFound'], resolve)
 
@@ -792,10 +799,55 @@ const routes = [
             path: 'list',
             component: ActivityList,
             meta: {
-              title: '优惠活动',
+              title: '图片管理',
               breadcrumb: [
                 { name: '优惠活动' },
                 { name: '图片管理' }
+              ]
+            }
+          }
+        ]
+      },
+      /* ========================================== 网站管理 ============================================ */
+      {
+        name: 'WebsiteManage',
+        path: '/website',
+        redirect: '/website/standby',
+        component: WebsiteManage,
+        children: [
+          {
+            name: 'WebsiteStandby',
+            path: 'standby',
+            component: WebsiteStandby,
+            meta: {
+              title: '备用网站管理',
+              breadcrumb: [
+                { name: '网站管理' },
+                { name: '备用网站管理' }
+              ]
+            }
+          },
+          {
+            name: 'WebsiteRegistryUser',
+            path: 'registry',
+            component: WebsiteRegistryUser,
+            meta: {
+              title: '会员注册配置',
+              breadcrumb: [
+                { name: '网站管理' },
+                { name: '会员注册配置' }
+              ]
+            }
+          },
+          {
+            name: 'WebsiteImagePhone',
+            path: 'image',
+            component: WebsiteImagePhone,
+            meta: {
+              title: '手机首页图片',
+              breadcrumb: [
+                { name: '网站管理' },
+                { name: '手机首页图片' }
               ]
             }
           }
@@ -872,13 +924,13 @@ const routes = [
             meta: { title: '意见反馈' }
           }
         ]
-      },
-      /* 短信验证码日志 */
-      {
-        path: '/validationCode/logs',
-        component: ValidationCodeLogs,
-        meta: { title: '短信验证码日志' }
       }
+      /* 短信验证码日志 */
+      // {
+      //   path: '/validationCode/logs',
+      //   component: ValidationCodeLogs,
+      //   meta: { title: '短信验证码日志' }
+      // }
     ]
   }
 ]

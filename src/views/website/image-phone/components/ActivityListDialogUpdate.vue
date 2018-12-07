@@ -6,7 +6,7 @@
       label-width="100px"
       size="small"
       class="clearfix"
-      ref="formCreate"
+      ref="formUpdate"
     >
       <el-form-item prop="title" label="活动标题">
         <el-input v-model.trim="formData.title" placeholder="双11大优惠" />
@@ -40,7 +40,8 @@
 
       <el-form-item prop="startTime" label="时间期限" class="custom-block">
         <FormTimeRange
-          @on-change="Object.assign(formData, { startTime: $event.startTime, endTime: $event.endTime })"
+          @on-change="Object.assign(this.formData, { startTime: $event.startTime, endTime: $event.endTime })"
+          :value="[ new Date(formData.startTime), new Date(formData.endTime) ]"
           width="100%"
           ref="dateRange"
         />
@@ -61,7 +62,7 @@
         <el-input v-model.trim="formData.sort" type="number" min="0" placeholder="整数" />
       </el-form-item>
 
-      <el-form-item prop="coverImg" label="封面图片" class="custom-block">
+      <!-- <el-form-item prop="coverImg" label="封面图片" class="custom-block">
         <FormUploadImage
           @on-uploaded="$set(formData, 'coverImg', $event.response)"
           @on-removed="$set(formData, 'coverImg', $event)"
@@ -73,34 +74,37 @@
           @on-uploaded="$set(formData, 'activityImg', $event.response)"
           @on-removed="$set(formData, 'activityImg', $event)"
         />
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
 
     <span slot="footer">
-      <el-button @click="submitForm('formCreate')" type="primary" size="small">确定</el-button>
+      <el-button @click="submitForm('formUpdate')" type="primary" size="small">确定</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-import { dialogCreateMixin } from '@/mixins'
+import { dialogUpdateMixin } from '@/mixins'
 
 import FormValidation from '@/config/form'
 
 import FormTimeRange from '@/components/form/FormTimeRange'
-import FormUploadImage from '@/components/form/FormUploadImage'
+import FormRadio from '@/components/form/FormRadio'
+import FormTimeSelect from '@/components/form/FormTimeSelect'
 
 export default {
-  name: 'ActivityListDialogCreate',
+  name: 'ActivityListDialogUpdate',
   components: {
     FormTimeRange,
-    FormUploadImage
+    FormRadio,
+    FormTimeSelect
   },
-  mixins: [ dialogCreateMixin ],
+  mixins: [ dialogUpdateMixin ],
   data () {
     return {
-      createHttpAPI: 'updateActivityItem',
-      formData: { type: 0, status: 0, sort: 1 },
+      updateHttpAPI: 'updateActivityItem',
+      idParams: {}, // 必须携带的Id参数/及其他参数
+      formData: { type: '', status: '', sort: '', startTime: '', endTime: '' },
       rules: {
         title: FormValidation.validateRequired('活动标题'),
         // startTime: { required: true, message: '时间期限不能为空', trigger: 'blur' },
@@ -109,6 +113,11 @@ export default {
         phone: FormValidation.validateSelect('是否手机段'),
         status: FormValidation.validateSelect('启用状态')
       }
+    }
+  },
+  watch: {
+    data () {
+      this.idParams = { id: this.data.id }
     }
   }
 }

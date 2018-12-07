@@ -15,6 +15,10 @@ export default {
       default () {
         return {}
       }
+    },
+    opposite: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -29,7 +33,7 @@ export default {
   },
   methods: {
     handleSwitchChange () {
-      this.$emit('on-change', Object.assign(this.payload, { value: this.value }))
+      this.$emit('on-change', Object.assign(this.payload, { value: this.opposite ? !this.value : this.value }))
     }
   }
 }

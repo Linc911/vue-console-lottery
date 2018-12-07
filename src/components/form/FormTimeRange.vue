@@ -1,8 +1,8 @@
 <template lang="html">
   <el-date-picker
-    v-model="value"
+    v-model="pickerValue"
     @change="handleDatePickerChange"
-    type="daterange"
+    type="datetimerange"
     :picker-options="pickerOptions"
     :default-time="['00:00:00', '23:59:59']"
     range-separator="至"
@@ -16,8 +16,12 @@
 
 <script>
 export default {
-  name: 'SearchUsername',
+  name: 'FormTimeRange',
   props: {
+    value: {
+      type: [ String, Array ],
+      default: ''
+    },
     // 内容长度
     width: {
       type: String,
@@ -26,7 +30,7 @@ export default {
   },
   data () {
     return {
-      value: '',
+      pickerValue: '',
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -54,6 +58,11 @@ export default {
           }
         }]
       }
+    }
+  },
+  watch: {
+    value () {
+      this.pickerValue = this.value
     }
   },
   methods: {
