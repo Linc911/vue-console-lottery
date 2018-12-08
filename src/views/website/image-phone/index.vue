@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <ActivityListSearch @on-search="handleSearch" />
+        <ImagePhoneSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -13,7 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <ActivityListTable
+      <ImagePhoneTable
         @on-updated="fetchTableData()"
         @on-deleted="fetchTableData()"
         @on-status-changed="fetchTableData()"
@@ -30,7 +30,7 @@
     </div>
 
     <!-- 创建弹框 -->
-    <ActivityListDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
+    <ImagePhoneDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
@@ -39,24 +39,24 @@ import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import BaseAdd from '@/components/base/BaseAdd'
-import ActivityListSearch from './components/ActivityListSearch'
-import ActivityListTable from './components/ActivityListTable'
-import ActivityListDialogCreate from './components/ActivityListDialogCreate'
+import ImagePhoneSearch from './components/ImagePhoneSearch'
+import ImagePhoneTable from './components/ImagePhoneTable'
+import ImagePhoneDialogCreate from './components/ImagePhoneDialogCreate'
 
 export default {
-  name: 'ActivityList',
+  name: 'WebsiteImagePhone',
   components: {
     SearchLayout,
     BaseAdd,
-    ActivityListSearch,
-    ActivityListTable,
-    ActivityListDialogCreate
+    ImagePhoneSearch,
+    ImagePhoneTable,
+    ImagePhoneDialogCreate
   },
   mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],
-      tableHttpAPI: 'fetchActivityList',
+      tableHttpAPI: 'fetchWebsiteImagePhoneList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }

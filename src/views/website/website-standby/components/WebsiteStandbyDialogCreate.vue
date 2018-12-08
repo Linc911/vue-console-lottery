@@ -5,7 +5,6 @@
       :rules="rules"
       label-width="80px"
       size="small"
-      class="clearfix"
       ref="formCreate"
     >
       <el-form-item prop="showDomain" label="显示域名">
@@ -20,7 +19,6 @@
         <el-radio-group v-model="formData.status">
           <el-radio :label="0">启用</el-radio>
           <el-radio :label="1">禁用</el-radio>
-          <el-radio :label="2">发布</el-radio>
         </el-radio-group>
       </el-form-item>
     </el-form>

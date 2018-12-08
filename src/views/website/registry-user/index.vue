@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <ActivityListSearch @on-search="handleSearch" />
+        <!-- <RegistryUserSearch @on-search="handleSearch" /> -->
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -13,7 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <ActivityListTable
+      <RegistryUserTable
         @on-updated="fetchTableData()"
         @on-deleted="fetchTableData()"
         @on-status-changed="fetchTableData()"
@@ -30,7 +30,7 @@
     </div>
 
     <!-- 创建弹框 -->
-    <ActivityListDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
+    <RegistryUserDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
@@ -39,25 +39,25 @@ import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import BaseAdd from '@/components/base/BaseAdd'
-import ActivityListSearch from './components/ActivityListSearch'
-import ActivityListTable from './components/ActivityListTable'
-import ActivityListDialogCreate from './components/ActivityListDialogCreate'
+import RegistryUserSearch from './components/RegistryUserSearch'
+import RegistryUserTable from './components/RegistryUserTable'
+import RegistryUserDialogCreate from './components/RegistryUserDialogCreate'
 
 export default {
-  name: 'ActivityList',
+  name: 'WebsiteRegistryUser',
   components: {
     SearchLayout,
     BaseAdd,
-    ActivityListSearch,
-    ActivityListTable,
-    ActivityListDialogCreate
+    RegistryUserSearch,
+    RegistryUserTable,
+    RegistryUserDialogCreate
   },
   mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],
-      tableHttpAPI: 'fetchActivityList',
-      requestParams: { pageNo: 1, pageSize: 10 },
+      tableHttpAPI: 'fetchWebsiteRegistryUserList',
+      requestParams: { type: 3, pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }
   }

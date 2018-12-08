@@ -1,20 +1,23 @@
 <template lang="html">
   <el-form :model="formData" size="small" inline>
-    <!-- <FormInput
+    <FormInput
       @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'title', $event)"
-      label="活动标题"
+      @on-change="$set(formData, 'username', $event)"
+      label="用户账号"
       width="174px"
-      ref="title"
-    /> -->
+      ref="username"
+    />
 
     <FormSelectStatic
       @on-change="$set(formData, 'status', $event)"
       :options="[
-        { value: 0, label: '启用' },
-        { value: 1, label: '禁用' },
+        { value: 0, label: '待审核' },
+        { value: 1, label: '已查看' },
+        { value: 2, label: '待解决' },
+        { value: 3, label: '已解决' },
+        { value: 4, label: '不予解决' }
       ]"
-      label="启用状态"
+      label="处理状态"
       width="100px"
       ref="status"
     />

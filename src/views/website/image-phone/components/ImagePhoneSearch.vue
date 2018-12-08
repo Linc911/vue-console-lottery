@@ -2,18 +2,10 @@
   <el-form :model="formData" size="small" inline>
     <FormInput
       @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'showDomain', $event)"
-      label="显示域名"
+      @on-change="$set(formData, 'name', $event)"
+      label="图片名称"
       width="174px"
-      ref="showDomain"
-    />
-
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'forwardDomain', $event)"
-      label="跳转域名"
-      width="174px"
-      ref="forwardDomain"
+      ref="name"
     />
 
     <FormSelectStatic
@@ -41,7 +33,7 @@ import FormInput from '@/components/form/FormInput'
 import FormSelectStatic from '@/components/form/FormSelectStatic'
 
 export default {
-  name: 'WebsiteStandbySearch',
+  name: 'ActivityListSearch',
   components: {
     FormInput,
     FormSelectStatic

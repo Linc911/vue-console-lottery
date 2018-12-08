@@ -106,6 +106,8 @@ const WebsiteManage = resolve => require(['@/views/website/WebsiteManage'], reso
 const WebsiteStandby = resolve => require(['@/views/website/website-standby'], resolve)
 const WebsiteRegistryUser = resolve => require(['@/views/website/registry-user'], resolve)
 const WebsiteImagePhone = resolve => require(['@/views/website/image-phone'], resolve)
+const WebsiteMenuSetting = resolve => require(['@/views/website/menu-setting'], resolve)
+const WebsiteFeedbackManagement = resolve => require(['@/views/website/feedback-management'], resolve)
 
 /* ========================================== 体育管理 ============================================ */
 
@@ -848,6 +850,30 @@ const routes = [
               breadcrumb: [
                 { name: '网站管理' },
                 { name: '手机首页图片' }
+              ]
+            }
+          },
+          {
+            name: 'WebsiteMenuSetting',
+            path: 'menu',
+            component: WebsiteMenuSetting,
+            meta: {
+              title: '网站菜单配置',
+              breadcrumb: [
+                { name: '网站管理' },
+                { name: '网站菜单配置' }
+              ]
+            }
+          },
+          {
+            name: 'WebsiteFeedbackManagement',
+            path: 'feedback',
+            component: WebsiteFeedbackManagement,
+            meta: {
+              title: '问题反馈管理',
+              breadcrumb: [
+                { name: '网站管理' },
+                { name: '问题反馈管理' }
               ]
             }
           }

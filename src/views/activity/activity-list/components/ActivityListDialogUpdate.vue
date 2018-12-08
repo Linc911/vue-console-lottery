@@ -108,7 +108,7 @@ export default {
       rules: {
         title: FormValidation.validateRequired('活动标题'),
         // startTime: { required: true, message: '时间期限不能为空', trigger: 'blur' },
-        sort: FormValidation.validateRequired('排序'),
+        sort: FormValidation.validateInteger('排序'),
         pc: FormValidation.validateSelect('是否电脑段'),
         phone: FormValidation.validateSelect('是否手机段'),
         status: FormValidation.validateSelect('启用状态')

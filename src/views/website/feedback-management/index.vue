@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <WebsiteStandbySearch @on-search="handleSearch" />
+        <FeedbackManagementSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -13,7 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <WebsiteStandbyTable
+      <FeedbackManagementTable
         @on-updated="fetchTableData()"
         @on-deleted="fetchTableData()"
         @on-status-changed="fetchTableData()"
@@ -30,7 +30,7 @@
     </div>
 
     <!-- 创建弹框 -->
-    <WebsiteStandbyDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
+    <FeedbackManagementDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
@@ -39,24 +39,24 @@ import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import BaseAdd from '@/components/base/BaseAdd'
-import WebsiteStandbySearch from './components/WebsiteStandbySearch'
-import WebsiteStandbyTable from './components/WebsiteStandbyTable'
-import WebsiteStandbyDialogCreate from './components/WebsiteStandbyDialogCreate'
+import FeedbackManagementSearch from './components/FeedbackManagementSearch'
+import FeedbackManagementTable from './components/FeedbackManagementTable'
+import FeedbackManagementDialogCreate from './components/FeedbackManagementDialogCreate'
 
 export default {
-  name: 'WebsiteStandby',
+  name: 'WebsiteFeedbackManagement',
   components: {
     SearchLayout,
     BaseAdd,
-    WebsiteStandbySearch,
-    WebsiteStandbyTable,
-    WebsiteStandbyDialogCreate
+    FeedbackManagementSearch,
+    FeedbackManagementTable,
+    FeedbackManagementDialogCreate
   },
   mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],
-      tableHttpAPI: 'fetchWebsiteStandbyList',
+      tableHttpAPI: 'fetchWebsiteFeedbackList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }

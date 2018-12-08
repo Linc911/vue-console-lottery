@@ -172,5 +172,21 @@ export default {
 
   fetchWebsiteStandbyList: (options) => axios.get('/api-b/website', options), // 备用网站列表
   updateWebsiteStandbyItem: (data) => axios.put('/api-b/website/save', data), // 创建与修改备用网站配置
-  deleteWebsiteStandbyItem: (options) => axios.delete('/api-b/website/delete', options) // 删除备用网站
+  deleteWebsiteStandbyItem: (options) => axios.delete('/api-b/website/delete', options), // 删除备用网站
+
+  fetchWebsiteRegistryUserList: (options) => axios.get('/api-b/dictionary/list', options), // 会员注册配置列表
+  updateWebsiteRegistryUserItem: (data) => axios.put('/api-b/dictionary/save', data), // 创建与修改会员注册配置
+  deleteWebsiteRegistryUserItem: (options) => axios.delete('/api-b/dictionary/delete', options), // 删除会员注册配置
+
+  fetchWebsiteImagePhoneList: (options) => axios.get('/api-b/cover', options), // 手机首页图片列表
+  updateWebsiteImagePhoneItem: (data) => axios.put('/api-b/cover/save', data), // 创建与修改手机首页图片
+  deleteWebsiteImagePhoneItem: (options) => axios.delete('/api-b/cover/delete', options), // 删除手机首页图片
+
+  fetchWebsiteMenuList: (options) => axios.get('/api-b/webMenu', options), // 网站菜单管理列表
+  updateWebsiteMenuItem: (data) => axios.put('/api-b/webMenu/save', data), // 创建与修改网站菜单管理
+  deleteWebsiteMenuItem: (options) => axios.delete('/api-b/webMenu/delete', options), // 删除网站菜单管理
+
+  fetchWebsiteFeedbackList: (options) => axios.get('/api-b/feedback', options), // 问题反馈管理列表
+  updateWebsiteFeedbackItem: (data) => axios.put('/api-b/feedback/save', data), // 创建与修改问题反馈管理
+  deleteWebsiteFeedbackItem: (options) => axios.delete('/api-b/feedback/delete', options) // 删除问题反馈管理
 }
