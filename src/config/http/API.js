@@ -2,6 +2,8 @@ import axios from './index'
 
 export default {
   /* ===================================== 公共数据 ======================================= */
+  // 会员分组
+  fetchPublicUserGroup: (options) => axios.get('/api-u/group/list', options),
 
   fetchSidebarMenuList: () => axios.get('/api-b/menus/all'), // 页面侧边栏菜单列表
 
@@ -160,15 +162,18 @@ export default {
 
   /* ===================================== 公告管理 ======================================= */
   fetchNoticeList: (options) => axios.get('/api-n/notice', options), // 公告列表
-  updateNoticeItem: (data) => axios.post('/api-n/notice/save', data), // 创建与修改公告信息
+  updateNoticeItem: (data) => axios.post('/api-n/notice/save', data), // 创建与修改公告
+  deleteNoticeItem: (data) => axios.delete('/api-n/notice/delete', data), // 删除公告
 
   fetchSystemNoticeList: (options) => axios.get('/api-n/sysnotice', options), // 系统公告列表
-  updateSystemNoticeItem: (data) => axios.post('/api-n/sysnotice/save', data), // 创建与修改系统公告信息
+  updateSystemNoticeItem: (data) => axios.post('/api-n/sysnotice/save', data), // 创建与修改系统公告
+  deleteSystemNoticeItem: (data) => axios.delete('/api-n/sysnotice/delete', data), // 删除系统公告
 
   fetchSystemMessageList: (options) => axios.get('/api-n/sysmessage', options), // 系统消息列表
   updateSystemMessageItem: (data) => axios.post('/api-n/sysmessage/save', data), // 创建与修改系统消息
+  deleteSystemMessageItem: (data) => axios.delete('/api-n/sysmessage/delete', data), // 删除系统消息
 
-  /* ===================================== 公告管理 ======================================= */
+  /* ===================================== 网站管理 ======================================= */
 
   fetchWebsiteStandbyList: (options) => axios.get('/api-b/website', options), // 备用网站列表
   updateWebsiteStandbyItem: (data) => axios.put('/api-b/website/save', data), // 创建与修改备用网站配置

@@ -68,7 +68,7 @@ import ImagePhoneDialogUpdate from './ImagePhoneDialogUpdate'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
-  name: 'ActivityListTable',
+  name: 'ImagePhoneTable',
   components: {
     BasePreview,
     DialogImagePreview,
@@ -79,7 +79,7 @@ export default {
   mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
-      deleteHttpAPI: 'deleteActivityItem',
+      deleteHttpAPI: 'deleteWebsiteImagePhoneItem',
       deleteAttrName: 'coverConfigId',
       deleteId: 'coverConfigId',
       switchObj: {

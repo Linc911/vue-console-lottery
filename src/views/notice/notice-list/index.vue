@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <UsersSettingSearch @on-search="handleSearch" />
+        <NoticeListSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -13,24 +13,24 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <!-- <ActivityListTable
+      <NoticeListTable
         @on-updated="fetchTableData()"
         @on-deleted="fetchTableData()"
         @on-status-change="fetchTableData()"
         :data="tableData"
-      /> -->
+      />
 
       <!-- 分页 -->
-      <!-- <BasePagination
+      <BasePagination
         @on-change="handlePaginationChange"
         :page="page"
         :requestParams="requestParams"
         :httpURL="tableHttpAPI"
-      /> -->
+      />
     </div>
 
     <!-- 创建弹框 -->
-    <ActivityListDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
+    <NoticeListDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
@@ -39,24 +39,24 @@ import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import BaseAdd from '@/components/base/BaseAdd'
-import UsersSettingSearch from './components/UsersSettingSearch'
-import ActivityListTable from './components/ActivityListTable'
-import ActivityListDialogCreate from './components/ActivityListDialogCreate'
+import NoticeListSearch from './components/NoticeListSearch'
+import NoticeListTable from './components/NoticeListTable'
+import NoticeListDialogCreate from './components/NoticeListDialogCreate'
 
 export default {
-  name: 'ActivityList',
+  name: 'NoticeList',
   components: {
     SearchLayout,
     BaseAdd,
-    UsersSettingSearch,
-    ActivityListTable,
-    ActivityListDialogCreate
+    NoticeListSearch,
+    NoticeListTable,
+    NoticeListDialogCreate
   },
   mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],
-      tableHttpAPI: 'fetchActivityList',
+      tableHttpAPI: 'fetchNoticeList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }

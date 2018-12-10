@@ -109,22 +109,19 @@ const WebsiteImagePhone = resolve => require(['@/views/website/image-phone'], re
 const WebsiteMenuSetting = resolve => require(['@/views/website/menu-setting'], resolve)
 const WebsiteFeedbackManagement = resolve => require(['@/views/website/feedback-management'], resolve)
 
+/* ========================================== 公告管理 ============================================ */
+
+const NoticeManage = resolve => require(['@/views/notice/NoticeManage'], resolve)
+const NoticeList = resolve => require(['@/views/notice/notice-list'], resolve)
+const NoticeSystemNotice = resolve => require(['@/views/notice/system-notice'], resolve)
+const NoticeSystemMessage = resolve => require(['@/views/notice/system-message'], resolve)
+
 /* ========================================== 体育管理 ============================================ */
 
 const SportManage = resolve => require(['@/views/sport/SportManage'], resolve)
 const SportThreeBets = resolve => require(['@/views/sport/SportThreeBets'], resolve)
 const SportThreeTransfer = resolve => require(['@/views/sport/SportThreeTransfer'], resolve)
 const SportStatistics = resolve => require(['@/views/sport/SportStatistics'], resolve)
-
-/* ========================================== 公告管理 ============================================ */
-
-const NoticeManage = resolve => require(['@/views/notice/NoticeManage'], resolve)
-const NoticePublish = resolve => require(['@/views/notice/NoticePublish'], resolve)
-const NoticePublishedList = resolve => require(['@/views/notice/NoticePublishedList'], resolve)
-const NoticeSystemNotifications = resolve => require(['@/views/notice/NoticeSystemNotifications'], resolve)
-const NoticeSystemMessages = resolve => require(['@/views/notice/NoticeSystemMessages'], resolve)
-const NoticeFeedbackUsers = resolve => require(['@/views/notice/NoticeFeedbackUsers'], resolve)
-const NoticeFeedbackSuggestions = resolve => require(['@/views/notice/NoticeFeedbackSuggestions'], resolve)
 
 /* ========================================== 其   他 ============================================ */
 
@@ -910,44 +907,44 @@ const routes = [
       {
         name: 'NoticeManage',
         path: '/notice',
-        redirect: '/notice/published/list',
+        redirect: '/notice/list',
         component: NoticeManage,
         children: [
           {
-            name: 'NoticePublish',
-            path: 'publish',
-            component: NoticePublish,
-            meta: { title: '发布公告' }
+            name: 'NoticeList',
+            path: 'list',
+            component: NoticeList,
+            meta: {
+              title: '公告',
+              breadcrumb: [
+                { name: '公告管理' },
+                { name: '公告' }
+              ]
+            }
           },
           {
-            name: 'NoticePublishedList',
-            path: 'published/list',
-            component: NoticePublishedList,
-            meta: { title: '已发公告列表' }
+            name: 'NoticeSystemNotice',
+            path: 'system/notice',
+            component: NoticeSystemNotice,
+            meta: {
+              title: '系统公告',
+              breadcrumb: [
+                { name: '公告管理' },
+                { name: '系统公告' }
+              ]
+            }
           },
           {
-            name: 'NoticeSystemNotifications',
-            path: 'system/notifications',
-            component: NoticeSystemNotifications,
-            meta: { title: '系统公告' }
-          },
-          {
-            name: 'NoticeSystemMessages',
-            path: 'system/messages',
-            component: NoticeSystemMessages,
-            meta: { title: '系统消息' }
-          },
-          {
-            name: 'NoticeFeedbackUsers',
-            path: 'feedback/users',
-            component: NoticeFeedbackUsers,
-            meta: { title: '会员反馈' }
-          },
-          {
-            name: 'NoticeFeedbackSuggestions',
-            path: 'feedback/suggestions',
-            component: NoticeFeedbackSuggestions,
-            meta: { title: '意见反馈' }
+            name: 'NoticeSystemMessage',
+            path: 'system/message',
+            component: NoticeSystemMessage,
+            meta: {
+              title: '系统消息',
+              breadcrumb: [
+                { name: '公告管理' },
+                { name: '系统消息' }
+              ]
+            }
           }
         ]
       }

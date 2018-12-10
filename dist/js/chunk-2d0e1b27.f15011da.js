@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0e1b27"],{"7c16":function(n,t,e){"use strict";e.r(t);var i=function(){var n=this,t=n.$createElement,e=n._self._c||t;return e("div",{staticClass:"unknown"},[n._v("\n  系统公告\n")])},s=[],c=e("048f"),o={},u=Object(c["a"])(o,i,s,!1,null,null,null);u.options.__file="NoticeSystemNotifications.vue";t["default"]=u.exports}}]);
-//# sourceMappingURL=chunk-2d0e1b27.f15011da.js.map
