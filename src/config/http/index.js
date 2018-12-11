@@ -55,7 +55,7 @@ axios.interceptors.response.use(response => {
     Message.warning('登录Token已过期，请重新登录。')
 
     return response
-  } else if (response.data.status === -9998) {
+  } else if (response.data.status === -9998 || response.data.status === -9999) {
     initLoginStatus()
 
     Message.warning('该账户已在其他设备登录')

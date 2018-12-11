@@ -16,7 +16,6 @@
       <SystemMessageTable
         @on-updated="fetchTableData()"
         @on-deleted="fetchTableData()"
-        @on-status-change="fetchTableData()"
         :data="tableData"
       />
 

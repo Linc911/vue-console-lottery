@@ -1,0 +1,48 @@
+<template lang="html">
+  <el-form :model="formData" size="small" inline>
+    <!-- <FormSelectGame
+      @on-change="$set(formData, 'gameType', $event)"
+      httpAPIName="fetchGamesMenu"
+      :httpAPIParams="{ params: { type: 1 } }"
+      labelAttr="name"
+      valueAttr="id"
+      prop="gameType"
+      label="游戏类型"
+      filterable
+      ref="gameType"
+    /> -->
+
+    <FormDateRange
+      @on-change="handleDateRangeChange"
+      label="时间区域"
+      ref="dateRange"
+    />
+
+    <div style="display: inline-block">
+      <SearchIcon @click.native="search" />
+      <SearchReset @click.native="reset" />
+    </div>
+  </el-form>
+</template>
+
+<script type="text/javascript">
+import { searchInnerMixin } from '@/mixins'
+
+import FormSelectGame from '@/components/form/FormSelectGame'
+import FormDateRange from '@/components/form/FormDateRange'
+
+export default {
+  name: 'StatisticsUsersSearch',
+  components: {
+    FormSelectGame,
+    FormDateRange
+  },
+  mixins: [ searchInnerMixin ],
+  methods: {
+    handleDateRangeChange ({ startTime, endTime }) {
+      this.formData.startTime = startTime
+      this.formData.endTime = endTime
+    }
+  }
+}
+</script>

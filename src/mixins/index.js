@@ -139,6 +139,10 @@ export const tableWithPaginationMixin = {
         }
 
         this.page.total = response.data.amount
+
+        if (Object.prototype.toString.call(this.statistics) === '[object Object]') {
+          this.statistics = response.data
+        }
       }).catch(error => console.log(error))
     }
   }

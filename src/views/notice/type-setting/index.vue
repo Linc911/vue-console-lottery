@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <SystemNoticeSearch @on-search="handleSearch" />
+        <!-- <SettingTypeSearch @on-search="handleSearch" /> -->
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -13,9 +13,10 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <SystemNoticeTable
+      <SettingTypeTable
         @on-updated="fetchTableData()"
         @on-deleted="fetchTableData()"
+        @on-status-changed="fetchTableData()"
         :data="tableData"
       />
 
@@ -29,7 +30,7 @@
     </div>
 
     <!-- 创建弹框 -->
-    <SystemNoticeDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
+    <SettingTypeDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
@@ -38,25 +39,25 @@ import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import BaseAdd from '@/components/base/BaseAdd'
-import SystemNoticeSearch from './components/SystemNoticeSearch'
-import SystemNoticeTable from './components/SystemNoticeTable'
-import SystemNoticeDialogCreate from './components/SystemNoticeDialogCreate'
+import SettingTypeSearch from './components/SettingTypeSearch'
+import SettingTypeTable from './components/SettingTypeTable'
+import SettingTypeDialogCreate from './components/SettingTypeDialogCreate'
 
 export default {
-  name: 'NoticeSystemNotice',
+  name: 'NoticeSettingType',
   components: {
     SearchLayout,
     BaseAdd,
-    SystemNoticeSearch,
-    SystemNoticeTable,
-    SystemNoticeDialogCreate
+    SettingTypeSearch,
+    SettingTypeTable,
+    SettingTypeDialogCreate
   },
   mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],
-      tableHttpAPI: 'fetchSystemNoticeList',
-      requestParams: { pageNo: 1, pageSize: 10 },
+      tableHttpAPI: 'fetchNoticeSettingTypeList',
+      requestParams: { pageNo: 1, pageSize: 10, type: 4 },
       page: { current: 1, size: 10, total: 10 }
     }
   }

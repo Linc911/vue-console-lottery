@@ -42,15 +42,16 @@ const UsersKeyword = resolve => require(['@/views/users/UsersKeyword'], resolve)
 /* ========================================== 彩票管理 ============================================ */
 
 const LotteryManage = resolve => require(['@/views/lottery/LotteryManage'], resolve)
+const LotteryOpen = resolve => require(['@/views/lottery/lottery-open'], resolve)
 const LotteryResults = resolve => require(['@/views/lottery/lottery-results'], resolve)
 const LotteryOdds = resolve => require(['@/views/lottery/lottery-odds'], resolve)
 const LotteryBets = resolve => require(['@/views/lottery/lottery-bets'], resolve)
-const LotteryOpen = resolve => require(['@/views/lottery/LotteryOpen'], resolve)
+const LotteryStatisticsUsers = resolve => require(['@/views/lottery/statistics-users'], resolve)
+const LotteryStatisticsBets = resolve => require(['@/views/lottery/statistics-bets'], resolve)
+const LotteryStatistics = resolve => require(['@/views/lottery/lottery-statistics'], resolve)
 const LotteryWithdraw = resolve => require(['@/views/lottery/LotteryWithdraw'], resolve)
 const LotteryKillrate = resolve => require(['@/views/lottery/LotteryKillrate'], resolve)
 const LotteryCheckout = resolve => require(['@/views/lottery/LotteryCheckout'], resolve)
-const LotteryStatistics = resolve => require(['@/views/lottery/LotteryStatistics'], resolve)
-const LotteryUsersInfo = resolve => require(['@/views/lottery/LotteryUsersInfo'], resolve)
 
 /* ========================================== 财务管理 ============================================ */
 
@@ -115,6 +116,7 @@ const NoticeManage = resolve => require(['@/views/notice/NoticeManage'], resolve
 const NoticeList = resolve => require(['@/views/notice/notice-list'], resolve)
 const NoticeSystemNotice = resolve => require(['@/views/notice/system-notice'], resolve)
 const NoticeSystemMessage = resolve => require(['@/views/notice/system-message'], resolve)
+const NoticeTypeSetting = resolve => require(['@/views/notice/type-setting'], resolve)
 
 /* ========================================== 体育管理 ============================================ */
 
@@ -124,8 +126,6 @@ const SportThreeTransfer = resolve => require(['@/views/sport/SportThreeTransfer
 const SportStatistics = resolve => require(['@/views/sport/SportStatistics'], resolve)
 
 /* ========================================== 其   他 ============================================ */
-
-// const ValidationCodeLogs = resolve => require(['@/views/others/ValidationCodeLogs'], resolve)
 
 const NotFound = resolve => require(['@/views/NotFound'], resolve)
 
@@ -366,11 +366,6 @@ const routes = [
         component: UserRechargeLogs,
         meta: { title: '会员个人充值记录' }
       },
-      // {
-      //   path: '/users/:id/depositStatistics',
-      //   component: UserAccountDeposit,
-      //   meta: { title: '存款历史统计' }
-      // },
       {
         path: '/users/:id/httpLogs',
         component: UserHttpLogs,
@@ -388,10 +383,10 @@ const routes = [
             path: 'open',
             component: LotteryOpen,
             meta: {
-              title: '彩票开盘记录',
+              title: '彩票开盘配置',
               breadcrumb: [
                 { name: '彩票管理' },
-                { name: '彩票开盘记录' }
+                { name: '彩票开盘配置' }
               ]
             }
           },
@@ -407,7 +402,6 @@ const routes = [
               ]
             }
           },
-          // 赔率设置
           {
             name: 'lotteryOdds',
             path: 'odds',
@@ -419,20 +413,44 @@ const routes = [
                 { name: '彩票赔率设置' }
               ]
             }
+          },
+          {
+            name: 'LotteryStatisticsUsers',
+            path: 'statistics/users',
+            component: LotteryStatisticsUsers,
+            meta: {
+              title: '彩票会员报表',
+              breadcrumb: [
+                { name: '彩票管理' },
+                { name: '彩票会员报表' }
+              ]
+            }
+          },
+          {
+            name: 'LotteryStatisticsBets',
+            path: 'statistics/bets',
+            component: LotteryStatisticsBets,
+            meta: {
+              title: '彩票注单报表',
+              breadcrumb: [
+                { name: '彩票管理' },
+                { name: '彩票注单报表' }
+              ]
+            }
+          },
+          {
+            name: 'LotteryStatistics',
+            path: 'statistics',
+            component: LotteryStatistics,
+            meta: {
+              title: '彩票总报表',
+              breadcrumb: [
+                { name: '彩票管理' },
+                { name: '彩票总报表' }
+              ]
+            }
           }
         ]
-      },
-      {
-        name: 'LotteryUsersInfo',
-        path: '/lottery/users/info',
-        component: LotteryUsersInfo,
-        meta: { title: '彩票会员报表', keepAlive: true }
-      },
-      {
-        name: 'LotteryStatistics',
-        path: '/lottery/statistics',
-        component: LotteryStatistics,
-        meta: { title: '彩票总报表', keepAlive: true }
       },
       {
         name: 'LotteryKillrate',
@@ -658,12 +676,6 @@ const routes = [
               ]
             }
           },
-          // {
-          //   name: 'Commercial',
-          //   path: 'commercial',
-          //   component: Commercial,
-          //   meta: { title: '出款商户配置' }
-          // },
           {
             name: 'TransactionRemittanceUser',
             path: 'remittance/user',
@@ -945,15 +957,21 @@ const routes = [
                 { name: '系统消息' }
               ]
             }
+          },
+          {
+            name: 'NoticeTypeSetting',
+            path: 'setting/type',
+            component: NoticeTypeSetting,
+            meta: {
+              title: '公告类型配置',
+              breadcrumb: [
+                { name: '公告管理' },
+                { name: '公告类型配置' }
+              ]
+            }
           }
         ]
       }
-      /* 短信验证码日志 */
-      // {
-      //   path: '/validationCode/logs',
-      //   component: ValidationCodeLogs,
-      //   meta: { title: '短信验证码日志' }
-      // }
     ]
   }
 ]

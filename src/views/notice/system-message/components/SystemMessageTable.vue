@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { tableComponentMixin, switchMixin } from '@/mixins'
+import { tableComponentMixin } from '@/mixins'
 
 import BasePopoverTextarea from '@/components/base/BasePopoverTextarea'
 import SystemMessageDialogDetail from './SystemMessageDialogDetail'
@@ -60,7 +60,7 @@ export default {
     SystemMessageDialogUpdate,
     DialogDeleteConfirm
   },
-  mixins: [ tableComponentMixin, switchMixin ],
+  mixins: [ tableComponentMixin ],
   data () {
     return {
       deleteHttpAPI: 'deleteSystemMessageItem',

@@ -17,6 +17,11 @@
         <el-tab-pane v-for="item in subGame" :key="item.type" :label="item.name" :name="item.type" />
       </el-tabs>
 
+      <!-- 三级菜单切换栏 -->
+      <!-- <el-tabs v-if="this.tableData" v-model="a" @tab-click="handleSubtabClick">
+        <el-tab-pane v-for="level1 in this.tableData" :key="level1.type" :label="level1.name" :name="level1.type" />
+      </el-tabs> -->
+
       <!-- 表格 -->
       <LotteryOddsTable @on-updated="fetchTableData()" :data="finalData" />
     </div>
@@ -42,7 +47,8 @@ export default {
       tableHttpAPI: 'fetchLotterOddsList',
       requestParams: { gameType: 3 },
       tabIndex: 0,
-      subtabIndex: 0
+      subtabIndex: 0,
+      a: ''
     }
   },
   computed: {

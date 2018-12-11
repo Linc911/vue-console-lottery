@@ -2,8 +2,10 @@ import axios from './index'
 
 export default {
   /* ===================================== 公共数据 ======================================= */
-  // 会员分组
-  fetchPublicUserGroup: (options) => axios.get('/api-u/group/list', options),
+
+  fetchPublicUserGroup: (options) => axios.get('/api-u/group/list', options), // 会员分组
+
+  fetchPublicUsers: options => axios.get('/api-u/backend/userList', options), // 会员列表
 
   fetchSidebarMenuList: () => axios.get('/api-b/menus/all'), // 页面侧边栏菜单列表
 
@@ -53,9 +55,6 @@ export default {
   updateSystemAreaItem: (data) => axios.put('/api-b/area/save', data), // 创建与修改地区配置
   deleteSystemAreaItem: (options) => axios.delete('/api-b/area/delete', options), // 删除地区
 
-  fetchLotterySettingInfo: (options) => axios.get('/api-g/GameTypeConfig/get', options), // 彩票设置列表
-  updateLotterySettingItem: (data) => axios.post('/api-g/GameTypeConfig/save', data), // 修改彩票设置
-
   /* ===================================== 会员管理 ======================================= */
 
   fetchUsersList: options => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
@@ -74,17 +73,19 @@ export default {
 
   /* ===================================== 彩票管理 ======================================= */
 
-  fetchLotteryResultsEleven: options => axios.get('/api-g/result/1', options),
-  fetchLotteryResultsFast3: options => axios.get('/api-g/result/2', options),
-  updateLotteryResultEleven: options => axios.get('/api-g/result/1/settlement', options), // 手动修改开奖结果
-  updateLotteryResultFast3: options => axios.get('/api-g/result/2/settlement', options),
-  cancelLotteryResultEleven: options => axios.get('/api-g/result/1/cancel', options), // 撤单
-  cancelLotteryResultFast3: options => axios.get('/api-g/result/2/cancel', options),
+  fetchLotterySettingInfo: (options) => axios.get('/api-g/GameTypeConfig/get', options), // 彩票设置列表(彩票开盘配置)
+  updateLotterySettingItem: (data) => axios.post('/api-g/GameTypeConfig/save', data), // 修改彩票设置(彩票开盘配置)
 
   fetchLotteryResultsList: (data) => axios.post('/api-g/result', data), // (新接口)所有开奖记录列表
 
   fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // 所有赔率列表
   updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改单个游戏赔率数据
+
+  fetchLotterStatisticsUsers: (options) => axios.get('/api-g/userBets/userReportForm', options), // 彩票会员报表
+
+  fetchLotterStatisticsBets: (options) => axios.get('/api-g/userBets/betReportForm', options), // 彩票注单报表
+
+  fetchLotterStatistics: (options) => axios.get('/api-g/userBets/totalReportForm', options), // 彩票总报表
 
   /* ===================================== 财务管理 ======================================= */
 
@@ -172,6 +173,10 @@ export default {
   fetchSystemMessageList: (options) => axios.get('/api-n/sysmessage', options), // 系统消息列表
   updateSystemMessageItem: (data) => axios.post('/api-n/sysmessage/save', data), // 创建与修改系统消息
   deleteSystemMessageItem: (data) => axios.delete('/api-n/sysmessage/delete', data), // 删除系统消息
+
+  fetchNoticeSettingTypeList: (options) => axios.get('/api-b/dictionary/list', options), // 公告类型列表
+  updateNoticeSettingTypeItem: (data) => axios.post('/api-b/dictionary/save', data), // 创建与修改公告类型
+  deleteNoticeSettingTypeItem: (data) => axios.delete('/api-b/dictionary/delete', data), // 删除公告类型
 
   /* ===================================== 网站管理 ======================================= */
 
