@@ -81,6 +81,8 @@ export default {
   fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // 所有赔率列表
   updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改单个游戏赔率数据
 
+  updateLotteryBillCancel: (data) => axios.post('/api-g/result/cancel', data), // 彩票未结撤单
+
   fetchLotterStatisticsUsers: (options) => axios.get('/api-g/userBets/userReportForm', options), // 彩票会员报表
 
   fetchLotterStatisticsBets: (options) => axios.get('/api-g/userBets/betReportForm', options), // 彩票注单报表
@@ -89,31 +91,34 @@ export default {
 
   /* ===================================== 财务管理 ======================================= */
 
-  fetchFinanceBalanceManipulation: options => axios.get('/api-p/changeUserRecharge/list', options), // 加减款列表
-  fetchBalanceChangeItem: options => axios.get('/api-p/changeUserRecharge/info', options), // 加减款每项详情
-  saveFinanceBalanceChange: data => axios.post('/api-p/changeUserRecharge/save', data), // 提交加减款表单
-  updateDepositFormStatus: options => axios.get('/api-p/changeUserRecharge/audit', options), // 审批加减款操作
+  fetchFinanceBalanceManipulation: (options) => axios.get('/api-p/changeUserRecharge/list', options), // 加减款列表
+  fetchBalanceChangeItem: (options) => axios.get('/api-p/changeUserRecharge/info', options), // 加减款每项详情
+  saveFinanceBalanceChange: (data) => axios.post('/api-p/changeUserRecharge/save', data), // 提交加减款表单
+  updateDepositFormStatus: (options) => axios.get('/api-p/changeUserRecharge/audit', options), // 审批加减款操作
 
-  fetchFinanceDepositForm: options => axios.get('/api-p/remitInfo/list', options), // 填单存款管理列表
-  updateFinanceDepositFormStatus: options => axios.get('/api-p/remitInfo/audit', options), // 审批填单存款
+  fetchFinanceDepositForm: (options) => axios.get('/api-p/remitInfo/list', options), // 填单存款管理列表
+  updateFinanceDepositFormStatus: (options) => axios.get('/api-p/remitInfo/audit', options), // 审批填单存款
 
-  fetchFinanceLimitationTransfer: options => axios.get('/api-u/convertRecharge/list', options), // 额度转换管理列表
+  fetchFinanceLimitationTransfer: (options) => axios.get('/api-u/convertRecharge/list', options), // 额度转换管理列表
 
-  fetchFinanceLoanList: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
-  fetchFinanceLoanType: options => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
-  createFinanceLoan: data => axios.post('/api-b/dictionary/save', data), // 创建与更新借贷类型数据
-  deleteFinanceLoan: options => axios.get('/api-b/dictionary/delete', options), // 删除借贷类型数据
+  fetchFinanceLoanList: (options) => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
+  fetchFinanceLoanType: (options) => axios.get('/api-b/dictionary/list', options), // 借贷类型列表
+  createFinanceLoan: (data) => axios.post('/api-b/dictionary/save', data), // 创建与更新借贷类型数据
+  deleteFinanceLoan: (options) => axios.get('/api-b/dictionary/delete', options), // 删除借贷类型数据
 
-  fetchFinanceWithdrawApply: options => axios.get('/api-u/withdrawOrder/list', options), // 提款申请管理列表
-  fetchFinanceWithdrawApplyItem: options => axios.get('/api-u/withdrawOrder/info', options), // 提款申请管理每项详情
-  updateFinanceWithdrawApplyStatus: options => axios.get('/api-u/withdrawOrder/audit', options), // 审批提款申请
+  fetchFinanceWithdrawApply: (options) => axios.get('/api-u/withdrawOrder/list', options), // 提款申请管理列表
+  fetchFinanceWithdrawApplyItem: (options) => axios.get('/api-u/withdrawOrder/info', options), // 提款申请管理每项详情
+  updateFinanceWithdrawApplyStatus: (options) => axios.get('/api-u/withdrawOrder/audit', options), // 审批提款申请
 
-  fetchFinanceDepositOnline: options => axios.get('/api-p/UserOrder/list', options), // 在线存款列表
+  fetchFinanceDepositOnline: (options) => axios.get('/api-p/UserOrder/list', options), // 在线存款列表
 
-  fetchFinanceSheet: options => axios.get('/api-u/backend/finance/statistics', options), // 会员财务报表
-  fetchFinanceStatistics: options => axios.get('/api-p/statistics/finance', options), // 财务统计汇总
+  fetchFinanceUserAssetList: (options) => axios.get('/api-p/capitalLog', options), // 会员资金列表
+  updateFinanceUserAssetStatus: (options) => axios.post('/api-p/capitalLog/retrieve', options), // 审批会员资金
 
-  fetchFinanceDepoistLogs: options => axios.get('/api-p/UserOrder/orderAndRecharge', options), // 所有存款记录
+  fetchFinanceSheet: (options) => axios.get('/api-u/backend/finance/statistics', options), // 会员财务报表
+  fetchFinanceStatistics: (options) => axios.get('/api-p/statistics/finance', options), // 财务统计汇总
+
+  fetchFinanceDepoistLogs: (options) => axios.get('/api-p/UserOrder/orderAndRecharge', options), // 所有存款记录
 
   /* ===================================== 返水管理 ======================================= */
 
@@ -145,11 +150,15 @@ export default {
   updateTransactionRemittance: data => axios.post('/api-b/configRemit/updateById', data), // 创建新会员汇款设置
   deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置
 
+  fetchTransactionWithdrawAccountList: (options) => axios.get('/api-b/dictionary/list', options), // 出款商户类型列表
+  updateTransactionWithdrawAccountItem: (data) => axios.put('/api-b/dictionary/save', data), // 创建与修改出款商户类型
+  deleteTransactionWithdrawAccountItem: (data) => axios.delete('/api-b/dictionary/delete', data), // 删除出款商户类型
+
   fetchRemittanceShortcutType: options => axios.get('/api-b/dictionary/list', options), // 汇款快捷支付设置类型列表
   fetchTransactionRemittanceShortcut: options => axios.get('/api-b/configQuickPay/list', options), // 汇款快捷列表
   createTransactionRemittanceShortcut: data => axios.post('/api-b/configQuickPay/save', data), // 创建新会员汇款设置
   updateTransactionRemittanceShortcut: data => axios.post('/api-b/configQuickPay/save', data), // 创建新会员汇款设置
-  // deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options) // 删除会员汇款设置
+  deleteTransactionRemittanceShortcut: options => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置
 
   /* ===================================== 代理管理 ======================================= */
 

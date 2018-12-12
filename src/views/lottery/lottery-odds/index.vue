@@ -8,19 +8,45 @@
     <!-- 主要内容 -->
     <div class="content-container">
       <!-- 一级菜单切换栏 -->
-      <el-tabs v-model="activeTab" @tab-click="handleTabClick">
-        <el-tab-pane v-for="item in tableData" :key="item.type" :label="item.name" :name="item.type" />
+      <el-tabs v-if="layers > 0" v-model="layer1Tab" @tab-click="handleTabClick($event, 0)">
+        <el-tab-pane
+          v-for="item in tableData"
+          :key="item.type"
+          :label="item.name"
+          :name="item.type"
+        />
       </el-tabs>
 
-      <!-- 二级菜单切换栏 -->
-      <el-tabs v-if="subtabVisible" type="card" v-model="activeSubtab" @tab-click="handleSubtabClick">
-        <el-tab-pane v-for="item in subGame" :key="item.type" :label="item.name" :name="item.type" />
+      <el-tabs v-if="layers > 1" v-model="layer2Tab" @tab-click="handleTabClick($event, 1)">
+        <el-tab-pane
+          v-for="item in tableData[layer1Index].children"
+          :key="item.type"
+          :label="item.name"
+          :name="item.type"
+        />
       </el-tabs>
 
-      <!-- 三级菜单切换栏 -->
-      <!-- <el-tabs v-if="this.tableData" v-model="a" @tab-click="handleSubtabClick">
-        <el-tab-pane v-for="level1 in this.tableData" :key="level1.type" :label="level1.name" :name="level1.type" />
-      </el-tabs> -->
+      <el-tabs v-if="layers > 2" v-model="layer3Tab" @tab-click="handleTabClick($event, 2)">
+        <el-tab-pane
+          v-for="item in tableData[layer1Index].children[layer2Index].children"
+          :key="item.type"
+          :label="item.name"
+          :name="item.type"
+        />
+      </el-tabs>
+
+      <el-tabs v-if="layers > 3" v-model="layer4Tab" @tab-click="handleTabClick">
+        <el-tab-pane
+          v-for="item in tableData[layer1Index].children[layer2Index].children[layer3Index].children"
+          :key="item.type"
+          :label="item.name"
+          :name="item.type"
+        />
+      </el-tabs>
+
+      <el-tabs v-if="layers > 4" v-model="layer4Tab" @tab-click="handleTabClick">
+        <el-tab-pane v-for="item in tableData[0].children[0].children[0].children[0].children" :key="item.type" :label="item.name" :name="item.type" />
+      </el-tabs>
 
       <!-- 表格 -->
       <LotteryOddsTable @on-updated="fetchTableData()" :data="finalData" />
@@ -29,8 +55,6 @@
 </template>
 
 <script>
-import { tableWithoutPaginationPostMixin } from '@/mixins'
-
 import GamesMenu from '@/components/global/GamesMenu'
 import LotteryOddsTable from './components/LotteryOddsTable'
 
@@ -40,7 +64,6 @@ export default {
     GamesMenu,
     LotteryOddsTable
   },
-  mixins: [ tableWithoutPaginationPostMixin ],
   data () {
     return {
       tableData: [],
@@ -48,79 +71,118 @@ export default {
       requestParams: { gameType: 3 },
       tabIndex: 0,
       subtabIndex: 0,
-      a: ''
+      layers: 0,
+      layer1Tab: '',
+      layer1Index: 0,
+      layer2Tab: '',
+      layer2Index: 0,
+      layer3Tab: '',
+      layer3Index: 0,
+      layer4Tab: ''
     }
   },
+  created () {
+    this.fetchTableData()
+  },
   computed: {
-    // 一级菜单当前活动的 tab
-    activeTab: {
-      get () {
-        if (this.tableData.length) {
-          return this.tableData[this.tabIndex].type
-        }
-        return '1'
-      },
-      set () {
-      }
-    },
-    // 二级菜单当前活动的 tab
-    activeSubtab: {
-      get () {
-        if (!this.tableData.length) {
-          return '1.1'
-        }
-        return this.tableData[this.tabIndex].children[0].type
-      },
-      set () {
-      }
-    },
-    // 二级菜单是否显示 Boolean值
-    subtabVisible () {
-      if (!this.tableData.length) {
-        return false
-      }
-      if (this.tableData[this.tabIndex].children[0].children === null) {
-        return false
-      } else {
-        return true
-      }
-    },
-    // 二级菜单对象
-    subGame () {
-      if (this.tableData.length) {
-        return this.tableData[this.tabIndex].children
-      }
-      return []
-    },
-    // 传入table组件对象
     finalData () {
-      if (!this.tableData.length) {
-        return []
-      }
-      if (this.subtabVisible) {
-        return this.tableData[this.tabIndex].children[this.subtabIndex].children
-      } else {
-        return this.tableData[this.tabIndex].children
+      switch (this.layers) {
+        case 0:
+          this.tableData.length && (this.layer1Tab = this.tableData[this.layer1Index].type)
+          return this.tableData
+        case 1:
+          return this.tableData[this.layer1Index].children
+        case 2:
+          return this.tableData[this.layer1Index].children[this.layer2Index].children
+        case 3:
+          return this.tableData[this.layer1Index].children[this.layer2Index].children[this.layer3Index].children
+        case 4:
+          return this.tableData[0].children[0].children[0].children[0].children
+        default:
+          return []
       }
     }
   },
   methods: {
     // 一级菜单切换；根据不同的菜单更新对应数据
-    handleTabClick (tab) {
-      this.tabIndex = tab.index
-      this.subtabIndex = 0 // 马上改变二级菜单的下标 否则报错
-    },
-    // 二级菜单切换；根据不同的菜单更新对应数据
-    handleSubtabClick (tab) {
-      this.subtabIndex = tab.index
+    handleTabClick (tab, layer) {
+      switch (layer) {
+        case 0:
+          this.layers = this._calcLayers(this.tableData[tab.index].children) + 1
+          this.layer1Index = tab.index
+          this.layer2Index = 0
+          this.layer3Index = 0
+          break
+        case 1:
+          this.layers = this._calcLayers(this.tableData[this.layer1Index].children[tab.index].children) + 2
+          this.layer2Index = tab.index
+          this.layer3Index = 0
+          break
+        case 2:
+          this.layer3Index = tab.index
+          break
+        case 3:
+          this.layer4Index = tab.index
+          break
+      }
     },
     // 侧边栏游戏切换： 初始化一、二级菜单；请求新数据
     handleMenuChange ({ groupId, itemId }) {
-      this.tabIndex = 0
-      this.subtabIndex = 0
+      this.layer1Tab = ''
+      this.layer2Tab = ''
+      this.layer3Tab = ''
+      this.layer4Tab = ''
+      // 请求新数据时，将全部下班重置 否则报错
+      this.layer1Index = 0
+      this.layer2Index = 0
+      this.layer3Index = 0
 
       this.requestParams = { gameType: itemId, pageNo: 1, pageSize: 10 }
       this.fetchTableData()
+    },
+    fetchTableData () {
+      this.$httpAPI[this.tableHttpAPI](this.requestParams).then(response => {
+        if (response.data.data) {
+          this.tableData = response.data.data
+
+          this.layers = this._calcLayers(this.tableData)
+          // console.log(this._calcLayers(this.tableData))
+        } else {
+          this.tableData = []
+        }
+      }).catch(error => console.log(error))
+    },
+    _calcLayers (arr) {
+      // 判断传入参数是 Array
+      if (!Array.isArray(arr)) {
+        throw new Error('Parameter must be Array')
+      }
+
+      if (arr[0].children) {
+        if (arr[0].children[0].children) {
+          if (arr[0].children[0].children[0].children) {
+            if (arr[0].children[0].children[0].children[0].children) {
+              if (arr[0].children[0].children[0].children[0].children[0].children) {
+                if (arr[0].children[0].children[0].children[0].children[0].children[0].children) {
+                  return 6
+                } else {
+                  return 5
+                }
+              } else {
+                return 4
+              }
+            } else {
+              return 3
+            }
+          } else {
+            return 2
+          }
+        } else {
+          return 1
+        }
+      } else {
+        return 0
+      }
     }
   }
 }

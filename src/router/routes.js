@@ -46,10 +46,10 @@ const LotteryOpen = resolve => require(['@/views/lottery/lottery-open'], resolve
 const LotteryResults = resolve => require(['@/views/lottery/lottery-results'], resolve)
 const LotteryOdds = resolve => require(['@/views/lottery/lottery-odds'], resolve)
 const LotteryBets = resolve => require(['@/views/lottery/lottery-bets'], resolve)
+const LotteryBillCancel = resolve => require(['@/views/lottery/LotteryBillCancel'], resolve)
 const LotteryStatisticsUsers = resolve => require(['@/views/lottery/statistics-users'], resolve)
 const LotteryStatisticsBets = resolve => require(['@/views/lottery/statistics-bets'], resolve)
 const LotteryStatistics = resolve => require(['@/views/lottery/lottery-statistics'], resolve)
-const LotteryWithdraw = resolve => require(['@/views/lottery/LotteryWithdraw'], resolve)
 const LotteryKillrate = resolve => require(['@/views/lottery/LotteryKillrate'], resolve)
 const LotteryCheckout = resolve => require(['@/views/lottery/LotteryCheckout'], resolve)
 
@@ -62,9 +62,10 @@ const FinanceDepositOnline = resolve => require(['@/views/finance/deposit-online
 const FinanceWithdrawApply = resolve => require(['@/views/finance/withdraw-apply'], resolve)
 const FinanceLimitationTransfer = resolve => require(['@/views/finance/limitation-transfer'], resolve)
 const FinanceDepositWithdrawList = resolve => require(['@/views/finance/deposit-withdraw'], resolve)
-const FinanceUsersAssets = resolve => require(['@/views/finance/FinanceUsersAssets'], resolve)
+const FinanceUserAsset = resolve => require(['@/views/finance/user-asset'], resolve)
 const FinanceBalanceSheet = resolve => require(['@/views/finance/balance-sheet'], resolve)
 const FinanceStatistics = resolve => require(['@/views/finance/FinanceStatistics'], resolve)
+
 // 常规配置
 const FinanceSetting = resolve => require(['@/views/finance/setting/FinanceSetting'], resolve)
 const FinanceSettingList = resolve => require(['@/views/finance/setting/FinanceSettingList'], resolve)
@@ -76,12 +77,14 @@ const RebateManage = resolve => require(['@/views/rebate/RebateManage'], resolve
 const RebateList = resolve => require(['@/views/rebate/rebate-list'], resolve)
 const RebateSetting = resolve => require(['@/views/rebate/rebate-setting'], resolve)
 
-/* 收款出款 */
+/* ========================================== 收款出款 ============================================ */
+
 const TransactionManage = resolve => require(['@/views/transaction/TransactionManage'], resolve)
 const TransactionPaymentType = resolve => require(['@/views/transaction/payment-type'], resolve)
 const TransactionPaymentPort = resolve => require(['@/views/transaction/payment-port'], resolve)
 const TransactionPaymentLine = resolve => require(['@/views/transaction/payment-line'], resolve)
 const TransactionRemittanceUser = resolve => require(['@/views/transaction/remittance-user'], resolve)
+const TransactionWithdrawAccount = resolve => require(['@/views/transaction/withdraw-account'], resolve)
 const TransactionRemittanceShortcut = resolve => require(['@/views/transaction/remittance-shortcut'], resolve)
 
 /* ========================================== 代理管理 ============================================ */
@@ -415,6 +418,18 @@ const routes = [
             }
           },
           {
+            name: 'LotteryBillCancel',
+            path: 'bill/cancel',
+            component: LotteryBillCancel,
+            meta: {
+              title: '彩票未结撤单',
+              breadcrumb: [
+                { name: '彩票管理' },
+                { name: '彩票未结撤单' }
+              ]
+            }
+          },
+          {
             name: 'LotteryStatisticsUsers',
             path: 'statistics/users',
             component: LotteryStatisticsUsers,
@@ -463,12 +478,6 @@ const routes = [
         path: '/lottery/checkout',
         component: LotteryCheckout,
         meta: { title: '彩票开奖校对', keepAlive: true }
-      },
-      {
-        name: 'LotteryWithdraw',
-        path: '/lottery/withdraw',
-        component: LotteryWithdraw,
-        meta: { title: '彩票未结撤单', keepAlive: true }
       },
       {
         name: 'LotteryBets',
@@ -550,9 +559,9 @@ const routes = [
             }
           },
           {
-            name: 'FinanceUsersAssets',
-            path: 'users/assets',
-            component: FinanceUsersAssets,
+            name: 'FinanceUserAsset',
+            path: 'user/asset',
+            component: FinanceUserAsset,
             meta: {
               title: '会员资金管理',
               breadcrumb: [
@@ -685,6 +694,18 @@ const routes = [
               breadcrumb: [
                 { name: '收款出款' },
                 { name: '会员汇款设置' }
+              ]
+            }
+          },
+          {
+            name: 'TransactionWithdrawAccount',
+            path: 'withdraw/account',
+            component: TransactionWithdrawAccount,
+            meta: {
+              title: '出款商户配置',
+              breadcrumb: [
+                { name: '收款出款' },
+                { name: '出款商户配置' }
               ]
             }
           },
