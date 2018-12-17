@@ -35,6 +35,9 @@ export default {
   updateSystemRolesItem: (data) => axios.put('/api-u/roles', data), // 更新角色信息
   deleteSystemRolesItem: (options) => axios.delete('/api-u/roles', options), // 删除角色
 
+  fetchRolePermissionsList: (options) => axios.get('/api-u/roles/permissions', options), // 角色权限列表
+  updateRolePermissionsList: (data) => axios.post('/api-u/roles/permissions', data), // 分配角色的权限
+
   fetchSystePermissionsList: (options) => axios.get('/api-u/permissions', options), // 权限列表
   createSystePermissionsItem: (options) => axios.post('/api-u/permissions', options), // 创建新权限
   updateSystePermissionsItem: (options) => axios.put('/api-u/permissions', options), // 修改权限信息
@@ -68,8 +71,9 @@ export default {
   getUsersRebate: options => axios.get('/api-u/userRelation/get', options),
   updateUsersRebate: (data, options) => axios.post('/api-u/group/save', data, options),
 
-  // 全部会员日志
-  fetchUsersLogs: (options) => axios.get('/api-l/logList', options),
+  fetchUsersAccountCheck: (options) => axios.get('/api-p/capitalLog/user', options), // 会员账户核查
+
+  fetchUsersLogs: (options) => axios.get('/api-l/logList', options), // 会员日志
 
   /* ===================================== 彩票管理 ======================================= */
 
@@ -150,9 +154,13 @@ export default {
   updateTransactionRemittance: data => axios.post('/api-b/configRemit/updateById', data), // 创建新会员汇款设置
   deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置
 
-  fetchTransactionWithdrawAccountList: (options) => axios.get('/api-b/dictionary/list', options), // 出款商户类型列表
-  updateTransactionWithdrawAccountItem: (data) => axios.put('/api-b/dictionary/save', data), // 创建与修改出款商户类型
-  deleteTransactionWithdrawAccountItem: (data) => axios.delete('/api-b/dictionary/delete', data), // 删除出款商户类型
+  fetchWithdrawAccountTypeList: (options) => axios.get('/api-b/dictionary/list', options), // 出款商户类型列表
+  updateWithdrawAccountTypeItem: (data) => axios.put('/api-b/dictionary/save', data), // 创建与修改出款商户类型
+  deleteWithdrawAccountTypeItem: (data) => axios.delete('/api-b/dictionary/delete', data), // 删除出款商户类型
+
+  fetchWithdrawAccountList: (options) => axios.get('/api-b/paymentMerchant', options), // 出款商户配置列表
+  updateWithdrawAccountItem: (data) => axios.put('/api-b/paymentMerchant/save', data), // 创建与修改出款商户配置
+  deleteWithdrawAccountItem: (data) => axios.delete('/api-b/paymentMerchant/delete', data), // 删除出款商户配置
 
   fetchRemittanceShortcutType: options => axios.get('/api-b/dictionary/list', options), // 汇款快捷支付设置类型列表
   fetchTransactionRemittanceShortcut: options => axios.get('/api-b/configQuickPay/list', options), // 汇款快捷列表

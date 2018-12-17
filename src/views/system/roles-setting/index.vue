@@ -14,6 +14,7 @@
         @on-updated="fetchTableData()"
         @on-deleted="fetchTableData()"
         @on-status-change="fetchTableData()"
+        @on-permissions-changed="fetchTableData()"
         :data="tableData"
       />
     </div>

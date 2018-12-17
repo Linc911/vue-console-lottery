@@ -3,38 +3,22 @@
     <el-table :data="data" size="small" highlight-current-row border>
       <el-table-column type="index" :width="36" />
 
-      <el-table-column prop="name" label="类型名称" />
-
-      <el-table-column prop="dictionaryName" label="接口类型名称" />
-
-      <el-table-column prop="merchantId" label="商户ID" />
-
-      <el-table-column prop="operator" label="操作人" />
-
-      <el-table-column prop="operator" label="接口类型名称" />
-
-      <el-table-column prop="address" label="地址" />
-
-      <el-table-column prop="publicKey" label="公钥" />
-
-      <el-table-column prop="privateKey" label="私钥" />
-
-      <el-table-column prop="whiteList" label="白名单" />
+      <el-table-column prop="name" label="类型名称" :min-width="140" />
 
       <el-table-column prop="status" label="启用状态" :min-width="70">
         <template slot-scope="scope">
           <BaseSwitch
             @on-change="handleSwitchChange"
             :propValue="!Boolean(scope.row.status)"
-            :payload="{ id: scope.row.paymentMerchantId }"
+            :payload="{ id: scope.row.dictionaryId }"
             opposite
           />
         </template>
       </el-table-column>
 
-      <el-table-column prop="sort" label="排序" />
+      <el-table-column prop="sort" label="排序" :min-width="45" />
 
-      <el-table-column prop="remarks" label="备注" />
+      <el-table-column prop="remark" label="备注" :min-width="160" />
 
       <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
@@ -53,10 +37,10 @@
     </el-table>
 
     <!-- 详情弹框 -->
-    <WithdrawAccountDialogDetail :data="activeItem" ref="dialogDetail" />
+    <WithdrawTypeDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 修改弹框 -->
-    <WithdrawAccountDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <WithdrawTypeDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
@@ -72,27 +56,27 @@
 import { tableComponentMixin, switchMixin } from '@/mixins'
 
 import BaseSwitch from '@/components/base/BaseSwitch'
-import WithdrawAccountDialogDetail from './WithdrawAccountDialogDetail'
-import WithdrawAccountDialogUpdate from './WithdrawAccountDialogUpdate'
+import WithdrawTypeDialogDetail from './WithdrawTypeDialogDetail'
+import WithdrawTypeDialogUpdate from './WithdrawTypeDialogUpdate'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
-  name: 'WithdrawAccountTable',
+  name: 'WithdrawTypeTable',
   components: {
     BaseSwitch,
-    WithdrawAccountDialogDetail,
-    WithdrawAccountDialogUpdate,
+    WithdrawTypeDialogDetail,
+    WithdrawTypeDialogUpdate,
     DialogDeleteConfirm
   },
   mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
-      deleteHttpAPI: 'deleteWithdrawAccountItem',
-      deleteAttrName: 'paymentMerchantId',
-      deleteId: 'paymentMerchantId',
+      deleteHttpAPI: 'deleteWithdrawAccountTypeItem',
+      deleteAttrName: 'dictionaryId',
+      deleteId: 'dictionaryId',
       switchObj: {
-        API: 'updateWithdrawAccountItem',
-        attrId: 'paymentMerchantId',
+        API: 'updateWithdrawAccountTypeItem',
+        attrId: 'dictionaryId',
         attrValue: 'status'
       },
       activeItem: { name: '' }

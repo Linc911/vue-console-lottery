@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-dialog :visible.sync="dialogVisible" title="修改支付接口配置" width="760px">
+    <el-dialog :visible.sync="dialogVisible" title="支付接口配置详情" width="760px">
       <el-form
         :model="formData"
         label-width="100px"

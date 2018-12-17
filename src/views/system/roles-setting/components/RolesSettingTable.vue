@@ -24,9 +24,9 @@
       <el-table-column prop="operations" label="操作" :min-width="240">
         <template slot-scope="scope">
           <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-          <el-button @click="$message.warning('接口调试中...')" type="primary" size="mini">分配权限</el-button>
+          <el-button @click="showDialog(scope.row, 'dialogPermissions')" type="primary" size="mini">分配权限</el-button>
           <el-button @click="$message.warning('接口调试中...')" type="primary" size="mini">分配菜单</el-button>
-          <el-button @click="$message.warning('接口调试中...')" type="warning" icon="el-icon-delete" size="mini" />
+          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
         </template>
       </el-table-column>
     </el-table>
@@ -35,7 +35,11 @@
     <RolesSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
 
     <!-- 修改弹框 -->
-    <!-- <RolesSettingDialogPermissions ref="dialogPermissions" /> -->
+    <RolesSettingDialogPermissions
+      :id="activeItem.id"
+      @on-permissions-changed="$emit('on-permissions-changed')"
+      ref="dialogPermissions"
+    />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
@@ -66,7 +70,7 @@ export default {
     return {
       deleteHttpAPI: 'deleteSystemRolesItem',
       deleteAttrName: 'id',
-      activeItem: { name: '' }
+      activeItem: { name: '', id: '' }
     }
   }
 }

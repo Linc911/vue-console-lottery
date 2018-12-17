@@ -36,7 +36,7 @@ const UserBetsStatistics = resolve => require(['@/views/users/UserBetsStatistics
 const UserRechargeLogs = resolve => require(['@/views/users/UserRechargeLogs'], resolve)
 const UserHttpLogs = resolve => require(['@/views/users/UserHttpLogs'], resolve)
 const UsersLogs = resolve => require(['@/views/users/UsersLogs'], resolve)
-const UsersAccount = resolve => require(['@/views/users/UsersAccount'], resolve)
+const UsersAccountCheck = resolve => require(['@/views/users/account-check'], resolve)
 const UsersKeyword = resolve => require(['@/views/users/UsersKeyword'], resolve)
 
 /* ========================================== 彩票管理 ============================================ */
@@ -84,6 +84,7 @@ const TransactionPaymentType = resolve => require(['@/views/transaction/payment-
 const TransactionPaymentPort = resolve => require(['@/views/transaction/payment-port'], resolve)
 const TransactionPaymentLine = resolve => require(['@/views/transaction/payment-line'], resolve)
 const TransactionRemittanceUser = resolve => require(['@/views/transaction/remittance-user'], resolve)
+const TransactionWithdrawType = resolve => require(['@/views/transaction/withdraw-type'], resolve)
 const TransactionWithdrawAccount = resolve => require(['@/views/transaction/withdraw-account'], resolve)
 const TransactionRemittanceShortcut = resolve => require(['@/views/transaction/remittance-shortcut'], resolve)
 
@@ -333,10 +334,16 @@ const routes = [
             }
           },
           {
-            name: 'UsersAccount',
-            path: 'account',
-            component: UsersAccount,
-            meta: { title: '会员账户核查' }
+            name: 'UsersAccountCheck',
+            path: 'account/check',
+            component: UsersAccountCheck,
+            meta: {
+              title: '会员账户核查',
+              breadcrumb: [
+                { name: '会员管理' },
+                { name: '会员账户核查' }
+              ]
+            }
           },
           {
             name: 'UsersKeyword',
@@ -694,6 +701,18 @@ const routes = [
               breadcrumb: [
                 { name: '收款出款' },
                 { name: '会员汇款设置' }
+              ]
+            }
+          },
+          {
+            name: 'TransactionWithdrawType',
+            path: 'withdraw/type',
+            component: TransactionWithdrawType,
+            meta: {
+              title: '出款商户类型',
+              breadcrumb: [
+                { name: '收款出款' },
+                { name: '出款商户类型' }
               ]
             }
           },

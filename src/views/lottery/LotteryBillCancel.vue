@@ -53,7 +53,7 @@ export default {
             if (response.data.status === 200) {
               this.$message.success('撤单成功！')
             } else {
-              this.$message.error('撤单失败: ' + response.data.message)
+              this.$message.error('撤单失败: ' + response.data.msg)
             }
           }).catch(error => console.log(error))
         } else {

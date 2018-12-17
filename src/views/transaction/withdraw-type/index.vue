@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <WithdrawAccountSearch @on-search="handleSearch" />
+        <WithdrawTypeSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -13,16 +13,15 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <WithdrawAccountTable
+      <WithdrawTypeTable
         @on-updated="fetchTableData()"
         @on-deleted="fetchTableData()"
-        @on-status-changed="fetchTableData()"
         :data="tableData"
       />
     </div>
 
     <!-- 创建弹框 -->
-    <WithdrawAccountDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
+    <WithdrawTypeDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
@@ -31,25 +30,25 @@ import { searchOuterMixin, tableWithoutPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import BaseAdd from '@/components/base/BaseAdd'
-import WithdrawAccountSearch from './components/WithdrawAccountSearch'
-import WithdrawAccountTable from './components/WithdrawAccountTable'
-import WithdrawAccountDialogCreate from './components/WithdrawAccountDialogCreate'
+import WithdrawTypeSearch from './components/WithdrawTypeSearch'
+import WithdrawTypeTable from './components/WithdrawTypeTable'
+import WithdrawTypeDialogCreate from './components/WithdrawTypeDialogCreate'
 
 export default {
-  name: 'TransactionWithdrawAccount',
+  name: 'TransactionWithdrawType',
   components: {
     SearchLayout,
     BaseAdd,
-    WithdrawAccountSearch,
-    WithdrawAccountTable,
-    WithdrawAccountDialogCreate
+    WithdrawTypeSearch,
+    WithdrawTypeTable,
+    WithdrawTypeDialogCreate
   },
   mixins: [ searchOuterMixin, tableWithoutPaginationMixin ],
   data () {
     return {
       tableData: [],
-      tableHttpAPI: 'fetchWithdrawAccountList',
-      requestParams: {}
+      tableHttpAPI: 'fetchWithdrawAccountTypeList',
+      requestParams: { type: 5 }
     }
   }
 }
