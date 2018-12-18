@@ -25,7 +25,7 @@
         <template slot-scope="scope">
           <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
           <el-button @click="showDialog(scope.row, 'dialogPermissions')" type="primary" size="mini">分配权限</el-button>
-          <el-button @click="$message.warning('接口调试中...')" type="primary" size="mini">分配菜单</el-button>
+          <el-button @click="showDialog(scope.row, 'dialogMenu')" type="primary" size="mini">分配菜单</el-button>
           <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
         </template>
       </el-table-column>
@@ -34,11 +34,18 @@
     <!-- 修改弹框 -->
     <RolesSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
 
-    <!-- 修改弹框 -->
+    <!-- 权限弹框 -->
     <RolesSettingDialogPermissions
       :id="activeItem.id"
       @on-permissions-changed="$emit('on-permissions-changed')"
       ref="dialogPermissions"
+    />
+
+    <!-- 菜单弹框 -->
+    <RolesSettingDialogMenu
+      :id="activeItem.id"
+      @on-menu-changed="$emit('on-permissions-changed')"
+      ref="dialogMenu"
     />
 
     <!-- 删除弹框 -->
@@ -56,6 +63,7 @@ import { tableComponentMixin, switchMixin } from '@/mixins'
 
 import RolesSettingDialogUpdate from './RolesSettingDialogUpdate'
 import RolesSettingDialogPermissions from './RolesSettingDialogPermissions'
+import RolesSettingDialogMenu from './RolesSettingDialogMenu'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
@@ -63,6 +71,7 @@ export default {
   components: {
     RolesSettingDialogUpdate,
     RolesSettingDialogPermissions,
+    RolesSettingDialogMenu,
     DialogDeleteConfirm
   },
   mixins: [ tableComponentMixin, switchMixin ],

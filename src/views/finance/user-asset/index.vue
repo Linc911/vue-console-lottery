@@ -3,19 +3,13 @@
     <!-- 检索栏 -->
     <UserAssetSearch @on-search="handleSearch" />
 
-    <!-- 菜单切换栏 -->
-    <!-- <el-tabs v-model="activeTab" @tab-click="handleTabClick">
-      <el-tab-pane label="会员资金待审核" name="unchecked" />
-      <el-tab-pane label="会员资金已审核" name="checked" />
-    </el-tabs> -->
-
     <!-- 统计汇总 -->
     <ul class="statistics-summary clearfix">
       <li class="pull-left">人工减款：【{{ statistics.type10Money | RMB }}】</li>
       <li class="pull-left">人工加款：【{{ statistics.type9Money | RMB }}】</li>
       <li class="pull-left">提款：【{{ statistics.type0Money | RMB }}】</li>
-      <li class="pull-left">存款：【{{ statistics.typy1_2Money | RMB }}】</li>
-      <li class="pull-left">优惠：{{ statistics.type3Money | RMB }}】</li>
+      <li class="pull-left">存款：【{{ statistics.depositMoney | RMB }}】</li>
+      <li class="pull-left">优惠：【{{ statistics.type3Money | RMB }}】</li>
       <li class="pull-left">返水：【{{ statistics.type4Money | RMB }}】</li>
       <li class="pull-left">派送：【{{ statistics.type5Money | RMB }}】</li>
       <li class="pull-left">分润：【{{ statistics.type6Money | RMB }}】</li>
@@ -26,7 +20,7 @@
     <!-- 主要内容 -->
     <div class="table-list">
       <!-- 表格 -->
-      <UserAssetTable :data="tableData" @on-show="showDialogAudit" />
+      <UserAssetTable @on-status-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -36,9 +30,6 @@
         :page="page"
       />
     </div>
-
-    <!-- 审核弹框 -->
-    <!-- <UserAssetDialog @on-success="handleStatusChange" :formData="tableData" ref="dialogDepositForm" /> -->
   </div>
 </template>
 
@@ -47,22 +38,19 @@ import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import UserAssetSearch from './components/UserAssetSearch'
 import UserAssetTable from './components/UserAssetTable'
-import UserAssetDialog from './components/UserAssetDialog'
 
 export default {
   name: 'FinanceUserAsset',
   components: {
     UserAssetSearch,
-    UserAssetTable,
-    UserAssetDialog
+    UserAssetTable
   },
   mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
-      activeTab: 'unchecked', // 当前活动菜单
       statistics: {
         type0Money: '',
-        type1_2Money: '',
+        depositMoney: '',
         type2Money: '',
         type3Money: '',
         type4Money: '',
@@ -75,38 +63,9 @@ export default {
       },
       tableData: [],
       tableHttpAPI: 'fetchFinanceUserAssetList',
-      requestParams: { size: 10, total: 10 },
+      requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 0, size: 10, total: 10 },
       currentItem: {} // 当前选中的数据
-    }
-  },
-  created () {
-    this.fetchFinanceDepositForm()
-  },
-  methods: {
-    // 菜单切换；根据不同的菜单更新对应数据
-    handleTabClick (tab) {
-      switch (tab.name) {
-        case 'unchecked':
-          this.requestParams.status = 0
-          this.fetchFinanceDepositForm()
-          break
-        case 'checked':
-          this.requestParams = Object.assign(this.requestParams, { pageNo: 1, status: '2,3' })
-          this.fetchFinanceDepositForm()
-          break
-        default:
-          this.requestParams = {}
-      }
-    },
-    // 显示审批加减款表单弹框
-    showDialogAudit (payload) {
-      this.currentItem = payload
-      this.$refs.dialogDepositForm.toggleDialogVisible(true)
-    },
-    // 审批状态改变时，更新在本地更新页面数据
-    handleStatusChange () {
-      this.fetchFinanceDepositForm()
     }
   }
 }

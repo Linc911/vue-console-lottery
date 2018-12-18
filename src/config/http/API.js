@@ -7,6 +7,7 @@ export default {
 
   fetchPublicUsers: options => axios.get('/api-u/backend/userList', options), // 会员列表
 
+  // 侧边栏菜单
   fetchSidebarMenuList: () => axios.get('/api-b/menus/all'), // 页面侧边栏菜单列表
 
   // 游戏类
@@ -37,6 +38,9 @@ export default {
 
   fetchRolePermissionsList: (options) => axios.get('/api-u/roles/permissions', options), // 角色权限列表
   updateRolePermissionsList: (data) => axios.post('/api-u/roles/permissions', data), // 分配角色的权限
+
+  fetchRoleMenuList: (options) => axios.get('/api-b/menus/tree', options), // 获取角色菜单
+  updateRoleMenuList: (data) => axios.post('/api-b/menus/toRole', data), // 分配角色菜单
 
   fetchSystePermissionsList: (options) => axios.get('/api-u/permissions', options), // 权限列表
   createSystePermissionsItem: (options) => axios.post('/api-u/permissions', options), // 创建新权限
@@ -117,7 +121,7 @@ export default {
   fetchFinanceDepositOnline: (options) => axios.get('/api-p/UserOrder/list', options), // 在线存款列表
 
   fetchFinanceUserAssetList: (options) => axios.get('/api-p/capitalLog', options), // 会员资金列表
-  updateFinanceUserAssetStatus: (options) => axios.post('/api-p/capitalLog/retrieve', options), // 审批会员资金
+  updateFinanceUserAssetStatus: (options) => axios.post('/api-p/capitalLog/retrieve', options), // 回收会员资金操作
 
   fetchFinanceSheet: (options) => axios.get('/api-u/backend/finance/statistics', options), // 会员财务报表
   fetchFinanceStatistics: (options) => axios.get('/api-p/statistics/finance', options), // 财务统计汇总
