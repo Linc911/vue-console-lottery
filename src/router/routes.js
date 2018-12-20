@@ -91,12 +91,13 @@ const TransactionRemittanceShortcut = resolve => require(['@/views/transaction/r
 /* ========================================== 代理管理 ============================================ */
 
 const AgentManage = resolve => require(['@/views/agent/AgentManage'], resolve)
-const AgentList = resolve => require(['@/views/agent/AgentList'], resolve)
 const AgentCreate = resolve => require(['@/views/agent/AgentCreate'], resolve)
-const AgentInvitationCode = resolve => require(['@/views/agent/AgentInvitationCode'], resolve)
-const AgentAchievementUsers = resolve => require(['@/views/agent/AgentAchievementUsers'], resolve)
+const AgentList = resolve => require(['@/views/agent/AgentList'], resolve)
+const AgentInvitationCode = resolve => require(['@/views/agent/invitation-code'], resolve)
 const AgentPerformanceLinear = resolve => require(['@/views/agent/performance-linear'], resolve)
-const AgentInterestGames = resolve => require(['@/views/agent/AgentInterestGames'], resolve)
+const AgentInterestGame = resolve => require(['@/views/agent/interest-game'], resolve)
+
+const AgentAchievementUsers = resolve => require(['@/views/agent/AgentAchievementUsers'], resolve)
 const AgentInterestDivision = resolve => require(['@/views/agent/AgentInterestDivision'], resolve)
 const AgentInterestUsersDivision = resolve => require(['@/views/agent/AgentInterestUsersDivision'], resolve)
 
@@ -783,22 +784,34 @@ const routes = [
         component: AgentManage,
         children: [
           {
+            name: 'AgentCreate',
+            path: 'create',
+            component: AgentCreate,
+            meta: {
+              title: '创建代理会员',
+              breadcrumb: [
+                { name: '代理管理' },
+                { name: '创建代理会员' }
+              ]
+            }
+          },
+          {
             name: 'AgentList',
             path: 'list',
             component: AgentList,
             meta: { title: '代理会员列表' }
           },
           {
-            name: 'AgentCreate',
-            path: 'create',
-            component: AgentCreate,
-            meta: { title: '创建代理会员' }
-          },
-          {
             name: 'AgentInvitationCode',
             path: 'invitationcode',
             component: AgentInvitationCode,
-            meta: { title: '邀请号码管理' }
+            meta: {
+              title: '邀请号码管理',
+              breadcrumb: [
+                { name: '代理管理' },
+                { name: '邀请号码管理' }
+              ]
+            }
           },
           {
             name: 'AgentAchievementUsers',
@@ -819,10 +832,16 @@ const routes = [
             }
           },
           {
-            name: 'AgentInterestGames',
-            path: 'interest/games',
-            component: AgentInterestGames,
-            meta: { title: '游戏分润基数' }
+            name: 'AgentInterestGame',
+            path: 'interest/game',
+            component: AgentInterestGame,
+            meta: {
+              title: '游戏分润基数',
+              breadcrumb: [
+                { name: '代理管理' },
+                { name: '游戏分润基数' }
+              ]
+            }
           },
           {
             name: 'AgentInterestDivision',

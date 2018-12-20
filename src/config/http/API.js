@@ -7,10 +7,8 @@ export default {
 
   fetchPublicUsers: options => axios.get('/api-u/backend/userList', options), // 会员列表
 
-  // 侧边栏菜单
   fetchSidebarMenuList: () => axios.get('/api-b/menus/all'), // 页面侧边栏菜单列表
 
-  // 游戏类
   fetchGameClasses: () => axios.get('/api-g/gameconfig/parent'), // 游戏菜单(大类)
   fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 游戏菜单（细分）
 
@@ -71,8 +69,7 @@ export default {
 
   fetchUserBetsList: data => axios.post('/api-g/getUserBetsInfo', data), // 单个会员全部注单记录
 
-  // 会员抽点
-  getUsersRebate: options => axios.get('/api-u/userRelation/get', options),
+  getUsersRebate: options => axios.get('/api-u/userRelation/get', options), // 会员抽点
   updateUsersRebate: (data, options) => axios.post('/api-u/group/save', data, options),
 
   fetchUsersAccountCheck: (options) => axios.get('/api-p/capitalLog/user', options), // 会员账户核查
@@ -166,15 +163,23 @@ export default {
   updateWithdrawAccountItem: (data) => axios.put('/api-b/paymentMerchant/save', data), // 创建与修改出款商户配置
   deleteWithdrawAccountItem: (data) => axios.delete('/api-b/paymentMerchant/delete', data), // 删除出款商户配置
 
-  fetchRemittanceShortcutType: options => axios.get('/api-b/dictionary/list', options), // 汇款快捷支付设置类型列表
-  fetchTransactionRemittanceShortcut: options => axios.get('/api-b/configQuickPay/list', options), // 汇款快捷列表
-  createTransactionRemittanceShortcut: data => axios.post('/api-b/configQuickPay/save', data), // 创建新会员汇款设置
-  updateTransactionRemittanceShortcut: data => axios.post('/api-b/configQuickPay/save', data), // 创建新会员汇款设置
-  deleteTransactionRemittanceShortcut: options => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置
+  fetchRemittanceShortcutType: (options) => axios.get('/api-b/dictionary/list', options), // 汇款快捷支付设置类型列表
+  fetchTransactionRemittanceShortcut: (options) => axios.get('/api-b/configQuickPay/list', options), // 汇款快捷列表
+  createTransactionRemittanceShortcut: (data) => axios.post('/api-b/configQuickPay/save', data), // 创建新会员汇款设置
+  updateTransactionRemittanceShortcut: (data) => axios.post('/api-b/configQuickPay/save', data), // 创建新会员汇款设置
+  deleteTransactionRemittanceShortcut: (options) => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置
 
   /* ===================================== 代理管理 ======================================= */
 
-  fetchAgentPerformanceLinearList: (options) => axios.get('/api-b/findAgentUserPerformanceList'), // 获取代理线条业绩列表
+  createAgentUserAccount: (data) => axios.put('/api-p/agent/create', data), // 创建代理会员
+
+  fetchAgentInvitationCode: (options) => axios.get('/api-u/userRelation', options), // 邀请码列表
+  deleteAgentInvitationCodeItem: (options) => axios.delete('/api-u/userRelation/delete', options), // 删除邀请码
+
+  fetchAgentPerformanceLinearList: (options) => axios.get('/api-b/findAgentUserPerformanceList', options), // 代理线条业绩列表
+
+  fetchAgentInterestGame: (options) => axios.get('/api-b/dictionary/list', options), // 游戏分润基数列表
+  updateInterestGame: (data) => axios.put('/api-b/dictionary/batchSave', data), // 保存游戏分润基数
 
   /* ===================================== 优惠活动 ======================================= */
 
