@@ -92,14 +92,14 @@ const TransactionRemittanceShortcut = resolve => require(['@/views/transaction/r
 
 const AgentManage = resolve => require(['@/views/agent/AgentManage'], resolve)
 const AgentCreate = resolve => require(['@/views/agent/AgentCreate'], resolve)
-const AgentList = resolve => require(['@/views/agent/AgentList'], resolve)
+const AgentAccountList = resolve => require(['@/views/agent/account-list'], resolve)
 const AgentInvitationCode = resolve => require(['@/views/agent/invitation-code'], resolve)
 const AgentPerformanceLinear = resolve => require(['@/views/agent/performance-linear'], resolve)
 const AgentInterestGame = resolve => require(['@/views/agent/interest-game'], resolve)
+const AgentInterestSetting = resolve => require(['@/views/agent/interest-setting'], resolve)
 
 const AgentAchievementUsers = resolve => require(['@/views/agent/AgentAchievementUsers'], resolve)
 const AgentInterestDivision = resolve => require(['@/views/agent/AgentInterestDivision'], resolve)
-const AgentInterestUsersDivision = resolve => require(['@/views/agent/AgentInterestUsersDivision'], resolve)
 
 /* ========================================== 优惠活动 ============================================ */
 
@@ -177,7 +177,12 @@ const routes = [
         name: 'HomePage',
         path: '/home',
         component: HomePage,
-        meta: { title: '系统首页', keepAlive: true }
+        meta: {
+          title: '系统首页',
+          breadcrumb: [
+            { name: '系统首页' }
+          ]
+        }
       },
       /* ========================================== 头像下拉框 ============================================ */
       {
@@ -796,10 +801,16 @@ const routes = [
             }
           },
           {
-            name: 'AgentList',
-            path: 'list',
-            component: AgentList,
-            meta: { title: '代理会员列表' }
+            name: 'AgentAccountList',
+            path: 'account/list',
+            component: AgentAccountList,
+            meta: {
+              title: '代理会员列表',
+              breadcrumb: [
+                { name: '代理管理' },
+                { name: '代理会员列表' }
+              ]
+            }
           },
           {
             name: 'AgentInvitationCode',
@@ -850,10 +861,16 @@ const routes = [
             meta: { title: '代理一键分润' }
           },
           {
-            name: 'AgentInterestUsersDivision',
-            path: 'interest/usersdivision',
-            component: AgentInterestUsersDivision,
-            meta: { title: '会员一键分润' }
+            name: 'AgentInterestSetting',
+            path: 'interest/setting',
+            component: AgentInterestSetting,
+            meta: {
+              title: '会员分润设置',
+              breadcrumb: [
+                { name: '代理管理' },
+                { name: '会员分润设置' }
+              ]
+            }
           }
         ]
       },

@@ -26,7 +26,6 @@ function initLoginStatus () {
 
 /* 设置axios全局配置 */
 axios.defaults.baseURL = process.env.VUE_APP_BASEURL
-// axios.defaults.baseURL = 'http://192.168.5.192:8080'
 
 // 处理页面刷新时，重新设置Token;
 if (store.getters['auth/token']) {
@@ -49,17 +48,20 @@ axios.interceptors.response.use(response => {
   // http响应完成时，停止动画； 返回获取的对象
   endLoading()
 
+  // 在登录Token已过期下返回的状态码
   if (response.status === 401) {
     initLoginStatus()
 
     Message.warning('登录Token已过期，请重新登录。')
 
     return response
+
+  // 在其他设备登录下返回的状态码
   } else if (response.data.status === -9998 || response.data.status === -9999) {
     initLoginStatus()
-
     Message.warning('该账户已在其他设备登录')
   }
+
   return response
 }, error => {
   endLoading() // 停止加载动画

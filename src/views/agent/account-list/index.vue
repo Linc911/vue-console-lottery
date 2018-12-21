@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <PerformanceLinearSearch @on-search="handleSearch" />
+        <AccountListSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -13,12 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <PerformanceLinearTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        @on-status-change="fetchTableData()"
-        :data="tableData"
-      />
+      <AccountListTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -36,22 +31,22 @@ import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import SearchLayout from '@/components/layout/SearchLayout'
 import BaseAdd from '@/components/base/BaseAdd'
-import PerformanceLinearSearch from './components/PerformanceLinearSearch'
-import PerformanceLinearTable from './components/PerformanceLinearTable'
+import AccountListSearch from './components/AccountListSearch'
+import AccountListTable from './components/AccountListTable'
 
 export default {
-  name: 'AgentPerformanceLinear',
+  name: 'AgentAcountList',
   components: {
     SearchLayout,
-    PerformanceLinearSearch,
     BaseAdd,
-    PerformanceLinearTable
+    AccountListSearch,
+    AccountListTable
   },
   mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],
-      tableHttpAPI: 'fetchAgentPerformanceList',
+      tableHttpAPI: 'fetchAgentAccountList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }

@@ -5,23 +5,23 @@ export default {
 
   fetchPublicUserGroup: (options) => axios.get('/api-u/group/list', options), // 会员分组
 
-  fetchPublicUsers: options => axios.get('/api-u/backend/userList', options), // 会员列表
+  fetchPublicUsers: (options) => axios.get('/api-u/backend/userList', options), // 会员列表
 
-  fetchSidebarMenuList: () => axios.get('/api-b/menus/all'), // 页面侧边栏菜单列表
+  fetchSidebarMenuList: (options) => axios.get('/api-b/menus/all', options), // 页面侧边栏菜单列表
 
-  fetchGameClasses: () => axios.get('/api-g/gameconfig/parent'), // 游戏菜单(大类)
-  fetchGamesMenu: () => axios.get('/api-g/GameTypeConfig/tree'), // 游戏菜单（细分）
+  fetchGameClasses: (options) => axios.get('/api-g/gameconfig/parent', options), // 游戏菜单(大类)
+  fetchGamesMenu: (options) => axios.get('/api-g/GameTypeConfig/tree', options), // 游戏菜单（细分）
 
-  fetchGamesList: () => axios.get('/api-g/gameconfig'), // 游戏类型/账户类型
-  fetchUserId: options => axios.get('/api-u/users-anon/getUserId', options), // 查询会员ID
+  fetchGamesList: (options) => axios.get('/api-g/gameconfig', options), // 游戏类型/账户类型
+  fetchUserId: (options) => axios.get('/api-u/users-anon/getUserId', options), // 查询会员ID
 
   /* ===================================== 登   录 ======================================= */
 
-  fetchLogoutInfo: () => axios.get('/api-u/sys/logout'),
+  fetchLogoutInfo: (options) => axios.get('/api-u/sys/logout', options),
   postUserLogin: (data, options) => axios.post('/api-u/sys/login', data, options),
 
-  fetchUserInfo: () => axios.get('/api-u/users/current'),
-  putUserInfo: data => axios.put('/api-u/users/me', data),
+  fetchUserInfo: (options) => axios.get('/api-u/users/current', options),
+  putUserInfo: (data) => axios.put('/api-u/users/me', data),
 
   /* ===================================== 系统管理 ======================================= */
 
@@ -62,14 +62,14 @@ export default {
 
   /* ===================================== 会员管理 ======================================= */
 
-  fetchUsersList: options => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
-  getUserInfo: options => axios.get('/api-u/backend/user', options), // 单个会员信息
+  fetchUsersList: (options) => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
+  getUserInfo: (options) => axios.get('/api-u/backend/user', options), // 单个会员信息
 
   updateUserControlStatus: (options) => axios.get('/api-u/backend/updateControl', options), // 修改会员监控状态
 
-  fetchUserBetsList: data => axios.post('/api-g/getUserBetsInfo', data), // 单个会员全部注单记录
+  fetchUserBetsList: (data) => axios.post('/api-g/getUserBetsInfo', data), // 单个会员全部注单记录
 
-  getUsersRebate: options => axios.get('/api-u/userRelation/get', options), // 会员抽点
+  getUsersRebate: (options) => axios.get('/api-u/userRelation/get', options), // 会员抽点
   updateUsersRebate: (data, options) => axios.post('/api-u/group/save', data, options),
 
   fetchUsersAccountCheck: (options) => axios.get('/api-p/capitalLog/user', options), // 会员账户核查
@@ -127,33 +127,33 @@ export default {
 
   /* ===================================== 返水管理 ======================================= */
 
-  fetchRebateSettingList: options => axios.get('/api-b/rebate/list', options), // 设置返水计划列表
-  createRebateSettingList: data => axios.post('/api-b/rebate/save', data), // 会设置返水计划保存
-  updateRebateSettingStatus: options => axios.get('/api-b/rebate/status', options), // 设置返水计划修改
-  deleteRebateSettingItem: options => axios.delete('/api-b/rebate/delete', options), // 删除设置返水计划
+  fetchRebateSettingList: (options) => axios.get('/api-b/rebate/list', options), // 设置返水计划列表
+  createRebateSettingList: (data) => axios.post('/api-b/rebate/save', data), // 会设置返水计划保存
+  updateRebateSettingStatus: (options) => axios.get('/api-b/rebate/status', options), // 设置返水计划修改
+  deleteRebateSettingItem: (options) => axios.delete('/api-b/rebate/delete', options), // 删除设置返水计划
 
-  fetchRebateLogsList: options => axios.get('/api-b/rebateLog/list', options), // 查看返水记录列表
-  statistic: options => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计
+  fetchRebateLogsList: (options) => axios.get('/api-b/rebateLog/list', options), // 查看返水记录列表
+  statistic: (options) => axios.get('/api-b/rebateLog/statistic', options), // 会员返水信息统计
 
   /* ===================================== 收款出款 ======================================= */
 
-  fetchTransactionPaymentType: options => axios.get('/api-b/configPayType/list', options), // 支付类型列表
-  createTransactionPaymentType: data => axios.post('/api-b/configPayType/save', data), // 创建新支付类型
-  updateTransactionPaymentType: data => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
+  fetchTransactionPaymentType: (options) => axios.get('/api-b/configPayType/list', options), // 支付类型列表
+  createTransactionPaymentType: (data) => axios.post('/api-b/configPayType/save', data), // 创建新支付类型
+  updateTransactionPaymentType: (data) => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
 
-  fetchTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/list', data), // 支付接口列表
-  fetchTransactionPaymentPortType: options => axios.get('/api-b/dictionary/list', options), // 支付接口类型列表
-  createTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/save', data), // 创建新支付接口
-  updateTransactionPaymentPort: data => axios.post('/api-b/configPayInterface/update', data), // 接口类型列表
+  fetchTransactionPaymentPort: (data) => axios.post('/api-b/configPayInterface/list', data), // 支付接口列表
+  fetchTransactionPaymentPortType: (options) => axios.get('/api-b/dictionary/list', options), // 支付接口类型列表
+  createTransactionPaymentPort: (data) => axios.post('/api-b/configPayInterface/save', data), // 创建新支付接口
+  updateTransactionPaymentPort: (data) => axios.post('/api-b/configPayInterface/update', data), // 接口类型列表
 
-  fetchTransactionPortLine: options => axios.get('/api-b/configPayRoute/list', options), // 支付路线类型列表
-  createTransactionPortLine: data => axios.post('/api-b/configPayRoute/save', data), // 创建新支付路线（可一对多）
-  deleteTransactionPortLine: data => axios.post('/api-b/configPayRoute/deleteMany', data), // 删除路线配置
+  fetchTransactionPortLine: (options) => axios.get('/api-b/configPayRoute/list', options), // 支付路线类型列表
+  createTransactionPortLine: (data) => axios.post('/api-b/configPayRoute/save', data), // 创建新支付路线（可一对多）
+  deleteTransactionPortLine: (data) => axios.post('/api-b/configPayRoute/deleteMany', data), // 删除路线配置
 
-  fetchTransactionRemittance: data => axios.post('/api-b/configRemit/list', data), // 会员汇款设置列表
-  createTransactionRemittance: data => axios.post('/api-b/configRemit/save', data), // 创建新会员汇款设置
-  updateTransactionRemittance: data => axios.post('/api-b/configRemit/updateById', data), // 创建新会员汇款设置
-  deleteTransactionRemittance: options => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置
+  fetchTransactionRemittance: (data) => axios.post('/api-b/configRemit/list', data), // 会员汇款设置列表
+  createTransactionRemittance: (data) => axios.post('/api-b/configRemit/save', data), // 创建新会员汇款设置
+  updateTransactionRemittance: (data) => axios.post('/api-b/configRemit/updateById', data), // 创建新会员汇款设置
+  deleteTransactionRemittance: (options) => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置
 
   fetchWithdrawAccountTypeList: (options) => axios.get('/api-b/dictionary/list', options), // 出款商户类型列表
   updateWithdrawAccountTypeItem: (data) => axios.put('/api-b/dictionary/save', data), // 创建与修改出款商户类型
@@ -173,13 +173,21 @@ export default {
 
   createAgentUserAccount: (data) => axios.put('/api-p/agent/create', data), // 创建代理会员
 
+  fetchAgentAccountList: (options) => axios.get('/api-p/agent', options), // 代理会员列表
+  updateAgentAccountInterest: (data) => axios.put('/api-p/agent/rate', data), // 修改会员分润
+  updateAgentSeniorLevel: (data) => axios.put('/api-p/agent/updateParent', data), // 修改上级分润
+
   fetchAgentInvitationCode: (options) => axios.get('/api-u/userRelation', options), // 邀请码列表
   deleteAgentInvitationCodeItem: (options) => axios.delete('/api-u/userRelation/delete', options), // 删除邀请码
 
-  fetchAgentPerformanceLinearList: (options) => axios.get('/api-b/findAgentUserPerformanceList', options), // 代理线条业绩列表
+  fetchAgentPerformanceList: (options) => axios.get('/api-p/agent/statistics', options), // 代理线条业绩列表/代理个人业绩
 
   fetchAgentInterestGame: (options) => axios.get('/api-b/dictionary/list', options), // 游戏分润基数列表
   updateInterestGame: (data) => axios.put('/api-b/dictionary/batchSave', data), // 保存游戏分润基数
+
+  fetchAgentInterestSetting: (options) => axios.get('/api-p/commisionConfig', options), // 会员分润设置列表
+  updateAgentInterestSettingItem: (data) => axios.put('/api-p/commisionConfig/save', data), // 创建与修改会员分润设置
+  deleteAgentInterestSettingItem: (options) => axios.delete('/api-p/commisionConfig/delete', options), // 删除会员分润设置
 
   /* ===================================== 优惠活动 ======================================= */
 
