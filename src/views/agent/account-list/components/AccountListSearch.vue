@@ -11,15 +11,14 @@
         ref="username"
       />
 
-      <FormSelectStatic
-        @on-change="$set(formData, 'status', $event)"
-        :options="[
-          { value: 0, label: '启用' },
-          { value: 1, label: '禁用' },
-        ]"
-        label="启用状态"
-        width="100px"
-        ref="status"
+      <FormDateRange @on-change="handleDateRangeChange" ref="dateRange" />
+
+      <FormNumberRange
+        @on-change="handleWinRangeChange"
+        label="会员余额"
+        startPlaceholder="最小金额"
+        endPlaceholder="最大金额"
+        ref="numberRange"
       />
 
       <div style="display: inline-block">
@@ -34,16 +33,26 @@
 import { searchInnerMixin } from '@/mixins'
 
 import FormInput from '@/components/form/FormInput'
-import FormSelect from '@/components/form/FormSelect'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormDateRange from '@/components/form/FormDateRange'
+import FormNumberRange from '@/components/form/FormNumberRange'
 
 export default {
   name: 'RebateSettingSearch',
   components: {
     FormInput,
-    FormSelect,
-    FormSelectStatic
+    FormDateRange,
+    FormNumberRange
   },
-  mixins: [ searchInnerMixin ]
+  mixins: [ searchInnerMixin ],
+  methods: {
+    handleDateRangeChange ({ startTime, endTime }) {
+      this.formData.startTime = startTime
+      this.formData.endTime = endTime
+    },
+    handleWinRangeChange ({ start, end }) {
+      this.formData.minWin = start
+      this.formData.maxWin = end
+    }
+  }
 }
 </script>

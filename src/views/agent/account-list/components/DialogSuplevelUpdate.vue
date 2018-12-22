@@ -50,7 +50,7 @@ export default {
     childId () {
       this.formData.userId = this.childId
 
-      if (this.childId) {
+      if (this.childId && this.dialogVisible) {
         this.fetchSuplevelList()
       }
     }

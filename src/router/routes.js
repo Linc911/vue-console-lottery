@@ -98,9 +98,6 @@ const AgentPerformanceLinear = resolve => require(['@/views/agent/performance-li
 const AgentInterestGame = resolve => require(['@/views/agent/interest-game'], resolve)
 const AgentInterestSetting = resolve => require(['@/views/agent/interest-setting'], resolve)
 
-const AgentAchievementUsers = resolve => require(['@/views/agent/AgentAchievementUsers'], resolve)
-const AgentInterestDivision = resolve => require(['@/views/agent/AgentInterestDivision'], resolve)
-
 /* ========================================== 优惠活动 ============================================ */
 
 const ActivityManage = resolve => require(['@/views/activity/ActivityManage'], resolve)
@@ -794,6 +791,7 @@ const routes = [
             component: AgentCreate,
             meta: {
               title: '创建代理会员',
+              keepAlive: true,
               breadcrumb: [
                 { name: '代理管理' },
                 { name: '创建代理会员' }
@@ -825,12 +823,6 @@ const routes = [
             }
           },
           {
-            name: 'AgentAchievementUsers',
-            path: 'performance/users',
-            component: AgentAchievementUsers,
-            meta: { title: '代理个人业绩' }
-          },
-          {
             name: 'AgentPerformanceLinear',
             path: 'performance/linear',
             component: AgentPerformanceLinear,
@@ -853,12 +845,6 @@ const routes = [
                 { name: '游戏分润基数' }
               ]
             }
-          },
-          {
-            name: 'AgentInterestDivision',
-            path: 'interest/division',
-            component: AgentInterestDivision,
-            meta: { title: '代理一键分润' }
           },
           {
             name: 'AgentInterestSetting',

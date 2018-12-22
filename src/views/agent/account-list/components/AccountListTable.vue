@@ -36,7 +36,7 @@
         <template slot-scope="scope">
           <el-button @click="showDialog(scope.row, 'dialogSublevel')" type="primary" size="mini">直属下级</el-button>
           <el-button @click="showDialog(scope.row, 'dialogSuplevel')" type="primary" size="mini">变更上级</el-button>
-          <!-- <el-button @click="showDialog(scope.row, 'dialogSuplevel')" type="primary" size="mini">修改分润</el-button> -->
+          <el-button @click="showDialog(scope.row, 'dialogInterest')" type="primary" size="mini">修改分润</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -48,7 +48,7 @@
     <DialogSuplevelUpdate @on-changed="$emit('on-changed')" :childId="activeItem.id" ref="dialogSuplevel" />
 
     <!-- 分润弹框 -->
-    <!-- <DialogSuplevelUpdate @on-changed="$emit('on-changed')" :childId="activeItem.id" ref="dialogInterest" /> -->
+    <DialogInterestUpdate @on-changed="$emit('on-changed')" :id="activeItem.id" ref="dialogInterest" />
 
   </div>
 </template>
@@ -58,12 +58,14 @@ import { tableComponentMixin } from '@/mixins'
 
 import DialogSublevelList from './DialogSublevelList'
 import DialogSuplevelUpdate from './DialogSuplevelUpdate'
+import DialogInterestUpdate from './DialogInterestUpdate'
 
 export default {
   name: 'AccountListTable',
   components: {
     DialogSublevelList,
-    DialogSuplevelUpdate
+    DialogSuplevelUpdate,
+    DialogInterestUpdate
   },
   mixins: [ tableComponentMixin ],
   data () {

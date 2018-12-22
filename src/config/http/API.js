@@ -174,8 +174,9 @@ export default {
   createAgentUserAccount: (data) => axios.put('/api-p/agent/create', data), // 创建代理会员
 
   fetchAgentAccountList: (options) => axios.get('/api-p/agent', options), // 代理会员列表
-  updateAgentAccountInterest: (data) => axios.put('/api-p/agent/rate', data), // 修改会员分润
   updateAgentSeniorLevel: (data) => axios.put('/api-p/agent/updateParent', data), // 修改上级分润
+  fetchAgentAccountInterest: (options) => axios.get('/api-p/agent/rate', options), // 获取会员分润比例
+  updateAgentAccountInterest: (data) => axios.put('/api-p/agent/rate', data), // 修改会员分润比例
 
   fetchAgentInvitationCode: (options) => axios.get('/api-u/userRelation', options), // 邀请码列表
   deleteAgentInvitationCodeItem: (options) => axios.delete('/api-u/userRelation/delete', options), // 删除邀请码

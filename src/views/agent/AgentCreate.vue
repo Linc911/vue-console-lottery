@@ -61,7 +61,7 @@
       </div>
     </el-card>
 
-    <div class="">
+    <div>
       <el-button @click="submitForm('createForm')" type="primary" size="medium">确认提交</el-button>
     </div>
   </el-form>
@@ -101,6 +101,9 @@ export default {
         if (valid) {
           this.$httpAPI.createAgentUserAccount(this.formData).then(response => {
             if (response.data.status === 200) {
+              this.$refs.createForm.resetFields()
+
+              this.$router.push({ name: 'AgentAccountList' })
               this.$message.success('创建成功！')
             } else {
               this.$message.error('创建失败！')
