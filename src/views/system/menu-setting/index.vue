@@ -10,30 +10,28 @@
     <!-- 表格 -->
     <MenuSettingTable
       @on-submenu-toggle="handleSubmenuToggleVisible"
-      @on-updated="fetchTableData()"
-      @on-deleted="fetchTableData()"
+      @on-changed="fetchTableData($event)"
       :data="tableData"
     />
 
     <!-- 创建弹框 -->
-    <MenuSettingDialogCreate @on-created="fetchTableData()" :menuOptions="tableOriginData" ref="dialogCreate" />
+    <MenuSettingDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
 <script>
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
+import { searchLayoutWithoutSearchMixin } from '@/mixins'
+
 import MenuSettingTable from './components/MenuSettingTable'
 import MenuSettingDialogCreate from './components/MenuSettingDialogCreate'
 
 export default {
   name: 'SystemMenuSetting',
   components: {
-    SearchLayout,
-    BaseAdd,
     MenuSettingTable,
     MenuSettingDialogCreate
   },
+  mixins: [ searchLayoutWithoutSearchMixin ],
   data () {
     return {
       tableOriginData: [],
@@ -50,28 +48,37 @@ export default {
     handleSubmenuToggleVisible (menu) {
       if (menu.child) {
         // 每次先把指示标签重置
-        this.$_.forEach(this.tableOriginData, (item) => {
-          item.child = false
-        })
+        this.$_.forEach(this.tableOriginData, (item) => (item.child = false))
 
         this.tableData = this.$_.filter(this.tableOriginData, (item) => !item.parentId)
       } else {
         // 每次先把指示标签重置
-        this.$_.forEach(this.tableOriginData, (item) => {
-          item.child = false
-        })
+        this.$_.forEach(this.tableOriginData, (item) => (item.child = false))
         menu.child = true
 
-        this.tableData = this.$_.filter(this.tableOriginData, (item) => {
-          return !item.parentId || item.parentId === menu.id
-        })
+        // 数据处理：列举第一级的全部菜单和选中的第二级菜单
+        this.tableData = this.$_.filter(this.tableOriginData, (item) => !item.parentId || item.parentId === menu.id)
       }
     },
-    fetchTableData () {
+    // 获取初始表格数据
+    fetchTableData (parentId) {
       this.$httpAPI[this.tableHttpAPI](this.requestParams).then(response => {
         if (response.data) {
+          // 作为参考数据
           this.tableOriginData = response.data
-          this.tableData = this.$_.filter(this.tableOriginData, (item) => !item.parentId)
+
+          // （重载）数据处理：只列举第一级的全部菜单
+          if (arguments[0] === undefined) {
+            this.tableData = this.$_.filter(this.tableOriginData, (item) => !item.parentId)
+          } else {
+            // 第一级的全部菜单为展开状态
+            this.$_.forEach(this.tableOriginData, (item) => {
+              item.id === parentId && (item.child = true)
+            })
+
+            // 数据处理：列举第一级的全部菜单和选中的第二级菜单
+            this.tableData = this.$_.filter(this.tableOriginData, (item) => !item.parentId || item.parentId === parentId)
+          }
         } else {
           this.tableData = []
         }

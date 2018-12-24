@@ -3,6 +3,8 @@ import BasePagination from '@/components/base/BasePagination'
 import BaseSwitch from '@/components/base/BaseSwitch'
 import BaseTimePicker from '@/components/base/BaseTimePicker'
 
+import SearchLayout from '@/components/layout/SearchLayout'
+import BaseAdd from '@/components/base/BaseAdd'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
@@ -81,7 +83,29 @@ export const menuMixin = {
 }
 
 /* ========================================== 条件筛选 ========================================== */
+// 顶部筛选 - 搜索组件父级调用(没有搜索区域)
+export const searchLayoutWithoutSearchMixin = {
+  components: {
+    SearchLayout,
+    BaseAdd
+  }
+}
 // 顶部筛选 - 搜索组件父级调用
+export const searchLayoutMixin = {
+  methods: {
+    // 处理触发搜索事件
+    handleSearch (params) {
+      // 请求参数改变（携带搜索条件参数、重置到首页）
+      this.requestParams = Object.assign(this.requestParams, params, { pageNo: 1 })
+      this.page.current = 1
+
+      // 重新获取数据
+      this.fetchTableData()
+    }
+  }
+}
+
+// 顶部筛选 - 搜索组件父级调用(deprecated 待删除)
 export const searchOuterMixin = {
   methods: {
     handleSearch (params) {

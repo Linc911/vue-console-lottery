@@ -1,30 +1,20 @@
 <template lang="html">
   <div>
     <el-table :data="data" size="small" :max-height="590" highlight-current-row border>
+
       <el-table-column type="index" :width="36" />
-
-      <el-table-column prop="createTime" label="创建时间" :min-width="100">
-        <template slot-scope="scope">
-          <span>{{ scope.row.createTime | date }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="updateTime" label="创建时间" :min-width="100">
-        <template slot-scope="scope">
-          <span>{{ scope.row.updateTime | date }}</span>
-        </template>
-      </el-table-column>
 
       <el-table-column prop="name" label="名称" :min-width="120">
         <template slot-scope="scope">
-          <i
-            v-if="!scope.row.parentId"
-            @click="$emit('on-submenu-toggle', scope.row)"
-            :class="[ scope.row.child ? 'el-icon-caret-bottom' : 'el-icon-caret-right' ]"></i>
-          <i v-else class="el-icon-share"></i>
-
-          <span v-if="!scope.row.parentId" @click="$emit('on-submenu-toggle', scope.row)" class="item-name">{{ scope.row.name }}</span>
-          <span v-else>{{ scope.row.name }}</span>
+          <!-- 不同级别菜单显示不同菜单 -->
+          <div v-if="!scope.row.parentId" @click="$emit('on-submenu-toggle', scope.row)">
+            <i :class="[ scope.row.child ? 'el-icon-caret-bottom' : 'el-icon-caret-right' ]"></i>
+            <span class="item-name">{{ scope.row.name }}</span>
+          </div>
+          <div v-else>
+            <i class="el-icon-share"></i>
+            <span>{{ scope.row.name }}</span>
+          </div>
         </template>
       </el-table-column>
 
@@ -38,19 +28,41 @@
 
       <el-table-column prop="sort" label="排序" :min-width="45" />
 
+      <el-table-column prop="createTime" label="创建时间" :min-width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.createTime | time }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="updateTime" label="更新时间" :min-width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.updateTime | time }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column prop="operations" label="操作" :min-width="90">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
+          <el-button
+            @click="showDialog(scope.row, 'dialogUpdate')"
+            type="primary"
+            icon="el-icon-edit"
+            size="mini"
+          />
+
+          <el-button
+            @click="showDialog(scope.row, 'dialogDelete')"
+            type="warning"
+            icon="el-icon-delete"
+            size="mini"
+          />
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 修改弹框 -->
     <MenuSettingDialogUpdate
-      @on-updated="$emit('on-updated')"
+      @on-updated="$emit('on-changed', activeItem.parentId)"
       :data="activeItem"
-      :menuOptions="data"
       ref="dialogUpdate"
     />
 
@@ -85,14 +97,15 @@ export default {
     }
   },
   methods: {
+    // 删除成功时，同步更新侧边栏数据（vuex）
     handleDialogDeleteConfirm () {
-      this.$refs.dialogDelete.toggleDialogVisible(false)
+      this.$refs.dialogDelete.toggleDialogVisible(false) // 隐藏弹框
 
       this.$axios.delete('/api-b/menus/' + this.activeItem.id).then((response) => {
-        // 更新侧边栏数据
         this.$store.dispatch('sidebar/refreshMenu')
 
-        this.$emit('on-deleted')
+        this.$emit('on-changed', this.activeItem.parentId)
+
         this.$message.success('删除成功！')
       }).catch(() => this.$message.error('服务器异常，请稍后再试！'))
     }

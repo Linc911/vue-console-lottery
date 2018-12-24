@@ -77,6 +77,7 @@ export default {
   position: fixed;
   z-index: 10;
   height: 100%;
+  padding-bottom: 60px;
   margin-top: 60px;
   background-color: #324057;
 }
