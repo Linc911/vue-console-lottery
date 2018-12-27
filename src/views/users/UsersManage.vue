@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="users-manage">
+  <div>
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive" />
     </keep-alive>

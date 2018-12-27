@@ -46,14 +46,15 @@
     </el-form-item>
 
     <el-form-item style="text-align: right">
+      <el-checkbox v-model="checked" class="pull-left">{{ saveString }}</el-checkbox>
       <el-button @click="submitForm('formCreate')" type="primary" size="small">确定</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-import Config from '@/config/data'
-import FormValition from '@/config/form'
+import config from '@/config/data'
+import validators from '@/config/form'
 
 export default {
   name: 'MenuSettingForm',
@@ -67,14 +68,16 @@ export default {
   },
   data () {
     return {
+      saveString: config.COMPONENT_CREATION_RECORD,
+      checked: true,
       options: [],
       formData: this.data,
       rules: {
-        parentId: FormValition.validateSelect('上级菜单'),
-        name: FormValition.validateRequired('菜单名称'),
-        url: this.data.parentId ? FormValition.validateRequired('路由地址') : {},
-        css: FormValition.validateRequired('图标代码'),
-        sort: FormValition.validateRequired('排序')
+        parentId: validators.validateSelect('上级菜单'),
+        name: validators.validateRequired('菜单名称'),
+        url: this.data.parentId ? validators.validateRequired('路由地址') : {},
+        css: validators.validateRequired('图标代码'),
+        sort: validators.validateRequired('排序')
       }
     }
   },
@@ -82,24 +85,24 @@ export default {
     data () {
       this.formData = Object.assign(this.formData, this.data)
 
-      this._generateValidationOfUrl(this.data.parentId)
+      this._generateValidationOfUrl(this.data.parentId) // 根据选择不同级别的菜单，url 字段是否是必填
     }
   },
   created () {
     this.fetchMenuList()
   },
   methods: {
-    // c
+    // 根据选择不同级别的菜单，url 字段是否是必填
     hanldeSelectChanged (value) {
       this._generateValidationOfUrl(value)
     },
     // 提交表单
     submitForm (formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$emit('on-validated', this.formData)
+          this.$emit('on-validated', { data: this.formData, checked: this.checked })
         } else {
-          this.$message.warning(Config.VALIDATION_FAILED)
+          this.$message.warning(config.VALIDATION_FAILED)
         }
       })
     },
@@ -116,7 +119,7 @@ export default {
     // 根据上级菜单是root时， url才是选填；其他情况必须填写
     _generateValidationOfUrl (vale) {
       if (vale) {
-        this.$set(this.rules, 'url', FormValition.validateRequired('路由地址'))
+        this.$set(this.rules, 'url', validators.validateRequired('路由地址'))
       } else {
         this.$set(this.rules, 'url', {})
       }

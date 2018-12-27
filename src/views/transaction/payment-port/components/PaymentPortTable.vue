@@ -68,6 +68,7 @@
 
     <!-- 详情弹框 -->
     <PaymentPortDialogDetail :data="activeItem" ref="dialogDetail" />
+
     <!-- 修改弹框 -->
     <PaymentPortDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
   </div>

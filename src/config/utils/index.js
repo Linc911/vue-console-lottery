@@ -14,11 +14,14 @@ export default {
       }
     }
   },
+
+  // 重置form相关组件的fields，调用组件提供的reset方法
   invokeRefResetMothod (refs) {
     const refsArray = Object.keys(refs).filter(item => !item.includes('form'))
 
     refsArray.forEach(ref => refs[ref].reset())
   },
+
   // 判断两个对象是否相等（只对比自有属性是否相等）
   isEquivalentObjects (a, b) {
     const aProps = Object.keys(a)

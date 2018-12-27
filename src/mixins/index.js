@@ -1,15 +1,15 @@
-import BasePagination from '@/components/base/BasePagination'
+import config from '@/config/data'
 
+import BasePagination from '@/components/base/BasePagination'
 import BaseSwitch from '@/components/base/BaseSwitch'
 import BaseTimePicker from '@/components/base/BaseTimePicker'
-
 import SearchLayout from '@/components/layout/SearchLayout'
 import BaseAdd from '@/components/base/BaseAdd'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
 /* ========================================== BaseSwitch组件 ========================================== */
-export const statusSwitchMixin = {
+export const statusSwitchMixin = { // Deprecated
   components: {
     BaseSwitch
   },
@@ -28,6 +28,7 @@ export const statusSwitchMixin = {
     }
   }
 }
+
 export const switchMixin = {
   components: {
     BaseSwitch
@@ -38,11 +39,10 @@ export const switchMixin = {
         { [this.switchObj.attrId]: payload.id, [this.switchObj.attrValue]: Number(payload.value) }
       ).then(response => {
         if (response.data.status === 200) {
-          this.$emit('on-status-changed', payload.id)
-          this.$message.success('修改状态成功！')
+          this.$emit('on-changed', payload.id)
+          this.$message.success(config.UPDATE_SUCCEEDED)
         } else {
-          this.$emit('on-status-failed', payload.id)
-          this.$message.error('修改状态失败！')
+          this.$message.error(config.UPDATE_FAILED)
         }
       }).catch(error => console.log(error))
     }
@@ -90,8 +90,9 @@ export const searchLayoutWithoutSearchMixin = {
     BaseAdd
   }
 }
+
 // 顶部筛选 - 搜索组件父级调用
-export const searchLayoutMixin = {
+export const searchLayoutWithoutAddMixin = {
   methods: {
     // 处理触发搜索事件
     handleSearch (params) {
@@ -105,7 +106,26 @@ export const searchLayoutMixin = {
   }
 }
 
-// 顶部筛选 - 搜索组件父级调用(deprecated 待删除)
+// 顶部筛选 - 搜索组件父级调用
+export const searchLayoutMixin = {
+  components: {
+    SearchLayout,
+    BaseAdd
+  },
+  methods: {
+    // 处理触发搜索事件
+    handleSearch (params) {
+      // 请求参数改变（携带搜索条件参数、重置到首页）
+      this.requestParams = Object.assign(this.requestParams, params, { pageNo: 1 })
+      this.page.current = 1
+
+      // 重新获取数据
+      this.fetchTableData()
+    }
+  }
+}
+
+// 顶部筛选 - 搜索组件父级调用 (deprecated 待删除)
 export const searchOuterMixin = {
   methods: {
     handleSearch (params) {
@@ -127,9 +147,11 @@ export const searchInnerMixin = {
     }
   },
   methods: {
+    // 通知父组件触发搜索事件；将请求参数传给父组件
     search () {
       this.$emit('on-search', this.formData)
     },
+    // 将全部的 form 组件重置为初始值；初始化组件内容的数据
     reset () {
       for (let key in this.$refs) {
         this.$refs[key].reset()
@@ -145,6 +167,11 @@ export const searchInnerMixin = {
 export const tableWithPaginationMixin = {
   components: {
     BasePagination
+  },
+  data () {
+    return {
+      tableData: []
+    }
   },
   created () {
     this.fetchTableData()
@@ -177,6 +204,11 @@ export const tableWithPaginationPostMixin = {
   components: {
     BasePagination
   },
+  data () {
+    return {
+      tableData: []
+    }
+  },
   created () {
     this.fetchTableData()
   },
@@ -201,6 +233,11 @@ export const tableWithPaginationPostMixin = {
 
 // 表格数据（不带分页）
 export const tableWithoutPaginationMixin = {
+  data () {
+    return {
+      tableData: []
+    }
+  },
   created () {
     this.fetchTableData()
   },
@@ -218,6 +255,11 @@ export const tableWithoutPaginationMixin = {
 }
 // 表格数据（带分页）
 export const tableWithoutPaginationPostMixin = {
+  data () {
+    return {
+      tableData: []
+    }
+  },
   created () {
     this.fetchTableData()
   },
@@ -244,31 +286,72 @@ export const tableComponentMixin = {
   },
   data () {
     return {
-      activeItem: { name: '' }
+      activeItem: {} // deprecated
     }
   },
   methods: {
+    // 显示弹框；将当前点击的数据记录下来
     showDialog (item, ref) {
       this.activeItem = item
+
       this.$refs[ref].toggleDialogVisible(true)
     },
+    // 响应删除操作
     handleDeleteConfirm () {
-      this.$refs.dialogDelete.toggleDialogVisible(false)
+      this.$refs.dialogDelete.toggleDialogVisible(false) // 隐藏弹框
 
+      // 发送请求；根据是否有 this.deleteId 赋值，来决定用什么对象属性
       this.$httpAPI[this.deleteHttpAPI]({
-        params: { [this.deleteAttrName]: this.deleteId ? this.activeItem[this.deleteId] : this.activeItem.id }
+        params: { [this.deleteAttrName]: this.deleteId ? this.activeItem[this.deleteId] : this.activeItem['id'] }
       }).then(response => {
-        /* 接口没有统一，待接口文档统一后再对相应的返回码做处理 */
-        // if (response.data.status === 200) {
-        //   this.$emit('on-deleted')
-        //   this.$message.success('删除成功！')
-        // } else {
-        //   this.$message.error('删除失败！')
-        // }
+        if (response.data.status === 200) {
+          this.$emit('on-changed')
+          this.$message.success(config.DELETE_SUCCEEDED)
+        } else {
+          this.$message.error(config.DELETE_FAILED)
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$message.warning(config.DELETE_FAILED)
+      })
+    }
+  }
+}
 
-        this.$emit('on-deleted')
-        this.$message.success('删除成功！')
-      }).catch(error => console.log(error))
+/* ================================== form 组件 ==================================== */
+export const formComponentMixin = {
+  props: {
+    data: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
+  },
+  watch: {
+    // 变化时，更新数据
+    data () {
+      this.formData = Object.assign(this.formData, this.data)
+    }
+  },
+  mounted () {
+    // 创建时，传入数据
+    this.formData = Object.assign(this.formData, this.data)
+  },
+  methods: {
+    // 表单验证：通过验证，通知父组件submit Form，否则提示验证失败
+    validateForm () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.$emit('on-validated', this.formData)
+        } else {
+          this.$message.warning(config.VALIDATION_FAILED)
+        }
+      })
+    },
+    // 初始化表单
+    resetFields () {
+      this.$refs.form.resetFields()
     }
   }
 }
@@ -277,14 +360,17 @@ export const tableComponentMixin = {
 export const dialogCreateMixin = {
   data () {
     return {
-      dialogVisible: false
+      saveString: config.COMPONENT_CREATION_RECORD,
+      dialogVisible: false,
+      checked: true
     }
   },
   methods: {
-    submitForm (formName) {
+    // 检验表单验证是否通过，发送修改请求
+    submitForm (formName) { // DEPRECATED
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.dialogVisible = false
+          this.dialogVisible = false // 表单验证通过才隐藏弹框
 
           this.$httpAPI[this.createHttpAPI](this.formData).then(response => {
             /* 接口没有统一，待接口文档统一后再对相应的返回码做处理 */
@@ -299,14 +385,37 @@ export const dialogCreateMixin = {
             //   this.$message.error('创建失败！')
             // }
 
+            // 清除表单填写记录
+            if (!this.checked) {
+              this.$utils.invokeRefResetMothod(this.$refs)
+              this.$refs[formName].resetFields()
+            }
+
             this.$emit('on-created', this.formData)
-            this.$message.success('创建成功！')
+
+            this.$message.success(config.CREATE_SUCCEEDED)
           }).catch(error => console.log(error))
         } else {
-          this.$message.warning('表单填写不正确，请按提示填写！')
+          this.$message.warning(config.VALIDATION_FAILED)
         }
       })
     },
+    // 当子组件通知验证通过时，发送请求
+    handleValidationSuccess (data) {
+      this.dialogVisible = false // 隐藏弹框
+
+      this.$httpAPI[this.createHttpAPI](data).then((response) => {
+        !this.checked && this.$refs.form.resetFields() // 根据用户选择，是否重置所有的表单输入
+
+        this.$emit('on-created')
+
+        this.$message.success(config.CREATE_SUCCEEDED)
+      }).catch((error) => {
+        console.dir(error)
+        this.$message.error(config.CREATE_FAILED)
+      })
+    },
+    // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {
       this.dialogVisible = status
     }
@@ -327,15 +436,17 @@ export const dialogUpdateMixin = {
     }
   },
   watch: {
-    data () {
-      this.formData = Object.assign(this.formData, this.data)
-    }
+    // 将数据赋值给新的对象（子组件不能更新父组件的属性）
+    // data () {
+    //   this.formData = Object.assign(this.formData, this.data)
+    // }
   },
   methods: {
-    submitForm (formName) {
+    // 检验表单验证是否通过，发送修改请求
+    submitForm (formName) { // DEPRECATED
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.dialogVisible = false
+          this.dialogVisible = false // 表单验证通过才隐藏弹框
 
           // 判断是否对表单数据进行修改: 没修改 => 提示数据没变化，不发送请求； 进行修改 => 发送修改请求
           const same = this.$utils.isEquivalentObjects(this.data, this.formData)
@@ -361,23 +472,41 @@ export const dialogUpdateMixin = {
               // }
 
               this.$emit('on-updated')
-              this.$message.success('修改成功！')
-            }).catch(error => console.log(error))
+
+              this.$message.success(config.UPDATE_SUCCEEDED)
+            }).catch((error) => {
+              console.log(error)
+              this.$message.error(config.UPDATE_FAILED)
+            })
           } else {
-            this.$message.info('检测数据没有变化，不发送修改请求。')
+            this.$message.info(config.VALIDATION_UNCHANTED)
           }
         } else {
-          this.$message.warning('表单填写不正确，请根据提示填写！')
+          this.$message.warning(config.VALIDATION_FAILED)
         }
       })
     },
+    // 当子组件通知验证通过时，发送请求
+    handleValidationSuccess (data) {
+      this.dialogVisible = false // 隐藏弹框
+
+      this.$httpAPI[this.updateHttpAPI](data).then((response) => {
+        this.$emit('on-updated')
+
+        this.$message.success(config.UPDATE_SUCCEEDED)
+      }).catch((error) => {
+        console.dir(error)
+        this.$message.error(config.UPDATE_FAILED)
+      })
+    },
+    // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {
       this.dialogVisible = status
     }
   }
 }
 
-/* ========================================== DialogDetail 组件 ========================================== */
+/* ================================== DialogDetail 组件 ==================================== */
 export const dialogDetailMixin = {
   props: {
     data: {

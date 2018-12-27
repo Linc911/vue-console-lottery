@@ -77,6 +77,8 @@
 </template>
 
 <script>
+import config from '@/config/data'
+
 import { tableComponentMixin } from '@/mixins'
 
 import MenuSettingDialogUpdate from './MenuSettingDialogUpdate'
@@ -102,12 +104,12 @@ export default {
       this.$refs.dialogDelete.toggleDialogVisible(false) // 隐藏弹框
 
       this.$axios.delete('/api-b/menus/' + this.activeItem.id).then((response) => {
-        this.$store.dispatch('sidebar/refreshMenu')
+        this.$store.dispatch('sidebar/refreshMenu') // 同步更新左侧菜单导航
 
         this.$emit('on-changed', this.activeItem.parentId)
 
-        this.$message.success('删除成功！')
-      }).catch(() => this.$message.error('服务器异常，请稍后再试！'))
+        this.$message.success(config.DELETE_SUCCEEDED)
+      }).catch(() => this.$message.error(config.DELETE_FAILED))
     }
   }
 }

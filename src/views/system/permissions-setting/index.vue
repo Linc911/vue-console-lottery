@@ -11,11 +11,7 @@
     </SearchLayout>
 
     <!-- 表格 -->
-    <PermissionsSettingTable
-      @on-updated="fetchTableData()"
-      @on-deleted="fetchTableData()"
-      :data="tableData"
-    />
+    <PermissionsSettingTable @on-changed="fetchTableData()" :data="tableData" />
 
     <!-- 创建弹框 -->
     <PermissionsSettingDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
@@ -23,10 +19,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithoutPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithoutPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import PermissionsSettingSearch from './components/PermissionsSettingSearch'
 import PermissionsSettingTable from './components/PermissionsSettingTable'
 import PermissionsSettingDialogCreate from './components/PermissionsSettingDialogCreate'
@@ -34,16 +28,13 @@ import PermissionsSettingDialogCreate from './components/PermissionsSettingDialo
 export default {
   name: 'SystemPermissionsSetting',
   components: {
-    SearchLayout,
-    BaseAdd,
     PermissionsSettingSearch,
     PermissionsSettingTable,
     PermissionsSettingDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithoutPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithoutPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchSystePermissionsList',
       requestParams: {}
     }

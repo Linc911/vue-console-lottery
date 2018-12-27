@@ -43,10 +43,11 @@ export default {
   fetchSystePermissionsList: (options) => axios.get('/api-u/permissions', options), // 权限列表
   createSystePermissionsItem: (options) => axios.post('/api-u/permissions', options), // 创建新权限
   updateSystePermissionsItem: (options) => axios.put('/api-u/permissions', options), // 修改权限信息
+  deleteSystePermissionsItem: (options) => axios.delete('/api-u/permissions', options), // 删除权限
 
   fetchUserGroups: (options) => axios.get('/api-u/group/list', options), // 分组列表
-  postSystemGroupChange: (data) => axios.post('/api-u/group/save', data), // 创建或修改分组信息
-  postUserGroupSetting: (options) => axios.get('/api-u/group/saveRelation', options), // 设置单个会员分组
+  postSystemGroupItem: (data) => axios.post('/api-u/group/save', data), // 创建或修改分组信息
+  deleteSystemGroupItem: (options) => axios.delete('/api-u/group/delete', options), // 删除分组
 
   fetchSystemUsersList: (options) => axios.get('/api-u/users', options), // 用户列表
   createSystemUsersList: (data) => axios.post('/api-u/users-anon/register', data), // 创建新用户
@@ -65,7 +66,8 @@ export default {
   fetchUsersList: (options) => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
   getUserInfo: (options) => axios.get('/api-u/backend/user', options), // 单个会员信息
 
-  updateUserControlStatus: (options) => axios.get('/api-u/backend/updateControl', options), // 修改会员监控状态
+  updateUserListStatus: (data) => axios.put('/api-u/backend/updateControl', data), // 修改会员监控状态
+  postUserGroupSetting: (data) => axios.put('/api-u/group/saveRelation', data), // 设置单个会员分组
 
   fetchUserBetsList: (data) => axios.post('/api-g/getUserBetsInfo', data), // 单个会员全部注单记录
 

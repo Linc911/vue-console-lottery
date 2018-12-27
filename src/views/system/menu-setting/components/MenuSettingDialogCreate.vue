@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import config from '@/config/data'
+
 import MenuSettingForm from './MenuSettingForm'
 
 export default {
@@ -19,18 +21,18 @@ export default {
   },
   methods: {
     // 表单验证通过，发送修改请求
-    handleValidationSuccess (value) {
+    handleValidationSuccess (payload) {
       this.dialogVisible = false // 表单验证通过才隐藏弹框
 
-      this.$httpAPI.createSystemMenuItem(value).then((response) => {
-        this.$refs.form.resetFields() // 重置所有的表单输入
+      this.$httpAPI.createSystemMenuItem(payload.data).then((response) => {
+        !payload.checked && this.$refs.form.resetFields() // 根据用户选择，是否重置所有的表单输入
 
         this.$store.dispatch('sidebar/refreshMenu') // 同步更新左侧菜单导航
 
         this.$emit('on-created')
 
-        this.$message.success('创建成功！')
-      }).catch(() => this.$message.error('创建失败！'))
+        this.$message.success(config.CREATE_SUCCEEDED)
+      }).catch(() => this.$message.error(config.CREATE_FAILED))
     },
     // 显示与隐藏弹框
     toggleDialogVisible (status) {

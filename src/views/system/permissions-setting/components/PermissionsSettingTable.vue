@@ -11,30 +11,45 @@
 
       <el-table-column prop="createTime" label="创建时间" >
         <template slot-scope="scope">
-          <span>{{scope.row.createTime | time}}</span>
+          <span>{{ scope.row.createTime | time }}</span>
         </template>
       </el-table-column>
 
       <el-table-column prop="updateTime" label="创建时间" >
         <template slot-scope="scope">
-          <span>{{scope.row.updateTime | time}}</span>
+          <span>{{ scope.row.updateTime | time }}</span>
         </template>
       </el-table-column>
 
       <el-table-column prop="operations" label="操作" :min-width="90">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
+          <el-button
+            @click="showDialog(scope.row, 'dialogUpdate')"
+            type="primary"
+            icon="el-icon-edit"
+            size="mini"
+          />
+
+          <el-button
+            @click="showDialog(scope.row, 'dialogDelete')"
+            type="warning"
+            icon="el-icon-delete"
+            size="mini"
+          />
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 修改弹框 -->
-    <PermissionsSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <PermissionsSettingDialogUpdate
+      @on-updated="$emit('on-changed')"
+      :data="activeItem"
+      ref="dialogUpdate"
+    />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
-      @on-confirm="handleDeleteConfirmAnother"
+      @on-confirm="handleDeleteConfirm"
       :name="activeItem.name"
       title="权限名称"
       ref="dialogDelete"
@@ -58,19 +73,9 @@ export default {
   data () {
     return {
       activeItem: { name: '' },
-      deleteHttpAPI: 'deleteRebateSettingItem',
-      deleteAttrName: 'groupId',
-      deleteId: 'groupId'
-    }
-  },
-  methods: {
-    handleDeleteConfirmAnother () {
-      this.$refs.dialogDelete.toggleDialogVisible(false) // 隐藏弹框
-
-      this.$axios.delete('/api-u/permissions/' + this.activeItem.id).then(() => {
-        this.$emit('on-deleted')
-        this.$message.success('删除权限成功！')
-      }).catch(() => this.$message.error('删除权限失败！'))
+      deleteHttpAPI: 'deleteSystePermissionsItem',
+      deleteAttrName: 'id',
+      deleteId: 'id'
     }
   }
 }

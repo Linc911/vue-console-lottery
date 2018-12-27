@@ -12,11 +12,16 @@
       </el-form-item>
 
       <el-form-item label="角色名称" prop="name">
-        <el-input @keyup.native.enter="submitForm('roleCreateForm')" v-model.trim="formData.name" placeholder="角色名称" />
+        <el-input
+          @keyup.native.enter="submitForm('roleCreateForm')"
+          v-model.trim="formData.name"
+          placeholder="角色名称"
+        />
       </el-form-item>
     </el-form>
 
     <span slot="footer">
+      <el-checkbox v-model="checked" class="pull-left">{{ saveString }}</el-checkbox>
       <el-button @click="submitForm('formCreate')" type="primary" size="small">确定</el-button>
     </span>
   </el-dialog>
@@ -25,7 +30,7 @@
 <script>
 import { dialogCreateMixin } from '@/mixins'
 
-import FormValidation from '@/config/form'
+import volidators from '@/config/form'
 
 export default {
   name: 'RolesSettingDialogCreate',
@@ -35,8 +40,8 @@ export default {
       createHttpAPI: 'createSystemRolesItem',
       formData: {},
       rules: {
-        code: FormValidation.validateStringLength('CODE', 1, 20),
-        name: FormValidation.validateStringLength('角色名称', 1, 20)
+        code: volidators.validateStringLength('CODE', 1, 20),
+        name: volidators.validateStringLength('角色名称', 1, 20)
       }
     }
   }

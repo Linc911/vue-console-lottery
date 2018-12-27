@@ -6,7 +6,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <UsersListTable @on-status-change="fetchTableData()" :data="tableData" />
+      <UsersListTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutWithoutAddMixin, tableWithPaginationMixin } from '@/mixins'
 
 import UsersListSearch from './components/UsersListSearch'
 import UsersListTable from './components/UsersListTable'
@@ -31,10 +31,9 @@ export default {
     UsersListSearch,
     UsersListTable
   },
-  mixins: [ tableWithPaginationMixin, searchOuterMixin ],
+  mixins: [ tableWithPaginationMixin, searchLayoutWithoutAddMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchUsersList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
@@ -55,19 +54,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../styles/variables';
+// @import '../../../styles/variables';
 
-.dialog-user-info {
-  padding-bottom: 30px;
-  line-height: 2;
-}
-.el-icon-error {
-  font-size: 16px;
-  cursor: pointer;
-}
-.el-icon-success {
-  font-size: 16px;
-  color: $--color-primary;
-  cursor: pointer;
-}
+// .dialog-user-info {
+//   padding-bottom: 30px;
+//   line-height: 2;
+// }
+// .el-icon-error {
+//   font-size: 16px;
+//   cursor: pointer;
+// }
+// .el-icon-success {
+//   font-size: 16px;
+//   color: $--color-primary;
+//   cursor: pointer;
+// }
 </style>

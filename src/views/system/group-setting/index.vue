@@ -8,11 +8,7 @@
     </SearchLayout>
 
     <!-- 表格 -->
-    <GroupSettingTable
-      @on-updated="fetchTableData()"
-      @on-deleted="fetchTableData()"
-      :data="tableData"
-    />
+    <GroupSettingTable @on-changed="fetchTableData()" :data="tableData" />
 
     <!-- 创建弹框 -->
     <GroupSettingDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
@@ -20,22 +16,18 @@
 </template>
 
 <script>
-import { tableWithoutPaginationMixin } from '@/mixins'
+import { searchLayoutWithoutSearchMixin, tableWithoutPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import GroupSettingTable from './components/GroupSettingTable'
 import GroupSettingDialogCreate from './components/GroupSettingDialogCreate'
 
 export default {
   name: 'SystemGroupSetting',
   components: {
-    SearchLayout,
-    BaseAdd,
     GroupSettingTable,
     GroupSettingDialogCreate
   },
-  mixins: [ tableWithoutPaginationMixin ],
+  mixins: [ searchLayoutWithoutSearchMixin, tableWithoutPaginationMixin ],
   data () {
     return {
       tableData: [],

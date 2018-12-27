@@ -49,7 +49,7 @@ axios.interceptors.response.use(response => {
   endLoading()
 
   // 在登录Token已过期下返回的状态码
-  if (response.status === 401 || response.status === 404) {
+  if (response.status === 401 || response.status === 404 || response.status === 503) {
     initLoginStatus()
 
     Message.warning('登录Token已过期，请重新登录。')
