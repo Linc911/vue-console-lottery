@@ -65,22 +65,31 @@ export default {
 
       if (payload) {
         state.routes[payload - 1].active = true
+
         router.push(state.routes[payload - 1].path)
+        this.commit('sidebar/updateActiveMenu', state.routes[payload - 1].name)
       } else {
         !state.routes.length && router.push({ name: 'HomePage' })
+        this.commit('sidebar/updateActiveMenu', '')
       }
     },
     removeLeftRoutes ({ commit, state }, payload) {
       router.push(state.routes[payload].path)
+
       commit('removeLeftRoutes', payload)
+      this.commit('sidebar/updateActiveMenu', state.routes[payload].name)
     },
     removeRightRoutes ({ commit, state }, payload) {
       router.push(state.routes[payload].path)
+
       commit('removeRightRoutes', payload)
+      this.commit('sidebar/updateActiveMenu', state.routes[payload].name)
     },
     removeOtherRoutes ({ commit, state }, payload) {
       router.push(state.routes[payload].path)
+
       commit('removeOtherRoutes', payload)
+      this.commit('sidebar/updateActiveMenu', state.routes[payload].name)
     },
     highlightRoute ({ commit }, paylod) {
       commit('highlightRoute', paylod)

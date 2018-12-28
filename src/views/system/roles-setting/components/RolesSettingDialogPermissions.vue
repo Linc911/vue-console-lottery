@@ -33,7 +33,7 @@ export default {
   },
   watch: {
     id () {
-      this.fetchPermissionsList(this.id)
+      if (this.dialogVisible) this.fetchPermissionsList(this.id)
     }
   },
   methods: {

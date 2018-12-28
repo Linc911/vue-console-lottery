@@ -3,13 +3,7 @@
     <el-table :data="data" size="small" highlight-current-row border>
       <el-table-column type="index" :width="36" />
 
-      <el-table-column prop="createTime" label="创建时间" :width="90">
-        <template slot-scope="scope">
-          <span>{{ scope.row.createTime | date }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="username" label="用户账户" />
+      <el-table-column prop="username" label="用户账户" :min-width="140" />
 
       <el-table-column prop="nickname" label="用户昵称" />
 
@@ -21,21 +15,32 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="phone" label="手机号码" :width="105">
+      <el-table-column prop="phone" label="手机号码" :min-width="105">
         <template slot-scope="scope">
           <span>{{ scope.row.phone | phoneFormat }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="email" label="邮箱地址" />
-
-      <el-table-column prop="type" label="类型" :width="100">
+      <el-table-column prop="type" label="用户类型">
         <template slot-scope="scope">
           <span>{{ scope.row.type | userType }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="banlance" label="账户余额" :min-width="120">
+      <el-table-column prop="roleNames" label="角色类型" :min-width="110">
+        <template slot-scope="scope">
+          <div>
+            <span>{{ scope.row.roleNames | separator('&nbsp;&nbsp;') }}</span>
+            <BaseIcon
+              @on-click="showDialog(scope.row, 'dialogRole')"
+              icon="el-icon-edit"
+              class="pull-right"
+            />
+          </div>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="banlance" label="账户余额" :min-width="100">
         <template slot-scope="scope">
           <span>{{scope.row.banlance | RMB}}</span>
         </template>
@@ -66,10 +71,15 @@
       </el-table-column>
     </el-table>
 
-    <!-- 修改弹框 -->
+    <!-- 角色弹框 -->
+    <UsersSettingDialogRole @on-changed="$emit('on-changed')" :data="activeItem" ref="dialogRole" />
+
+    <!-- 详情弹框 -->
     <UsersSettingDialogDetail :data="activeItem" ref="dialogDetail" />
+
     <!-- 修改弹框 -->
-    <UsersSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <UsersSettingDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
+
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
       @on-confirm="handleDeleteConfirm"
@@ -83,15 +93,19 @@
 <script>
 import { tableComponentMixin, switchMixin } from '@/mixins'
 
+import BaseIcon from '@/components/base/BaseIcon'
 import BaseIndicator from '@/components/base/BaseIndicator'
+import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
+import UsersSettingDialogRole from './UsersSettingDialogRole'
 import UsersSettingDialogDetail from './UsersSettingDialogDetail'
 import UsersSettingDialogUpdate from './UsersSettingDialogUpdate'
-import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
   name: 'UsersSettingTable',
   components: {
+    BaseIcon,
     BaseIndicator,
+    UsersSettingDialogRole,
     UsersSettingDialogDetail,
     UsersSettingDialogUpdate,
     DialogDeleteConfirm
@@ -99,14 +113,15 @@ export default {
   mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
-      deleteHttpAPI: 'deleteRebateSettingItem',
-      deleteAttrName: 'rebateId',
+      activeItem: { username: '' },
+      deleteHttpAPI: 'deleteSystemUsersItem',
+      deleteAttrName: 'id',
+      deleteId: 'idStr',
       switchObj: {
         API: 'updateSystemUsersItem',
         attrId: 'id',
         attrValue: 'enabled'
-      },
-      activeItem: { username: '' }
+      }
     }
   }
 }

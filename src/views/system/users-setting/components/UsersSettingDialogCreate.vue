@@ -64,23 +64,21 @@
 <script>
 import { dialogCreateMixin } from '@/mixins'
 
-import FormValidation from '@/config/form'
+import validators from '@/config/form'
 
 export default {
-  name: 'RebateSettingDialogCreate',
+  name: 'UsersSettingDialogCreate',
   mixins: [ dialogCreateMixin ],
   data () {
     return {
       createHttpAPI: 'createSystemUsersList',
       formData: { enabled: 1, sex: 1 },
       rules: {
-        username: [
-          { required: true, message: '用户名称不能为空' },
-          { pattern: /^[a-zA-Z]+/, message: '用户名称必须是字母开头' },
-          { min: 4, max: 15, message: '用户名称长度在 4 - 15 字符之间' }
-        ],
-        password: FormValidation.validateStringLength('登录密码', 6, 20),
-        phone: FormValidation.validatePhone('手机号码')
+        username: validators.validateRequired('用户名称'),
+        password: validators.validateStringLength('登录密码', 6, 20),
+        phone: validators.validatePhone('手机号码'),
+        sex: validators.validateSelect('性别'),
+        enabled: validators.validateSelect('启用状态')
       }
     }
   }

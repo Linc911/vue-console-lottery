@@ -84,6 +84,7 @@ export default {
 .tab-panel {
   position: fixed;
   width: 100%;
+  height: 40px;
   background-color: #fff;
   border-bottom: 1px solid #e5e5e5;
   z-index: 10;

@@ -28,14 +28,6 @@
           <el-input v-model.trim="formData.phone" type="number" placeholder="手机号码" />
         </el-form-item>
 
-        <el-form-item prop="password" label="登录密码">
-          <el-input v-model.trim="formData.password" placeholder="登录密码" />
-        </el-form-item>
-
-        <el-form-item prop="withdrawal" label="取款密码">
-          <el-input v-model.trim="formData.withdrawal" placeholder="取款密码" />
-        </el-form-item>
-
         <el-form-item prop="qq" label="QQ号码">
           <el-input v-model.trim="formData.qq" placeholder="QQ号码" />
         </el-form-item>
@@ -66,7 +58,7 @@
 <script>
 import { dialogUpdateMixin } from '@/mixins'
 
-import FormValidation from '@/config/form'
+import validators from '@/config/form'
 
 import FormSelect from '@/components/form/FormSelect'
 import FormRadio from '@/components/form/FormRadio'
@@ -84,15 +76,13 @@ export default {
     return {
       updateHttpAPI: 'updateSystemUsersItem',
       idParams: {}, // 必须携带的Id参数/及其他参数
-      formData: { name: '', password: '', phone: '' },
+      formData: { username: '', password: '', phone: '', sex: '', enabled: '' },
       rules: {
-        username: [
-          { required: true, message: '用户名称不能为空' },
-          { pattern: /^[a-zA-Z]+/, message: '用户名称必须是字母开头' },
-          { min: 4, max: 15, message: '用户名称长度在 4 - 15 字符之间' }
-        ],
-        password: FormValidation.validateStringLength('登录密码', 6, 20),
-        phone: FormValidation.validatePhone('手机号码')
+        username: validators.validateRequired('用户名称'),
+        password: validators.validateStringLength('登录密码', 6, 20),
+        phone: validators.validatePhone('手机号码'),
+        sex: validators.validateSelect('性别'),
+        enabled: validators.validateSelect('启用状态')
       }
     }
   },

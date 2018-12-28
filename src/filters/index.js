@@ -72,7 +72,7 @@ Vue.filter('phoneFormat', value => {
 // 按传入的连接符，连接数组为字符串
 Vue.filter('separator', (value, separator) => {
   if (value) {
-    return value.join(separator)
+    return value.join(separator || ' ')
   }
   return ''
 })

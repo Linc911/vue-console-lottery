@@ -52,6 +52,7 @@ const LotteryStatisticsBets = resolve => require(['@/views/lottery/statistics-be
 const LotteryStatistics = resolve => require(['@/views/lottery/lottery-statistics'], resolve)
 const LotteryKillrate = resolve => require(['@/views/lottery/LotteryKillrate'], resolve)
 const LotteryCheckout = resolve => require(['@/views/lottery/LotteryCheckout'], resolve)
+const LotteryRulesList = resolve => require(['@/views/lottery/lottery-rules'], resolve)
 
 /* ========================================== 财务管理 ============================================ */
 
@@ -472,6 +473,18 @@ const routes = [
               breadcrumb: [
                 { name: '彩票管理' },
                 { name: '彩票总报表' }
+              ]
+            }
+          },
+          {
+            name: 'LotteryRulesList',
+            path: 'rules',
+            component: LotteryRulesList,
+            meta: {
+              title: '游戏规则',
+              breadcrumb: [
+                { name: '彩票管理' },
+                { name: '游戏规则' }
               ]
             }
           }

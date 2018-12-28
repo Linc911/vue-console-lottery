@@ -15,11 +15,13 @@ function endLoading () {
   loading.close()
 }
 
+// 重置所有状态
 function initLoginStatus () {
-  store.dispatch('auth/clearToken')
-  store.dispatch('tab/clearRoutes')
+  store.dispatch('auth/clearToken') // 清空 token 相关数据
+  store.dispatch('tab/clearRoutes') // 重置浏览记录导航条
+  store.dispatch('sidebar/updateActiveMenu', '') // 重置侧边栏 active 状态菜单
 
-  axios.defaults.headers.common['Authorization'] = ''
+  axios.defaults.headers.common['Authorization'] = '' // 登录时不能带上，在这里要重置
 
   router.push({ name: 'LoginUsername' })
 }

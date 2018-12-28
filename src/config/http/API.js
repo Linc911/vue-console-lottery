@@ -52,6 +52,8 @@ export default {
   fetchSystemUsersList: (options) => axios.get('/api-u/users', options), // 用户列表
   createSystemUsersList: (data) => axios.post('/api-u/users-anon/register', data), // 创建新用户
   updateSystemUsersItem: (data) => axios.post('/api-u/users/update', data), // 更新用户信息
+  deleteSystemUsersItem: (options) => axios.delete('/api-u/users/delete', options), // 删除分组
+  updateSystemUsersItemRole: (data) => axios.post('/api-u/users/roles', data), // 更新用户的角色类型
 
   fetchSystemBanksList: (data) => axios.post('/api-b/bankConfig/list', data), // 银行设置列表
   createSystemBanksItem: (data) => axios.put('/api-b/bankConfig/save', data), // 创建新银行配置
@@ -65,18 +67,15 @@ export default {
 
   fetchUsersList: (options) => axios.get('/api-u/backend/userList', options), // 全部会员信息列表
   getUserInfo: (options) => axios.get('/api-u/backend/user', options), // 单个会员信息
-
   updateUserListStatus: (data) => axios.put('/api-u/backend/updateControl', data), // 修改会员监控状态
   postUserGroupSetting: (data) => axios.put('/api-u/group/saveRelation', data), // 设置单个会员分组
-
   fetchUserBetsList: (data) => axios.post('/api-g/getUserBetsInfo', data), // 单个会员全部注单记录
-
   getUsersRebate: (options) => axios.get('/api-u/userRelation/get', options), // 会员抽点
   updateUsersRebate: (data, options) => axios.post('/api-u/group/save', data, options),
 
   fetchUsersAccountCheck: (options) => axios.get('/api-p/capitalLog/user', options), // 会员账户核查
 
-  fetchUsersLogs: (options) => axios.get('/api-l/logList', options), // 会员日志
+  fetchUsersLogsList: (options) => axios.get('/api-l/logList', options), // 会员日志列表
 
   /* ===================================== 彩票管理 ======================================= */
 
@@ -95,6 +94,10 @@ export default {
   fetchLotterStatisticsBets: (options) => axios.get('/api-g/userBets/betReportForm', options), // 彩票注单报表
 
   fetchLotterStatistics: (options) => axios.get('/api-g/userBets/totalReportForm', options), // 彩票总报表
+
+  fetchLotteryRulesList: (options) => axios.get('/api-b/gameExplain', options), // 游戏说明列表
+  updateLotteryRulesItem: (data) => axios.put('/api-b/gameExplain', data), // 创建与更新游戏说明
+  deleteLotteryRulesItem: (data) => axios.delete('/api-b/gameExplain', data), // 删除游戏说明
 
   /* ===================================== 财务管理 ======================================= */
 

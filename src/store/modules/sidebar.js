@@ -13,6 +13,7 @@ const getters = {
 
 const mutations = {
   refreshMenu: (state, payload) => (state.menu = payload),
+  // payload 传入的是菜单的中文名称，不是id
   updateActiveMenu: (state, payload) => (state.activeMenu = payload)
 }
 

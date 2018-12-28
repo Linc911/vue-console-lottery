@@ -38,14 +38,6 @@
           <el-input :value="formData.phone | phoneFormat" />
         </el-form-item>
 
-        <el-form-item label="登录密码">
-          <el-input :value="formData.password" />
-        </el-form-item>
-
-        <el-form-item label="取款密码">
-          <el-input :value="formData.withdrawal" />
-        </el-form-item>
-
         <el-form-item label="QQ号码">
           <el-input :value="formData.qq" />
         </el-form-item>

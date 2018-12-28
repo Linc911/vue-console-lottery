@@ -35,21 +35,6 @@ export default {
   name: 'TheSidebar',
   data () {
     return {
-      //   {
-      //     id: 'test08',
-      //     name: '代理管理',
-      //     path: '',
-      //     icon: 'fa-user',
-      //     children: [
-      //       { id: 'test0804', name: '代理会员列表', path: '/agent/list', icon: 'fa-cubes' },
-      //       { id: 'test0801', name: '创建代理会员', path: '/agent/create', icon: 'fa-cubes' },
-      //       { id: 'test0803', name: '邀请号码管理', path: '/agent/invitationcode', icon: 'fa-cubes' },
-      //       { id: 'test0805', name: '代理个人业绩', path: '/agent/achievement/users', icon: 'fa-cubes' },
-      //       { id: 'test0806', name: '代理线条业绩', path: '/agent/achievement/linear', icon: 'fa-cubes' },
-      //       { id: 'test0802', name: '游戏分润基数', path: '/agent/interest/games', icon: 'fa-cubes' },
-      //       { id: 'test0807', name: '代理一键分润', path: '/agent/interest/division', icon: 'fa-cubes' },
-      //       { id: 'test0808', name: '会员一键分润', path: '/agent/interest/usersdivision', icon: 'fa-cubes' }
-      //     ]
       //     id: 'test11',
       //     name: '港彩管理',
       //     path: '',
@@ -61,43 +46,6 @@ export default {
       //       { id: 'test1104', name: '六合彩基础设置', path: '/users/unset', icon: 'fa-cubes' },
       //       { id: 'test1105', name: '六合彩赔率设置', path: '/users/unset', icon: 'fa-cubes' },
       //       { id: 'test1106', name: '六合彩总报表', path: '/users/unset', icon: 'fa-cubes' }
-      //     ]
-      //   },
-      //   {
-      //     id: 'test12',
-      //     name: '网站管理',
-      //     path: '',
-      //     icon: 'fa-user',
-      //     children: [
-      //       { id: 'test1201', name: '网站菜单配置', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test1202', name: '备用网址管理', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test1203', name: '手机首页图片', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test1204', name: '系统信息清理', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test1205', name: '问题反馈管理', path: '/users/unset', icon: 'fa-cubes' },
-      //       { id: 'test1206', name: '会员注册配置', path: '/users/unset', icon: 'fa-cubes' }
-      //     ]
-      //   },
-      //   {
-      //     id: 'test13',
-      //     name: '优惠活动',
-      //     path: '',
-      //     icon: 'fa-user',
-      //     children: [
-      //       { id: 'test1301', name: '优惠图片管理', path: '/promotion/list', icon: 'fa-cubes' }
-      //     ]
-      //   },
-      //   {
-      //     id: 'test14',
-      //     name: '公告管理',
-      //     path: '',
-      //     icon: 'fa-user',
-      //     children: [
-      //       { id: 'test1401', name: '发布公告', path: '/notice/publish', icon: 'fa-cubes' },
-      //       { id: 'test1403', name: '已发公告', path: '/notice/published/list', icon: 'fa-cubes' },
-      //       { id: 'test1406', name: '系统公告', path: '/notice/system/notifications', icon: 'fa-cubes' },
-      //       { id: 'test1402', name: '系统消息', path: '/notice/system/messages', icon: 'fa-cubes' },
-      //       { id: 'test1404', name: '会员反馈', path: '/notice/feedback/users', icon: 'fa-cubes' },
-      //       { id: 'test1405', name: '意见反馈', path: '/notice/feedback/suggestions', icon: 'fa-cubes' }
       //     ]
       //   },
       //   {

@@ -13,6 +13,7 @@
         @check="handleTreeCheckChanged"
         :data="treeData"
         :props="treeProps"
+        :default-checked-keys="checkedKeys"
         :filter-node-method="filterNode"
         node-key="id"
         show-checkbox
@@ -39,17 +40,18 @@ export default {
     return {
       dialogVisible: false,
       treeData: [],
+      checkedKeys: [], // 选择的二级菜单，不包括一级菜单（其状态由二级菜单决定）
       treeProps: {
         label: 'name',
         children: 'child'
       },
       filterText: '',
-      checkedKeys: []
+      selectedKeys: [] // 用于表单提交（选中的菜单，包括一级菜单）
     }
   },
   watch: {
     id () {
-      this.fetchRoleMenu(this.id)
+      if (this.dialogVisible) this.fetchRoleMenu(this.id)
     },
     filterText (val) {
       this.$refs.tree.filter(val)
@@ -63,7 +65,7 @@ export default {
 
       this.$httpAPI.updateRoleMenuList({
         roleId: this.id,
-        menuIds: this.checkedKeys
+        menuIds: this.selectedKeys
       }).then((response) => {
         if (response.data.status === 200) {
           this.$emit('on-menu-changed')
@@ -83,20 +85,32 @@ export default {
       }
       return data.name.indexOf(value) !== -1
     },
-    // 树状图响应被点击事件
+    // 树状图响应被点击事件; 将选择的数据传入树
     handleTreeCheckChanged (node, obj) {
-      this.checkedKeys = [ ...obj.checkedKeys, ...obj.halfCheckedKeys ]
+      this.selectedKeys = [ ...obj.checkedKeys, ...obj.halfCheckedKeys ]
     },
     // 切换弹框隐藏与显示（给外部调动）
     toggleDialogVisible (status) {
       this.dialogVisible = status
     },
     // 获取角色菜单
-    fetchRoleMenu (id) {
+    fetchRoleMenu (roleId) {
       this.$httpAPI.fetchRoleMenuList({
-        params: { id }
+        params: { roleId }
       }).then((response) => {
         this.treeData = response.data.data
+
+        this.checkedKeys = [] // 每次选中的清空
+
+        // 将已经选中的数据传入树；一级菜单不用处理，根据二级菜单来显现状态
+        this.$_.forEach(this.treeData, (group) => {
+          // 将二级菜单中，已分配的菜单的id放入 checkedKeys
+          if (group.child) {
+            this.$_.forEach(group.child, (item) => {
+              if (item.self) this.checkedKeys.push(item.id)
+            })
+          }
+        })
       }).catch((error) => console.log(error))
     }
   }

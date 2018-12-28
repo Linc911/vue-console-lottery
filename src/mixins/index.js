@@ -308,7 +308,7 @@ export const tableComponentMixin = {
           this.$emit('on-changed')
           this.$message.success(config.DELETE_SUCCEEDED)
         } else {
-          this.$message.error(config.DELETE_FAILED)
+          this.$message.error(`${config.DELETE_FAILED}: ${response.data.msg}`)
         }
       }).catch((error) => {
         console.log(error)
@@ -373,27 +373,19 @@ export const dialogCreateMixin = {
           this.dialogVisible = false // 表单验证通过才隐藏弹框
 
           this.$httpAPI[this.createHttpAPI](this.formData).then(response => {
-            /* 接口没有统一，待接口文档统一后再对相应的返回码做处理 */
-            // if (response.data.status === 200) {
-            //   // 清除表单填写记录
-            //   this.$utils.invokeRefResetMothod(this.$refs)
-            //   this.$refs[formName].resetFields()
-            //
-            //   this.$emit('on-created', this.formData)
-            //   this.$message.success('创建成功！')
-            // } else {
-            //   this.$message.error('创建失败！')
-            // }
+            if (response.data.status === 200) {
+              // 清除表单填写记录
+              if (!this.checked) {
+                this.$utils.invokeRefResetMothod(this.$refs)
+                this.$refs[formName].resetFields()
+              }
 
-            // 清除表单填写记录
-            if (!this.checked) {
-              this.$utils.invokeRefResetMothod(this.$refs)
-              this.$refs[formName].resetFields()
+              this.$emit('on-created', this.formData)
+
+              this.$message.success(config.CREATE_SUCCEEDED)
+            } else {
+              this.$message.error(`${config.CREATE_FAILED}: ${response.data.msg}`)
             }
-
-            this.$emit('on-created', this.formData)
-
-            this.$message.success(config.CREATE_SUCCEEDED)
           }).catch(error => console.log(error))
         } else {
           this.$message.warning(config.VALIDATION_FAILED)
@@ -435,12 +427,12 @@ export const dialogUpdateMixin = {
       dialogVisible: false
     }
   },
-  watch: {
-    // 将数据赋值给新的对象（子组件不能更新父组件的属性）
-    // data () {
-    //   this.formData = Object.assign(this.formData, this.data)
-    // }
-  },
+  // watch: {
+  //   // 将数据赋值给新的对象（子组件不能更新父组件的属性）
+  //   data () {
+  //     this.formData = Object.assign(this.formData, this.data)
+  //   }
+  // },
   methods: {
     // 检验表单验证是否通过，发送修改请求
     submitForm (formName) { // DEPRECATED

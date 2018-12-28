@@ -12,7 +12,7 @@
     </ul>
 
     <!-- 主要内容 -->
-    <div class="table-list">
+    <div>
       <!-- 表格 -->
       <AccountCheckTable :data="tableData" />
 
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutWithoutAddMixin, tableWithPaginationMixin } from '@/mixins'
 
 import AccountCheckSearch from './components/AccountCheckSearch'
 import AccountCheckTable from './components/AccountCheckTable'
@@ -39,7 +39,7 @@ export default {
     AccountCheckSearch,
     AccountCheckTable
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutWithoutAddMixin, tableWithPaginationMixin ],
   data () {
     return {
       statistics: {
@@ -48,7 +48,6 @@ export default {
         type0Amount: '',
         depositAmount: ''
       },
-      tableData: [],
       tableHttpAPI: 'fetchUsersAccountCheck',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 0, size: 10, total: 10 }
