@@ -1,61 +1,59 @@
 <template lang="html">
   <!-- 条件筛选 -->
-  <div>
-    <el-form :model="formData" size="small" inline>
-      <FormInput
-        @keyup.native.enter="$emit('on-search', formData)"
-        @on-change="$set(formData, 'username', $event)"
-        label="会员账户"
-        width="174px"
-        ref="username"
-      />
+  <el-form :model="formData" size="small" inline>
+    <FormInput
+      @keyup.native.enter="$emit('on-search', formData)"
+      @on-change="$set(formData, 'username', $event)"
+      label="会员账户"
+      width="174px"
+      ref="username"
+    />
 
-      <FormDateRange @on-change="handleDateRangeChange" label="注册时间" ref="dateRange" />
+    <FormDateRange @on-change="handleDateRangeChange" label="注册时间" ref="dateRange" />
 
-      <FormSelect
-        @on-change="$set(formData, 'groupId', $event)"
-        httpAPIName="fetchUserGroups"
-        :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
-        labelAttr="name"
-        valueAttr="groupId"
-        label="会员分组"
-        filterable
-        ref="groupId"
-      />
+    <FormSelect
+      @on-change="$set(formData, 'groupId', $event)"
+      httpAPIName="fetchUserGroups"
+      :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
+      labelAttr="name"
+      valueAttr="groupId"
+      label="会员分组"
+      filterable
+      ref="groupId"
+    />
 
-      <FormNumberRange
-        @on-change="handleNumberRangeChange"
-        label="会员余额"
-        startPlaceholder="最小金额"
-        endPlaceholder="最大金额"
-        ref="numberRange"
-      />
+    <FormNumberRange
+      @on-change="handleNumberRangeChange"
+      label="会员余额"
+      startPlaceholder="最小金额"
+      endPlaceholder="最大金额"
+      ref="numberRange"
+    />
 
-      <FormNumberRange
-        @on-change="handleWinRangeChange"
-        label="输赢金额"
-        startPlaceholder="最小金额"
-        endPlaceholder="最大金额"
-        ref="winRange"
-      />
+    <FormNumberRange
+      @on-change="handleWinRangeChange"
+      label="输赢金额"
+      startPlaceholder="最小金额"
+      endPlaceholder="最大金额"
+      ref="winRange"
+    />
 
-      <FormSelectStatic
-        @on-change="$set(formData, 'control', $event)"
-        :options="[
-          { value: 0, label: '禁用' },
-          { value: 1, label: '启用' },
-        ]"
-        label="监控状态"
-        width="100px"
-        ref="control"
-      />
+    <FormSelectStatic
+      @on-change="$set(formData, 'control', $event)"
+      :options="[
+        { value: 0, label: '禁用' },
+        { value: 1, label: '启用' },
+      ]"
+      label="监控状态"
+      width="100px"
+      ref="control"
+    />
 
-      <div style="display: inline-block">
-        <SearchIcon @click.native="search" />
-        <SearchReset @click.native="reset" />
-      </div>
-    </el-form>
-  </div>
+    <div style="display: inline-block">
+      <SearchIcon @click.native="search" />
+      <SearchReset @click.native="reset" />
+    </div>
+  </el-form>
 </template>
 
 <script type="text/javascript">

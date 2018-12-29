@@ -1,6 +1,6 @@
 <template>
   <el-dialog :visible.sync="dialogVisible" title="投注每注详情" width="768px" center>
-    <h4 style="margin-top: 0">投注类型：{{ bets.betType | betType }}</h4>
+    <!-- <h4 style="margin-top: 0">投注类型：{{ bets.betType | betType }}</h4>
 
     <el-table :data="betss" size="small" max-height="441" highlight-current-row border>
       <el-table-column type="index" :width="36" />
@@ -36,7 +36,7 @@
           <span>{{ scope.row.betResulte | betResult }}</span>
         </template>
       </el-table-column>
-    </el-table>
+    </el-table> -->
   </el-dialog>
 </template>
 
@@ -49,8 +49,8 @@ export default {
     LotteryBall
   },
   props: {
-    bets: {
-      type: Object,
+    id: {
+      type: [ String, Number ],
       required: true
     }
   },
@@ -59,40 +59,30 @@ export default {
       dialogVisible: false
     }
   },
-  computed: {
-    betss () {
-      switch (this.bets.betType) {
-        case 1:
-          return [
-            ...this.bets.totalSum,
-            ...this.bets.firstBall,
-            ...this.bets.secondBall,
-            ...this.bets.thirdBall,
-            ...this.bets.fourthBall,
-            ...this.bets.fifthBall
-          ]
-        case 2:
-          return [
-            ...this.bets.firstBall,
-            ...this.bets.secondBall,
-            ...this.bets.thirdBall,
-            ...this.bets.fourthBall,
-            ...this.bets.fifthBall
-          ]
-        case 3:
-          return this.bets.bettings
-        case 4:
-          return this.bets.bettings
-        case 5:
-          return this.bets.bettings
-        default:
-          return []
-      }
+  watch: {
+    id () {
+      this.fetchBetDetail(this.id)
     }
   },
+  created () {
+    // this.fetchBetDetail(this.id)
+  },
   methods: {
+    // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {
       this.dialogVisible = status
+    },
+    // 用传入的ID 获取注单详情
+    fetchBetDetail (id) {
+      this.$httpAPI.fetchLotterBetDetail({
+        params: { id }
+      }).then(response => {
+        if (response.data.data) {
+          this.betDetail = response.data.data
+        } else {
+          this.betDetail = []
+        }
+      }).catch(error => console.log(error))
     }
   }
 }

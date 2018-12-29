@@ -2,71 +2,70 @@
   <div>
     <el-table :data="data" size="small" highlight-current-row border>
 
-      <el-table-column type="index" :width="40" />
+      <el-table-column type="index" :width="36" />
 
-      <el-table-column prop="username" label="账户名称" />
+      <el-table-column prop="id" label="注单ID" :min-width="150" />
 
-      <el-table-column prop="createDate" label="投注时间" :min-width="140">
+      <el-table-column prop="currentDrawno" label="投注期号" :min-width="90" />
+
+      <el-table-column prop="gameName" label="彩票类型" :min-width="120" />
+
+      <el-table-column prop="username" label="账户名称" :width="100" />
+
+      <el-table-column prop="totalBets" label="投注数" :width="90">
         <template slot-scope="scope">
-          <span>{{scope.row.createDate | time}}</span>
+          <span>{{ scope.row.totalBets }}</span>
+          <BaseIcon @on-click="showDialog(scope.row, 'dialogDetail')" class="pull-right" />
         </template>
       </el-table-column>
 
-      <el-table-column prop="orderId" label="注单ID" :min-width="150" />
-
-      <el-table-column prop="currentDrawno" label="当前投注期号" :min-width="95" />
-
-      <el-table-column prop="gameName" label="彩票类型" :min-width="140" />
-
-      <el-table-column prop="betsType" label="投注主类型">
+      <el-table-column prop="totalAmount" label="投注金额" :min-width="80">
         <template slot-scope="scope">
-          <span>{{scope.row.betsType | betType}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="totalBets" label="总投注数" :width="80">
-        <template slot-scope="scope">
-          <span>{{scope.row.totalBets}}</span>
-          <BaseMore @on-click="showDialog(JSON.parse(scope.row.bets), 'dialogDetail')" class="pull-right" />
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="totalAmount" label="总投注金额" :min-width="80">
-        <template slot-scope="scope">
-          <span>{{scope.row.totalAmount | RMB}}</span>
+          <span>{{ scope.row.totalAmount | RMB }}</span>
         </template>
       </el-table-column>
 
       <el-table-column prop="totalAwardAmount" label="中奖金额" :min-width="80">
         <template slot-scope="scope">
-          <span>{{JSON.parse(scope.row.bets).totalAwardAmount | RMB}}</span>
+          <span>{{ scope.row.totalAwardAmount | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="status" label="注单状态">
+      <el-table-column prop="status" label="注单状态" :min-width="70">
         <template slot-scope="scope">
-          <span>{{scope.row.status | lotteryStatus}}</span>
+          <span>{{ scope.row.status | lotteryOrderStatus }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="createDate" label="投注时间" :min-width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.createDate | time }}</span>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 详情弹框 -->
-    <DialogBetsDetail :bets="activeItem" ref="dialogDetail" />
+    <DialogBetsDetail :id="activeItem.id" ref="dialogDetail" />
   </div>
 </template>
 
 <script>
 import { tableComponentMixin } from '@/mixins'
 
-import BaseMore from '@/components/base/BaseMore'
+import BaseIcon from '@/components/base/BaseIcon'
 import DialogBetsDetail from '@/components/dialog/DialogBetsDetail'
 
 export default {
   name: 'UserBetsTable',
   components: {
-    BaseMore,
+    BaseIcon,
     DialogBetsDetail
   },
-  mixins: [ tableComponentMixin ]
+  mixins: [ tableComponentMixin ],
+  data () {
+    return {
+      activeItem: { id: '' }
+    }
+  }
 }
 </script>

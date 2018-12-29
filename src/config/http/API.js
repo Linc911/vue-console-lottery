@@ -89,6 +89,9 @@ export default {
 
   updateLotteryBillCancel: (data) => axios.post('/api-g/result/cancel', data), // 彩票未结撤单
 
+  fetchLotterBetsList: (data) => axios.get('/api-g/userBet/page', data), // 所有注单记录列表
+  fetchLotterBetDetail: (data) => axios.get('/api-g/userBet/detail', data), // 单个注单详情
+
   fetchLotterStatisticsUsers: (options) => axios.get('/api-g/userBets/userReportForm', options), // 彩票会员报表
 
   fetchLotterStatisticsBets: (options) => axios.get('/api-g/userBets/betReportForm', options), // 彩票注单报表

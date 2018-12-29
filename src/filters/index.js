@@ -213,6 +213,19 @@ Vue.filter('lotteryStatus', value => {
       return '其他'
   }
 })
+// 开奖结算状态
+Vue.filter('lotteryOrderStatus', value => {
+  switch (value) {
+    case 0:
+      return '未结算'
+    case 1:
+      return '中奖'
+    case 2:
+      return '未开奖'
+    default:
+      return '其他'
+  }
+})
 // 彩票球
 Vue.filter('lotteryBall', value => {
   if (value === 11) {

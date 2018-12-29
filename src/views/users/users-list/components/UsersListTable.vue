@@ -60,7 +60,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :min-width="275">
+      <el-table-column label="操作" :min-width="200">
         <template slot-scope="scope">
           <el-button
             @click="showDialog(scope.row, 'dialogDetail')"
@@ -76,21 +76,24 @@
           >注单详情</el-button>
 
           <el-button
-            @click="$router.push(`/users/${scope.row.id}/httpLogs`)"
+            @click="showDialog(scope.row, 'dialogLogs')"
             type="primary"
             size="mini"
           >日志详情</el-button>
 
-          <UserRebateSetting :userId="String(scope.row.id)" />
+          <!-- <UserRebateSetting :userId="String(scope.row.id)" /> -->
         </template>
       </el-table-column>
     </el-table>
 
+    <!-- 修改分组弹框 -->
+    <DialogGroupSetting :user="activeItem" @on-group-changed="$emit('on-changed')" ref="dialogGroup" />
+
     <!-- 详情弹框 -->
     <UsersListDialogDetail :data="activeItem" ref="dialogDetail" />
 
-    <!-- 修改弹框 -->
-    <DialogGroupSetting :user="activeItem" @on-group-changed="$emit('on-changed')" ref="dialogGroup" />
+    <!-- 日志弹框 -->
+    <UsersListDialogLogs :userId="activeItem.id" @on-group-changed="$emit('on-changed')" ref="dialogLogs" />
   </div>
 </template>
 
@@ -102,6 +105,7 @@ import BaseIndicator from '@/components/base/BaseIndicator'
 import DialogGroupSetting from './DialogGroupSetting'
 import UserRebateSetting from './UserRebateSetting'
 import UsersListDialogDetail from './UsersListDialogDetail'
+import UsersListDialogLogs from './UsersListDialogLogs'
 
 export default {
   name: 'UsersListTable',
@@ -110,12 +114,13 @@ export default {
     BaseIndicator,
     DialogGroupSetting,
     UserRebateSetting,
-    UsersListDialogDetail
+    UsersListDialogDetail,
+    UsersListDialogLogs
   },
   mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
-      activeItem: {},
+      activeItem: { id: '' },
       switchObj: {
         API: 'updateUserListStatus',
         attrId: 'userId',

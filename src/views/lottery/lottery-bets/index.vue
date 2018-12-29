@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
+import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
 
 import UserBetsSearch from './components/UserBetsSearch'
 import UserBetsTable from './components/UserBetsTable'
@@ -32,12 +32,12 @@ export default {
     UserBetsSearch,
     UserBetsTable
   },
-  mixins: [ searchOuterMixin, tableWithPaginationPostMixin ],
+  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],
-      tableHttpAPI: 'fetchUserBetsList',
-      requestParams: { id: this.$route.params.id, pageNo: 1, pageSize: 10 },
+      tableHttpAPI: 'fetchLotterBetsList',
+      requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }
   }
