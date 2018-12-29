@@ -13,11 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <SystemNoticeTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        :data="tableData"
-      />
+      <SystemNoticeTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -34,10 +30,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import SystemNoticeSearch from './components/SystemNoticeSearch'
 import SystemNoticeTable from './components/SystemNoticeTable'
 import SystemNoticeDialogCreate from './components/SystemNoticeDialogCreate'
@@ -45,16 +39,13 @@ import SystemNoticeDialogCreate from './components/SystemNoticeDialogCreate'
 export default {
   name: 'NoticeSystemNotice',
   components: {
-    SearchLayout,
-    BaseAdd,
     SystemNoticeSearch,
     SystemNoticeTable,
     SystemNoticeDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchSystemNoticeList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }

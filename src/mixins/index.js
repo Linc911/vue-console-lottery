@@ -366,42 +366,20 @@ export const dialogCreateMixin = {
     }
   },
   methods: {
-    // 检验表单验证是否通过，发送修改请求
-    submitForm (formName) { // DEPRECATED
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.dialogVisible = false // 表单验证通过才隐藏弹框
-
-          this.$httpAPI[this.createHttpAPI](this.formData).then(response => {
-            if (response.data.status === 200) {
-              // 清除表单填写记录
-              if (!this.checked) {
-                this.$utils.invokeRefResetMothod(this.$refs)
-                this.$refs[formName].resetFields()
-              }
-
-              this.$emit('on-created', this.formData)
-
-              this.$message.success(config.CREATE_SUCCEEDED)
-            } else {
-              this.$message.error(`${config.CREATE_FAILED}: ${response.data.msg}`)
-            }
-          }).catch(error => console.log(error))
-        } else {
-          this.$message.warning(config.VALIDATION_FAILED)
-        }
-      })
-    },
     // 当子组件通知验证通过时，发送请求
     handleValidationSuccess (data) {
       this.dialogVisible = false // 隐藏弹框
 
       this.$httpAPI[this.createHttpAPI](data).then((response) => {
-        !this.checked && this.$refs.form.resetFields() // 根据用户选择，是否重置所有的表单输入
+        if (response.data.status === 200) {
+          !this.checked && this.$refs.form.resetFields() // 根据用户选择，是否重置所有的表单输入
 
-        this.$emit('on-created')
+          this.$emit('on-created')
 
-        this.$message.success(config.CREATE_SUCCEEDED)
+          this.$message.success(config.CREATE_SUCCEEDED)
+        } else {
+          this.$message.error(`${config.CREATE_FAILED}: ${response.data.msg}`)
+        }
       }).catch((error) => {
         console.dir(error)
         this.$message.error(config.CREATE_FAILED)
@@ -427,65 +405,19 @@ export const dialogUpdateMixin = {
       dialogVisible: false
     }
   },
-  // watch: {
-  //   // 将数据赋值给新的对象（子组件不能更新父组件的属性）
-  //   data () {
-  //     this.formData = Object.assign(this.formData, this.data)
-  //   }
-  // },
   methods: {
-    // 检验表单验证是否通过，发送修改请求
-    submitForm (formName) { // DEPRECATED
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.dialogVisible = false // 表单验证通过才隐藏弹框
-
-          // 判断是否对表单数据进行修改: 没修改 => 提示数据没变化，不发送请求； 进行修改 => 发送修改请求
-          const same = this.$utils.isEquivalentObjects(this.data, this.formData)
-          if (!same) {
-            // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置必须按要求顺序传入）
-            const postData = this.$utils.generateObjectWithChangedProperties(this.data, this.formData)
-
-            // 判断接口是否是传支持多个修改： 是 => 生产数组，否 => 生产对象
-            let finalPostData = null
-            if (this.idParams.multiple) {
-              finalPostData = [ Object.assign(this.idParams, postData) ]
-            } else {
-              finalPostData = Object.assign(this.idParams, postData)
-            }
-
-            this.$httpAPI[this.updateHttpAPI](finalPostData).then(response => {
-              /* 接口没有统一，待接口文档统一后再对相应的返回码做处理 */
-              // if (response.data.status === 200) {
-              //   this.$emit('on-updated')
-              //   this.$message.success('修改成功！')
-              // } else {
-              //   this.$message.error('修改失败！')
-              // }
-
-              this.$emit('on-updated')
-
-              this.$message.success(config.UPDATE_SUCCEEDED)
-            }).catch((error) => {
-              console.log(error)
-              this.$message.error(config.UPDATE_FAILED)
-            })
-          } else {
-            this.$message.info(config.VALIDATION_UNCHANTED)
-          }
-        } else {
-          this.$message.warning(config.VALIDATION_FAILED)
-        }
-      })
-    },
     // 当子组件通知验证通过时，发送请求
     handleValidationSuccess (data) {
       this.dialogVisible = false // 隐藏弹框
 
       this.$httpAPI[this.updateHttpAPI](data).then((response) => {
-        this.$emit('on-updated')
+        if (response.data.status === 200) {
+          this.$emit('on-updated')
 
-        this.$message.success(config.UPDATE_SUCCEEDED)
+          this.$message.success(config.UPDATE_SUCCEEDED)
+        } else {
+          this.$message.error(`${config.UPDATE_FAILED}: ${response.data.msg}`)
+        }
       }).catch((error) => {
         console.dir(error)
         this.$message.error(config.UPDATE_FAILED)
@@ -518,8 +450,87 @@ export const dialogDetailMixin = {
     }
   },
   methods: {
+    // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {
       this.dialogVisible = status
     }
   }
 }
+
+// // 检验表单验证是否通过，发送修改请求
+// submitForm (formName) { // DEPRECATED
+//   this.$refs[formName].validate(valid => {
+//     if (valid) {
+//       this.dialogVisible = false // 表单验证通过才隐藏弹框
+
+//       this.$httpAPI[this.createHttpAPI](this.formData).then(response => {
+//         if (response.data.status === 200) {
+//           // 清除表单填写记录
+//           if (!this.checked) {
+//             this.$utils.invokeRefResetMothod(this.$refs)
+//             this.$refs[formName].resetFields()
+//           }
+
+//           this.$emit('on-created', this.formData)
+
+//           this.$message.success(config.CREATE_SUCCEEDED)
+//         } else {
+//           this.$message.error(`${config.CREATE_FAILED}: ${response.data.msg}`)
+//         }
+//       }).catch(error => console.log(error))
+//     } else {
+//       this.$message.warning(config.VALIDATION_FAILED)
+//     }
+//   })
+// },
+
+// // 检验表单验证是否通过，发送修改请求
+// submitForm (formName) { // DEPRECATED
+//   this.$refs[formName].validate(valid => {
+//     if (valid) {
+//       this.dialogVisible = false // 表单验证通过才隐藏弹框
+
+//       // 判断是否对表单数据进行修改: 没修改 => 提示数据没变化，不发送请求； 进行修改 => 发送修改请求
+//       const same = this.$utils.isEquivalentObjects(this.data, this.formData)
+//       if (!same) {
+//         // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置必须按要求顺序传入）
+//         const postData = this.$utils.generateObjectWithChangedProperties(this.data, this.formData)
+
+//         // 判断接口是否是传支持多个修改： 是 => 生产数组，否 => 生产对象
+//         let finalPostData = null
+//         if (this.idParams.multiple) {
+//           finalPostData = [ Object.assign(this.idParams, postData) ]
+//         } else {
+//           finalPostData = Object.assign(this.idParams, postData)
+//         }
+
+//         this.$httpAPI[this.updateHttpAPI](finalPostData).then(response => {
+//           /* 接口没有统一，待接口文档统一后再对相应的返回码做处理 */
+//           // if (response.data.status === 200) {
+//           //   this.$emit('on-updated')
+//           //   this.$message.success('修改成功！')
+//           // } else {
+//           //   this.$message.error('修改失败！')
+//           // }
+
+//           this.$emit('on-updated')
+
+//           this.$message.success(config.UPDATE_SUCCEEDED)
+//         }).catch((error) => {
+//           console.log(error)
+//           this.$message.error(config.UPDATE_FAILED)
+//         })
+//       } else {
+//         this.$message.info(config.VALIDATION_UNCHANTED)
+//       }
+//     } else {
+//       this.$message.warning(config.VALIDATION_FAILED)
+//     }
+//   })
+// },
+// watch: {
+//   // 将数据赋值给新的对象（子组件不能更新父组件的属性）
+//   data () {
+//     this.formData = Object.assign(this.formData, this.data)
+//   }
+// },

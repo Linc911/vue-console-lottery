@@ -13,11 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <NoticeListTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        :data="tableData"
-      />
+      <NoticeListTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -34,10 +30,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import NoticeListSearch from './components/NoticeListSearch'
 import NoticeListTable from './components/NoticeListTable'
 import NoticeListDialogCreate from './components/NoticeListDialogCreate'
@@ -45,16 +39,13 @@ import NoticeListDialogCreate from './components/NoticeListDialogCreate'
 export default {
   name: 'NoticeList',
   components: {
-    SearchLayout,
-    BaseAdd,
     NoticeListSearch,
     NoticeListTable,
     NoticeListDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchNoticeList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }

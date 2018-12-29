@@ -17,15 +17,15 @@
     />
 
     <FormSelectGame
-      @on-change="$set(formData, 'type', $event)"
+      @on-change="$set(formData, 'gameType', $event)"
       httpAPIName="fetchGamesMenu"
       :httpAPIParams="{ params: { type: 1 } }"
       labelAttr="name"
       valueAttr="id"
-      prop="type"
+      prop="gameType"
       label="游戏类型"
       filterable
-      ref="type"
+      ref="gameType"
     />
 
     <FormDateRange @on-change="handleDateRangeChange" ref="dateRange" />
@@ -33,8 +33,9 @@
     <FormSelectStatic
       @on-change="$set(formData, 'status', $event)"
       :options="[
-        { value: 0, label: '未处理' },
-        { value: 1, label: '已处理' },
+        { value: 0, label: '未结算' },
+        { value: 1, label: '中奖' },
+        { value: 2, label: '未中奖' }
       ]"
       label="处理状态"
       width="100px"

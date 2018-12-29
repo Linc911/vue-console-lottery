@@ -13,11 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <SystemMessageTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        :data="tableData"
-      />
+      <SystemMessageTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -34,10 +30,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import SystemMessageSearch from './components/SystemMessageSearch'
 import SystemMessageTable from './components/SystemMessageTable'
 import SystemMessageDialogCreate from './components/SystemMessageDialogCreate'
@@ -45,16 +39,13 @@ import SystemMessageDialogCreate from './components/SystemMessageDialogCreate'
 export default {
   name: 'NoticeSystemMessage',
   components: {
-    SearchLayout,
-    BaseAdd,
     SystemMessageSearch,
     SystemMessageTable,
     SystemMessageDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchSystemMessageList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }

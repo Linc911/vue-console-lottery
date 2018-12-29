@@ -70,7 +70,7 @@
           />
 
           <el-button
-            @click="$router.push(`/users/${scope.row.id}/bets?user=${scope.row.username}`)"
+            @click="showDialog(scope.row, 'dialogBets')"
             type="primary"
             size="mini"
           >注单详情</el-button>
@@ -94,6 +94,9 @@
 
     <!-- 日志弹框 -->
     <UsersListDialogLogs :userId="activeItem.id" @on-group-changed="$emit('on-changed')" ref="dialogLogs" />
+
+    <!-- 注单弹框 -->
+    <UsersListDialogBets :userId="activeItem.id" @on-group-changed="$emit('on-changed')" ref="dialogBets" />
   </div>
 </template>
 
@@ -106,6 +109,7 @@ import DialogGroupSetting from './DialogGroupSetting'
 import UserRebateSetting from './UserRebateSetting'
 import UsersListDialogDetail from './UsersListDialogDetail'
 import UsersListDialogLogs from './UsersListDialogLogs'
+import UsersListDialogBets from './UsersListDialogBets'
 
 export default {
   name: 'UsersListTable',
@@ -115,7 +119,8 @@ export default {
     DialogGroupSetting,
     UserRebateSetting,
     UsersListDialogDetail,
-    UsersListDialogLogs
+    UsersListDialogLogs,
+    UsersListDialogBets
   },
   mixins: [ tableComponentMixin, switchMixin ],
   data () {

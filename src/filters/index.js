@@ -221,7 +221,7 @@ Vue.filter('lotteryOrderStatus', value => {
     case 1:
       return '中奖'
     case 2:
-      return '未开奖'
+      return '未中奖'
     default:
       return '其他'
   }
@@ -583,11 +583,11 @@ Vue.filter('betResult', value => {
   switch (value) {
     case null:
       return '未处理'
-    case 'LOSE':
+    case -1:
       return '输'
-    case 'WIN':
+    case 1:
       return '赢'
-    case 'DRAW':
+    case 0:
       return '和'
     default:
       return '未处理'

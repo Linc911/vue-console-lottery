@@ -13,12 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <SettingTypeTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        @on-status-changed="fetchTableData()"
-        :data="tableData"
-      />
+      <SettingTypeTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -35,10 +30,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import SettingTypeSearch from './components/SettingTypeSearch'
 import SettingTypeTable from './components/SettingTypeTable'
 import SettingTypeDialogCreate from './components/SettingTypeDialogCreate'
@@ -46,16 +39,13 @@ import SettingTypeDialogCreate from './components/SettingTypeDialogCreate'
 export default {
   name: 'NoticeSettingType',
   components: {
-    SearchLayout,
-    BaseAdd,
     SettingTypeSearch,
     SettingTypeTable,
     SettingTypeDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchNoticeSettingTypeList',
       requestParams: { pageNo: 1, pageSize: 10, type: 4 },
       page: { current: 1, size: 10, total: 10 }

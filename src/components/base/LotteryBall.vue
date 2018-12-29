@@ -1,6 +1,6 @@
 <template lang="html">
   <el-tooltip :content="number | lotteryBall" effect="light" placement="top-start">
-    <span class="ball" :style="{ backgroundColor: bgcolor }">{{number}}</span>>
+    <span class="ball" :style="{ backgroundColor: bgcolor }">{{ number }}</span>>
   </el-tooltip>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   props: {
     number: {
-      type: Number,
+      type: [ Number, String ],
       default: 0
     },
     bgcolor: {

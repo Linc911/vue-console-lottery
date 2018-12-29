@@ -7,23 +7,38 @@
 
       <el-table-column prop="title" label="消息标题" :min-width="140" />
 
-      <el-table-column prop="target" label="消息对象" :min-width="140" />
+      <el-table-column prop="targetName" label="消息对象" :min-width="100" />
 
       <el-table-column prop="content" label="消息内容" :min-width="200">
         <template slot-scope="scope">
-          <span v-if="!scope.row.content">{{ scope.row.content }}</span>
-          <span v-else-if="scope.row.content.length <= 40">{{ scope.row.content }}</span>
-          <BasePopoverTextarea v-else :data="scope.row.content" :maxLength="30" />
+          <BasePopoverTextarea :data="scope.row.content" :maxLength="28" />
         </template>
       </el-table-column>
 
       <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
+          <div>
+            <el-button
+              @click="showDialog(scope.row, 'dialogDetail')"
+              type="primary"
+              icon="el-icon-view"
+              size="mini"
+            />
 
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
+            <el-button
+              @click="showDialog(scope.row, 'dialogUpdate')"
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+            />
 
-          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
+            <el-button
+              @click="showDialog(scope.row, 'dialogDelete')"
+              type="warning"
+              icon="el-icon-delete"
+              size="mini"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -32,7 +47,7 @@
     <SystemMessageDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 修改弹框 -->
-    <SystemMessageDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <SystemMessageDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
