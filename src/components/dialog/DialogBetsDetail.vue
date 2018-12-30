@@ -55,13 +55,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="awardAmount" label="中奖金额" :min-width="80" sortable>
+      <el-table-column prop="awardAmount" label="中奖金额" :min-width="100" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.awardAmount | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="betResult" label="投注输赢" :min-width="80" sortable>
+      <el-table-column prop="betResult" label="投注输赢" :min-width="100" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.betResult | betResult }}</span>
         </template>

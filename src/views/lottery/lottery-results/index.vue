@@ -12,8 +12,7 @@
       <!-- 主要内容 -->
       <div class="content-container">
         <!-- 表格 -->
-        <!-- <component :is="activeComponent" :data="tableData" /> -->
-        <LotteryResultsTable :data="tableData" />
+        <LotteryResultsTable @on-changed="fetchTableData()" :data="tableData" />
 
         <!-- 分页 -->
         <BasePagination

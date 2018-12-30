@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import FormValidation from '@/config/form'
+import validators from '@/config/form'
+import config from '@/config/data'
 
 import FormSelectGame from '@/components/form/FormSelectGame'
 
@@ -38,26 +39,32 @@ export default {
     return {
       formData: {},
       rules: {
-        gameType: FormValidation.validateSelect('所属彩种'),
-        drawno: FormValidation.validateInteger('彩种期号')
+        gameType: validators.validateSelect('所属彩种'),
+        drawno: validators.validateInteger('彩种期号')
       }
     }
   },
   methods: {
+    // 确认撤单,发送请求
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$httpAPI.updateLotteryBillCancel({
-            params: this.formData
-          }).then(response => {
+          this.$httpAPI.updateLotteryBillCancel(this.formData).then((response) => {
             if (response.data.status === 200) {
-              this.$message.success('撤单成功！')
+              // 成功时重置form fileds
+              this.$refs[formName].resetFields()
+              this.$refs.gameType.reset()
+
+              this.$message.success(config.OPERATION_SUCCEEDED)
             } else {
-              this.$message.error('撤单失败: ' + response.data.msg)
+              this.$message.error(`${config.OPERATION_FAILED}: ${response.data.msg}`)
             }
-          }).catch(error => console.log(error))
+          }).catch((error) => {
+            console.log(error)
+            this.$message.error(config.SERVER_RESPONSE_EXCEPTION)
+          })
         } else {
-          this.$message.warning('表单填写不正确，请按提示填写！')
+          this.$message.warning(config.VALIDATION_FAILED)
         }
       })
     }

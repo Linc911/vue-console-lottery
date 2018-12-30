@@ -29,7 +29,6 @@
 
     <el-form-item prop="explain" label="游戏说明">
       <quill-editor
-        @blur="$set(formData, 'explain', content)"
         v-model="content"
         :options="editorOption"
         ref="myQuillEditor"
@@ -47,6 +46,7 @@ import 'quill/dist/quill.bubble.css'
 import { formComponentMixin } from '@/mixins'
 
 import validators from '@/config/form'
+import config from '@/config/data'
 
 import { quillEditor } from 'vue-quill-editor'
 import FormSelectGame from '@/components/form/FormSelectGame'
@@ -62,7 +62,7 @@ export default {
     return {
       content: '',
       editorOption: {
-        // some quill options
+        placeholder: '游戏规则详情'
       },
       formData: { gameType: '', type: 0, explain: '' }, // 验证的form属性必须要初始化，否则在更新时无法验证
       rules: {
@@ -80,6 +80,19 @@ export default {
   },
   mounted () {
     this.content = this.formData.explain
+  },
+  methods: {
+    // 表单验证：通过验证，通知父组件submit Form，否则提示验证失败
+    validateForm () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.formData.explain = this.content // 将富文本内容同步到formData中
+          this.$emit('on-validated', this.formData)
+        } else {
+          this.$message.warning(config.VALIDATION_FAILED)
+        }
+      })
+    }
   }
 }
 </script>

@@ -12,8 +12,8 @@
       <BasePagination
         @on-change="handlePaginationChange"
         :page="page"
+        :httpURL="tableHttpAPI"
         :requestParams="requestParams"
-        httpURL="fetchUsersList"
       />
     </div>
   </section>
@@ -52,21 +52,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-// @import '../../../styles/variables';
-
-// .dialog-user-info {
-//   padding-bottom: 30px;
-//   line-height: 2;
-// }
-// .el-icon-error {
-//   font-size: 16px;
-//   cursor: pointer;
-// }
-// .el-icon-success {
-//   font-size: 16px;
-//   color: $--color-primary;
-//   cursor: pointer;
-// }
-</style>

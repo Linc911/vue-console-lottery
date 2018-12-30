@@ -31,12 +31,10 @@ const SystemAreaSetting = resolve => require(['@/views/system/area-setting'], re
 
 const UsersManage = resolve => require(['@/views/users/UsersManage'], resolve)
 const UsersList = resolve => require(['@/views/users/users-list'], resolve)
-const UserBets = resolve => require(['@/views/users/user-bets'], resolve)
+const UsersAccountCheck = resolve => require(['@/views/users/account-check'], resolve)
+const UsersLogsList = resolve => require(['@/views/users/logs-list'], resolve)
 const UserBetsStatistics = resolve => require(['@/views/users/UserBetsStatistics'], resolve)
 const UserRechargeLogs = resolve => require(['@/views/users/UserRechargeLogs'], resolve)
-const UserHttpLogs = resolve => require(['@/views/users/UserHttpLogs'], resolve)
-const UsersLogs = resolve => require(['@/views/users/UsersLogs'], resolve)
-const UsersAccountCheck = resolve => require(['@/views/users/account-check'], resolve)
 const UsersKeyword = resolve => require(['@/views/users/UsersKeyword'], resolve)
 
 /* ========================================== 彩票管理 ============================================ */
@@ -326,18 +324,6 @@ const routes = [
             }
           },
           {
-            name: 'UsersLogs',
-            path: 'logs',
-            component: UsersLogs,
-            meta: {
-              title: '会员日志记录',
-              breadcrumb: [
-                { name: '会员管理' },
-                { name: '会员日志记录' }
-              ]
-            }
-          },
-          {
             name: 'UsersAccountCheck',
             path: 'account/check',
             component: UsersAccountCheck,
@@ -350,25 +336,24 @@ const routes = [
             }
           },
           {
+            name: 'UsersLogsList',
+            path: 'logs',
+            component: UsersLogsList,
+            meta: {
+              title: '会员日志列表',
+              breadcrumb: [
+                { name: '会员管理' },
+                { name: '会员日志列表' }
+              ]
+            }
+          },
+          {
             name: 'UsersKeyword',
             path: 'keyword',
             component: UsersKeyword,
             meta: { title: '会员关键信息修改', keepAlive: true }
           }
         ]
-      },
-      {
-        name: 'UserBets',
-        path: '/users/:id/bets',
-        component: UserBets,
-        meta: {
-          title: '会员个人注单列表',
-          breadcrumb: [
-            { name: '会员管理' },
-            { name: '会员信息管理', path: '/users/list' },
-            { name: '会员个人注单列表' }
-          ]
-        }
       },
       {
         path: '/users/:id/betsStatistics',
@@ -379,11 +364,6 @@ const routes = [
         path: '/users/:id/rechargeLogs',
         component: UserRechargeLogs,
         meta: { title: '会员个人充值记录' }
-      },
-      {
-        path: '/users/:id/httpLogs',
-        component: UserHttpLogs,
-        meta: { title: '会员个人HTTP请求日志列表' }
       },
       /* ========================================== 彩票管理 ============================================ */
       {

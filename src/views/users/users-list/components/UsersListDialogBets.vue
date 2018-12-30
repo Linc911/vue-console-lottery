@@ -1,15 +1,7 @@
 <template lang="html">
-  <el-dialog :visible.sync="dialogVisible" title="会员日志列表" width="80%" style="min-width: 760px">
+  <el-dialog :visible.sync="dialogVisible" title="会员投注记录列表" width="80%" style="min-width: 760px">
     <!-- 条件筛选 -->
-    <el-form :model="searchData" size="small" inline>
-      <FormInput
-        @keyup.native.enter="$emit('on-search', formData)"
-        @on-change="$set(formData, 'username', $event)"
-        label="账户名称"
-        width="174px"
-        ref="username"
-      />
-
+    <el-form :model="formData" size="small" inline>
       <FormInput
         @keyup.native.enter="$emit('on-search', formData)"
         @on-change="$set(formData, 'drawno', $event)"
@@ -143,7 +135,7 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      searchData: {},
+      formData: {},
       activeItem: { id: '' },
       tableData: [],
       tableAPI: 'fetchLotterBetsList',
@@ -153,10 +145,11 @@ export default {
   },
   watch: {
     userId () {
-      this.page.current = 1
-      this.$set(this.requestParams, 'userId', this.userId)
+      this.page.current = 1 // 将分页重置为第一页
+      this.reset() // 清除搜索结果
+      this.$set(this.requestParams, 'userId', this.userId) // 重新赋值 userId
 
-      this.fetchUserBets(this.userId)
+      this.fetchUserBets({ userId: this.userId })
     }
   },
   methods: {
@@ -164,28 +157,15 @@ export default {
     handlePaginationChange (data) {
       this.tableData = data
     },
-    fetchUserBets (userId) {
-      this.$httpAPI[this.tableAPI]({
-        params: { userId, pageNo: 1, pageSize: 10 }
-      }).then(response => {
-        this.page.total = response.data.amount
-
-        if (response.data.data) {
-          this.tableData = response.data.data
-        } else {
-          this.tableData = []
-          this.$message.info('暂无数据返回')
-        }
-      }).catch(error => console.log(error))
-    },
     // 通知父组件触发搜索事件；将请求参数传给父组件
     search () {
-      this.$emit('on-search', this.formData)
+      this.fetchUserBets(this.formData)
     },
     // 将全部的 form 组件重置为初始值；初始化组件内容的数据
     reset () {
       for (let key in this.$refs) {
-        this.$refs[key].reset()
+        // 排除 dialog 相关的 ref
+        if (!key.includes('dialog')) this.$refs[key].reset()
       }
 
       this.$utils.initializeObjectProperties(this.formData)
@@ -195,6 +175,20 @@ export default {
       this.activeItem = item
 
       this.$refs[ref].toggleDialogVisible(true)
+    },
+    // 获取数据
+    fetchUserBets (obj) {
+      this.$httpAPI[this.tableAPI]({
+        params: Object.assign(this.requestParams, obj)
+      }).then(response => {
+        this.page.total = response.data.amount
+
+        if (response.data.data) {
+          this.tableData = response.data.data
+        } else {
+          this.tableData = []
+        }
+      }).catch(error => console.log(error))
     },
     // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {

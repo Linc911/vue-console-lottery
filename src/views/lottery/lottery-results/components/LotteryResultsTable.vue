@@ -37,7 +37,7 @@
 
       <el-table-column label="结算状态" :min-width="70">
         <template slot-scope="scope">
-          <span>{{scope.row.status | lotteryStatus}}</span>
+          <span>{{ scope.row.status | lotteryStatus }}</span>
         </template>
       </el-table-column>
 
@@ -50,6 +50,7 @@
             >手动结算</el-button>
 
             <el-button
+              @click="showDialog(scope.row, 'dialogCancel')"
               type="primary"
               size="mini"
             >撤单</el-button>
@@ -57,6 +58,20 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!-- 手动结算弹框 -->
+    <LotteryResultsDialogManual
+      @on-changed="$emit('on-changed')"
+      :data="activeItem"
+      ref="dialogManual"
+    />
+
+    <!-- 撤单弹框 -->
+    <LotteryResultsDialogCancel
+      @on-canceled="$emit('on-changed')"
+      :data="activeItem"
+      ref="dialogCancel"
+    />
   </div>
 </template>
 
@@ -65,22 +80,21 @@ import { tableComponentMixin } from '@/mixins'
 
 import BaseDice from '@/components/base/BaseDice'
 import LotteryBall from '@/components/base/LotteryBall'
+import LotteryResultsDialogManual from './LotteryResultsDialogManual'
+import LotteryResultsDialogCancel from './LotteryResultsDialogCancel'
 
 export default {
   name: 'ResultsElevenTable',
   components: {
     BaseDice,
-    LotteryBall
+    LotteryBall,
+    LotteryResultsDialogManual,
+    LotteryResultsDialogCancel
   },
   mixins: [ tableComponentMixin ],
-  methods: {
-    showDialogCancel (drawno) {
-      this.activeItem = {
-        drawno,
-        type: 3
-      }
-
-      this.$refs.dialogCancel.toggleDialogVisible(true)
+  data () {
+    return {
+      activeItem: {}
     }
   }
 }
