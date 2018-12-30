@@ -24,6 +24,7 @@
     "vue-context-menu": "^2.0.6",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1",
+    "vuedraggable": "^2.17.0",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"
   },

@@ -20,16 +20,22 @@
       <el-form-item label="开奖结果：">
         <!-- 骰子类型 -->
         <div v-if="this.data.gameType >= 7 && this.data.gameType <= 17 && this.data.gameType != 10" class="container-box">
-          <span v-for="(ball, index) in results" :key="index">
-            <BaseDice :number="ball" @click.native="undoBall(ball, index)" />
-          </span>
+          <draggable v-model="results" @start="drag = true" @end="drag = false">
+            <span v-for="(ball, index) in results" :key="index">
+              <BaseDice :number="ball" @dblclick.native="undoBall(ball, index)" />
+            </span>
+          </draggable>
         </div>
 
         <!-- 其他类型 -->
         <div v-else class="container-box">
-          <span v-for="(ball, index) in results" :key="index">
-            <LotteryBall :number="ball" @click.native="undoBall(ball, index)" />
-          </span>
+          <draggable v-model="results" @start="drag = true" @end="drag = false">
+            <transition-group>
+            <span v-for="(ball, index) in results" :key="index">
+              <LotteryBall :number="ball" @dblclick.native="undoBall(ball, index)" />
+            </span>
+            </transition-group>
+          </draggable>
         </div>
       </el-form-item>
 
@@ -42,12 +48,15 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 import BaseDice from '@/components/base/BaseDice'
 import LotteryBall from '@/components/base/LotteryBall'
 
 export default {
   name: 'LotteryResultsDialogCancel',
   components: {
+    draggable,
     BaseDice,
     LotteryBall
   },

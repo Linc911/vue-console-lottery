@@ -45,10 +45,7 @@
         <template slot-scope="scope">
           <div v-if="scope.row.status !== 2">
             <el-button
-              @click="showDialog(Object.assign(rules, {
-                gameType: scope.row.gameType,
-                drowno: scope.row.drawno
-              }), 'dialogManual')"
+              @click="showDialogManual(scope.row, 'dialogManual')"
               type="primary"
               size="mini"
             >手动结算</el-button>
@@ -66,7 +63,7 @@
     <!-- 手动结算弹框 -->
     <LotteryResultsDialogManual
       @on-changed="$emit('on-changed')"
-      :data="activeItem"
+      :data="rules"
       ref="dialogManual"
     />
 
@@ -105,6 +102,14 @@ export default {
   data () {
     return {
       activeItem: this.rules
+    }
+  },
+  methods: {
+    showDialogManual ({ gameType, drowno}, ref) {
+      this.$refs[ref].toggleDialogVisible(true)
+
+      this.rules.gameType = gameType
+      this.rules.drowno = drowno
     }
   }
 }
