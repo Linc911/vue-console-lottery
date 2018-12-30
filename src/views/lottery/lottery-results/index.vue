@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <!-- 检索栏 -->
-    <ResultsSearch @on-search="handleSearch" ref="resultsSearch" />
+    <LotteryResultsSearch @on-search="handleSearch" ref="resultsSearch" />
 
     <div>
       <!-- 彩票分类菜单 -->
@@ -12,7 +12,8 @@
       <!-- 主要内容 -->
       <div class="content-container">
         <!-- 表格 -->
-        <component :is="activeComponent" :data="tableData" />
+        <!-- <component :is="activeComponent" :data="tableData" /> -->
+        <LotteryResultsTable :data="tableData" />
 
         <!-- 分页 -->
         <BasePagination
@@ -28,67 +29,33 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
+import { searchLayoutWithoutAddMixin, tableWithPaginationMixin } from '@/mixins'
 
-import ResultsSearch from './components/ResultsSearch'
 import GamesMenu from '@/components/global/GamesMenu'
-import ResultsPK10Table from './components/table/ResultsPK10Table'
-import ResultsElevenTable from './components/table/ResultsElevenTable'
-import ResultsFast3Table from './components/table/ResultsFast3Table'
+import LotteryResultsSearch from './components/LotteryResultsSearch'
+import LotteryResultsTable from './components/LotteryResultsTable'
 
 export default {
   name: 'LotteryResults',
   components: {
-    ResultsSearch,
     GamesMenu,
-    ResultsPK10Table,
-    ResultsElevenTable,
-    ResultsFast3Table
+    LotteryResultsSearch,
+    LotteryResultsTable
   },
   data () {
     return {
-      activeComponent: 'ResultsElevenTable',
-      tableData: [],
       tableHttpAPI: 'fetchLotteryResultsList',
       requestParams: { gameType: 3, pageNo: 1, pageSize: 10 },
       page: { current: 0, size: 10, total: 10 }
     }
   },
-  mixins: [ searchOuterMixin, tableWithPaginationPostMixin ],
+  mixins: [ searchLayoutWithoutAddMixin, tableWithPaginationMixin ],
   methods: {
     handleMenuChange ({ groupId, itemId }) {
       this.requestParams = { gameType: itemId, pageNo: 1, pageSize: 10 }
       this.$refs.resultsSearch.reset()
 
-      switch (groupId) {
-        case 18:
-          console.log('pk10')
-          this.activeComponent = 'ResultsPK10Table'
-          this.fetchTableData()
-          break
-        case 23:
-          this.tableData = []
-          break
-        case 29:
-          this.tableData = []
-          break
-        case 33:
-          this.tableData = []
-          break
-        case 2:
-          this.activeComponent = 'ResultsFast3Table'
-          this.fetchTableData()
-          break
-        case 1:
-          this.activeComponent = 'ResultsElevenTable'
-          this.fetchTableData()
-          break
-        case 39:
-          this.tableData = []
-          break
-        default:
-          this.tableData = []
-      }
+      this.fetchTableData()
     }
   }
 }

@@ -9,11 +9,12 @@
     </template>
 
     <template v-else>
-      <el-popover width="400" trigger="hover" :content="data">
-        <p slot="reference">
+      <el-popover width="400" :trigger="triggerType">
+        <div v-html="data"></div>
+        <div slot="reference">
           <span>{{ data.substr(0, maxLength) }}...</span>
           <i class="el-icon-search"></i>
-        </p>
+        </div>
       </el-popover>
     </template>
   </div>
@@ -30,6 +31,10 @@ export default {
     maxLength: {
       type: Number,
       default: 30
+    },
+    triggerType: {
+      type: String,
+      default: 'hover'
     }
   }
 }

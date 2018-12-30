@@ -11,7 +11,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="explain" label="游戏说明" :min-width="240" />
+      <el-table-column prop="explain" label="游戏说明" :min-width="200">
+        <template slot-scope="scope">
+          <BasePopoverTextarea :data="scope.row.explain" :maxlength="28" triggerType="click" />
+        </template>
+      </el-table-column>
 
       <el-table-column prop="updateTime" label="更新时间" :min-width="140">
         <template slot-scope="scope">
@@ -63,12 +67,14 @@ import { tableComponentMixin } from '@/mixins'
 import config from '@/config/data'
 
 import LotteryRulesDialogUpdate from './LotteryRulesDialogUpdate'
+import BasePopoverTextarea from '@/components/base/BasePopoverTextarea'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
   name: 'LotteryRulesTable',
   components: {
     LotteryRulesDialogUpdate,
+    BasePopoverTextarea,
     DialogDeleteConfirm
   },
   mixins: [ tableComponentMixin ],
@@ -116,3 +122,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.el-popover {
+  width: 60% !important;
+  max-height: 80%;
+}
+</style>

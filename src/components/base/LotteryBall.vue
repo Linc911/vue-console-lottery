@@ -1,7 +1,5 @@
 <template lang="html">
-  <el-tooltip :content="number | lotteryBall" effect="light" placement="top-start">
-    <span class="ball" :style="{ backgroundColor: bgcolor }">{{ number }}</span>>
-  </el-tooltip>
+  <span class="ball" :style="{ backgroundColor: bgcolor }">{{ number }}</span>
 </template>
 
 <script type="text/javascript">

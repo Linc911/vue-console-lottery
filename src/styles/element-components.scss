@@ -46,7 +46,9 @@
 
 /* popover 组件 */
 .el-popover {
-  overflow: hidden;
+  width: 60% !important;
+  max-height: 80%;
+  overflow-y: scroll;
 }
 
 

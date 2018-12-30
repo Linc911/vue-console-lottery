@@ -82,7 +82,7 @@ export default {
   fetchLotterySettingInfo: (options) => axios.get('/api-g/GameTypeConfig/get', options), // 彩票设置列表(彩票开盘配置)
   updateLotterySettingItem: (data) => axios.post('/api-g/GameTypeConfig/save', data), // 修改彩票设置(彩票开盘配置)
 
-  fetchLotteryResultsList: (data) => axios.post('/api-g/result', data), // (新接口)所有开奖记录列表
+  fetchLotteryResultsList: (options) => axios.get('/api-g/result', options), // 开奖记录列表
 
   fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // 所有赔率列表
   updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改单个游戏赔率数据

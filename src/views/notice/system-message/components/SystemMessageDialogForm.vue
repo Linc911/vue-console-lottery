@@ -21,26 +21,39 @@
     />
 
     <el-form-item prop="content" label="消息内容">
-      <el-input v-model.trim="formData.content" type="textarea" rows="5" placeholder="控制在500字以内" />
+      <quill-editor
+        @blur="$set(formData, 'content', content)"
+        v-model="content"
+        placeholder="控制在500字以内"
+        ref="myQuillEditor"
+      />
     </el-form-item>
   </el-form>
 </template>
 
 <script>
+// require styles
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
 import { formComponentMixin } from '@/mixins'
 
 import validators from '@/config/form'
 
+import { quillEditor } from 'vue-quill-editor'
 import FormSelect from '@/components/form/FormSelect'
 
 export default {
   name: 'SystemMessageDialogForm',
   components: {
+    quillEditor,
     FormSelect
   },
   mixins: [ formComponentMixin ],
   data () {
     return {
+      content: '',
       // 验证的form属性必须要初始化，否则在更新时无法验证
       formData: { author: '', title: '', target: '', content: '' },
       rules: {

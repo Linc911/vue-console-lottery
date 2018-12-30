@@ -13,7 +13,7 @@
         <template slot-scope="scope">
           <div>
             <!-- 骰子类型 -->
-            <template v-if="gameType >= 9 && gameType <= 17">
+            <template v-if="gameType >= 7 && gameType <= 17 && gameType != 10">
               <span v-for="(ball, index) in scope.row.ballValue" :key="index">
               <!-- 数值 用球表示 -->
               <template v-if="/^[0-9]+/.test(ball)">

@@ -1,5 +1,5 @@
 <template lang="html">
-  <el-dialog :visible.sync="dialogVisible" title="创建新系统消息" width="500px">
+  <el-dialog :visible.sync="dialogVisible" title="创建新系统消息" width="80%" style="min-width: 768px">
     <SystemMessageDialogForm @on-validated="handleValidationSuccess" ref="form" />
 
     <span slot="footer">

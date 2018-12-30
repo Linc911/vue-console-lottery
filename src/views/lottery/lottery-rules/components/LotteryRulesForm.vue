@@ -28,31 +28,42 @@
     </el-form-item>
 
     <el-form-item prop="explain" label="游戏说明">
-      <el-input
-        v-model.trim="formData.explain"
-        type="textarea"
-        rows="8"
-        placeholder="游戏说明"
+      <quill-editor
+        @blur="$set(formData, 'explain', content)"
+        v-model="content"
+        :options="editorOption"
+        ref="myQuillEditor"
       />
     </el-form-item>
   </el-form>
 </template>
 
 <script>
+// require styles
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
 import { formComponentMixin } from '@/mixins'
 
 import validators from '@/config/form'
 
+import { quillEditor } from 'vue-quill-editor'
 import FormSelectGame from '@/components/form/FormSelectGame'
 
 export default {
   name: 'GroupSettingForm',
   components: {
+    quillEditor,
     FormSelectGame
   },
   mixins: [ formComponentMixin ],
   data () {
     return {
+      content: '',
+      editorOption: {
+        // some quill options
+      },
       formData: { gameType: '', type: 0, explain: '' }, // 验证的form属性必须要初始化，否则在更新时无法验证
       rules: {
         gameType: validators.validateSelect('游戏类型'),
@@ -60,6 +71,15 @@ export default {
         explain: validators.validateRequired('游戏说明')
       }
     }
+  },
+  watch: {
+    // 变化时，更新数据
+    data () {
+      this.content = this.formData.explain
+    }
+  },
+  mounted () {
+    this.content = this.formData.explain
   }
 }
 </script>
