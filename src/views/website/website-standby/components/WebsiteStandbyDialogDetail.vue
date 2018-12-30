@@ -1,14 +1,6 @@
 <template lang="html">
   <el-dialog :visible.sync="dialogVisible" title="备用网站详情" width="760px">
     <el-form :model="formData" size="small" label-width="90px" class="clearfix" disabled>
-      <el-form-item label="启用状态">
-        <el-input :value="formData.status | statusTrible" />
-      </el-form-item>
-
-      <el-form-item label="创建时间">
-        <el-input :value="formData.createTime | time" />
-      </el-form-item>
-
       <el-form-item label="显示域名">
         <el-input :value="formData.showDomain" />
       </el-form-item>
@@ -19,6 +11,14 @@
 
       <el-form-item label="备用网站ID">
         <el-input :value="formData.websiteId" />
+      </el-form-item>
+
+      <el-form-item label="启用状态">
+        <el-input :value="formData.status | statusTrible" />
+      </el-form-item>
+
+      <el-form-item label="创建时间">
+        <el-input :value="formData.createTime | time" />
       </el-form-item>
 
       <el-form-item label="创建人ID">

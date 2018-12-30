@@ -8,6 +8,7 @@ export default {
   fetchPublicUsers: (options) => axios.get('/api-u/backend/userList', options), // 会员列表
 
   fetchSidebarMenuList: (options) => axios.get('/api-b/menus/all', options), // 页面侧边栏菜单列表
+  fetchSidebarMenu: (options) => axios.get('/api-b/menus/me', options), // 页面侧边栏菜单列表（控制权限）
 
   fetchGameClasses: (options) => axios.get('/api-g/gameconfig/parent', options), // 游戏菜单(大类)
   fetchGamesMenu: (options) => axios.get('/api-g/GameTypeConfig/tree', options), // 游戏菜单（细分）
@@ -83,11 +84,11 @@ export default {
   updateLotterySettingItem: (data) => axios.post('/api-g/GameTypeConfig/save', data), // 修改彩票设置(彩票开盘配置)
 
   fetchLotteryResultsList: (options) => axios.get('/api-g/result', options), // 开奖记录列表
+  updateLotteryBillCancel: (data) => axios.post('/api-g/result/cancel', data), // 彩票未结撤单
+  updateLotteryResultManual: (data) => axios.post('/api-g/result/settlement', data), // 彩票手动结算
 
   fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // 所有赔率列表
   updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改单个游戏赔率数据
-
-  updateLotteryBillCancel: (data) => axios.post('/api-g/result/cancel', data), // 彩票未结撤单
 
   fetchLotterBetsList: (data) => axios.get('/api-g/userBet/page', data), // 所有注单记录列表
   fetchLotterBetDetail: (data) => axios.get('/api-g/userBet/detail', data), // 单个注单详情

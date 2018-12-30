@@ -12,15 +12,14 @@
       <!-- 主要内容 -->
       <div class="content-container">
         <!-- 表格 -->
-        <LotteryResultsTable @on-changed="fetchTableData()" :data="tableData" />
+        <LotteryResultsTable @on-changed="fetchTableData()" :data="tableData" :rules="gameRules" />
 
         <!-- 分页 -->
         <BasePagination
           @on-change="handlePaginationChange"
           :page="page"
-          httpMethod="post"
-          :requestParams="requestParams"
           :httpURL="tableHttpAPI"
+          :requestParams="requestParams"
         />
       </div>
     </div>
@@ -43,6 +42,11 @@ export default {
   },
   data () {
     return {
+      gameRules: {
+        balls: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+        ballNum: 5,
+        repeat: 0
+      },
       tableHttpAPI: 'fetchLotteryResultsList',
       requestParams: { gameType: 3, pageNo: 1, pageSize: 10 },
       page: { current: 0, size: 10, total: 10 }
@@ -50,10 +54,15 @@ export default {
   },
   mixins: [ searchLayoutWithoutAddMixin, tableWithPaginationMixin ],
   methods: {
-    handleMenuChange ({ groupId, itemId }) {
-      this.requestParams = { gameType: itemId, pageNo: 1, pageSize: 10 }
-      this.$refs.resultsSearch.reset()
+    // 处理侧边游戏菜单点击事件
+    handleMenuChange ({ groupId, itemId, item }) {
+      // 获取每种游戏的开奖规则，传入子组件
+      let { ballNum, balls, repeat } = item
+      Object.assign(this.gameRules, { ballNum, balls, repeat })
 
+      this.$refs.resultsSearch.reset() // 清空搜索条件
+
+      this.requestParams = { gameType: itemId, pageNo: 1, pageSize: 10 }
       this.fetchTableData()
     }
   }

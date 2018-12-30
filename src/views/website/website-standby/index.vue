@@ -35,10 +35,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import WebsiteStandbySearch from './components/WebsiteStandbySearch'
 import WebsiteStandbyTable from './components/WebsiteStandbyTable'
 import WebsiteStandbyDialogCreate from './components/WebsiteStandbyDialogCreate'
@@ -46,16 +44,13 @@ import WebsiteStandbyDialogCreate from './components/WebsiteStandbyDialogCreate'
 export default {
   name: 'WebsiteStandby',
   components: {
-    SearchLayout,
-    BaseAdd,
     WebsiteStandbySearch,
     WebsiteStandbyTable,
     WebsiteStandbyDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchWebsiteStandbyList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }

@@ -48,8 +48,6 @@ const LotteryBillCancel = resolve => require(['@/views/lottery/LotteryBillCancel
 const LotteryStatisticsUsers = resolve => require(['@/views/lottery/statistics-users'], resolve)
 const LotteryStatisticsBets = resolve => require(['@/views/lottery/statistics-bets'], resolve)
 const LotteryStatistics = resolve => require(['@/views/lottery/lottery-statistics'], resolve)
-const LotteryKillrate = resolve => require(['@/views/lottery/LotteryKillrate'], resolve)
-const LotteryCheckout = resolve => require(['@/views/lottery/LotteryCheckout'], resolve)
 const LotteryRulesList = resolve => require(['@/views/lottery/lottery-rules'], resolve)
 
 /* ========================================== 财务管理 ============================================ */
@@ -397,6 +395,18 @@ const routes = [
             }
           },
           {
+            name: 'LotteryBets',
+            path: '/lottery/bets',
+            component: LotteryBets,
+            meta: {
+              title: '客户注单查询',
+              breadcrumb: [
+                { name: '彩票管理' },
+                { name: '客户注单查询' }
+              ]
+            }
+          },
+          {
             name: 'lotteryOdds',
             path: 'odds',
             component: LotteryOdds,
@@ -469,30 +479,6 @@ const routes = [
             }
           }
         ]
-      },
-      {
-        name: 'LotteryKillrate',
-        path: '/lottery/killrate',
-        component: LotteryKillrate,
-        meta: { title: '彩票杀率配置', keepAlive: true }
-      },
-      {
-        name: 'LotteryCheckout',
-        path: '/lottery/checkout',
-        component: LotteryCheckout,
-        meta: { title: '彩票开奖校对', keepAlive: true }
-      },
-      {
-        name: 'LotteryBets',
-        path: '/lottery/bets',
-        component: LotteryBets,
-        meta: {
-          title: '客户注单查询',
-          breadcrumb: [
-            { name: '彩票管理' },
-            { name: '客户注单查询' }
-          ]
-        }
       },
       /* ========================================== 财务管理 ============================================ */
       {

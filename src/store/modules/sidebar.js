@@ -1,5 +1,4 @@
 import axios from 'axios'
-import _ from 'lodash'
 
 const state = {
   menu: [],
@@ -19,8 +18,8 @@ const mutations = {
 
 const actions = {
   refreshMenu: ({ commit }) => {
-    axios.get('/api-b/menus/all').then(response => {
-      const menu = _.groupBy(response.data, 'parentId')
+    axios.get('/api-b/menus/me').then(response => {
+      const menu = response.data.data
       commit('refreshMenu', menu)
     }).catch(error => console.log(error))
   },

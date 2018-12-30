@@ -1,14 +1,20 @@
 <template lang="html">
-  <el-dialog :visible.sync="dialogVisible" title="会员日志列表" width="80%" style="min-width: 760px">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    title="会员日志列表"
+    center
+    width="80%"
+    style="min-width: 760px"
+  >
     <!-- 条件筛选 -->
     <el-form :model="searchData" size="small" inline>
-      <FormInput
+      <!-- <FormInput
         @keyup.native.enter="$emit('on-search', formData)"
         @on-change="$set(formData, 'username', $event)"
         label="会员账户"
         width="174px"
         ref="username"
-      />
+      /> -->
 
       <div style="display: inline-block">
         <SearchIcon @click.native="search" />
@@ -22,19 +28,19 @@
       <el-table :data="tableData" size="small" highlight-current-row border>
         <el-table-column type="index" :width="36" />
 
-        <el-table-column prop="ip" label="ip地址" />
-
         <el-table-column prop="module" label="请求模块" :min-width="120" />
 
         <el-table-column prop="params" label="请求参数" :min-width="200">
           <template slot-scope="scope">
-            <BasePopoverTextarea :data="scope.row.params" :maxLength="26" />
+            <BasePopoverTextarea :data="scope.row.params" :maxLength="50" />
           </template>
         </el-table-column>
 
+        <el-table-column prop="ip" label="ip地址" />
+
         <el-table-column prop="area" label="所属区域" />
 
-        <el-table-column prop="createTime" label="请求时间" :width="140">
+        <el-table-column prop="createTime" label="请求时间" :min-width="140">
           <template slot-scope="scope">
             <span>{{scope.row.createTime | time}}</span>
           </template>
@@ -42,7 +48,7 @@
 
         <el-table-column prop="remark" label="备注" :min-width="150">
           <template slot-scope="scope">
-            <BasePopoverTextarea :data="scope.row.remark" :maxLength="18" />
+            <BasePopoverTextarea :data="scope.row.remark" :maxLength="15" />
           </template>
         </el-table-column>
       </el-table>
@@ -51,7 +57,7 @@
       <BasePagination
         @on-change="handlePaginationChange"
         :page="page"
-        :httpURL="tableAPI"
+        :httpURL="tableHttpAPI"
         :requestParams="requestParams"
       />
     </div>
@@ -85,7 +91,7 @@ export default {
       dialogVisible: false,
       searchData: {},
       tableData: [],
-      tableAPI: 'fetchUsersLogsList',
+      tableHttpAPI: 'fetchUsersLogsList',
       requestParams: { userId: this.userId, pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }
@@ -93,6 +99,7 @@ export default {
   watch: {
     userId () {
       this.page.current = 1
+      this.reset() // 清除搜索结果
       this.$set(this.requestParams, 'userId', this.userId)
 
       this.fetchLogsList(this.userId)
@@ -104,7 +111,7 @@ export default {
       this.tableData = data
     },
     fetchLogsList (userId) {
-      this.$httpAPI[this.tableAPI]({
+      this.$httpAPI[this.tableHttpAPI]({
         params: { userId, pageNo: 1, pageSize: 10 }
       }).then(response => {
         this.page.total = response.data.amount
@@ -116,6 +123,19 @@ export default {
           this.$message.info('暂无数据返回')
         }
       }).catch(error => console.log(error))
+    },
+    // 通知父组件触发搜索事件；将请求参数传给父组件
+    search () {
+      this.fetchUserBets(this.formData)
+    },
+    // 将全部的 form 组件重置为初始值；初始化组件内容的数据
+    reset () {
+      for (let key in this.$refs) {
+        // 排除 dialog 相关的 ref
+        if (!key.includes('dialog')) this.$refs[key].reset()
+      }
+
+      this.$utils.initializeObjectProperties(this.formData)
     },
     // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {

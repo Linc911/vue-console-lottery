@@ -13,19 +13,14 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <MenuSettingTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        @on-status-changed="fetchTableData()"
-        :data="tableData"
-      />
+      <MenuSettingTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
         :page="page"
-        :requestParams="requestParams"
         :httpURL="tableHttpAPI"
+        :requestParams="requestParams"
       />
     </div>
 
@@ -35,10 +30,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import MenuSettingSearch from './components/MenuSettingSearch'
 import MenuSettingTable from './components/MenuSettingTable'
 import MenuSettingDialogCreate from './components/MenuSettingDialogCreate'
@@ -46,16 +39,13 @@ import MenuSettingDialogCreate from './components/MenuSettingDialogCreate'
 export default {
   name: 'WebsiteMenuSetting',
   components: {
-    SearchLayout,
-    BaseAdd,
     MenuSettingSearch,
     MenuSettingTable,
     MenuSettingDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchWebsiteMenuList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }

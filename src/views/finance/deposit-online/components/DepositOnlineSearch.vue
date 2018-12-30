@@ -2,9 +2,9 @@
   <!-- 条件筛选 -->
   <div class="search">
     <el-form :model="formData" size="small" label-width="80px" inline>
-      <SearchUsername @keyup.native.enter="search" @on-change="handleUsernameChange" ref="username" />
+      <!-- <SearchUsername @keyup.native.enter="search" @on-change="handleUsernameChange" ref="username" />
 
-      <SearchDateRange @on-change="handleDateRangeChange" ref="dateRange" />
+      <SearchDateRange @on-change="handleDateRangeChange" ref="dateRange" /> -->
 
       <SearchIcon @click.native="search" />
 
@@ -14,16 +14,16 @@
 </template>
 
 <script type="text/javascript">
-import SearchUsername from '@/components/search/SearchUsername'
-import SearchDateRange from '@/components/search/SearchDateRange'
+// import SearchUsername from '@/components/search/SearchUsername'
+// import SearchDateRange from '@/components/search/SearchDateRange'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
 export default {
   name: 'DepositOnlineSearch',
   components: {
-    SearchUsername,
-    SearchDateRange,
+    // SearchUsername,
+    // SearchDateRange,
     SearchIcon,
     SearchReset
   },

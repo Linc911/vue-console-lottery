@@ -2,13 +2,13 @@
   <!-- 条件筛选 -->
   <div class="search">
     <el-form :model="formData" size="small" label-width="80px" inline>
-      <SearchUsername @keyup.native.enter="search" @on-change="formData.username = $event" ref="username" />
+      <!-- <SearchUsername @keyup.native.enter="search" @on-change="formData.username = $event" ref="username" />
 
       <SearchAccountType @on-change="formData.gameType = $event" ref="gameType" />
 
       <SearchLoanType @on-change="formData.loanType = $event" ref="loanType" />
 
-      <SearchLoanDirection @on-change="formData.type = $event" ref="type" />
+      <SearchLoanDirection @on-change="formData.type = $event" ref="type" /> -->
 
       <SearchIcon @click.native="search" />
 
@@ -18,20 +18,20 @@
 </template>
 
 <script type="text/javascript">
-import SearchUsername from '@/components/search/SearchUsername'
-import SearchAccountType from '@/components/search/SearchAccountType'
-import SearchLoanType from '@/components/search/SearchLoanType'
-import SearchLoanDirection from '@/components/search/SearchLoanDirection'
+// import SearchUsername from '@/components/search/SearchUsername'
+// import SearchAccountType from '@/components/search/SearchAccountType'
+// import SearchLoanType from '@/components/search/SearchLoanType'
+// import SearchLoanDirection from '@/components/search/SearchLoanDirection'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
 export default {
   name: 'DepositFormSearch',
   components: {
-    SearchUsername,
-    SearchAccountType,
-    SearchLoanType,
-    SearchLoanDirection,
+    // SearchUsername,
+    // SearchAccountType,
+    // SearchLoanType,
+    // SearchLoanDirection,
     SearchIcon,
     SearchReset
   },

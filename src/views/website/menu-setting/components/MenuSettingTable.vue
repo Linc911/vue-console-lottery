@@ -11,14 +11,31 @@
 
       <el-table-column prop="operations" label="操作" :min-width="100">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
+          <div>
+            <el-button
+              @click="showDialog(scope.row, 'dialogUpdate')"
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+            />
+
+            <el-button
+              @click="showDialog(scope.row, 'dialogDelete')"
+              type="warning"
+              icon="el-icon-delete"
+              size="mini"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 修改弹框 -->
-    <MenuSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <MenuSettingDialogUpdate
+      @on-updated="$emit('on-changed')"
+      :data="activeItem"
+      ref="dialogUpdate"
+    />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
@@ -45,10 +62,10 @@ export default {
   mixins: [ tableComponentMixin ],
   data () {
     return {
+      activeItem: { name: '' },
       deleteHttpAPI: 'deleteWebsiteMenuItem',
       deleteAttrName: 'webMenuId',
-      deleteId: 'webMenuId',
-      activeItem: { name: '' }
+      deleteId: 'webMenuId'
     }
   }
 }

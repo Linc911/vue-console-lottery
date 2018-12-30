@@ -12,16 +12,16 @@
     <FormDateRange @on-change="handleDateRangeChange" label="开奖时间" ref="dateRange" />
 
     <FormSelectStatic
-    @on-change="$set(formData, 'status', $event)"
-    :options="[
-    { value: 0, label: '未开奖' },
-    { value: 1, label: '未结算' },
-    { value: 2, label: '已结算' },
-    { value: 3, label: '已撤单' }
-    ]"
-    label="结算状态"
-    width="100px"
-    ref="status"
+      @on-change="$set(formData, 'status', $event)"
+      :options="[
+      { value: 0, label: '未开奖' },
+      { value: 1, label: '未结算' },
+      { value: 2, label: '已结算' },
+      { value: 3, label: '已撤单' }
+      ]"
+      label="结算状态"
+      width="100px"
+      ref="status"
     />
 
     <div style="display: inline-block">

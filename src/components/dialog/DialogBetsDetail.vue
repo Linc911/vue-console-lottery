@@ -1,7 +1,8 @@
 <template>
   <el-dialog
     :visible.sync="dialogVisible"
-    title="每注详情"
+    title="每注注单详情"
+    center
     width="70%"
     style="min-width: 768px"
     append-to-body

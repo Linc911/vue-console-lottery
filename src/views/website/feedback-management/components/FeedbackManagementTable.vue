@@ -11,16 +11,33 @@
 
       <el-table-column prop="status" label="处理状态" :min-width="70" >
         <template slot-scope="scope">
-          <span>{{ scope.row.staus | statusPipe }}</span>
+          <span>{{ scope.row.status | statusPipe }}</span>
         </template>
       </el-table-column>
 
       <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
           <div>
-            <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
-            <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-            <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
+            <el-button
+              @click="showDialog(scope.row, 'dialogDetail')"
+              type="primary"
+              icon="el-icon-view"
+              size="mini"
+            />
+
+            <el-button
+              @click="showDialog(scope.row, 'dialogUpdate')"
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+            />
+
+            <el-button
+              @click="showDialog(scope.row, 'dialogDelete')"
+              type="warning"
+              icon="el-icon-delete"
+              size="mini"
+            />
           </div>
         </template>
       </el-table-column>
@@ -30,7 +47,11 @@
     <FeedbackManagementDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 修改弹框 -->
-    <FeedbackManagementDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <FeedbackManagementDialogUpdate
+      @on-updated="$emit('on-changed')"
+      :data="activeItem"
+      ref="dialogUpdate"
+    />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
@@ -43,7 +64,7 @@
 </template>
 
 <script>
-import { tableComponentMixin, switchMixin } from '@/mixins'
+import { tableComponentMixin } from '@/mixins'
 
 import FeedbackManagementDialogDetail from './FeedbackManagementDialogDetail'
 import FeedbackManagementDialogUpdate from './FeedbackManagementDialogUpdate'
@@ -74,13 +95,13 @@ export default {
       }
     }
   },
-  mixins: [ tableComponentMixin, switchMixin ],
+  mixins: [ tableComponentMixin ],
   data () {
     return {
+      activeItem: { title: '' },
       deleteHttpAPI: 'deleteWebsiteFeedbackItem',
       deleteAttrName: 'feedbackId',
-      deleteId: 'feedbackId',
-      activeItem: { title: '' }
+      deleteId: 'feedbackId'
     }
   }
 }

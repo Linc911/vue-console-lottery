@@ -1,5 +1,11 @@
 <template lang="html">
-  <el-dialog :visible.sync="dialogVisible" title="会员投注记录列表" width="80%" style="min-width: 760px">
+  <el-dialog
+    :visible.sync="dialogVisible"
+    title="会员投注记录列表"
+    center
+    width="80%"
+    style="min-width: 760px"
+  >
     <!-- 条件筛选 -->
     <el-form :model="formData" size="small" inline>
       <FormInput
@@ -47,13 +53,13 @@
 
         <el-table-column type="index" :width="36" />
 
-        <el-table-column prop="id" label="注单ID" :min-width="150" />
+        <el-table-column prop="username" label="账户名称" :width="100" />
 
         <el-table-column prop="currentDrawno" label="投注期号" :min-width="90" />
 
         <el-table-column prop="gameName" label="彩票类型" :min-width="120" />
 
-        <el-table-column prop="username" label="账户名称" :width="100" />
+        <el-table-column prop="id" label="注单ID" :min-width="150" />
 
         <el-table-column prop="totalBets" label="投注数" :width="90">
           <template slot-scope="scope">

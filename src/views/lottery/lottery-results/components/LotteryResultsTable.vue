@@ -41,10 +41,14 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :min-width="120">
+      <el-table-column label="操作" :min-width="140">
         <template slot-scope="scope">
           <div v-if="scope.row.status !== 2">
             <el-button
+              @click="showDialog(Object.assign(rules, {
+                gameType: scope.row.gameType,
+                drowno: scope.row.drawno
+              }), 'dialogManual')"
               type="primary"
               size="mini"
             >手动结算</el-button>
@@ -91,10 +95,16 @@ export default {
     LotteryResultsDialogManual,
     LotteryResultsDialogCancel
   },
+  props: {
+    rules: {
+      type: Object,
+      required: true
+    }
+  },
   mixins: [ tableComponentMixin ],
   data () {
     return {
-      activeItem: {}
+      activeItem: this.rules
     }
   }
 }

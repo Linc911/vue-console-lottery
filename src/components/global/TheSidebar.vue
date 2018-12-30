@@ -8,15 +8,19 @@
       background-color="#324057"
       active-text-color="#409eff"
     >
-      <template v-for="group in menu[0]">
+      <template v-for="group in menu">
         <el-submenu :index="group.name" :key="group.id">
           <template slot="title">
             <i :class="`fa ${group.css}`"></i>
             <span>{{group.name}}</span>
           </template>
 
-          <router-link v-for="item in menu[group.id]" :to="item.url" :key="item.id">
-            <el-menu-item @click="handleMenuItemClick" :index="item.name" :class="{ 'unprepared-link': item.url === '/users/unset' }">
+          <router-link v-for="item in group.child" :to="item.url" :key="item.id">
+            <el-menu-item
+              @click="handleMenuItemClick"
+              :index="item.name"
+              :class="{ 'unprepared-link': item.url === '/users/unset' }"
+            >
               <i :class="`fa ${item.css}`"></i>
               <span>{{item.name}}</span>
             </el-menu-item>

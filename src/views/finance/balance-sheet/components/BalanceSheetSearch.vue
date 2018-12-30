@@ -3,9 +3,9 @@
   <div class="search">
     <el-form :model="formData" size="small" label-width="80px" inline>
 
-      <SearchDateRange @on-change="handleDateRangeDepositChange" label="存款时间" ref="dateRangeDeposit" />
+      <!-- <SearchDateRange @on-change="handleDateRangeDepositChange" label="存款时间" ref="dateRangeDeposit" />
 
-      <SearchDateRange @on-change="handleDateRangeWithdrawChange" label="取款时间" ref="dateRangeWithdraw" />
+      <SearchDateRange @on-change="handleDateRangeWithdrawChange" label="取款时间" ref="dateRangeWithdraw" /> -->
 
       <SearchIcon @click.native="search" />
 
@@ -15,14 +15,14 @@
 </template>
 
 <script type="text/javascript">
-import SearchDateRange from '@/components/search/SearchDateRange'
+// import SearchDateRange from '@/components/search/SearchDateRange'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
 export default {
   name: 'BalanceSheetSearch',
   components: {
-    SearchDateRange,
+    // SearchDateRange,
     SearchIcon,
     SearchReset
   },

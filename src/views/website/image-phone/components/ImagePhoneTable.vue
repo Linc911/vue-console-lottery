@@ -46,7 +46,7 @@
     <ImagePhoneDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 修改弹框 -->
-    <ImagePhoneDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <ImagePhoneDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
@@ -79,6 +79,8 @@ export default {
   mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
+      activeItem: { name: '' },
+      imgUrl: '',
       deleteHttpAPI: 'deleteWebsiteImagePhoneItem',
       deleteAttrName: 'coverConfigId',
       deleteId: 'coverConfigId',
@@ -86,9 +88,7 @@ export default {
         API: 'updateWebsiteImagePhoneItem',
         attrId: 'coverConfigId',
         attrValue: 'status'
-      },
-      activeItem: { name: '' },
-      imgUrl: ''
+      }
     }
   },
   methods: {

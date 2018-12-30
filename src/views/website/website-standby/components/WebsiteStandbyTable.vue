@@ -28,9 +28,28 @@
 
       <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
+          <div>
+            <el-button
+              @click="showDialog(scope.row, 'dialogDetail')"
+              type="primary"
+              icon="el-icon-view"
+              size="mini"
+            />
+
+            <el-button
+              @click="showDialog(scope.row, 'dialogUpdate')"
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+            />
+
+            <el-button
+              @click="showDialog(scope.row, 'dialogDelete')"
+              type="warning"
+              icon="el-icon-delete"
+              size="mini"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -39,7 +58,11 @@
     <WebsiteStandbyDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 修改弹框 -->
-    <WebsiteStandbyDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <WebsiteStandbyDialogUpdate
+      @on-updated="$emit('on-changed')"
+      :data="activeItem"
+      ref="dialogUpdate"
+    />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
@@ -68,6 +91,7 @@ export default {
   mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
+      activeItem: { showDomain: '' },
       deleteHttpAPI: 'deleteWebsiteStandbyItem',
       deleteAttrName: 'websiteId',
       deleteId: 'websiteId',
@@ -75,8 +99,7 @@ export default {
         API: 'updateWebsiteStandbyItem',
         attrId: 'websiteId',
         attrValue: 'status'
-      },
-      activeItem: { showDomain: '' }
+      }
     }
   }
 }

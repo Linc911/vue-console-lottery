@@ -8,7 +8,11 @@
           </template>
 
           <template v-for="item in group.children">
-            <el-menu-item @click="$emit('on-change', { groupId: group.id, itemId: item.id })" :index="String(item.id)" :key="item.id">
+            <el-menu-item
+              @click="$emit('on-change', { groupId: group.id, itemId: item.id, item })"
+              :index="String(item.id)"
+              :key="item.id"
+            >
               <span>{{item.name}}</span>
             </el-menu-item>
           </template>
