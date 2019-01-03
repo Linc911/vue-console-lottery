@@ -456,6 +456,45 @@ export const dialogDetailMixin = {
     }
   }
 }
+/* ================================== DialogAudit 组件 ==================================== */
+export const dialogAuditMixin = {
+  props: {
+    data: {
+      type: Object,
+      required: true
+    }
+  },
+  data () {
+    return {
+      dialogVisible: false
+    }
+  },
+  methods: {
+    // 显示与隐藏弹框（父组件调用）
+    toggleDialogVisible (status) {
+      this.dialogVisible = status
+    },
+    // 审批操作
+    changeStatus (status) {
+      this.dialogVisible = false // 隐藏弹框
+
+      this.$httpAPI[this.audit.httpAPI]({
+        [this.audit.attrName]: status
+      }).then((response) => {
+        // 判断http返回状态码
+        if (response.data.status === 200) {
+          this.$emit('on-success')
+          this.$message.success(config.AUDIT_SUCCEEDED)
+        } else {
+          this.$message.error(`${config.AUDIT_FAILED}: ${response.data.msg}`)
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$message.error(config.SERVER_RESPONSE_EXCEPTION)
+      })
+    }
+  }
+}
 
 // // 检验表单验证是否通过，发送修改请求
 // submitForm (formName) { // DEPRECATED

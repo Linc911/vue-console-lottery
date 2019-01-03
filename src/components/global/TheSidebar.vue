@@ -27,6 +27,13 @@
           </router-link>
         </el-submenu>
       </template>
+
+      <!-- 仅仅为了做全部收取的状态，没有意义；如果有更好的方案，可以删除下面代码 -->
+      <el-submenu index="demoParent" style="display: none">
+        <el-menu-item index="demo">
+          <span>Demo</span>
+        </el-menu-item>
+      </el-submenu>
     </el-menu>
   </div>
 </template>

@@ -1,18 +1,34 @@
 <template lang="html">
   <section class="login-layout">
-    <div class="login-card">
+    <transition
+      mode="out-in"
+      enter-active-class="animated pulse"
+      leave-active-class="animated zoomOut fast"
+    >
+    <div class="login-card" v-show="show">
       <h1 class="login-title">后台管理系统</h1>
-      <keep-alive v-if="$route.meta.keepAlive">
+      <keep-alive>
         <router-view />
       </keep-alive>
-      <router-view v-else />
     </div>
+    </transition>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'LoginLayout'
+  name: 'LoginLayout',
+  data () {
+    return {
+      show: false
+    }
+  },
+  mounted () {
+    this.show = true
+  },
+  beforeDestroy () {
+    this.show = false
+  }
 }
 </script>
 

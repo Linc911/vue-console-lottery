@@ -22,11 +22,11 @@
 
 <script>
 export default {
-  name: 'SearchNumberRange',
+  name: 'FormNumberRange',
   props: {
     label: {
       type: String,
-      required: true
+      default: '数字范围'
     },
     startPlaceholder: {
       type: String,

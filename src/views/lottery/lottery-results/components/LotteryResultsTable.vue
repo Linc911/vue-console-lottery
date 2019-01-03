@@ -48,7 +48,7 @@
               @click="showDialogManual(scope.row, 'dialogManual')"
               type="primary"
               size="mini"
-            >手动结算</el-button>
+            >手动开奖</el-button>
 
             <el-button
               @click="showDialog(scope.row, 'dialogCancel')"
@@ -60,7 +60,7 @@
       </el-table-column>
     </el-table>
 
-    <!-- 手动结算弹框 -->
+    <!-- 手动开奖弹框 -->
     <LotteryResultsDialogManual
       @on-changed="$emit('on-changed')"
       :data="rules"
@@ -105,11 +105,11 @@ export default {
     }
   },
   methods: {
-    showDialogManual ({ gameType, drowno}, ref) {
+    showDialogManual ({ gameType, drawno }, ref) {
       this.$refs[ref].toggleDialogVisible(true)
 
       this.rules.gameType = gameType
-      this.rules.drowno = drowno
+      this.rules.drawno = drawno
     }
   }
 }

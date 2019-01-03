@@ -5,11 +5,11 @@
 
       <el-table-column prop="username" label="用户账户" :min-width="140" />
 
-      <el-table-column prop="nickname" label="用户昵称" />
+      <el-table-column prop="nickname" label="用户昵称" :min-width="120" />
 
-      <el-table-column prop="realname" label="真实姓名" />
+      <el-table-column prop="realname" label="真实姓名" :min-width="100" />
 
-      <el-table-column prop="sex" label="性别" :width="45">
+      <el-table-column prop="sex" label="性别" :min-width="45">
         <template slot-scope="scope">
           <span>{{ scope.row.sex | gender }}</span>
         </template>
@@ -21,13 +21,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="type" label="用户类型">
-        <template slot-scope="scope">
-          <span>{{ scope.row.type | userType }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="roleNames" label="角色类型" :min-width="110">
+      <el-table-column prop="roleNames" label="角色类型" :min-width="120">
         <template slot-scope="scope">
           <div>
             <span>{{ scope.row.roleNames | separator('&nbsp;&nbsp;') }}</span>
@@ -37,18 +31,6 @@
               class="pull-right"
             />
           </div>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="banlance" label="账户余额" :min-width="100">
-        <template slot-scope="scope">
-          <span>{{scope.row.banlance | RMB}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="control" label="监控状态" :width="45">
-        <template slot-scope="scope">
-          <BaseIndicator :status="scope.row.control" opposite />
         </template>
       </el-table-column>
 

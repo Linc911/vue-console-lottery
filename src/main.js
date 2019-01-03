@@ -24,6 +24,8 @@ import 'normalize.css/normalize.css'
 import '@/styles/index.scss'
 // FontAwesome
 import 'font-awesome/css/font-awesome.css'
+// Animate.css
+import 'animate.css/animate.min.css'
 
 import App from './App.vue'
 

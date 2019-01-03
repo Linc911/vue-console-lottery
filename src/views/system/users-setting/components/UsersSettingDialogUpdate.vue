@@ -79,10 +79,10 @@ export default {
       formData: { username: '', password: '', phone: '', sex: '', enabled: '' },
       rules: {
         username: validators.validateRequired('用户名称'),
-        password: validators.validateStringLength('登录密码', 6, 20),
-        phone: validators.validatePhone('手机号码'),
-        sex: validators.validateSelect('性别'),
-        enabled: validators.validateSelect('启用状态')
+        password: validators.validateStringLength('登录密码', 6, 20)
+        // phone: validators.validatePhone('手机号码'),
+        // sex: validators.validateSelect('性别'),
+        // enabled: validators.validateSelect('启用状态')
       }
     }
   },

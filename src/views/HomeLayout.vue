@@ -3,13 +3,25 @@
     <el-container>
       <!-- 顶部导航 -->
       <el-header>
-        <TheHeader />
+        <transition
+          mode="out-in"
+          enter-active-class="animated slideInDown fast"
+          leave-active-class="animated slideOutUp fast"
+        >
+          <TheHeader v-show="headerVisible" />
+        </transition>
       </el-header>
 
       <el-container>
         <!-- 侧边栏导航 -->
         <el-aside width="220px">
-          <TheSidebar />
+          <transition
+            mode="out-in"
+            enter-active-class="animated slideInLeft fast"
+            leave-active-class="animated slideOutRight fast"
+          >
+            <TheSidebar v-show="sidebarVisible" />
+          </transition>
         </el-aside>
 
         <el-container>
@@ -24,15 +36,34 @@
             <!-- 主要内容 -->
             <div class="content-container">
               <keep-alive>
-                <router-view v-if="$route.meta.keepAlive" />
+                <transition
+                  mode="out-in"
+                  enter-active-class="animated fadeIn fast"
+                  leave-active-class="animated fadeOut fast"
+                >
+                  <router-view v-if="$route.meta.keepAlive" />
+                </transition>
               </keep-alive>
-              <router-view v-if="!$route.meta.keepAlive" />
+
+              <transition
+                mode="out-in"
+                enter-active-class="animated fadeIn fast"
+                leave-active-class="animated fadeOut fast"
+              >
+                <router-view v-if="!$route.meta.keepAlive" />
+              </transition>
             </div>
           </el-main>
 
           <!-- 底部栏 -->
           <el-footer height="auto">
-            <TheFooter />
+            <transition
+              mode="out-in"
+              enter-active-class="animated slideInLeft fast"
+              leave-active-class="animated slideOutRight fast"
+            >
+              <TheFooter v-show="footerVisible" />
+            </transition>
           </el-footer>
 
         </el-container>
@@ -56,6 +87,23 @@ export default {
     TapPanel,
     BaseBreadcrumb,
     TheFooter
+  },
+  data () {
+    return {
+      headerVisible: false,
+      sidebarVisible: false,
+      footerVisible: false
+    }
+  },
+  mounted () {
+    this.headerVisible = true
+    this.sidebarVisible = true
+    this.footerVisible = true
+  },
+  destroyed () {
+    this.headerVisible = false
+    this.sidebarVisible = false
+    this.footerVisible = false
   }
 }
 </script>

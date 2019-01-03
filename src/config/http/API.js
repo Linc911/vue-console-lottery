@@ -85,7 +85,7 @@ export default {
 
   fetchLotteryResultsList: (options) => axios.get('/api-g/result', options), // 开奖记录列表
   updateLotteryBillCancel: (data) => axios.post('/api-g/result/cancel', data), // 彩票未结撤单
-  updateLotteryResultManual: (data) => axios.post('/api-g/result/settlement', data), // 彩票手动结算
+  updateLotteryResultManual: (data) => axios.post('/api-g/result/settlement', data), // 彩票手动开奖
 
   fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // 所有赔率列表
   updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改单个游戏赔率数据
@@ -111,7 +111,7 @@ export default {
   updateDepositFormStatus: (options) => axios.get('/api-p/changeUserRecharge/audit', options), // 审批加减款操作
 
   fetchFinanceDepositForm: (options) => axios.get('/api-p/remitInfo/list', options), // 填单存款管理列表
-  updateFinanceDepositFormStatus: (options) => axios.get('/api-p/remitInfo/audit', options), // 审批填单存款
+  updateFinanceDepositFormStatus: (data) => axios.post('/api-p/remitInfo/audit', data), // 审批填单存款
 
   fetchFinanceLimitationTransfer: (options) => axios.get('/api-u/convertRecharge/list', options), // 额度转换管理列表
 
@@ -122,7 +122,7 @@ export default {
 
   fetchFinanceWithdrawApply: (options) => axios.get('/api-u/withdrawOrder/list', options), // 提款申请管理列表
   fetchFinanceWithdrawApplyItem: (options) => axios.get('/api-u/withdrawOrder/info', options), // 提款申请管理每项详情
-  updateFinanceWithdrawApplyStatus: (options) => axios.get('/api-u/withdrawOrder/audit', options), // 审批提款申请
+  updateFinanceWithdrawApplyStatus: (data) => axios.post('/api-u/withdrawOrder/audit', data), // 审批提款申请
 
   fetchFinanceDepositOnline: (options) => axios.get('/api-p/UserOrder/list', options), // 在线存款列表
 

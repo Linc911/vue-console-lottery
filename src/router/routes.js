@@ -16,7 +16,7 @@ const UserActiveInfoUpdate = resolve => require(['@/views/useractive/UserActiveI
 const UserActiveAvatarUpdate = resolve => require(['@/views/useractive/UserActiveAvatarUpdate'], resolve)
 const UserActivePhoneUpdate = resolve => require(['@/views/useractive/UserActivePhoneUpdate'], resolve)
 
-/* ========================================== 系统设置 ============================================ */
+/* ========================================== 后台系统设置 ============================================ */
 
 const SystemMenuSetting = resolve => require(['@/views/system/menu-setting'], resolve) // 菜单
 const SystemRolesSetting = resolve => require(['@/views/system/roles-setting'], resolve) // 角色
@@ -27,7 +27,7 @@ const SystemLotterySetting = resolve => require(['@/views/system/lottery-setting
 const SystemBanksSetting = resolve => require(['@/views/system/banks-setting'], resolve) // 银行
 const SystemAreaSetting = resolve => require(['@/views/system/area-setting'], resolve) // 地区
 
-/* ========================================== 会员管理 ============================================ */
+/* ========================================== 平台用户查询 ============================================ */
 
 const UsersManage = resolve => require(['@/views/users/UsersManage'], resolve)
 const UsersList = resolve => require(['@/views/users/users-list'], resolve)
@@ -37,7 +37,7 @@ const UserBetsStatistics = resolve => require(['@/views/users/UserBetsStatistics
 const UserRechargeLogs = resolve => require(['@/views/users/UserRechargeLogs'], resolve)
 const UsersKeyword = resolve => require(['@/views/users/UsersKeyword'], resolve)
 
-/* ========================================== 彩票管理 ============================================ */
+/* ========================================== 自营彩票管理 ============================================ */
 
 const LotteryManage = resolve => require(['@/views/lottery/LotteryManage'], resolve)
 const LotteryOpen = resolve => require(['@/views/lottery/lottery-open'], resolve)
@@ -211,10 +211,10 @@ const routes = [
         path: '/system/menu',
         component: SystemMenuSetting,
         meta: {
-          title: '菜单',
+          title: '后台菜单配置',
           breadcrumb: [
-            { name: '系统设置' },
-            { name: '菜单' }
+            { name: '后台系统设置' },
+            { name: '后台菜单配置' }
           ]
         }
       },
@@ -223,10 +223,10 @@ const routes = [
         path: '/system/roles',
         component: SystemRolesSetting,
         meta: {
-          title: '角色',
+          title: '设置角色权限',
           breadcrumb: [
-            { name: '系统设置' },
-            { name: '角色' }
+            { name: '后台系统设置' },
+            { name: '设置角色权限' }
           ]
         }
       },
@@ -237,7 +237,7 @@ const routes = [
         meta: {
           title: '权限',
           breadcrumb: [
-            { name: '系统设置' },
+            { name: '后台系统设置' },
             { name: '权限' }
           ]
         }
@@ -247,10 +247,10 @@ const routes = [
         path: '/system/group',
         component: SystemGroupSetting,
         meta: {
-          title: '分组',
+          title: '用户分组设置',
           breadcrumb: [
-            { name: '系统设置' },
-            { name: '分组' }
+            { name: '平台用户查询' },
+            { name: '用户分组设置' }
           ]
         }
       },
@@ -259,10 +259,10 @@ const routes = [
         path: '/system/users',
         component: SystemUsersSetting,
         meta: {
-          title: '用户',
+          title: '后台用户列表',
           breadcrumb: [
-            { name: '系统设置' },
-            { name: '用户' }
+            { name: '后台系统设置' },
+            { name: '后台用户列表' }
           ]
         }
       },
@@ -273,7 +273,7 @@ const routes = [
         meta: {
           title: '彩票',
           breadcrumb: [
-            { name: '系统设置' },
+            { name: '后台系统设置' },
             { name: '彩票' }
           ]
         }
@@ -285,7 +285,7 @@ const routes = [
         meta: {
           title: '地区',
           breadcrumb: [
-            { name: '系统设置' },
+            { name: '后台系统设置' },
             { name: '地区' }
           ]
         }
@@ -297,12 +297,12 @@ const routes = [
         meta: {
           title: '银行',
           breadcrumb: [
-            { name: '系统设置' },
+            { name: '后台系统设置' },
             { name: '银行' }
           ]
         }
       },
-      /* ========================================== 会员管理 ============================================ */
+      /* ========================================== 平台用户查询 ============================================ */
       {
         name: 'UsersManage',
         path: '/users',
@@ -314,10 +314,10 @@ const routes = [
             path: 'list',
             component: UsersList,
             meta: {
-              title: '会员信息管理',
+              title: '用户列表查询',
               breadcrumb: [
-                { name: '会员管理' },
-                { name: '会员信息管理' }
+                { name: '平台用户查询' },
+                { name: '用户列表查询' }
               ]
             }
           },
@@ -326,10 +326,10 @@ const routes = [
             path: 'account/check',
             component: UsersAccountCheck,
             meta: {
-              title: '会员账户核查',
+              title: '用户账户核查',
               breadcrumb: [
-                { name: '会员管理' },
-                { name: '会员账户核查' }
+                { name: '平台用户查询' },
+                { name: '用户账户核查' }
               ]
             }
           },
@@ -338,10 +338,10 @@ const routes = [
             path: 'logs',
             component: UsersLogsList,
             meta: {
-              title: '会员日志列表',
+              title: '日志列表',
               breadcrumb: [
-                { name: '会员管理' },
-                { name: '会员日志列表' }
+                { name: '平台用户查询' },
+                { name: '日志列表' }
               ]
             }
           },
@@ -363,7 +363,7 @@ const routes = [
         component: UserRechargeLogs,
         meta: { title: '会员个人充值记录' }
       },
-      /* ========================================== 彩票管理 ============================================ */
+      /* ========================================== 自营彩票管理 ============================================ */
       {
         name: 'LotteryManage',
         path: '/lottery',
@@ -377,7 +377,7 @@ const routes = [
             meta: {
               title: '彩票开盘配置',
               breadcrumb: [
-                { name: '彩票管理' },
+                { name: '自营彩票管理' },
                 { name: '彩票开盘配置' }
               ]
             }
@@ -389,7 +389,7 @@ const routes = [
             meta: {
               title: '彩票开奖记录',
               breadcrumb: [
-                { name: '彩票管理' },
+                { name: '自营彩票管理' },
                 { name: '彩票开奖记录' }
               ]
             }
@@ -401,7 +401,7 @@ const routes = [
             meta: {
               title: '客户注单查询',
               breadcrumb: [
-                { name: '彩票管理' },
+                { name: '自营彩票管理' },
                 { name: '客户注单查询' }
               ]
             }
@@ -413,7 +413,7 @@ const routes = [
             meta: {
               title: '彩票赔率设置',
               breadcrumb: [
-                { name: '彩票管理' },
+                { name: '自营彩票管理' },
                 { name: '彩票赔率设置' }
               ]
             }
@@ -425,7 +425,7 @@ const routes = [
             meta: {
               title: '彩票未结撤单',
               breadcrumb: [
-                { name: '彩票管理' },
+                { name: '自营彩票管理' },
                 { name: '彩票未结撤单' }
               ]
             }
@@ -437,7 +437,7 @@ const routes = [
             meta: {
               title: '彩票会员报表',
               breadcrumb: [
-                { name: '彩票管理' },
+                { name: '自营彩票管理' },
                 { name: '彩票会员报表' }
               ]
             }
@@ -449,7 +449,7 @@ const routes = [
             meta: {
               title: '彩票注单报表',
               breadcrumb: [
-                { name: '彩票管理' },
+                { name: '自营彩票管理' },
                 { name: '彩票注单报表' }
               ]
             }
@@ -461,7 +461,7 @@ const routes = [
             meta: {
               title: '彩票总报表',
               breadcrumb: [
-                { name: '彩票管理' },
+                { name: '自营彩票管理' },
                 { name: '彩票总报表' }
               ]
             }
@@ -473,7 +473,7 @@ const routes = [
             meta: {
               title: '游戏规则',
               breadcrumb: [
-                { name: '彩票管理' },
+                { name: '自营彩票管理' },
                 { name: '游戏规则' }
               ]
             }

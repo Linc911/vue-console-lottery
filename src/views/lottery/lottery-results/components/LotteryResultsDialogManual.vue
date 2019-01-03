@@ -1,5 +1,11 @@
 <template lang="html">
-  <el-dialog :visible.sync="dialogVisible" title="手动结算" width="768px" center>
+  <el-dialog
+    @close="results = []"
+    :visible.sync="dialogVisible"
+    title="手动开奖"
+    width="768px"
+    center
+  >
     <el-form label-width="100px">
       <el-form-item label="开奖选择：">
         <!-- 骰子类型 -->
@@ -30,12 +36,21 @@
         <!-- 其他类型 -->
         <div v-else class="container-box">
           <draggable v-model="results" @start="drag = true" @end="drag = false">
-            <transition-group>
             <span v-for="(ball, index) in results" :key="index">
               <LotteryBall :number="ball" @dblclick.native="undoBall(ball, index)" />
             </span>
-            </transition-group>
           </draggable>
+        </div>
+      </el-form-item>
+
+      <el-form-item>
+        <div class="tip-container">
+          <p class="tip-content">
+            操作提示：<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;1. 点击开奖选择框中的数字，可以选中该数字<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;2. 双击开奖结果框中的数字，可以撤销该数字<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;3. 拖动开奖结果框中的数字，可以调换顺序<br>
+          </p>
         </div>
       </el-form-item>
 
@@ -48,6 +63,8 @@
 </template>
 
 <script>
+import config from '@/config/data'
+
 import draggable from 'vuedraggable'
 
 import BaseDice from '@/components/base/BaseDice'
@@ -72,13 +89,13 @@ export default {
       dialogVisible: false
     }
   },
-  watch: {
-    data () {
-      console.log(this.data)
-      // 每次变动数据时，清除上次的选择结果
-      this.results = []
-    }
-  },
+  // watch: {
+  //   data () {
+  //     console.log(this.data)
+  //     // 每次变动数据时，清除上次的选择结果
+  //     this.results = []
+  //   }
+  // },
   methods: {
     choseBall (number, index) {
       if (this.results.length < this.data.ballNum) {
@@ -100,29 +117,29 @@ export default {
     },
     // 确认撤单；发送请求，成功时通知父组件更新数据
     handleConfirm () {
+      // 判断是否符合开奖规则
       if (this.results.length < this.data.ballNum) {
-        this.$message.warning(`不符合游戏开奖规则：开奖数字为 ${this.data.ballNum} 位`)
+        this.$message.warning(`不符合游戏开奖规则：开奖位数为 ${this.data.ballNum} 位`)
       } else {
-        this.$message.error('接口调试中...')
+        this.dialogVisible = false // 隐藏弹框
+        console.log(this.data)
+
+        this.$httpAPI.updateLotteryResultManual({
+          gameType: this.data.gameType,
+          drawno: this.data.drawno,
+          balls: this.results
+        }).then((response) => {
+          if (response.data.status === 200) {
+            this.$emit('on-changed')
+            this.$message.success(config.OPERATION_SUCCEEDED)
+          } else {
+            this.$message.error(`${config.OPERATION_FAILED}: ${response.data.msg}`)
+          }
+        }).catch((error) => {
+          console.log(error)
+          this.$message.error(config.SERVER_RESPONSE_EXCEPTION)
+        })
       }
-
-      // this.dialogVisible = false // 隐藏弹框
-
-      // this.$httpAPI.updateLotteryResultManual({
-      //   gameType: this.data.gameType,
-      //   drawno: this.data.drawno,
-      //   balls: this.results
-      // }).then((response) => {
-      //   if (response.data.status === 200) {
-      //     this.$emit('on-changed')
-      //     this.$message.success(config.OPERATION_SUCCEEDED)
-      //   } else {
-      //     this.$message.error(`${config.OPERATION_FAILED}: ${response.data.msg}`)
-      //   }
-      // }).catch((error) => {
-      //   console.log(error)
-      //   this.$message.error(config.SERVER_RESPONSE_EXCEPTION)
-      // })
     },
     // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {
@@ -140,5 +157,17 @@ export default {
   border: 1px solid #ebeef5;
   border-radius: 4px;
   box-shadow: rgba(0,0,0,.1) 0 2px 12px 0;
+}
+
+.tip-container {
+  padding: 8px 16px;
+  background-color: #fff6f7;
+  border-left: 5px solid #fe6c6f;
+  border-radius: 4px;
+}
+.tip-content {
+  font-size: 13px;
+  color: #828282;
+  line-height: 1.5em;
 }
 </style>

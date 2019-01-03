@@ -17,9 +17,13 @@ const config = {
   DELETE_SUCCEEDED: '删除成功',
   DELETE_FAILED: '删除失败',
 
+  // 创建提示
+  AUDIT_SUCCEEDED: '审核成功',
+  AUDIT_FAILED: '审核失败',
+
   // 操作提示
-  OPERATION_SUCCEEDED: '删除成功',
-  OPERATION_FAILED: '删除失败',
+  OPERATION_SUCCEEDED: '操作成功',
+  OPERATION_FAILED: '操作失败',
 
   /* 服务器问题 */
   SERVER_RESPONSE_EXCEPTION: '服务器异常，请稍后重试',

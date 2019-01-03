@@ -108,6 +108,7 @@ export default {
   },
   data () {
     return {
+      show: true,
       chartBarData: null,
       chartDoughnutData: null,
       statisticData: {},

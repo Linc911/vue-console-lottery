@@ -1,4 +1,4 @@
-d<template lang="html">
+<template lang="html">
   <section class="login-username">
     <el-form :model="formData" :rules="rules" ref="loginForm">
       <el-form-item prop="username">
