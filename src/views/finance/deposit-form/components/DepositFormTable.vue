@@ -41,7 +41,7 @@
     </el-table>
 
     <!-- 审核弹框 -->
-    <DepositFormDialog
+    <DepositFormDialogAudit
       @on-success="$emit('on-changed')"
       :data="activeItem"
       ref="dialogDeposit"
@@ -52,12 +52,12 @@
 <script>
 import { tableComponentMixin } from '@/mixins'
 
-import DepositFormDialog from './DepositFormDialog'
+import DepositFormDialogAudit from './DepositFormDialogAudit'
 
 export default {
   name: 'DepositFormTable',
   components: {
-    DepositFormDialog
+    DepositFormDialogAudit
   },
   mixins: [ tableComponentMixin ],
   data () {

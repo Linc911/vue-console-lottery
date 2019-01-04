@@ -5,6 +5,7 @@ export default {
 
   fetchPublicUserGroup: (options) => axios.get('/api-u/group/list', options), // 会员分组
 
+  fetchPublicUsersBasic: (options) => axios.get('/api-u/users/basic', options), // 会员列表(简单数据)
   fetchPublicUsers: (options) => axios.get('/api-u/backend/userList', options), // 会员列表
 
   fetchSidebarMenuList: (options) => axios.get('/api-b/menus/all', options), // 页面侧边栏菜单列表
@@ -108,7 +109,7 @@ export default {
   fetchFinanceBalanceManipulation: (options) => axios.get('/api-p/changeUserRecharge/list', options), // 加减款列表
   fetchBalanceChangeItem: (options) => axios.get('/api-p/changeUserRecharge/info', options), // 加减款每项详情
   saveFinanceBalanceChange: (data) => axios.post('/api-p/changeUserRecharge/save', data), // 提交加减款表单
-  updateDepositFormStatus: (options) => axios.get('/api-p/changeUserRecharge/audit', options), // 审批加减款操作
+  updateDepositFormStatus: (data) => axios.put('/api-p/changeUserRecharge/audit', data), // 审批加减款操作
 
   fetchFinanceDepositForm: (options) => axios.get('/api-p/remitInfo/list', options), // 填单存款管理列表
   updateFinanceDepositFormStatus: (data) => axios.post('/api-p/remitInfo/audit', data), // 审批填单存款

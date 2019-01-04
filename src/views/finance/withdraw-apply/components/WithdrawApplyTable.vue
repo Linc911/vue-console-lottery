@@ -1,14 +1,9 @@
 <template lang="html">
   <div>
-    <el-table
-      :data="data"
-      size="small"
-      highlight-current-row
-      border
-    >
-      <el-table-column type="index" />
+    <el-table :data="data" size="small" highlight-current-row border>
+      <el-table-column type="index" :width="36" />
 
-      <el-table-column prop="username" label="用户账号" />
+      <el-table-column prop="username" label="用户账号" :min-width="100" />
 
       <el-table-column prop="orderId" label="申请单号" :min-width="140" />
 
@@ -24,13 +19,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="审批状态" :width="120">
+      <el-table-column label="审批状态" :min-width="70">
         <template slot-scope="scope">
           <span>{{ scope.row.status | auditStatus }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="remark" label="备注" />
+      <el-table-column prop="remark" label="备注" :min-width="120" />
 
       <el-table-column prop="operations" label="操作">
         <template slot-scope="scope">
@@ -42,7 +37,7 @@
     </el-table>
 
     <!-- 审核弹框 -->
-    <WithdrawApplyDialog
+    <WithdrawApplyDialogAudit
       @on-success="$emit('on-changed')"
       :data="activeItem"
       ref="dialogWithdraw"
@@ -54,12 +49,12 @@
 <script>
 import { tableComponentMixin } from '@/mixins'
 
-import WithdrawApplyDialog from './WithdrawApplyDialog'
+import WithdrawApplyDialogAudit from './WithdrawApplyDialogAudit'
 
 export default {
   name: 'WithdrawApplyTable',
   components: {
-    WithdrawApplyDialog
+    WithdrawApplyDialogAudit
   },
   mixins: [ tableComponentMixin ],
   data () {

@@ -2,12 +2,17 @@
   <section class="login-username">
     <el-form :model="formData" :rules="rules" ref="loginForm">
       <el-form-item prop="username">
-        <el-input v-model="formData.username" placeholder="用户名"></el-input>
+        <el-input v-model="formData.username" placeholder="用户名" autofocus />
       </el-form-item>
 
       <el-form-item prop="password">
-        <el-input @keyup.native.enter="submitForm('loginForm')" v-model="formData.password" type="password" placeholder="密码"></el-input>
-      </el-form-item>
+        <el-input
+          @keyup.native.enter="submitForm('loginForm')"
+          v-model="formData.password"
+          type="password"
+          placeholder="密码"
+        />
+     </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>

@@ -50,7 +50,7 @@ const LotteryStatisticsBets = resolve => require(['@/views/lottery/statistics-be
 const LotteryStatistics = resolve => require(['@/views/lottery/lottery-statistics'], resolve)
 const LotteryRulesList = resolve => require(['@/views/lottery/lottery-rules'], resolve)
 
-/* ========================================== 财务管理 ============================================ */
+/* ========================================== 平台财务管理 ============================================ */
 
 const FinanceManage = resolve => require(['@/views/finance/FinanceManage'], resolve)
 const FinanceBalanceManipulation = resolve => require(['@/views/finance/balance-manipulation'], resolve)
@@ -480,7 +480,7 @@ const routes = [
           }
         ]
       },
-      /* ========================================== 财务管理 ============================================ */
+      /* ========================================== 平台财务管理 ============================================ */
       {
         name: 'FinanceManage',
         path: '/finance',
@@ -492,10 +492,10 @@ const routes = [
             path: 'balance/manipulation',
             component: FinanceBalanceManipulation,
             meta: {
-              title: '操作 - 给客户加减款',
+              title: '人工 - 给客户加减款',
               breadcrumb: [
-                { name: '财务管理' },
-                { name: '操作 - 给客户加减款' }
+                { name: '平台财务管理' },
+                { name: '人工 - 给客户加减款' }
               ]
             }
           },
@@ -506,7 +506,7 @@ const routes = [
             meta: {
               title: '存款 - 客户汇款管理',
               breadcrumb: [
-                { name: '财务管理' },
+                { name: '平台财务管理' },
                 { name: '存款 - 客户汇款管理' }
               ]
             }
@@ -518,7 +518,7 @@ const routes = [
             meta: {
               title: '存款 - 客户在线存款',
               breadcrumb: [
-                { name: '财务管理' },
+                { name: '平台财务管理' },
                 { name: '存款 - 客户在线存款' }
               ]
             }
@@ -530,7 +530,7 @@ const routes = [
             meta: {
               title: '提款 - 客户提款审批',
               breadcrumb: [
-                { name: '财务管理' },
+                { name: '平台财务管理' },
                 { name: '提款 - 客户提款审批' }
               ]
             }
@@ -542,7 +542,7 @@ const routes = [
             meta: {
               title: '额度转换记录查询',
               breadcrumb: [
-                { name: '财务管理' },
+                { name: '平台财务管理' },
                 { name: '额度转换记录查询' }
               ]
             }
@@ -554,7 +554,7 @@ const routes = [
             meta: {
               title: '会员资金管理',
               breadcrumb: [
-                { name: '财务管理' },
+                { name: '平台财务管理' },
                 { name: '会员资金管理' }
               ]
             }
@@ -566,7 +566,7 @@ const routes = [
             meta: {
               title: '存/取款记录查询',
               breadcrumb: [
-                { name: '财务管理' },
+                { name: '平台财务管理' },
                 { name: '存/取款记录查询' }
               ]
             }
@@ -578,7 +578,7 @@ const routes = [
             meta: {
               title: '会员财务报表',
               breadcrumb: [
-                { name: '财务管理' },
+                { name: '平台财务管理' },
                 { name: '会员财务报表' }
               ]
             }
@@ -590,7 +590,7 @@ const routes = [
             meta: {
               title: '平台收支汇总',
               breadcrumb: [
-                { name: '财务管理' },
+                { name: '平台财务管理' },
                 { name: '平台收支汇总' }
               ]
             }
@@ -608,7 +608,7 @@ const routes = [
                 meta: {
                   title: '常规配置列表',
                   breadcrumb: [
-                    { name: '财务管理' },
+                    { name: '平台财务管理' },
                     { name: '常规配置列表' }
                   ],
                   keepAlive: true
@@ -621,7 +621,7 @@ const routes = [
                 meta: {
                   title: '借贷类型列表',
                   breadcrumb: [
-                    { name: '财务管理' },
+                    { name: '平台财务管理' },
                     { name: '常规配置列表', path: '/finance/setting/list' },
                     { name: '借贷类型列表' }
                   ]

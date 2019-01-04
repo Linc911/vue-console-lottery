@@ -1,67 +1,43 @@
 <template lang="html">
-  <!-- 条件筛选 -->
-  <div class="search">
-    <el-form :model="formData" size="small" label-width="80px" inline>
+  <el-form :model="formData" size="small" label-width="80px" inline>
+    <FormDateRange
+      @on-change="handleDateRangeChangeDeposit"
+      label="存款时间"
+      ref="dateRange"
+    />
 
-      <!-- <SearchDateRange @on-change="handleDateRangeDepositChange" label="存款时间" ref="dateRangeDeposit" />
+    <FormDateRange
+      @on-change="handleDateRangeChangeWithdraw"
+      label="取款时间"
+      ref="dateRange"
+    />
 
-      <SearchDateRange @on-change="handleDateRangeWithdrawChange" label="取款时间" ref="dateRangeWithdraw" /> -->
-
+    <div style="display: inline-block">
       <SearchIcon @click.native="search" />
-
       <SearchReset @click.native="reset" />
-    </el-form>
-  </div>
+    </div>
+  </el-form>
 </template>
 
 <script type="text/javascript">
-// import SearchDateRange from '@/components/search/SearchDateRange'
-import SearchIcon from '@/components/search/SearchIcon'
-import SearchReset from '@/components/search/SearchReset'
+import { searchInnerMixin } from '@/mixins'
+
+import FormDateRange from '@/components/form/FormDateRange'
 
 export default {
-  name: 'BalanceSheetSearch',
+  name: 'DepositeOnlineSearch',
   components: {
-    // SearchDateRange,
-    SearchIcon,
-    SearchReset
+    FormDateRange
   },
-  data () {
-    return {
-      formData: {
-        startInTime: '',
-        endInTime: '',
-        startOutTime: '',
-        endOutTime: ''
-      }
-    }
-  },
+  mixins: [ searchInnerMixin ],
   methods: {
-    handleDateRangeDepositChange ({ startTime, endTime }) {
-      this.formData = Object.assign(this.formData, {
-        startInTime: startTime,
-        endInTime: endTime
-      })
+    handleDateRangeChangeDeposit ({ startTime, endTime }) {
+      this.formData.startInTime = startTime
+      this.formData.endInTime = endTime
     },
-    handleDateRangeWithdrawChange ({ startTime, endTime }) {
-      this.formData = Object.assign(this.formData, {
-        startOutTime: startTime,
-        endOutTime: endTime
-      })
-    },
-    search () {
-      this.$emit('on-search', this.formData)
-    },
-    reset () {
-      this.$refs.dateRangeDeposit.reset()
-      this.$refs.dateRangeWithdraw.reset()
-
-      this.formData = {
-        startInTime: '',
-        endInTime: '',
-        startOutTime: '',
-        endOutTime: ''
-      }
+    handleDateRangeChangeWithdraw ({ startTime, endTime }) {
+      this.formData.startOutTime = startTime
+      this.formData.endOutTime = endTime
     }
   }
 }

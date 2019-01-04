@@ -21,7 +21,13 @@ export default {
   mixins: [ dialogUpdateMixin ],
   data () {
     return {
-      updateHttpAPI: 'updateSystePermissionsItem'
+      updateHttpAPI: 'updateSystePermissionsItem',
+      httpParams: { id: this.data.id }
+    }
+  },
+  watch: {
+    data () {
+      this.httpParams.id = this.data.id
     }
   }
 }

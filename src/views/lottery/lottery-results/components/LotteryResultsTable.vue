@@ -50,11 +50,11 @@
               size="mini"
             >手动开奖</el-button>
 
-            <el-button
+            <!-- <el-button
               @click="showDialog(scope.row, 'dialogCancel')"
               type="primary"
               size="mini"
-            >撤单</el-button>
+            >撤单</el-button> -->
           </div>
         </template>
       </el-table-column>

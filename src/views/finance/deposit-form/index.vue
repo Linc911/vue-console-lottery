@@ -30,14 +30,12 @@ import { searchLayoutWithoutAddMixin, tableWithPaginationMixin } from '@/mixins'
 
 import DepositFormSearch from './components/DepositFormSearch'
 import DepositFormTable from './components/DepositFormTable'
-import DepositFormDialog from './components/DepositFormDialog'
 
 export default {
   name: 'FinanceDepositForm',
   components: {
     DepositFormSearch,
-    DepositFormTable,
-    DepositFormDialog
+    DepositFormTable
   },
   mixins: [ searchLayoutWithoutAddMixin, tableWithPaginationMixin ],
   data () {

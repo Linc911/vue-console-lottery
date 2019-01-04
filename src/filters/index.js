@@ -36,7 +36,8 @@ Vue.filter('RMB', value => {
   if (value === null) {
     return ''
   }
-  return '￥ ' + parseInt(value).toLocaleString()
+
+  return '￥ ' + Number(Number(value).toFixed(2)).toLocaleString()
 })
 
 // 百分比

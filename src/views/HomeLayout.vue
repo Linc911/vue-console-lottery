@@ -59,7 +59,7 @@
           <el-footer height="auto">
             <transition
               mode="out-in"
-              enter-active-class="animated slideInLeft fast"
+              enter-active-class="animated slideInUp fast"
               leave-active-class="animated slideOutRight fast"
             >
               <TheFooter v-show="footerVisible" />

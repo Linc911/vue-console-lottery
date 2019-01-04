@@ -25,7 +25,7 @@
     </section>
     <div class="data-summary">
       <!-- 会员在线人员统计 -->
-      <section class="data-summary">
+      <!-- <section class="data-summary">
         <el-card>
           <div slot="header">
             <i class="fa fa-gears"></i>
@@ -35,7 +35,7 @@
             <BarChart :chart-data="chartBarData" :width="920" />
           </div>
         </el-card>
-      </section>
+      </section> -->
       <!-- 存款统计 -->
       <section class="data-summary">
         <el-card>
@@ -113,11 +113,11 @@ export default {
       chartDoughnutData: null,
       statisticData: {},
       summary: [
-        { title: '在线会员数量', identifier: 'onlineuseramount', color: 'red', path: {} },
         { title: '今日新增会员数量', identifier: 'todayuseramount', color: 'blue', path: {} },
         { title: '总会员数量', identifier: 'useramount', color: 'orange', path: { name: 'UsersList' } },
         { title: '今日注单笔数', identifier: 'todayorderamount', color: 'purple', path: {} },
-        { title: '今日注单总额', identifier: 'todayordermoney', color: 'green', path: {} }
+        { title: '今日注单总额', identifier: 'todayordermoney', color: 'green', path: {} },
+        { title: '今日派彩总额', identifier: 'totalAwardAmount', color: 'red', path: {} }
       ]
     }
   },

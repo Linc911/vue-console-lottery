@@ -5,7 +5,7 @@
 
     <div>
       <!-- 表格 -->
-      <BalanceManipulationForm @on-changed="fetchTableData()" :data="formData" />
+      <BalanceManipulationTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -22,13 +22,13 @@
 import { searchLayoutWithoutAddMixin, tableWithPaginationMixin } from '@/mixins'
 
 import BalanceManipulationSearch from './BalanceManipulationSearch'
-import BalanceManipulationForm from './BalanceManipulationForm'
+import BalanceManipulationTable from './BalanceManipulationTable'
 
 export default {
   name: 'BalanceManipulationListUnchecked',
   components: {
     BalanceManipulationSearch,
-    BalanceManipulationForm
+    BalanceManipulationTable
   },
   mixins: [ searchLayoutWithoutAddMixin, tableWithPaginationMixin ],
   data () {

@@ -101,7 +101,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .el-form-item {
   float: left;
   width: 50%;

@@ -7,16 +7,15 @@
     style="max-width: 800px"
     ref="form"
   >
-    <!-- <FormSelect
+    <FormSelect
       @on-change="$set(formData, 'username', $event)"
-      httpAPIName="fetchUsersList"
-      :httpAPIParams="{ params: { pageNo: 1, pageSize: 1000 } }"
+      httpAPIName="fetchPublicUsersBasic"
       labelAttr="username"
       valueAttr="id"
       prop="username"
       label="用户账号"
       filterable
-    /> -->
+    />
 
     <FormSelect
       @on-change="$set(formData, 'gameType', $event)"
