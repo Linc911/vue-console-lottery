@@ -1,9 +1,7 @@
 <template lang="html">
   <div>
     <el-table :data="data" size="small" highlight-current-row border>
-      <el-table-column type="index" :width="36" />
-
-      <el-table-column prop="code" label="角色编码" :min-width="100" />
+      <el-table-column type="index" :min-width="36" />
 
       <el-table-column prop="name" label="角色名称" :min-width="120" />
 

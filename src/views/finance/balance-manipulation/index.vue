@@ -9,7 +9,6 @@
 
     <!-- 主要内容 -->
     <component v-bind:is="currentTabComponent" @on-created="handleCreated"></component>
-
   </div>
 </template>
 
@@ -32,6 +31,7 @@ export default {
     }
   },
   methods: {
+    // 创建成功时，跳转到加减款审核列表
     handleCreated () {
       this.activeTab = 'unchecked'
       this.currentTabComponent = 'BalanceManipulationListUnchecked'

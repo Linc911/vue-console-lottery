@@ -372,7 +372,11 @@ export const dialogCreateMixin = {
 
       this.$httpAPI[this.createHttpAPI](data).then((response) => {
         if (response.data.status === 200) {
-          !this.checked && this.$refs.form.resetFields() // 根据用户选择，是否重置所有的表单输入
+          // 清除表单填写记录
+          if (!this.checked) {
+            this.$utils.invokeRefResetMothod(this.$refs)
+            this.$refs.form.resetFields()
+          }
 
           this.$emit('on-created')
 
@@ -410,18 +414,36 @@ export const dialogUpdateMixin = {
     handleValidationSuccess (data) {
       this.dialogVisible = false // 隐藏弹框
 
-      this.$httpAPI[this.updateHttpAPI](data).then((response) => {
-        if (response.data.status === 200) {
-          this.$emit('on-updated')
+      // 判断是否对表单数据进行修改: 没修改 => 提示数据没变化，不发送请求； 进行修改 => 发送修改请求
+      const same = this.$utils.isEquivalentObjects(this.data, data)
 
-          this.$message.success(config.UPDATE_SUCCEEDED)
+      if (!same) {
+        // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置必须按要求顺序传入）
+        const postData = this.$utils.generateObjectWithChangedProperties(this.data, data)
+
+        // 判断接口是否是传支持多个修改： 是 => 生产数组，否 => 生产对象
+        let finalPostData
+        if (this.httpMutiple) {
+          finalPostData = [ Object.assign(postData, this.httpParams) ]
         } else {
-          this.$message.error(`${config.UPDATE_FAILED}: ${response.data.msg}`)
+          finalPostData = Object.assign(postData, this.httpParams)
         }
-      }).catch((error) => {
-        console.dir(error)
-        this.$message.error(config.UPDATE_FAILED)
-      })
+
+        this.$httpAPI[this.updateHttpAPI](finalPostData).then((response) => {
+          if (response.data.status === 200) {
+            this.$emit('on-updated')
+
+            this.$message.success(config.UPDATE_SUCCEEDED)
+          } else {
+            this.$message.error(`${config.UPDATE_FAILED}: ${response.data.msg}`)
+          }
+        }).catch((error) => {
+          console.dir(error)
+          this.$message.error(config.UPDATE_FAILED)
+        })
+      } else {
+        this.$message.info(config.VALIDATION_UNCHANGED)
+      }
     },
     // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {
