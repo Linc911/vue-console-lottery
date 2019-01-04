@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="manipulation-form">
     <!-- 主要内容 -->
-    <el-form :model="formData" :rules="rules" ref="balanceForm" label-width="120px">
+    <el-form :model="formData" :rules="rules" ref="balanceForm" label-width="120px" style="max-width: 800px">
       <el-form-item prop="username" label="会员账号">
         <el-input v-model="formData.username" placeholder="会员账号" />
       </el-form-item>
