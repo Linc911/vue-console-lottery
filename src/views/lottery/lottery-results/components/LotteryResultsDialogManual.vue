@@ -1,6 +1,5 @@
 <template lang="html">
   <el-dialog
-    @close="results = []"
     :visible.sync="dialogVisible"
     title="手动开奖"
     width="768px"
@@ -10,14 +9,14 @@
       <el-form-item label="开奖选择：">
         <!-- 骰子类型 -->
         <div v-if="this.data.gameType >= 7 && this.data.gameType <= 17 && this.data.gameType != 10" class="container-box">
-          <span v-for="(ball, index) in data.balls" :key="index">
+          <span v-for="(ball, index) in balls" :key="index">
             <BaseDice :number="ball" @click.native="choseBall(ball, index)" />
           </span>
         </div>
 
         <!-- 其他类型 -->
         <div v-else class="container-box">
-          <span v-for="(ball, index) in data.balls" :key="index">
+          <span v-for="(ball, index) in balls" :key="index">
             <LotteryBall :number="ball" @click.native="choseBall(ball, index)" />
           </span>
         </div>
@@ -47,7 +46,7 @@
         <div class="tip-container">
           <p class="tip-content">
             操作提示：<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;1. 点击开奖选择框中的数字，可以选中该数字<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;1. 单击开奖选择框中的数字，可以选中该数字<br>
             &nbsp;&nbsp;&nbsp;&nbsp;2. 双击开奖结果框中的数字，可以撤销该数字<br>
             &nbsp;&nbsp;&nbsp;&nbsp;3. 拖动开奖结果框中的数字，可以调换顺序<br>
           </p>
@@ -86,33 +85,37 @@ export default {
   data () {
     return {
       results: [],
+      balls: Object.assign([], this.data.balls),
       dialogVisible: false
     }
   },
-  // watch: {
-  //   data () {
-  //     console.log(this.data)
-  //     // 每次变动数据时，清除上次的选择结果
-  //     this.results = []
-  //   }
-  // },
+  // 没有找到更好的方法清除上次选择的记录；暂在弹框
+  watch: {
+    data () {
+      // 每次变动数据时，清除上次的选择结果
+      this.balls = Object.assign([], this.data.balls)
+      this.results = []
+    }
+  },
   methods: {
+    // 在开奖数字里选择
     choseBall (number, index) {
       if (this.results.length < this.data.ballNum) {
         this.results.push(number)
 
         // 如果是不能重复，直接在选择队列中删除
-        if (!this.data.repeat) this.data.balls.splice(index, 1)
+        if (!this.data.repeat) this.balls.splice(index, 1)
       } else {
         this.$message.warning(`不符合游戏开奖规则：开奖数字为 ${this.data.ballNum} 位`)
       }
     },
+    // 在开奖结果里，撤销选择
     undoBall (number, index) {
       this.results.splice(index, 1)
       // 如果是不能重复，才再次放回到选择队列中
       if (!this.data.repeat) {
-        this.data.balls.push(number)
-        this.data.balls.sort((a, b) => a - b)
+        this.balls.push(number)
+        this.balls.sort((a, b) => a - b)
       }
     },
     // 确认撤单；发送请求，成功时通知父组件更新数据
@@ -122,7 +125,6 @@ export default {
         this.$message.warning(`不符合游戏开奖规则：开奖位数为 ${this.data.ballNum} 位`)
       } else {
         this.dialogVisible = false // 隐藏弹框
-        console.log(this.data)
 
         this.$httpAPI.updateLotteryResultManual({
           gameType: this.data.gameType,

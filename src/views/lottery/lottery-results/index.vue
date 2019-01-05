@@ -6,13 +6,18 @@
     <div>
       <!-- 彩票分类菜单 -->
       <aside class="aside-menu">
-        <GamesMenu @on-change="handleMenuChange" :gameType="'3'" />
+        <GamesMenu @on-loaded="handleLoaded" @on-change="handleMenuChange" :gameType="'3'" />
       </aside>
 
       <!-- 主要内容 -->
       <div class="content-container">
         <!-- 表格 -->
-        <LotteryResultsTable @on-changed="fetchTableData()" :data="tableData" :rules="gameRules" />
+        <LotteryResultsTable
+          v-if="tableShow"
+          @on-changed="fetchTableData()"
+          :data="tableData"
+          :rules="gameRules"
+        />
 
         <!-- 分页 -->
         <BasePagination
@@ -42,11 +47,8 @@ export default {
   },
   data () {
     return {
-      gameRules: {
-        balls: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
-        ballNum: 5,
-        repeat: 0
-      },
+      gameRules: {},
+      tableShow: false,
       tableHttpAPI: 'fetchLotteryResultsList',
       requestParams: { gameType: 3, pageNo: 1, pageSize: 10 },
       page: { current: 0, size: 10, total: 10 }
@@ -54,22 +56,27 @@ export default {
   },
   mixins: [ searchLayoutWithoutAddMixin, tableWithPaginationMixin ],
   methods: {
+    // 等侧边的游戏列表请求数据完成后，获取到当前游戏种类再渲染表格
+    // 保证 gameRules 带上数据
+    handleLoaded ({ balls, ballNum, repeat }) {
+      this.gameRules = { balls, ballNum, repeat }
+      this.tableShow = true
+    },
     // 处理侧边游戏菜单点击事件
-    handleMenuChange ({ groupId, itemId, item }) {
+    handleMenuChange ({ balls, ballNum, repeat, type }) {
       // 获取每种游戏的开奖规则，传入子组件
-      let { ballNum, balls, repeat } = item
-      Object.assign(this.gameRules, { ballNum, balls, repeat })
+      this.gameRules = { ballNum, balls, repeat }
 
       this.$refs.resultsSearch.reset() // 清空搜索条件
 
-      this.requestParams = { gameType: itemId, pageNo: 1, pageSize: 10 }
+      this.requestParams = { gameType: type, pageNo: 1, pageSize: 10 }
       this.fetchTableData()
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .aside-menu {
   float: left;
   width: 200px;

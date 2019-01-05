@@ -58,8 +58,9 @@ const actions = {
   // 登出 -- token设置为空，调整到用户登录页
   logout ({ commit }) {
     axios.get('/api-u/sys/logout').then(response => {
-      commit('clearToken')
-      this.commit('tab/clearRoutes')
+      commit('clearToken') // 清除token相关的数据
+      this.commit('tab/clearRoutes') // 清除所有的浏览记录
+      this.commit('sidebar/updateActiveMenu', 'demo') // 同步更新侧边栏菜单，全部收起状态
 
       router.push({ name: 'LoginUsername' })
     }).catch(error => console.log(error))

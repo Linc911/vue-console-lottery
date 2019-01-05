@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="table-container">
+  <div>
     <el-table :data="data" size="small" highlight-current-row border>
       <el-table-column type="index" :width="36" />
 
@@ -87,16 +87,28 @@
     </el-table>
 
     <!-- 修改分组弹框 -->
-    <DialogGroupSetting :user="activeItem" @on-group-changed="$emit('on-changed')" ref="dialogGroup" />
+    <DialogGroupSetting
+      :user="activeItem"
+      @on-group-changed="$emit('on-changed')"
+      ref="dialogGroup"
+    />
 
     <!-- 详情弹框 -->
     <UsersListDialogDetail :data="activeItem" ref="dialogDetail" />
 
-    <!-- 日志弹框 -->
-    <UsersListDialogLogs :userId="activeItem.id" @on-group-changed="$emit('on-changed')" ref="dialogLogs" />
-
     <!-- 注单弹框 -->
-    <UsersListDialogBets :userId="activeItem.id" @on-group-changed="$emit('on-changed')" ref="dialogBets" />
+    <UsersListDialogBets
+      :id="activeItem.id"
+      @on-group-changed="$emit('on-changed')"
+      ref="dialogBets"
+    />
+
+    <!-- 日志弹框 -->
+    <UsersListDialogLogs
+      :id="activeItem.id"
+      @on-group-changed="$emit('on-changed')"
+      ref="dialogLogs"
+    />
   </div>
 </template>
 
@@ -105,11 +117,12 @@ import { tableComponentMixin, switchMixin } from '@/mixins'
 
 import BaseIcon from '@/components/base/BaseIcon'
 import BaseIndicator from '@/components/base/BaseIndicator'
+
 import DialogGroupSetting from './DialogGroupSetting'
 import UserRebateSetting from './UserRebateSetting'
 import UsersListDialogDetail from './UsersListDialogDetail'
-import UsersListDialogLogs from './UsersListDialogLogs'
 import UsersListDialogBets from './UsersListDialogBets'
+import UsersListDialogLogs from './UsersListDialogLogs'
 
 export default {
   name: 'UsersListTable',
@@ -119,8 +132,8 @@ export default {
     DialogGroupSetting,
     UserRebateSetting,
     UsersListDialogDetail,
-    UsersListDialogLogs,
-    UsersListDialogBets
+    UsersListDialogBets,
+    UsersListDialogLogs
   },
   mixins: [ tableComponentMixin, switchMixin ],
   data () {

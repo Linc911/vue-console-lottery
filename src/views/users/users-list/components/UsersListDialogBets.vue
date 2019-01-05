@@ -2,7 +2,6 @@
   <el-dialog
     :visible.sync="dialogVisible"
     title="会员投注记录列表"
-    center
     width="80%"
     style="min-width: 760px"
   >
@@ -97,7 +96,7 @@
       <BasePagination
         @on-change="handlePaginationChange"
         :page="page"
-        :httpURL="tableAPI"
+        :httpURL="tableHttpAPI"
         :requestParams="requestParams"
       />
     </div>
@@ -108,16 +107,15 @@
 </template>
 
 <script>
-import BaseIcon from '@/components/base/BaseIcon'
-import DialogBetsDetail from '@/components/dialog/DialogBetsDetail'
+import { onePageMixin } from '@/mixins'
 
+import BaseIcon from '@/components/base/BaseIcon'
 import FormInput from '@/components/form/FormInput'
 import FormSelectGame from '@/components/form/FormSelectGame'
 import FormSelectStatic from '@/components/form/FormSelectStatic'
-import SearchIcon from '@/components/search/SearchIcon'
-import SearchReset from '@/components/search/SearchReset'
-import BasePagination from '@/components/base/BasePagination'
 import BasePopoverTextarea from '@/components/base/BasePopoverTextarea'
+
+import DialogBetsDetail from '@/components/dialog/DialogBetsDetail'
 
 export default {
   name: 'UsersListDialogLogs',
@@ -125,80 +123,30 @@ export default {
     FormInput,
     FormSelectGame,
     FormSelectStatic,
-    SearchIcon,
-    SearchReset,
     BasePopoverTextarea,
-    BasePagination,
     BaseIcon,
     DialogBetsDetail
   },
-  props: {
-    userId: {
-      type: [ String, Number ],
-      required: true
-    }
-  },
+  mixins: [ onePageMixin ],
   data () {
     return {
-      dialogVisible: false,
-      formData: {},
       activeItem: { id: '' },
-      tableData: [],
-      tableAPI: 'fetchLotterBetsList',
-      requestParams: { userId: this.userId, pageNo: 1, pageSize: 10 },
+      tableHttpAPI: 'fetchLotterBetsList',
+      requestParams: { userId: this.id, pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }
   },
   watch: {
-    userId () {
-      this.page.current = 1 // 将分页重置为第一页
-      this.reset() // 清除搜索结果
-      this.$set(this.requestParams, 'userId', this.userId) // 重新赋值 userId
+    id () {
+      // 点击同一列数据时，因为id没有变化不好发送请求；
+      // 每次id变动的时候，都把同一列弹框需要的数据请求回来
+      if (this.dialogVisible || !this.tableData.length) {
+        this.page.current = 1 // 将分页重置为第一页
+        this.reset() // 清除搜索结果
+        this.$set(this.requestParams, 'userId', this.id) // 重新赋值 userId
 
-      this.fetchUserBets({ userId: this.userId })
-    }
-  },
-  methods: {
-    // 分页变化时，请求新数据
-    handlePaginationChange (data) {
-      this.tableData = data
-    },
-    // 通知父组件触发搜索事件；将请求参数传给父组件
-    search () {
-      this.fetchUserBets(this.formData)
-    },
-    // 将全部的 form 组件重置为初始值；初始化组件内容的数据
-    reset () {
-      for (let key in this.$refs) {
-        // 排除 dialog 相关的 ref
-        if (!key.includes('dialog')) this.$refs[key].reset()
+        this.fetchTableData({ userId: this.id })
       }
-
-      this.$utils.initializeObjectProperties(this.formData)
-    },
-    // 显示弹框；将当前点击的数据记录下来
-    showDialog (item, ref) {
-      this.activeItem = item
-
-      this.$refs[ref].toggleDialogVisible(true)
-    },
-    // 获取数据
-    fetchUserBets (obj) {
-      this.$httpAPI[this.tableAPI]({
-        params: Object.assign(this.requestParams, obj)
-      }).then(response => {
-        this.page.total = response.data.amount
-
-        if (response.data.data) {
-          this.tableData = response.data.data
-        } else {
-          this.tableData = []
-        }
-      }).catch(error => console.log(error))
-    },
-    // 显示与隐藏弹框（父组件调用）
-    toggleDialogVisible (status) {
-      this.dialogVisible = status
     }
   }
 }

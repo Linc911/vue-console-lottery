@@ -2,12 +2,11 @@
   <el-dialog
     :visible.sync="dialogVisible"
     title="会员日志列表"
-    center
     width="80%"
     style="min-width: 760px"
   >
     <!-- 条件筛选 -->
-    <el-form :model="searchData" size="small" inline>
+    <el-form :model="formData" size="small" inline>
       <!-- <FormInput
         @keyup.native.enter="$emit('on-search', formData)"
         @on-change="$set(formData, 'username', $event)"
@@ -65,81 +64,34 @@
 </template>
 
 <script>
-import FormInput from '@/components/form/FormInput'
-import SearchIcon from '@/components/search/SearchIcon'
-import SearchReset from '@/components/search/SearchReset'
-import BasePagination from '@/components/base/BasePagination'
+import { onePageMixin } from '@/mixins'
+
 import BasePopoverTextarea from '@/components/base/BasePopoverTextarea'
 
 export default {
   name: 'UsersListDialogLogs',
   components: {
-    FormInput,
-    SearchIcon,
-    SearchReset,
-    BasePopoverTextarea,
-    BasePagination
+    BasePopoverTextarea
   },
-  props: {
-    userId: {
-      type: [ String, Number ],
-      required: true
-    }
-  },
+  mixins: [ onePageMixin ],
   data () {
     return {
-      dialogVisible: false,
-      searchData: {},
-      tableData: [],
       tableHttpAPI: 'fetchUsersLogsList',
-      requestParams: { userId: this.userId, pageNo: 1, pageSize: 10 },
+      requestParams: { userId: this.id, pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }
   },
   watch: {
-    userId () {
-      this.page.current = 1
-      this.reset() // 清除搜索结果
-      this.$set(this.requestParams, 'userId', this.userId)
+    id () {
+      // 点击同一列数据时，因为id没有变化不好发送请求；
+      // 每次id变动的时候，都把同一列弹框需要的数据请求回来
+      if (this.dialogVisible || !this.tableData.length) {
+        this.page.current = 1
+        this.reset() // 清除搜索结果
+        this.$set(this.requestParams, 'userId', this.id)
 
-      this.fetchLogsList(this.userId)
-    }
-  },
-  methods: {
-    // 分页变化时，请求新数据
-    handlePaginationChange (data) {
-      this.tableData = data
-    },
-    fetchLogsList (userId) {
-      this.$httpAPI[this.tableHttpAPI]({
-        params: { userId, pageNo: 1, pageSize: 10 }
-      }).then(response => {
-        this.page.total = response.data.amount
-
-        if (response.data.data) {
-          this.tableData = response.data.data
-        } else {
-          this.tableData = []
-          this.$message.info('暂无数据返回')
-        }
-      }).catch(error => console.log(error))
-    },
-    // 通知父组件触发搜索事件；将请求参数传给父组件
-    search () {
-      this.fetchUserBets(this.formData)
-    },
-    // 将全部的 form 组件重置为初始值；初始化组件内容的数据
-    reset () {
-      for (let key in this.$refs) {
-        // 排除 dialog 相关的 ref
-        if (!key.includes('dialog')) this.$refs[key].reset()
+        this.fetchTableData({ userId: this.id })
       }
-
-      this.$utils.initializeObjectProperties(this.formData)
-    },
-    // 显示与隐藏弹框（父组件调用）
-    toggleDialogVisible (status) {
-      this.dialogVisible = status
     }
   }
 }

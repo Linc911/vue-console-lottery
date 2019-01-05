@@ -50,7 +50,7 @@ export const switchMixin = {
 }
 
 /* ========================================== BaseTimePicker组件 ========================================== */
-export const timePickerMixin = {
+export const timePickerMixin = { // absolete
   components: {
     BaseTimePicker
   },
@@ -62,7 +62,7 @@ export const timePickerMixin = {
 }
 
 /* ========================================== 动态菜单 Tab组件 ========================================== */
-export const menuMixin = {
+export const menuMixin = { // deprecated
   created () {
     this.fetchMenuData()
   },
@@ -126,7 +126,7 @@ export const searchLayoutMixin = {
 }
 
 // 顶部筛选 - 搜索组件父级调用 (deprecated 待删除)
-export const searchOuterMixin = {
+export const searchOuterMixin = { // deprecated
   methods: {
     handleSearch (params) {
       this.requestParams = Object.assign(this.requestParams, params, { pageNo: 1 })
@@ -200,7 +200,7 @@ export const tableWithPaginationMixin = {
 }
 
 // 表格数据（带分页 Post请求）
-export const tableWithPaginationPostMixin = {
+export const tableWithPaginationPostMixin = { // deprecated
   components: {
     BasePagination
   },
@@ -254,7 +254,7 @@ export const tableWithoutPaginationMixin = {
   }
 }
 // 表格数据（带分页）
-export const tableWithoutPaginationPostMixin = {
+export const tableWithoutPaginationPostMixin = { // deprecated
   data () {
     return {
       tableData: []
@@ -314,6 +314,72 @@ export const tableComponentMixin = {
         console.log(error)
         this.$message.warning(config.DELETE_FAILED)
       })
+    }
+  }
+}
+
+/* ================================== onePage 组件 ==================================== */
+// 用于全部弹框内容里有分页、table、搜索的组件
+export const onePageMixin = {
+  components: {
+    SearchIcon,
+    SearchReset,
+    BasePagination
+  },
+  props: {
+    id: {
+      type: [ String, Number ],
+      required: true
+    }
+  },
+  data () {
+    return {
+      dialogVisible: false,
+      formData: {},
+      tableData: []
+    }
+  },
+  methods: {
+    // 分页变化时，请求新数据
+    handlePaginationChange (data) {
+      this.tableData = data
+    },
+    // 通知父组件触发搜索事件；将请求参数传给父组件
+    search () {
+      this.fetchUserBets(this.formData)
+    },
+    // 将全部的 form 组件重置为初始值；初始化组件内容的数据
+    reset () {
+      for (let key in this.$refs) {
+        // 排除 dialog 相关的 ref
+        if (!key.includes('dialog')) this.$refs[key].reset()
+      }
+
+      this.$utils.initializeObjectProperties(this.formData)
+    },
+    // 显示弹框；将当前点击的数据记录下来
+    showDialog (item, ref) {
+      this.activeItem = item
+
+      this.$refs[ref].toggleDialogVisible(true)
+    },
+    // 获取数据
+    fetchTableData (obj) {
+      this.$httpAPI[this.tableHttpAPI]({
+        params: Object.assign(this.requestParams, obj)
+      }).then(response => {
+        this.page.total = response.data.amount
+
+        if (response.data.data) {
+          this.tableData = response.data.data
+        } else {
+          this.tableData = []
+        }
+      }).catch(error => console.log(error))
+    },
+    // 显示与隐藏弹框（父组件调用）
+    toggleDialogVisible (status) {
+      this.dialogVisible = status
     }
   }
 }
@@ -543,55 +609,4 @@ export const dialogAuditMixin = {
 //       this.$message.warning(config.VALIDATION_FAILED)
 //     }
 //   })
-// },
-
-// // 检验表单验证是否通过，发送修改请求
-// submitForm (formName) { // DEPRECATED
-//   this.$refs[formName].validate(valid => {
-//     if (valid) {
-//       this.dialogVisible = false // 表单验证通过才隐藏弹框
-
-//       // 判断是否对表单数据进行修改: 没修改 => 提示数据没变化，不发送请求； 进行修改 => 发送修改请求
-//       const same = this.$utils.isEquivalentObjects(this.data, this.formData)
-//       if (!same) {
-//         // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置必须按要求顺序传入）
-//         const postData = this.$utils.generateObjectWithChangedProperties(this.data, this.formData)
-
-//         // 判断接口是否是传支持多个修改： 是 => 生产数组，否 => 生产对象
-//         let finalPostData = null
-//         if (this.idParams.multiple) {
-//           finalPostData = [ Object.assign(this.idParams, postData) ]
-//         } else {
-//           finalPostData = Object.assign(this.idParams, postData)
-//         }
-
-//         this.$httpAPI[this.updateHttpAPI](finalPostData).then(response => {
-//           /* 接口没有统一，待接口文档统一后再对相应的返回码做处理 */
-//           // if (response.data.status === 200) {
-//           //   this.$emit('on-updated')
-//           //   this.$message.success('修改成功！')
-//           // } else {
-//           //   this.$message.error('修改失败！')
-//           // }
-
-//           this.$emit('on-updated')
-
-//           this.$message.success(config.UPDATE_SUCCEEDED)
-//         }).catch((error) => {
-//           console.log(error)
-//           this.$message.error(config.UPDATE_FAILED)
-//         })
-//       } else {
-//         this.$message.info(config.VALIDATION_UNCHANTED)
-//       }
-//     } else {
-//       this.$message.warning(config.VALIDATION_FAILED)
-//     }
-//   })
-// },
-// watch: {
-//   // 将数据赋值给新的对象（子组件不能更新父组件的属性）
-//   data () {
-//     this.formData = Object.assign(this.formData, this.data)
-//   }
 // },
