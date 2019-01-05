@@ -5,8 +5,8 @@
 
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
-      <el-tab-pane label="填单存款待审核列表" name="unchecked" />
-      <el-tab-pane label="填单存款已审核列表" name="checked" />
+      <el-tab-pane label="客户提款待审核列表" name="unchecked" />
+      <el-tab-pane label="客户提款已审核列表" name="checked" />
     </el-tabs>
 
     <!-- 主要内容 -->
