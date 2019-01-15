@@ -79,7 +79,7 @@ export default {
 
   fetchUsersLogsList: (options) => axios.get('/api-l/logList', options), // 会员日志列表
 
-  /* ===================================== 彩票管理 ======================================= */
+  /* ===================================== 自营彩票管理 ======================================= */
 
   fetchLotterySettingInfo: (options) => axios.get('/api-g/GameTypeConfig/get', options), // 彩票设置列表(彩票开盘配置)
   updateLotterySettingItem: (data) => axios.post('/api-g/GameTypeConfig/save', data), // 修改彩票设置(彩票开盘配置)
@@ -88,8 +88,8 @@ export default {
   updateLotteryBillCancel: (data) => axios.post('/api-g/result/cancel', data), // 彩票未结撤单
   updateLotteryResultManual: (data) => axios.post('/api-g/result/settlement', data), // 彩票手动开奖
 
-  fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // 所有赔率列表
-  updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改单个游戏赔率数据
+  fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // 彩票赔率列表
+  updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改彩票赔率数据
 
   fetchLotterBetsList: (data) => axios.get('/api-g/userBet/page', data), // 所有注单记录列表
   fetchLotterBetDetail: (data) => axios.get('/api-g/userBet/detail', data), // 单个注单详情
@@ -103,6 +103,19 @@ export default {
   fetchLotteryRulesList: (options) => axios.get('/api-b/gameExplain', options), // 游戏说明列表
   updateLotteryRulesItem: (data) => axios.put('/api-b/gameExplain', data), // 创建与更新游戏说明
   deleteLotteryRulesItem: (data) => axios.delete('/api-b/gameExplain', data), // 删除游戏说明
+
+  /* ===================================== 港彩管理 ======================================= */
+
+  fetchSixRulesList: (options) => axios.get('/api-g/markSix/result', options), // 六合彩开奖记录列表
+
+  fetchSixBetsList: (data) => axios.get('/api-g/markSix/userBet', data), // 六合彩注单列表
+  fetchSixBetDetail: (data) => axios.get('/api-g/markSix/userBetDetail', data), // 六合彩单注详情
+
+  fetchSixOddsList: (options) => axios.get('/api-g/markSix/oddsSet', options), // 六合彩赔率列表
+  updateSixOddsItem: (data) => axios.post('/api-g/markSix/oddsSet', data), // 修改六合彩赔率
+
+  fetchSixSettingList: (options) => axios.get('/api-g/markSix/config', options), // 六合彩基础配置列表
+  updateSixSettingItem: (data) => axios.put('/api-g/markSix/updateConfig', data), // 修改六合彩基础配置
 
   /* ===================================== 财务管理 ======================================= */
 

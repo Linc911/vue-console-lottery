@@ -38,8 +38,8 @@
               <keep-alive>
                 <transition
                   mode="out-in"
-                  enter-active-class="animated fadeIn fast"
-                  leave-active-class="animated fadeOut fast"
+                  enter-active-class="animated fadeIn faster"
+                  leave-active-class="animated fadeOut faster"
                 >
                   <router-view v-if="$route.meta.keepAlive" />
                 </transition>
@@ -47,8 +47,8 @@
 
               <transition
                 mode="out-in"
-                enter-active-class="animated fadeIn fast"
-                leave-active-class="animated fadeOut fast"
+                enter-active-class="animated fadeIn faster"
+                leave-active-class="animated fadeOut faster"
               >
                 <router-view v-if="!$route.meta.keepAlive" />
               </transition>

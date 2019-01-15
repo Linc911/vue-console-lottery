@@ -1,12 +1,12 @@
 <template lang="html">
-  <span class="ball" :style="{ backgroundColor: bgcolor }">{{number}}</span>
+  <span class="ball" :style="{ backgroundColor: bgcolor }">{{ number }}</span>
 </template>
 
 <script type="text/javascript">
 export default {
   props: {
     number: {
-      type: Number,
+      type: [ Number, String ],
       default: 0
     },
     bgcolor: {

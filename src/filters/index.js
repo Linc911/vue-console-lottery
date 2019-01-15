@@ -635,3 +635,43 @@ Vue.filter('rebateStatus', value => {
       return '失败'
   }
 })
+
+/* ======================================= 港彩相关 =============================================== */
+Vue.filter('markSixColor', (value) => {
+  switch (value) {
+    case 0:
+      return '红'
+    case 1:
+      return '绿'
+    case 2:
+      return '蓝'
+    default:
+      return '异常'
+  }
+})
+
+Vue.filter('markSixRGB', (value) => {
+  switch (value) {
+    case 0:
+      return '#F56C6C'
+    case 1:
+      return '#67C23A'
+    case 2:
+      return '#409EFF'
+    default:
+      return '#909399'
+  }
+})
+
+Vue.filter('markSixBeast', (value) => {
+  return value ? '家禽' : '野兽'
+})
+
+Vue.filter('zodiac', (value) => {
+  if (typeof value !== 'number') {
+    throw new Error('生肖参数必须是数字')
+  }
+
+  const arr = [ '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪' ]
+  return arr[value]
+})

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="balance-manipulation">
+  <div>
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
       <el-tab-pane label="创建加减款请求" name="creating" />

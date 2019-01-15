@@ -50,6 +50,14 @@ const LotteryStatisticsBets = resolve => require(['@/views/lottery/statistics-be
 const LotteryStatistics = resolve => require(['@/views/lottery/lottery-statistics'], resolve)
 const LotteryRulesList = resolve => require(['@/views/lottery/lottery-rules'], resolve)
 
+/* ========================================== 港彩管理 ============================================ */
+
+const MarkSixManage = resolve => require(['@/views/six/MarkSixManage'], resolve)
+const MarkSixResults = resolve => require(['@/views/six/six-results'], resolve)
+const MarkSixBets = resolve => require(['@/views/six/six-bets'], resolve)
+const MarkSixOdds = resolve => require(['@/views/six/six-odds'], resolve)
+const MarkSixSetting = resolve => require(['@/views/six/six-setting'], resolve)
+
 /* ========================================== 平台财务管理 ============================================ */
 
 const FinanceManage = resolve => require(['@/views/finance/FinanceManage'], resolve)
@@ -396,7 +404,7 @@ const routes = [
           },
           {
             name: 'LotteryBets',
-            path: '/lottery/bets',
+            path: 'bets',
             component: LotteryBets,
             meta: {
               title: '客户注单查询',
@@ -475,6 +483,63 @@ const routes = [
               breadcrumb: [
                 { name: '自营彩票管理' },
                 { name: '游戏规则' }
+              ]
+            }
+          }
+        ]
+      },
+      /* ========================================== 港彩管理 ============================================ */
+      {
+        name: 'MarkSixManage',
+        path: '/six',
+        direct: '/six/results',
+        component: MarkSixManage,
+        children: [
+          {
+            name: 'MarkSixResults',
+            path: 'results',
+            component: MarkSixResults,
+            meta: {
+              title: '六合彩开盘开奖',
+              breadcrumb: [
+                { name: '港彩管理' },
+                { name: '六合彩开盘开奖' }
+              ]
+            }
+          },
+          {
+            name: 'MarkSixBets',
+            path: 'bets',
+            component: MarkSixBets,
+            meta: {
+              title: '六合彩注单查询',
+              breadcrumb: [
+                { name: '港彩管理' },
+                { name: '六合彩注单查询' }
+              ]
+            }
+          },
+          {
+            name: 'MarkSixOdds',
+            path: 'odds',
+            component: MarkSixOdds,
+            meta: {
+              title: '六合彩赔率设置',
+              breadcrumb: [
+                { name: '港彩管理' },
+                { name: '六合彩赔率设置' }
+              ]
+            }
+          },
+          {
+            name: 'MarkSixSetting',
+            path: 'setting',
+            component: MarkSixSetting,
+            meta: {
+              title: '六合彩基础设置',
+              breadcrumb: [
+                { name: '港彩管理' },
+                { name: '六合彩基础设置' }
               ]
             }
           }

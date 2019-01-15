@@ -1,30 +1,29 @@
 <template lang="html">
-  <section class="games-menu">
-    <el-menu :default-active="gameType" mode="vertical" unique-opened>
-      <template v-for="group in menu">
-        <el-submenu :index="String(group.id)" :key="group.id">
-          <template slot="title">
-            <span>{{ group.name }}</span>
-          </template>
+  <el-menu :default-active="gameType" mode="vertical" unique-opened>
+    <template v-for="group in menu">
+      <!--  不显示六合彩系列 -->
+      <el-submenu v-if="group.id !== 29" :index="String(group.id)" :key="group.id">
+        <template slot="title">
+          <span>{{ group.name }}</span>
+        </template>
 
-          <template v-for="item in group.children">
-            <el-menu-item
-              @click="$emit('on-change', item)"
-              :index="String(item.id)"
-              :key="item.id"
-            >
-              <span>{{ item.name }}</span>
-            </el-menu-item>
-          </template>
-        </el-submenu>
-      </template>
-    </el-menu>
-  </section>
+        <template v-for="item in group.children">
+          <el-menu-item
+            @click="$emit('on-change', item)"
+            :index="String(item.id)"
+            :key="item.id"
+          >
+            <span>{{ item.name }}</span>
+          </el-menu-item>
+        </template>
+      </el-submenu>
+    </template>
+  </el-menu>
 </template>
 
 <script>
 export default {
-  name: 'gamesMenu',
+  name: 'GamesMenu',
   props: {
     gameType: {
       type: String,

@@ -48,7 +48,7 @@
 
       <el-table-column prop="actor" label="玩法类型" :min-width="120" />
 
-      <el-table-column prop="rate1" label="赔率" :min-width="45" />
+      <el-table-column prop="rate1" label="赔率" :min-width="60" />
 
       <el-table-column prop="betAmount" label="投注金额" :min-width="80">
         <template slot-scope="scope">
