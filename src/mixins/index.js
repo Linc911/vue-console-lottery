@@ -8,6 +8,22 @@ import BaseAdd from '@/components/base/BaseAdd'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
 
+/* ========================================== 公共函数 ========================================== */
+// 触发搜索函数
+const SearchHandleSearch = (self, params) => {
+  // 有page对象，做赋值处理
+  if (self.page) {
+    // 页面重置为第一页
+    self.requestParams.pageNo = 1
+    self.page.current = 1
+  }
+  // 请求参数改变（携带搜索条件参数、重置到首页）
+  self.requestParams = Object.assign(self.requestParams, params)
+
+  // 重新获取数据
+  self.fetchTableData()
+}
+
 /* ========================================== BaseSwitch组件 ========================================== */
 export const statusSwitchMixin = { // Deprecated
   components: {
@@ -96,12 +112,7 @@ export const searchLayoutWithoutAddMixin = {
   methods: {
     // 处理触发搜索事件
     handleSearch (params) {
-      // 请求参数改变（携带搜索条件参数、重置到首页）
-      this.requestParams = Object.assign(this.requestParams, params, { pageNo: 1 })
-      this.page.current = 1
-
-      // 重新获取数据
-      this.fetchTableData()
+      SearchHandleSearch(this, params)
     }
   }
 }
@@ -115,12 +126,7 @@ export const searchLayoutMixin = {
   methods: {
     // 处理触发搜索事件
     handleSearch (params) {
-      // 请求参数改变（携带搜索条件参数、重置到首页）
-      this.requestParams = Object.assign(this.requestParams, params, { pageNo: 1 })
-      this.page.current = 1
-
-      // 重新获取数据
-      this.fetchTableData()
+      SearchHandleSearch(this, params)
     }
   }
 }
@@ -487,15 +493,7 @@ export const dialogUpdateMixin = {
         // 生成需要修改属性组成的对象，仅包含变动的属性（两个参数位置必须按要求顺序传入）
         const postData = this.$utils.generateObjectWithChangedProperties(this.data, data)
 
-        // 判断接口是否是传支持多个修改： 是 => 生产数组，否 => 生产对象
-        let finalPostData
-        if (this.httpMutiple) {
-          finalPostData = [ Object.assign(postData, this.httpParams) ]
-        } else {
-          finalPostData = Object.assign(postData, this.httpParams)
-        }
-
-        this.$httpAPI[this.updateHttpAPI](finalPostData).then((response) => {
+        this.$httpAPI[this.updateHttpAPI](Object.assign(postData, this.httpParams)).then((response) => {
           if (response.data.status === 200) {
             this.$emit('on-updated')
 

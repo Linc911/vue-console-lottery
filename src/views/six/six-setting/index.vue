@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <!-- 条件筛选 -->
-    <!-- <LogsListSearch @on-search="handleSearch" /> -->
+    <SixSettingSearch @on-search="handleSearch" />
 
     <!-- 主要内容 -->
     <div>
@@ -14,13 +14,13 @@
 <script>
 import { searchLayoutWithoutAddMixin, tableWithoutPaginationMixin } from '@/mixins'
 
-// import LogsListSearch from './components/LogsListSearch'
+import SixSettingSearch from './components/SixSettingSearch'
 import SixSettingTable from './components/SixSettingTable'
 
 export default {
   name: 'MarkSixSetting',
   components: {
-    // LogsListSearch,
+    SixSettingSearch,
     SixSettingTable
   },
   mixins: [ searchLayoutWithoutAddMixin, tableWithoutPaginationMixin ],

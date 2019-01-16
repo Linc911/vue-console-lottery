@@ -106,16 +106,22 @@ export default {
 
   /* ===================================== 港彩管理 ======================================= */
 
-  fetchSixRulesList: (options) => axios.get('/api-g/markSix/result', options), // 六合彩开奖记录列表
+  fetchSixRulesList: (options) => axios.get('/api-g/markSix/result', options), // 港彩开奖记录列表
+  // 港彩手动开奖：设置开奖结果和结算状态改变都在这个接口； 修改结算状态时，不传 balls 参数
+  updateSixResultManual: (options) => axios.post('/api-g/markSix/settlement', options),
 
-  fetchSixBetsList: (data) => axios.get('/api-g/markSix/userBet', data), // 六合彩注单列表
-  fetchSixBetDetail: (data) => axios.get('/api-g/markSix/userBetDetail', data), // 六合彩单注详情
+  createSixOfficalItem: (data) => axios.put('/api-g/markSix/result', data), // 创建香港六合彩彩期
+  updateSixOfficalItem: (data) => axios.post('/api-g/markSix/result', data), // 修改香港六合彩信息
+  deleteSixOfficalItem: (data) => axios.delete('/api-g/markSix/result', data), // 删除香港六合彩彩期
 
-  fetchSixOddsList: (options) => axios.get('/api-g/markSix/oddsSet', options), // 六合彩赔率列表
-  updateSixOddsItem: (data) => axios.post('/api-g/markSix/oddsSet', data), // 修改六合彩赔率
+  fetchSixBetsList: (data) => axios.get('/api-g/markSix/userBet', data), // 港彩注单列表
+  fetchSixBetDetail: (data) => axios.get('/api-g/markSix/userBetDetail', data), // 港彩单注详情
 
-  fetchSixSettingList: (options) => axios.get('/api-g/markSix/config', options), // 六合彩基础配置列表
-  updateSixSettingItem: (data) => axios.put('/api-g/markSix/updateConfig', data), // 修改六合彩基础配置
+  fetchSixOddsList: (options) => axios.get('/api-g/markSix/oddsSet', options), // 港彩赔率列表
+  updateSixOddsItem: (data) => axios.post('/api-g/markSix/oddsSet', data), // 修改港彩赔率
+
+  fetchSixSettingList: (options) => axios.get('/api-g/markSix/config', options), // 港彩基础配置列表
+  updateSixSettingItem: (data) => axios.put('/api-g/markSix/updateConfig', data), // 修改港彩基础配置
 
   /* ===================================== 财务管理 ======================================= */
 

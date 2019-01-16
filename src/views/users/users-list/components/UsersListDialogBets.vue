@@ -138,7 +138,7 @@ export default {
   },
   watch: {
     id () {
-      // 点击同一列数据时，因为id没有变化不好发送请求；
+      // 点击同一列数据时，因为id没有变化,不发送请求；
       // 每次id变动的时候，都把同一列弹框需要的数据请求回来
       if (this.dialogVisible || !this.tableData.length) {
         this.page.current = 1 // 将分页重置为第一页

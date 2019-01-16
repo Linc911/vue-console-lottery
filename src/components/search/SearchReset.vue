@@ -1,6 +1,6 @@
 <template lang="html">
   <el-form-item>
-    <el-button type="primary" icon="el-icon-refresh" size="mini" />
+    <el-button type="primary" icon="el-icon-delete" size="mini" />
   </el-form-item>
 </template>
 
@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .el-button {
   font-size: 16px;
 }

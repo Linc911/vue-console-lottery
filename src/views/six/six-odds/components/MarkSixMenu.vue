@@ -1,7 +1,8 @@
 <template lang="html">
-  <el-menu mode="vertical">
-    <template v-for="group in data">
-      <el-submenu :index="String(group.id)" :key="group.id">
+  <el-menu :default-active="gameType" mode="vertical" unique-opened>
+    <template v-for="group in menu">
+      <!--  不显示六合彩系列 -->
+      <el-submenu v-if="group.id === 29" :index="String(group.id)" :key="group.id">
         <template slot="title">
           <span>{{ group.name }}</span>
         </template>
@@ -22,24 +23,20 @@
 
 <script>
 export default {
-  name: 'MarkSixMenu',
+  name: 'GamesMenu',
   props: {
-    data: {
-      type: Array,
-      required: true
+    gameType: {
+      type: String,
+      default: ''
     }
-    // gameType: {
-    //   type: String,
-    //   default: ''
-    // }
   },
   data () {
     return {
-      // menu: []
+      menu: []
     }
   },
   created () {
-    // this.getGamesMenu()
+    this.getGamesMenu()
   },
   methods: {
     getGamesMenu () {

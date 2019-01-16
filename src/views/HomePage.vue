@@ -113,11 +113,11 @@ export default {
       chartDoughnutData: null,
       statisticData: {},
       summary: [
-        { title: '今日新增会员数量', identifier: 'todayuseramount', color: 'blue', path: {} },
+        { title: '今日新增会员数量', identifier: 'todayuseramount', color: 'blue', path: { name: 'UsersList' } },
         { title: '总会员数量', identifier: 'useramount', color: 'orange', path: { name: 'UsersList' } },
-        { title: '今日注单笔数', identifier: 'todayorderamount', color: 'purple', path: {} },
-        { title: '今日注单总额', identifier: 'todayordermoney', color: 'green', path: {} },
-        { title: '今日派彩总额', identifier: 'totalAwardAmount', color: 'red', path: {} }
+        { title: '今日注单笔数', identifier: 'todayorderamount', color: 'purple', path: { name: 'LotteryStatistics' } },
+        { title: '今日注单总额', identifier: 'todayordermoney', color: 'green', path: { name: 'LotteryStatistics' } },
+        { title: '今日派彩总额', identifier: 'totalAwardAmount', color: 'red', path: { name: 'LotteryStatistics' } }
       ]
     }
   },

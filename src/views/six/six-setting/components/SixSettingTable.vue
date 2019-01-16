@@ -54,7 +54,7 @@
     </el-table>
 
     <!-- 修改弹框 -->
-    <SixSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <SixSettingDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
   </div>
 </template>
 

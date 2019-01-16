@@ -1,45 +1,43 @@
 <template lang="html">
-  <el-form-item :prop="prop" :label="label">
-    <el-select
-      v-model="selectedOption"
-      @change="$emit('on-change', selectedOption)"
-      :placeholder="label"
-      clearable
-      :style="{ width }"
-    >
-      <el-option
-        v-for="option in options"
-        :key="option.value"
-        :label="option.label"
-        :value="option.value"
-      />
-    </el-select>
-  </el-form-item>
+  <el-select
+    v-model="selectedOption"
+    @change="$emit('on-change', selectedOption)"
+    :placeholder="placeholder"
+    clearable
+    :style="styles"
+  >
+    <el-option
+      v-for="option in options"
+      :key="option.value"
+      :label="option.label"
+      :value="option.value"
+    />
+  </el-select>
 </template>
 
 <script>
 export default {
   name: 'FormSelectStatic',
   props: {
+    // 当前绑定值
     value: {
       type: [ String, Number ],
       default: ''
     },
+    // 选项对象（必须包含 label、value 属性）
     options: {
       type: Array,
       required: true
     },
-    label: {
+    placeholder: {
       type: String,
-      default: '状态'
+      default: '请选择'
     },
-    prop: {
-      type: String,
-      default: ''
-    },
-    width: {
-      type: String,
-      default: ''
+    styles: {
+      type: Object,
+      default () {
+        return {}
+      }
     }
   },
   data () {

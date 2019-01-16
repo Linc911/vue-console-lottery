@@ -33,7 +33,7 @@ Vue.filter('sortTime', second => {
 
 // 货币数值格式化
 Vue.filter('RMB', value => {
-  if (value === null) {
+  if (value === null || value === undefined) {
     return ''
   }
 

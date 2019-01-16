@@ -1,13 +1,15 @@
 <template lang="html">
   <!-- 条件筛选 -->
   <el-form :model="formData" size="small" inline>
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'username', $event)"
-      label="会员账户"
-      width="174px"
-      ref="username"
-    />
+    <el-form-item label="会员账户">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'username', $event)"
+        placehoder="会员账户"
+        :style="{ width: '150px' }"
+        ref="username"
+      />
+    </el-form-item>
 
     <FormDateRange @on-change="handleDateRangeChange" label="注册时间" ref="dateRange" />
 
@@ -38,16 +40,17 @@
       ref="winRange"
     />
 
-    <FormSelectStatic
-      @on-change="$set(formData, 'control', $event)"
-      :options="[
-        { value: 0, label: '禁用' },
-        { value: 1, label: '启用' },
-      ]"
-      label="监控状态"
-      width="100px"
-      ref="control"
-    />
+    <el-form-item label="监控状态">
+      <FormSelectStatic
+        @on-change="$set(formData, 'control', $event)"
+        :options="[
+          { value: 0, label: '禁用' },
+          { value: 1, label: '启用' },
+        ]"
+        :styles="{ width: '90px' }"
+        ref="control"
+      />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />

@@ -13,7 +13,12 @@
         <LotteryResultsSearch @on-search="handleSearch" ref="resultsSearch" />
       </div>
       <div slot="right">
-        <el-button type="primary" size="small">
+        <el-button
+          v-if="requestParams.gameType === '32'"
+          @click="$refs.dialogCreate.toggleDialogVisible(true)"
+          type="primary"
+          size="small"
+        >
           <i class="el-icon-plus"></i>
           <span>开盘录入</span>
         </el-button>
@@ -23,7 +28,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <SixResultsTable @on-changed="fetchTableData()" :data="tableData" />
+      <SixResultsTable @on-changed="fetchTableData()" :data="tableData" :gameType="requestParams.gameType" />
 
       <!-- 分页 -->
       <BasePagination
@@ -33,6 +38,9 @@
         :requestParams="requestParams"
       />
     </div>
+
+    <!-- 创建弹框 -->
+    <SixResultsDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
@@ -41,12 +49,14 @@ import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
 import LotteryResultsSearch from './components/LotteryResultsSearch'
 import SixResultsTable from './components/SixResultsTable'
+import SixResultsDialogCreate from './components/SixResultsDialogCreate'
 
 export default {
   name: 'MarkSixResults',
   components: {
     LotteryResultsSearch,
-    SixResultsTable
+    SixResultsTable,
+    SixResultsDialogCreate
   },
   data () {
     return {
@@ -61,7 +71,7 @@ export default {
       // 选择不同彩种时，更新参数，获取数据
       this.$set(this.requestParams, 'gameType', tab.name)
 
-      this.fetchTable()
+      this.fetchTableData()
     }
   }
 }

@@ -19,7 +19,13 @@
       </template>
     </el-table-column>
 
-    <el-table-column prop="totalAwardAmount" label="输赢金额" sortable>
+    <el-table-column prop="awardAmount" label="派彩金额">
+      <template slot-scope="scope">
+        <span>{{ scope.row.awardAmount | RMB }}</span>
+      </template>
+    </el-table-column>
+
+    <el-table-column prop="totalAwardAmount" label="平台输赢金额" sortable>
       <template slot-scope="scope">
         <span>{{ scope.row.totalAwardAmount | RMB }}</span>
       </template>
