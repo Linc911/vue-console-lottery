@@ -31,27 +31,14 @@
             <TapPanel />
 
             <!-- 面包屑导航 -->
-            <BaseBreadcrumb :breadcrumb="$route.meta.breadcrumb" />
+            <BaseBreadcrumb :breadcrumb="breadcrumb" />
 
             <!-- 主要内容 -->
             <div class="content-container">
               <keep-alive>
-                <transition
-                  mode="out-in"
-                  enter-active-class="animated fadeIn faster"
-                  leave-active-class="animated fadeOut faster"
-                >
-                  <router-view v-if="$route.meta.keepAlive" />
-                </transition>
+                <router-view v-if="$route.meta.keepAlive" />
               </keep-alive>
-
-              <transition
-                mode="out-in"
-                enter-active-class="animated fadeIn faster"
-                leave-active-class="animated fadeOut faster"
-              >
-                <router-view v-if="!$route.meta.keepAlive" />
-              </transition>
+              <router-view v-if="!$route.meta.keepAlive" />
             </div>
           </el-main>
 
@@ -90,20 +77,48 @@ export default {
   },
   data () {
     return {
+      breadcrumb: [],
       headerVisible: false,
       sidebarVisible: false,
       footerVisible: false
     }
   },
+  // 处理动画效果
   mounted () {
+    this.fetchBreadcrumb()
+
     this.headerVisible = true
     this.sidebarVisible = true
     this.footerVisible = true
   },
+  // 处理动画效果
   destroyed () {
     this.headerVisible = false
     this.sidebarVisible = false
     this.footerVisible = false
+  },
+  watch: {
+    // 面包屑导航
+    $route () {
+      this.fetchBreadcrumb()
+    }
+  },
+  methods: {
+    fetchBreadcrumb () {
+      this.breadcrumb = [] // 每次清空
+
+      const path = this.$route.path
+      const menu = this.$store.getters['sidebar/menu']
+      this.$_.forEach(menu, (group) => {
+        this.$_.forEach(group.child, (item) => {
+          if (item.url === path) {
+            this.breadcrumb.push(group)
+            this.breadcrumb.push(item)
+            return
+          }
+        })
+      })
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template lang="html">
   <el-form-item>
-    <el-button type="primary" icon="el-icon-delete" size="mini" />
+    <el-button type="primary" icon="el-icon-delete" size="mini" title="重置" />
   </el-form-item>
 </template>
 

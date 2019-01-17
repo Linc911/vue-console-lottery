@@ -5,9 +5,15 @@
 
       <el-table-column prop="username" label="会员账号" />
 
-      <el-table-column prop="orderId" label="订单号" :min-width="140" />
+      <el-table-column prop="orderId" label="订单号" :min-width="150" />
 
-      <el-table-column prop="discount" label="优惠%" />
+      <el-table-column prop="createTime" label="订单时间" :min-width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.createTime | time }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="discount" label="优惠%" :min-width="60" />
 
       <el-table-column prop="poundage" label="手续费">
         <template slot-scope="scope">
@@ -15,37 +21,37 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="money" label="金额">
+      <el-table-column prop="money" label="变动金额" :min-width="100" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.money | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="before" label="改变前金额">
+      <el-table-column prop="before" label="改变前金额" :min-width="100">
         <template slot-scope="scope">
           <span>{{ scope.row.before | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="after" label="改变后金额">
+      <el-table-column prop="after" label="改变后金额" :min-width="100">
         <template slot-scope="scope">
           <span>{{ scope.row.after | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="type" label="类型">
+      <el-table-column prop="type" label="类型" :min-width="70">
         <template slot-scope="scope">
           <span>{{ scope.row.type | typeFilter }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="status" label="处理状态">
+      <el-table-column prop="status" label="处理状态" :min-width="70">
         <template slot-scope="scope">
           <span>{{ scope.row.status | statusFilter }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="remark" label="备注" />
+      <!-- <el-table-column prop="remark" label="备注" :min-width="100" /> -->
 
       <el-table-column prop="operations" label="操作" :min-width="90">
         <template slot-scope="scope">

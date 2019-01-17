@@ -9,12 +9,6 @@
 
       <el-table-column prop="realname" label="真实姓名" :min-width="100" />
 
-      <el-table-column prop="sex" label="性别" :min-width="45">
-        <template slot-scope="scope">
-          <span>{{ scope.row.sex | gender }}</span>
-        </template>
-      </el-table-column>
-
       <el-table-column prop="phone" label="手机号码" :min-width="105">
         <template slot-scope="scope">
           <span>{{ scope.row.phone | phoneFormat }}</span>

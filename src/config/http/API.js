@@ -17,6 +17,10 @@ export default {
   fetchGamesList: (options) => axios.get('/api-g/gameconfig', options), // 游戏类型/账户类型
   fetchUserId: (options) => axios.get('/api-u/users-anon/getUserId', options), // 查询会员ID
 
+  fetchLotterBetsList: (data) => axios.get('/api-g/userBet/page', data), // 注单列表(不包含港彩)
+  fetchSixBetsList: (data) => axios.get('/api-g/markSix/userBet', data), // 港彩注单列表
+  fetchLotterBetDetail: (data) => axios.get('/api-g/userBet/detail', data), // 单个注单详情
+
   /* ===================================== 登   录 ======================================= */
 
   fetchLogoutInfo: (options) => axios.get('/api-u/sys/logout', options),
@@ -91,9 +95,6 @@ export default {
   fetchLotterOddsList: (data) => axios.post('/api-g/oddsset', data), // 彩票赔率列表
   updateLotterOddsItem: (data) => axios.post('/api-g/oddsset/update', data), // 修改彩票赔率数据
 
-  fetchLotterBetsList: (data) => axios.get('/api-g/userBet/page', data), // 所有注单记录列表
-  fetchLotterBetDetail: (data) => axios.get('/api-g/userBet/detail', data), // 单个注单详情
-
   fetchLotterStatisticsUsers: (options) => axios.get('/api-g/userBets/userReportForm', options), // 彩票会员报表
 
   fetchLotterStatisticsBets: (options) => axios.get('/api-g/userBets/betReportForm', options), // 彩票注单报表
@@ -114,11 +115,8 @@ export default {
   updateSixOfficalItem: (data) => axios.post('/api-g/markSix/result', data), // 修改香港六合彩信息
   deleteSixOfficalItem: (data) => axios.delete('/api-g/markSix/result', data), // 删除香港六合彩彩期
 
-  fetchSixBetsList: (data) => axios.get('/api-g/markSix/userBet', data), // 港彩注单列表
-  fetchSixBetDetail: (data) => axios.get('/api-g/markSix/userBetDetail', data), // 港彩单注详情
-
   fetchSixOddsList: (options) => axios.get('/api-g/markSix/oddsSet', options), // 港彩赔率列表
-  updateSixOddsItem: (data) => axios.post('/api-g/markSix/oddsSet', data), // 修改港彩赔率
+  updateSixOddsItem: (data) => axios.put('/api-g/markSix/updateOddsSet', data), // 修改港彩赔率
 
   fetchSixSettingList: (options) => axios.get('/api-g/markSix/config', options), // 港彩基础配置列表
   updateSixSettingItem: (data) => axios.put('/api-g/markSix/updateConfig', data), // 修改港彩基础配置

@@ -2,12 +2,12 @@
   <div class="breadcrumb-container">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item
-        v-for="item in breadcrumb"
-        :key="item.name"
-        :to="item.path"
+        v-for="(item, index) in breadcrumb"
+        :key="index"
+        :to="item.url"
         :class="{ activeLink: item.path }"
       >
-        {{item.name}}
+        {{ item.name }}
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
@@ -27,7 +27,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .breadcrumb-container {
   margin-top: 40px;
 }

@@ -352,7 +352,7 @@ export const onePageMixin = {
     },
     // 通知父组件触发搜索事件；将请求参数传给父组件
     search () {
-      this.fetchUserBets(this.formData)
+      this.fetchTableData(this.formData)
     },
     // 将全部的 form 组件重置为初始值；初始化组件内容的数据
     reset () {
@@ -581,30 +581,3 @@ export const dialogAuditMixin = {
     }
   }
 }
-
-// // 检验表单验证是否通过，发送修改请求
-// submitForm (formName) { // DEPRECATED
-//   this.$refs[formName].validate(valid => {
-//     if (valid) {
-//       this.dialogVisible = false // 表单验证通过才隐藏弹框
-
-//       this.$httpAPI[this.createHttpAPI](this.formData).then(response => {
-//         if (response.data.status === 200) {
-//           // 清除表单填写记录
-//           if (!this.checked) {
-//             this.$utils.invokeRefResetMothod(this.$refs)
-//             this.$refs[formName].resetFields()
-//           }
-
-//           this.$emit('on-created', this.formData)
-
-//           this.$message.success(config.CREATE_SUCCEEDED)
-//         } else {
-//           this.$message.error(`${config.CREATE_FAILED}: ${response.data.msg}`)
-//         }
-//       }).catch(error => console.log(error))
-//     } else {
-//       this.$message.warning(config.VALIDATION_FAILED)
-//     }
-//   })
-// },

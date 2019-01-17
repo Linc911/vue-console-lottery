@@ -1,19 +1,21 @@
 <template lang="html">
   <el-dialog
     :visible.sync="dialogVisible"
-    title="会员投注记录列表"
+    title="投注记录列表"
     width="80%"
-    style="min-width: 760px"
+    style="min-width: 768px"
   >
     <!-- 条件筛选 -->
     <el-form :model="formData" size="small" inline>
-      <FormInput
-        @keyup.native.enter="$emit('on-search', formData)"
-        @on-change="$set(formData, 'drawno', $event)"
-        label="彩票期号"
-        width="174px"
-        ref="drawno"
-      />
+      <el-form-item label="彩票期号">
+        <FormInput
+          @keyup.native.enter="$emit('on-search', formData)"
+          @on-change="$set(formData, 'drawno', $event)"
+          placeholder="可模糊搜索"
+          :styles="{ width: '120px' }"
+          ref="drawno"
+        />
+      </el-form-item>
 
       <FormSelectGame
         @on-change="$set(formData, 'gameType', $event)"
@@ -27,17 +29,18 @@
         ref="gameType"
       />
 
-      <FormSelectStatic
-        @on-change="$set(formData, 'status', $event)"
-        :options="[
-          { value: 0, label: '未结算' },
-          { value: 1, label: '中奖' },
-          { value: 2, label: '未中奖' }
-        ]"
-        label="处理状态"
-        width="100px"
-        ref="status"
-      />
+      <el-form-item label="注单状态">
+        <FormSelectStatic
+          @on-change="$set(formData, 'status', $event)"
+          :options="[
+            { value: 0, label: '未结算' },
+            { value: 1, label: '中奖' },
+            { value: 2, label: '未中奖' }
+          ]"
+          :styles="{ width: '100px' }"
+          ref="status"
+        />
+      </el-form-item>
 
       <div style="display: inline-block">
         <SearchIcon @click.native="search" />
@@ -58,22 +61,20 @@
 
         <el-table-column prop="gameName" label="彩票类型" :min-width="120" />
 
-        <el-table-column prop="id" label="注单ID" :min-width="150" />
-
-        <el-table-column prop="totalBets" label="投注数" :width="90">
+        <el-table-column prop="totalBets" label="投注数" :width="95" sortable>
           <template slot-scope="scope">
             <span>{{ scope.row.totalBets }}</span>
             <BaseIcon @on-click="showDialog(scope.row, 'dialogDetail')" class="pull-right" />
           </template>
         </el-table-column>
 
-        <el-table-column prop="totalAmount" label="投注金额" :min-width="80">
+        <el-table-column prop="totalAmount" label="投注金额" :min-width="95" sortable>
           <template slot-scope="scope">
             <span>{{ scope.row.totalAmount | RMB }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column prop="totalAwardAmount" label="中奖金额" :min-width="80">
+        <el-table-column prop="totalAwardAmount" label="中奖金额" :min-width="95" sortable>
           <template slot-scope="scope">
             <span>{{ scope.row.totalAwardAmount | RMB }}</span>
           </template>
@@ -84,6 +85,8 @@
             <span>{{ scope.row.status | lotteryOrderStatus }}</span>
           </template>
         </el-table-column>
+
+        <el-table-column prop="id" label="注单ID" :min-width="150" />
 
         <el-table-column prop="createDate" label="投注时间" :min-width="140">
           <template slot-scope="scope">

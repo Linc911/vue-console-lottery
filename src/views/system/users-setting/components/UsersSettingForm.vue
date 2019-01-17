@@ -15,13 +15,6 @@
         <el-input v-model.trim="formData.nickname" placeholder="用户昵称" />
       </el-form-item>
 
-      <el-form-item prop="sex" label="用户性别">
-        <el-radio-group v-model="formData.sex">
-          <el-radio :label="0">女</el-radio>
-          <el-radio :label="1">男</el-radio>
-        </el-radio-group>
-      </el-form-item>
-
       <el-form-item prop="phone" label="手机号码" >
         <el-input v-model.trim="formData.phone" type="number" placeholder="手机号码" />
       </el-form-item>
@@ -32,6 +25,7 @@
         httpAPIName="fetchSystemRolesList"
         labelAttr="name"
         valueAttr="id"
+        prop="roleIds"
         label="角色类型"
         multiple
         ref="roleIds"
@@ -41,10 +35,6 @@
       <div v-if="!hidden">
         <el-form-item prop="password" label="登录密码">
           <el-input v-model.trim="formData.password" placeholder="登录密码" />
-        </el-form-item>
-
-        <el-form-item prop="withdrawal" label="取款密码">
-          <el-input v-model.trim="formData.withdrawal" placeholder="取款密码" />
         </el-form-item>
       </div>
 
@@ -94,6 +84,7 @@ export default {
       formData: { username: '', password: '123456', enabled: 1, type: 'BACKEND' },
       rules: {
         username: validators.validateRequired('用户名称'),
+        roleIds: validators.validateSelect('角色类型'),
         password: validators.validateStringLength('登录密码', 6, 20)
       }
     }

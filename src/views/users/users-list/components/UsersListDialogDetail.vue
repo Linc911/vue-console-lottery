@@ -1,9 +1,9 @@
 <template lang="html">
-  <el-dialog :visible.sync="dialogVisible" title="会员信息详情" width="760px">
+  <el-dialog :visible.sync="dialogVisible" title="用户信息详情" width="768px">
     <el-form
       :model="formData"
-      label-width="100px"
       size="small"
+      label-width="120px"
       disabled
       class="clearfix"
     >
@@ -54,6 +54,10 @@
       <el-form-item prop="createTime" label="创建时间">
         <el-input :value="formData.createTime | time" />
       </el-form-item>
+
+      <el-form-item prop="loginTime" label="最近登录时间">
+        <el-input :value="formData.loginTime | time" />
+      </el-form-item>
     </el-form>
   </el-dialog>
 </template>
@@ -67,7 +71,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .el-form-item {
   float: left;
   width: 50%;

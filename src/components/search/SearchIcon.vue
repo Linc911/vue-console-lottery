@@ -1,6 +1,6 @@
 <template lang="html">
   <el-form-item>
-    <el-button type="primary" icon="el-icon-search" size="mini" />
+    <el-button type="primary" icon="el-icon-search" size="mini" title="搜索" />
   </el-form-item>
 </template>
 

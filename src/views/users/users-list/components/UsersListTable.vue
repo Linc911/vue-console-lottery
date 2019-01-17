@@ -5,6 +5,18 @@
 
       <el-table-column prop="username" label="会员账号" :min-width="100" />
 
+      <el-table-column label="注册时间" :min-width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.createTime | time }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="最近登录时间" :min-width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.loginTime | time }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column label="分组" :width="120">
         <template slot-scope="scope">
           <div>
@@ -18,15 +30,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="relation" label="邀请码" />
-
-      <el-table-column label="会员余额" :min-width="100">
+      <el-table-column label="会员余额" :min-width="100" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.banlance | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="win" label="输赢" :min-width="100">
+      <el-table-column prop="win" label="输赢" :min-width="100" sortable>>
         <template slot-scope="scope">
           <span>{{ scope.row.win | RMB }}</span>
         </template>
@@ -80,16 +90,14 @@
             type="primary"
             size="mini"
           >日志详情</el-button>
-
-          <!-- <UserRebateSetting :userId="String(scope.row.id)" /> -->
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 修改分组弹框 -->
     <DialogGroupSetting
-      :user="activeItem"
       @on-group-changed="$emit('on-changed')"
+      :user="activeItem"
       ref="dialogGroup"
     />
 
@@ -97,16 +105,16 @@
     <UsersListDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 注单弹框 -->
-    <UsersListDialogBets
-      :id="activeItem.id"
+    <DialogBetsList
       @on-group-changed="$emit('on-changed')"
+      :id="activeItem.id"
       ref="dialogBets"
     />
 
     <!-- 日志弹框 -->
     <UsersListDialogLogs
-      :id="activeItem.id"
       @on-group-changed="$emit('on-changed')"
+      :id="activeItem.id"
       ref="dialogLogs"
     />
   </div>
@@ -121,7 +129,7 @@ import BaseIndicator from '@/components/base/BaseIndicator'
 import DialogGroupSetting from './DialogGroupSetting'
 import UserRebateSetting from './UserRebateSetting'
 import UsersListDialogDetail from './UsersListDialogDetail'
-import UsersListDialogBets from './UsersListDialogBets'
+import DialogBetsList from '@/components/dialog/DialogBetsList'
 import UsersListDialogLogs from './UsersListDialogLogs'
 
 export default {
@@ -132,7 +140,7 @@ export default {
     DialogGroupSetting,
     UserRebateSetting,
     UsersListDialogDetail,
-    UsersListDialogBets,
+    DialogBetsList,
     UsersListDialogLogs
   },
   mixins: [ tableComponentMixin, switchMixin ],

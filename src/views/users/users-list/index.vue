@@ -1,5 +1,5 @@
 <template lang="html">
-  <section class="users-list">
+  <div>
     <!-- 条件筛选 -->
     <UsersListSearch @on-search="handleSearch" />
 
@@ -16,7 +16,7 @@
         :requestParams="requestParams"
       />
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

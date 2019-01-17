@@ -1,13 +1,14 @@
 <template lang="html">
-  <!-- 条件筛选 -->
   <el-form @submit.native.prevent :model="formData" size="small" inline>
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'username', $event)"
-      label="请求账号"
-      width="174px"
-      ref="username"
-    />
+    <el-form-item label="请求账号">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'username', $event)"
+        placeholder="请求账号"
+        :styles="{ width: '174px' }"
+        ref="username"
+      />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />
