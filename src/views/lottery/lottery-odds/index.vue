@@ -2,7 +2,7 @@
   <div>
     <!-- 彩票分类菜单 -->
     <aside class="aside-menu">
-      <GamesMenu @on-change="handleMenuChange" :gameType="'3'" />
+      <GamesMenu @on-change="handleMenuChange" :gameType="'19'" />
     </aside>
 
     <!-- 主要内容 -->
@@ -68,7 +68,7 @@ export default {
     return {
       tableData: [],
       tableHttpAPI: 'fetchLotterOddsList',
-      requestParams: { gameType: 3 },
+      requestParams: { gameType: 19 },
       tabIndex: 0,
       subtabIndex: 0,
       layers: 0,
@@ -88,6 +88,7 @@ export default {
     finalData () {
       switch (this.layers) {
         case 0:
+          // eslint-disable-next-line
           this.tableData.length && (this.layer1Tab = this.tableData[this.layer1Index].type)
           return this.tableData
         case 1:
@@ -127,7 +128,7 @@ export default {
       }
     },
     // 侧边栏游戏切换： 初始化一、二级菜单；请求新数据
-    handleMenuChange ({ groupId, itemId }) {
+    handleMenuChange (payload) {
       this.layer1Tab = ''
       this.layer2Tab = ''
       this.layer3Tab = ''
@@ -137,7 +138,7 @@ export default {
       this.layer2Index = 0
       this.layer3Index = 0
 
-      this.requestParams = { gameType: itemId, pageNo: 1, pageSize: 10 }
+      this.requestParams = { gameType: payload.type, pageNo: 1, pageSize: 10 }
       this.fetchTableData()
     },
     fetchTableData () {

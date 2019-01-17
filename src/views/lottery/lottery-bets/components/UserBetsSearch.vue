@@ -1,20 +1,23 @@
 <template lang="html">
   <el-form :model="formData" size="small" inline>
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'username', $event)"
-      label="账户名称"
-      width="174px"
-      ref="username"
-    />
+    <el-form-item label="账户名称">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'username', $event)"
+        placeholder="账户名称"
+        :styles="{ width: '140px' }"
+        ref="username"
+      />
+    </el-form-item>
 
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'drawno', $event)"
-      label="彩票期号"
-      width="174px"
-      ref="drawno"
-    />
+    <el-form-item label="彩票期号">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'drawno', $event)"
+        :styles="{ width: '150px' }"
+        ref="drawno"
+      />
+    </el-form-item>
 
     <FormSelectGame
       @on-change="$set(formData, 'gameType', $event)"
@@ -30,17 +33,14 @@
 
     <FormDateRange @on-change="handleDateRangeChange" ref="dateRange" />
 
-    <FormSelectStatic
-      @on-change="$set(formData, 'status', $event)"
-      :options="[
-        { value: 0, label: '未结算' },
-        { value: 1, label: '中奖' },
-        { value: 2, label: '未中奖' }
-      ]"
-      label="处理状态"
-      width="100px"
-      ref="status"
-    />
+    <el-form-item label="注单状态">
+      <FormSelectArray
+        @on-change="$set(formData, 'status', $event)"
+        :options="[ '未结算', '中奖', '未中奖' ]"
+        :styles="{ width: '100px' }"
+        ref="status"
+      />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />
@@ -55,7 +55,7 @@ import { searchInnerMixin } from '@/mixins'
 import FormInput from '@/components/form/FormInput'
 import FormSelectGame from '@/components/form/FormSelectGame'
 import FormDateRange from '@/components/form/FormDateRange'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
   name: 'PaymentPortSearch',
@@ -63,7 +63,7 @@ export default {
     FormInput,
     FormSelectGame,
     FormDateRange,
-    FormSelectStatic
+    FormSelectArray
   },
   mixins: [ searchInnerMixin ],
   methods: {

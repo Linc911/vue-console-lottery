@@ -2,8 +2,8 @@
   <div>
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
-      <el-tab-pane label="填单存款待审核列表" name="unchecked" />
-      <el-tab-pane label="填单存款已审核列表" name="checked" />
+      <el-tab-pane label="客户提款待审核列表" name="unchecked" />
+      <el-tab-pane label="客户提款已审核列表" name="checked" />
     </el-tabs>
 
     <!-- 条件筛选 -->
@@ -50,7 +50,7 @@ export default {
     // 菜单切换；根据不同的菜单更新对应数据
     handleTabClick (tab) {
       this.page.current = 1 // 回到第一页
-      
+
       if (tab.name === 'unchecked') {
         this.requestParams.status = 0
       } else {

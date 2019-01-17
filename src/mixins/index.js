@@ -564,9 +564,9 @@ export const dialogAuditMixin = {
     changeStatus (status) {
       this.dialogVisible = false // 隐藏弹框
 
-      this.$httpAPI[this.audit.httpAPI]({
-        [this.audit.attrName]: status
-      }).then((response) => {
+      this.$httpAPI[this.audit.httpAPI](
+        Object.assign(this.requestParams, { [this.audit.attrName]: status })
+      ).then((response) => {
         // 判断http返回状态码
         if (response.data.status === 200) {
           this.$emit('on-success')

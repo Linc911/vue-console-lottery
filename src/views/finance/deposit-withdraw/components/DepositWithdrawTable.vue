@@ -11,7 +11,7 @@
 
     <el-table-column label="支付时间" :width="140">
       <template slot-scope="scope">
-        <span>{{scope.row.payTime | time}}</span>
+        <span>{{ scope.row.payTime | time }}</span>
       </template>
     </el-table-column>
 
@@ -25,13 +25,13 @@
 
     <el-table-column label="支付金额">
       <template slot-scope="scope">
-        <span>{{scope.row.payNum | RMB}}</span>
+        <span>{{ scope.row.payNum | RMB }}</span>
       </template>
     </el-table-column>
 
     <el-table-column label="订单状态">
       <template slot-scope="scope">
-        <span>{{scope.row.selfStatus | paymentStatus}}</span>
+        <span>{{ scope.row.selfStatus | paymentStatus }}</span>
       </template>
     </el-table-column>
   </el-table>

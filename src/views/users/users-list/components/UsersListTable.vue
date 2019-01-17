@@ -30,13 +30,28 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="会员余额" :min-width="100" sortable>
+      <el-table-column label="会员余额" :min-width="120">
         <template slot-scope="scope">
           <span>{{ scope.row.banlance | RMB }}</span>
+          <!-- 各种账号的金额查询 -->
+          <el-popover trigger="hover" placement="right" width="350">
+            <el-table :data="scope.row.banlanceDetail">
+              <el-table-column width="200" property="name" label="账号"></el-table-column>
+              <el-table-column width="150" property="balance" label="金额"><template slot-scope="scope">
+                <span style="color: red">{{ scope.row.balance | RMB }}</span>
+              </template>
+            </el-table-column>
+            </el-table>
+            <BaseIcon
+              icon="el-icon-zoom-in"
+              class="pull-right"
+              slot="reference"
+            />
+          </el-popover>
         </template>
       </el-table-column>
 
-      <el-table-column prop="win" label="输赢" :min-width="100" sortable>>
+      <el-table-column prop="win" label="输赢" :min-width="100">
         <template slot-scope="scope">
           <span>{{ scope.row.win | RMB }}</span>
         </template>

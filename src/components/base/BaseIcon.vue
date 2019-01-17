@@ -20,7 +20,8 @@ export default {
 .more-detail {
   display: inline-block;
 }
-.el-icon-edit {
+
+i {
   font-size: 14px;
   border-width: 4px 10px;
   border-style: solid;

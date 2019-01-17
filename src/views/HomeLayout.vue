@@ -114,6 +114,7 @@ export default {
           if (item.url === path) {
             this.breadcrumb.push(group)
             this.breadcrumb.push(item)
+            /* eslint-disable */
             return
           }
         })

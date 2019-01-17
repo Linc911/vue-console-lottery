@@ -53,11 +53,16 @@ export default {
   mixins: [ dialogAuditMixin ],
   data () {
     return {
-      requestParams: { changeId: this.data.changeId },
+      requestParams: {},
       audit: {
         httpAPI: 'updateDepositFormStatus',
         attrName: 'status'
       }
+    }
+  },
+  watch: {
+    data () {
+      this.requestParams.changeId = this.data.changeId
     }
   }
 }

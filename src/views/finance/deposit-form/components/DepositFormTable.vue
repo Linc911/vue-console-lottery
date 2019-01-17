@@ -9,7 +9,7 @@
 
       <el-table-column prop="configPayTypeName" label="支付方式" />
 
-      <el-table-column label="汇款金额">
+      <el-table-column label="汇款金额" :min-width="100" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.remitMoney | RMB }}</span>
         </template>

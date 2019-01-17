@@ -3,13 +3,13 @@
     <el-table :data="data" size="small" highlight-current-row border>
       <el-table-column type="index" />
 
+      <el-table-column prop="username" label="会员账号" />
+
       <el-table-column label="创建时间" :width="140">
         <template slot-scope="scope">
           <span>{{scope.row.createTime | time}}</span>
         </template>
       </el-table-column>
-
-      <el-table-column prop="username" label="会员账号" />
 
       <el-table-column label="转换金额">
         <template slot-scope="scope">

@@ -73,7 +73,7 @@ export default {
   mixins: [ dialogAuditMixin ],
   data () {
     return {
-      requestParams: { withdrawId: this.data.withdrawId },
+      requestParams: {},
       audit: {
         httpAPI: 'updateFinanceWithdrawApplyStatus',
         attrName: 'status'

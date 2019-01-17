@@ -129,7 +129,7 @@ export default {
   updateDepositFormStatus: (data) => axios.put('/api-p/changeUserRecharge/audit', data), // 审批加减款操作
 
   fetchFinanceDepositForm: (options) => axios.get('/api-p/remitInfo/list', options), // 填单存款管理列表
-  updateFinanceDepositFormStatus: (data) => axios.post('/api-p/remitInfo/audit', data), // 审批填单存款
+  updateFinanceDepositFormStatus: (data) => axios.put('/api-p/remitInfo/audit', data), // 审批填单存款
 
   fetchFinanceLimitationTransfer: (options) => axios.get('/api-u/convertRecharge/list', options), // 额度转换管理列表
 
@@ -140,7 +140,7 @@ export default {
 
   fetchFinanceWithdrawApply: (options) => axios.get('/api-u/withdrawOrder/list', options), // 提款申请管理列表
   fetchFinanceWithdrawApplyItem: (options) => axios.get('/api-u/withdrawOrder/info', options), // 提款申请管理每项详情
-  updateFinanceWithdrawApplyStatus: (data) => axios.post('/api-u/withdrawOrder/audit', data), // 审批提款申请
+  updateFinanceWithdrawApplyStatus: (data) => axios.put('/api-u/withdrawOrder/audit', data), // 审批提款申请
 
   fetchFinanceDepositOnline: (options) => axios.get('/api-p/UserOrder/list', options), // 在线存款列表
 

@@ -1,20 +1,24 @@
 <template lang="html">
   <el-form :model="formData" size="small" label-width="80px" inline>
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'username', $event)"
-      label="用户账号"
-      width="174px"
-      ref="username"
-    />
+    <el-form-item label="用户账号">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'username', $event)"
+        placeholder="用户账号"
+        :styles="{ width: '120px' }"
+        ref="username"
+      />
+    </el-form-item>
 
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'orderId', $event)"
-      label="申请单号"
-      width="174px"
-      ref="orderId"
-    />
+    <el-form-item label="申请单号">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'orderId', $event)"
+        placeholder="申请单号"
+        :styles="{ width: '160px' }"
+        ref="orderId"
+      />
+    </el-form-item>
 
     <FormNumberRange
       @on-change="handleNumberRangeChange"

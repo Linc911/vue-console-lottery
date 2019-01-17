@@ -6,7 +6,7 @@
     <div>
       <!-- 彩票分类菜单 -->
       <aside class="aside-menu">
-        <GamesMenu @on-loaded="handleLoaded" @on-change="handleMenuChange" :gameType="'3'" />
+        <GamesMenu @on-loaded="handleLoaded" @on-change="handleMenuChange" :gameType="'19'" />
       </aside>
 
       <!-- 主要内容 -->
@@ -50,7 +50,7 @@ export default {
       gameRules: {},
       tableShow: false,
       tableHttpAPI: 'fetchLotteryResultsList',
-      requestParams: { gameType: 3, pageNo: 1, pageSize: 10 },
+      requestParams: { gameType: 19, pageNo: 1, pageSize: 10 },
       page: { current: 0, size: 10, total: 10 }
     }
   },
