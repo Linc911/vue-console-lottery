@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <el-table :data="data" size="small" max-height="600" highlight-current-row border>
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="username" label="会员账号" :min-width="100" />
@@ -30,11 +30,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="会员余额" :min-width="120">
+      <el-table-column label="余额" :min-width="120">
         <template slot-scope="scope">
           <span>{{ scope.row.banlance | RMB }}</span>
           <!-- 各种账号的金额查询 -->
-          <el-popover trigger="hover" placement="right" width="350">
+          <el-popover trigger="click" placement="right" width="350">
             <el-table :data="scope.row.banlanceDetail">
               <el-table-column width="200" property="name" label="账号"></el-table-column>
               <el-table-column width="150" property="balance" label="金额"><template slot-scope="scope">
@@ -85,7 +85,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :min-width="200">
+      <el-table-column label="操作" :width="200">
         <template slot-scope="scope">
           <el-button
             @click="showDialog(scope.row, 'dialogDetail')"

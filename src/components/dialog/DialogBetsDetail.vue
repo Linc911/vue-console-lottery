@@ -2,12 +2,18 @@
   <el-dialog
     :visible.sync="dialogVisible"
     title="每注注单详情"
-    center
     width="70%"
     style="min-width: 768px"
     append-to-body
   >
-    <el-table :data="bets" size="small" max-height="441" highlight-current-row border>
+    <el-table
+      :data="bets"
+      :row-class-name="tableRowClassName"
+      size="small"
+      max-height="441"
+      highlight-current-row
+      border
+    >
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="ballValue" label="投注内容" :min-width="300">
@@ -100,6 +106,13 @@ export default {
     }
   },
   methods: {
+    // 判断表格中的 注单为赢时；高亮显示这行
+    tableRowClassName ({ row }) {
+      if (row.betResult === 1) {
+        return 'warning-row'
+      }
+      return ''
+    },
     // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {
       this.dialogVisible = status

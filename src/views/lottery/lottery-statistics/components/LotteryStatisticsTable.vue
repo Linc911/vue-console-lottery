@@ -1,6 +1,12 @@
 <template lang="html">
-  <el-table :data="data" size="small" max-height="640" highlight-current-row border>
-
+  <el-table
+    :data="data"
+    :row-class-name="tableRowClassName"
+    size="small"
+    max-height="640"
+    highlight-current-row
+    border
+  >
     <el-table-column type="index" :width="36" />
 
     <el-table-column prop="gameName" label="游戏名称" />
@@ -38,6 +44,15 @@ import { tableComponentMixin } from '@/mixins'
 
 export default {
   name: 'LotteryStatisctisTable',
-  mixins: [ tableComponentMixin ]
+  mixins: [ tableComponentMixin ],
+  methods: {
+    // 判断表格中的 注单为赢时；高亮显示这行
+    tableRowClassName ({ row }) {
+      if (row.totalAwardAmount < 0) {
+        return 'warning-row'
+      }
+      return ''
+    }
+  }
 }
 </script>

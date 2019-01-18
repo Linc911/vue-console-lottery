@@ -1,6 +1,13 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <el-table
+      :data="data"
+      :row-class-name="tableRowClassName"
+      max-height="600"
+      size="small"
+      highlight-current-row
+      border
+    >
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="gameName" label="彩票类型" :min-width="100"  />
@@ -77,6 +84,7 @@
 
           <el-button
             v-if="scope.row.status === 0"
+            @click="showDialog(scope.row, 'dialogManual')"
             type="primary"
             size="mini"
           >开奖</el-button>
@@ -112,11 +120,11 @@
     />
 
     <!-- 手动开奖弹框 -->
-    <!-- <LotteryResultsDialogManual
-      @on-changed="$emit('on-changed')"
-      :data="rules"
+    <LotteryResultsDialogManual
+      @on-updated="$emit('on-changed')"
+      :data="activeItem"
       ref="dialogManual"
-    /> -->
+    />
 
     <!-- 修改弹框 -->
     <SixResultsDialogUpdate
@@ -167,6 +175,13 @@ export default {
     }
   },
   methods: {
+    // 判断表格中的 投注金额 < 奖金金额；高亮显示这行
+    tableRowClassName ({ row }) {
+      if (row.totalAmount < row.totalAwardAmount) {
+        return 'warning-row'
+      }
+      return ''
+    },
     showDialogManual ({ gameType, drawno }, ref) {
       this.$refs[ref].toggleDialogVisible(true)
 

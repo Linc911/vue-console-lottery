@@ -3,7 +3,7 @@
     <el-date-picker
       v-model="value"
       @change="handleDatePickerChange"
-      type="daterange"
+      :type="type"
       :picker-options="pickerOptions"
       :default-time="['00:00:00', '23:59:59']"
       range-separator="至"
@@ -23,6 +23,10 @@ export default {
     prop: {
       type: String,
       default: ''
+    },
+    type: {
+      type: String,
+      default: 'daterange'
     },
     label: {
       type: String,

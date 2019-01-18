@@ -42,7 +42,8 @@ export default {
   width: 100%;
   height: 100%;
   min-height: 600px;
-  background: url(../../assets/images/login-bg.png) no-repeat center / cover;
+  // background: url(../../assets/images/login-bg.png) no-repeat center / cover;
+  background-color: #7a8b9b;
 }
 .login-card {
   width: 400px;

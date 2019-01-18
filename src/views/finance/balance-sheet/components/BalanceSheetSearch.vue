@@ -1,5 +1,15 @@
 <template lang="html">
   <el-form :model="formData" size="small" label-width="80px" inline>
+    <el-form-item label="会员账号">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'username', $event)"
+        placehoder="会员账号"
+        :style="{ width: '150px' }"
+        ref="username"
+      />
+    </el-form-item>
+
     <FormDateRange
       @on-change="handleDateRangeChangeDeposit"
       label="存款时间"
@@ -22,11 +32,13 @@
 <script type="text/javascript">
 import { searchInnerMixin } from '@/mixins'
 
+import FormInput from '@/components/form/FormInput'
 import FormDateRange from '@/components/form/FormDateRange'
 
 export default {
-  name: 'DepositeOnlineSearch',
+  name: 'BalanceSheetSearch',
   components: {
+    FormInput,
     FormDateRange
   },
   mixins: [ searchInnerMixin ],

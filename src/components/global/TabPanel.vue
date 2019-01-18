@@ -80,7 +80,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .tab-panel {
   position: fixed;
   width: 100%;

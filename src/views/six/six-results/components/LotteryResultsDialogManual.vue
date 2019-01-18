@@ -3,79 +3,50 @@
     :visible.sync="dialogVisible"
     title="手动开奖"
     width="768px"
-    center
   >
-    <el-form label-width="100px">
-      <el-form-item label="开奖选择：">
-        <!-- 骰子类型 -->
-        <div v-if="this.data.gameType >= 7 && this.data.gameType <= 17 && this.data.gameType != 10" class="container-box">
-          <span v-for="(ball, index) in balls" :key="index">
-            <BaseDice :number="ball" @click.native="choseBall(ball, index)" />
-          </span>
-        </div>
-
-        <!-- 其他类型 -->
-        <div v-else class="container-box">
-          <span v-for="(ball, index) in balls" :key="index">
-            <LotteryBall :number="ball" @click.native="choseBall(ball, index)" />
-          </span>
-        </div>
+    <el-form :model="formData" :rules="rules" label-width="80px" size="small" ref="form" class="clearfix">
+      <el-form-item prop="number1" label="正码一">
+        <el-input v-model.trim="formData.number1" />
       </el-form-item>
 
-      <el-form-item label="开奖结果：">
-        <!-- 骰子类型 -->
-        <div v-if="this.data.gameType >= 7 && this.data.gameType <= 17 && this.data.gameType != 10" class="container-box">
-          <draggable v-model="results" @start="drag = true" @end="drag = false">
-            <span v-for="(ball, index) in results" :key="index">
-              <BaseDice :number="ball" @dblclick.native="undoBall(ball, index)" />
-            </span>
-          </draggable>
-        </div>
-
-        <!-- 其他类型 -->
-        <div v-else class="container-box">
-          <draggable v-model="results" @start="drag = true" @end="drag = false">
-            <span v-for="(ball, index) in results" :key="index">
-              <LotteryBall :number="ball" @dblclick.native="undoBall(ball, index)" />
-            </span>
-          </draggable>
-        </div>
+      <el-form-item prop="number2" label="正码二">
+        <el-input v-model.trim="formData.number2" />
       </el-form-item>
 
-      <el-form-item>
-        <div class="tip-container">
-          <p class="tip-content">
-            操作提示：<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;1. 单击开奖选择框中的数字，可以选中该数字<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;2. 双击开奖结果框中的数字，可以撤销该数字<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;3. 拖动开奖结果框中的数字，可以调换顺序<br>
-          </p>
-        </div>
+      <el-form-item prop="number3" label="正码三">
+        <el-input v-model.trim="formData.number3" />
+      </el-form-item>
+
+      <el-form-item prop="number4" label="正码四">
+        <el-input v-model.trim="formData.number4" />
+      </el-form-item>
+
+      <el-form-item prop="number5" label="正码五">
+        <el-input v-model.trim="formData.number5" />
+      </el-form-item>
+
+      <el-form-item prop="number6" label="正码六">
+        <el-input v-model.trim="formData.number6" />
+      </el-form-item>
+
+      <el-form-item prop="number7" label="特码">
+        <el-input v-model.trim="formData.number7" />
       </el-form-item>
 
       <el-form-item style="text-align: right">
         <el-button @click="handleConfirm" type="primary" size="small">确认</el-button>
       </el-form-item>
     </el-form>
-
   </el-dialog>
 </template>
 
 <script>
 import config from '@/config/data'
 
-import draggable from 'vuedraggable'
-
-import BaseDice from '@/components/base/BaseDice'
-import LotteryBall from '@/components/base/LotteryBall'
+import validators from '@/config/form'
 
 export default {
   name: 'LotteryResultsDialogCancel',
-  components: {
-    draggable,
-    BaseDice,
-    LotteryBall
-  },
   props: {
     data: {
       type: Object,
@@ -84,8 +55,17 @@ export default {
   },
   data () {
     return {
+      formData: {},
+      rules: {
+        number1: validators.validateRequired('正码一'),
+        number2: validators.validateRequired('正码二'),
+        number3: validators.validateRequired('正码三'),
+        number4: validators.validateRequired('正码四'),
+        number5: validators.validateRequired('正码五'),
+        number6: validators.validateRequired('正码六'),
+        number7: validators.validateRequired('特码')
+      },
       results: [],
-      balls: Object.assign([], this.data.balls),
       dialogVisible: false
     }
   },
@@ -120,28 +100,26 @@ export default {
     },
     // 确认撤单；发送请求，成功时通知父组件更新数据
     handleConfirm () {
-      // 判断是否符合开奖规则
-      if (this.results.length < this.data.ballNum) {
-        this.$message.warning(`不符合游戏开奖规则：开奖位数为 ${this.data.ballNum} 位`)
-      } else {
-        this.dialogVisible = false // 隐藏弹框
+      this.$message.warning('接口调试中...')
+      return
+      // eslint-disable-next-line
+      console.log(this.data)
+      console.log(this.formData)
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.$httpAPI.updateSixResultManual(this.formData).then(response => {
+            if (response.data.data) {
+              this.$emit('on-updated')
 
-        this.$httpAPI.updateLotteryResultManual({
-          gameType: this.data.gameType,
-          drawno: this.data.drawno,
-          balls: this.results
-        }).then((response) => {
-          if (response.data.status === 200) {
-            this.$emit('on-changed')
-            this.$message.success(config.OPERATION_SUCCEEDED)
-          } else {
-            this.$message.error(`${config.OPERATION_FAILED}: ${response.data.msg}`)
-          }
-        }).catch((error) => {
-          console.log(error)
-          this.$message.error(config.SERVER_RESPONSE_EXCEPTION)
-        })
-      }
+              this.$message.success(config.UPDATE_SUCCEEDED)
+            } else {
+              this.$message.error(`${config.UPDATE_FAILED}: ${response.data.msg}`)
+            }
+          }).catch(error => console.log(error))
+        } else {
+          this.$message.warning(config.VALIDATION_FAILED)
+        }
+      })
     },
     // 显示与隐藏弹框（父组件调用）
     toggleDialogVisible (status) {
@@ -152,6 +130,10 @@ export default {
 </script>
 
 <style scoped>
+.el-form-item {
+  float: left;
+  width: 50%;
+}
 .container-box {
   min-height: 52px;
   padding: 10px 15px;

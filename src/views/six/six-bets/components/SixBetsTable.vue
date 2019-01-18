@@ -1,7 +1,13 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
-
+    <el-table
+      :data="data"
+      :row-class-name="tableRowClassName"
+      max-height="600"
+      size="small"
+      highlight-current-row
+      border
+    >
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="username" label="账户名称" :width="100" />
@@ -65,6 +71,15 @@ export default {
   data () {
     return {
       activeItem: { id: '' }
+    }
+  },
+  methods: {
+    // 判断表格中的 注单为赢时；高亮显示这行
+    tableRowClassName ({ row }) {
+      if (row.status === 1) {
+        return 'warning-row'
+      }
+      return ''
     }
   }
 }

@@ -45,6 +45,8 @@ const actions = {
       axios.defaults.headers.common['Authorization'] = `${token_type} ${access_token}`
       axios.defaults.headers.common['sessionId'] = `${sessionId}`
 
+      this.commit('tab/clearRoutes') // 清除所有的浏览记录
+
       router.push({ name: 'HomePage' })
     }).catch((error) => {
       if (error.message === 'Network Error') {
@@ -52,7 +54,6 @@ const actions = {
       } else {
         Message.warning('帐号与密码不匹配')
       }
-      // console.dir(error)
     })
   },
   // 登出 -- token设置为空，调整到用户登录页

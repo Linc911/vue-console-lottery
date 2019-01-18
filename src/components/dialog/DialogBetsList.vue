@@ -6,7 +6,13 @@
     style="min-width: 768px"
   >
     <!-- 条件筛选 -->
-    <el-form :model="formData" size="small" inline>
+    <el-form
+      :model="formData"
+      :row-class-name="tableRowClassName"
+      max-height="600"
+      size="small"
+      inline
+    >
       <el-form-item label="彩票期号">
         <FormInput
           @keyup.native.enter="$emit('on-search', formData)"
@@ -30,13 +36,9 @@
       />
 
       <el-form-item label="注单状态">
-        <FormSelectStatic
+        <FormSelectArray
           @on-change="$set(formData, 'status', $event)"
-          :options="[
-            { value: 0, label: '未结算' },
-            { value: 1, label: '中奖' },
-            { value: 2, label: '未中奖' }
-          ]"
+          :options="[ '未结算', '中奖', '未中奖' ]"
           :styles="{ width: '100px' }"
           ref="status"
         />
@@ -115,7 +117,7 @@ import { onePageMixin } from '@/mixins'
 import BaseIcon from '@/components/base/BaseIcon'
 import FormInput from '@/components/form/FormInput'
 import FormSelectGame from '@/components/form/FormSelectGame'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectArray from '@/components/form/FormSelectArray'
 import BasePopoverTextarea from '@/components/base/BasePopoverTextarea'
 
 import DialogBetsDetail from '@/components/dialog/DialogBetsDetail'
@@ -125,7 +127,7 @@ export default {
   components: {
     FormInput,
     FormSelectGame,
-    FormSelectStatic,
+    FormSelectArray,
     BasePopoverTextarea,
     BaseIcon,
     DialogBetsDetail
@@ -150,6 +152,15 @@ export default {
 
         this.fetchTableData({ userId: this.id })
       }
+    }
+  },
+  methods: {
+    // 判断表格中的 注单为赢时；高亮显示这行
+    tableRowClassName ({ row }) {
+      if (row.status === 1) {
+        return 'warning-row'
+      }
+      return ''
     }
   }
 }

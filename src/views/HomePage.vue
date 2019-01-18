@@ -53,13 +53,16 @@
         <el-card>
           <div slot="header">
             <i class="fa fa-gears"></i>
-            <span> 优博公告</span>
+            <span> 系统公告</span>
           </div>
           <div>
             <ul>
-              <li v-for="n in 4" :key="n" class="note-item clearfix">
-                <span class="note-info"><i v-if="n === 1" class="note-new">New</i>【系统更新】 11月17日优博平台升级，详情请点击查看详情内容！</span>
-                <span class="note-time">2018-11-17 15:07:20</span>
+              <li v-for="item in systemNotices" :key="item.id" class="note-item clearfix">
+                <span class="note-info">
+                  <!-- <i v-if="index < 2" class="note-new">New</i> -->
+                  {{ item.title }}
+                </span>
+                <span class="note-time">{{ item.onlineTime | time }}</span>
               </li>
             </ul>
           </div>
@@ -70,11 +73,17 @@
         <el-card>
           <div slot="header">
             <i class="fa fa-gears"></i>
-            <span> 站内公告</span>
+            <span> 系统消息</span>
           </div>
-          <div style="min-height: 120px;">
-            <p>暂无内容</p>
-          </div>
+          <ul>
+            <li v-for="item in systemMessages" :key="item.id" class="note-item clearfix">
+              <span class="note-info">
+                <!-- <i v-if="index < 2" class="note-new">New</i> -->
+                {{ item.title }}
+              </span>
+              <span class="note-time">{{ item.createTime | time }}</span>
+            </li>
+          </ul>
         </el-card>
       </section>
       <!-- 登录异常警告 -->
@@ -111,6 +120,8 @@ export default {
       show: true,
       chartBarData: null,
       chartDoughnutData: null,
+      systemNotices: [],
+      systemMessages: [],
       statisticData: {},
       summary: [
         { title: '今日新增会员数量', identifier: 'todayuseramount', color: 'blue', path: { name: 'UsersList' } },
@@ -123,6 +134,8 @@ export default {
   },
   created () {
     this.fetchIndexStatistic()
+    this.fetchSystemNotices()
+    this.fetchSystemMessages()
   },
   mounted () {
     this.fetchUsersOnline()
@@ -157,6 +170,20 @@ export default {
           ]
         }
       }).catch(error => console.log(error))
+    },
+    fetchSystemNotices () {
+      this.$httpAPI.fetchSystemNoticeList({
+        params: { pageNo: 1, pageSize: 10 }
+      }).then((response) => {
+        this.systemNotices = response.data.data
+      }).catch((error) => console.log(error))
+    },
+    fetchSystemMessages () {
+      this.$httpAPI.fetchSystemMessageList({
+        params: { pageNo: 1, pageSize: 10 }
+      }).then((response) => {
+        this.systemMessages = response.data.data
+      }).catch((error) => console.log(error))
     },
     // 存款统计
     fetchUsersDeposit () {
