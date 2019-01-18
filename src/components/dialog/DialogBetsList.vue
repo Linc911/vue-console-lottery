@@ -8,8 +8,6 @@
     <!-- 条件筛选 -->
     <el-form
       :model="formData"
-      :row-class-name="tableRowClassName"
-      max-height="600"
       size="small"
       inline
     >
@@ -53,7 +51,8 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <el-table :data="tableData" size="small" highlight-current-row border>
+      <el-table :data="tableData" size="small" highlight-current-row border :row-class-name="tableRowClassName"
+      max-height="600">
 
         <el-table-column type="index" :width="36" />
 
@@ -157,7 +156,7 @@ export default {
   methods: {
     // 判断表格中的 注单为赢时；高亮显示这行
     tableRowClassName ({ row }) {
-      if (row.status === 1) {
+      if (row.totalAmount < row.totalAwardAmount) {
         return 'warning-row'
       }
       return ''

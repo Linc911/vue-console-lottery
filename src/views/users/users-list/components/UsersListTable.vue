@@ -5,13 +5,13 @@
 
       <el-table-column prop="username" label="会员账号" :min-width="100" />
 
-      <el-table-column label="注册时间" :min-width="140">
+      <el-table-column prop="createTime" label="注册时间" :min-width="140" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.createTime | time }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="最近登录时间" :min-width="140">
+      <el-table-column prop="createTime" label="最近登录时间" :min-width="140" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.loginTime | time }}</span>
         </template>
@@ -30,7 +30,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="余额" :min-width="120">
+      <el-table-column prop="banlance" label="余额" :min-width="120" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.banlance | RMB }}</span>
           <!-- 各种账号的金额查询 -->
@@ -51,7 +51,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="win" label="输赢" :min-width="100">
+      <el-table-column prop="win" label="输赢" :min-width="100" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.win | RMB }}</span>
         </template>
