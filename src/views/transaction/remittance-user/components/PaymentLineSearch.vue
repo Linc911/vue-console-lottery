@@ -2,12 +2,14 @@
   <!-- 条件筛选 -->
   <div class="search">
     <el-form @submit.native.prevent :model="formData" size="small" label-width="80px" inline>
-      <FormInput
-        @keyup.native.enter="$emit('on-search', formData)"
-        @on-change="$set(formData, 'username', $event)"
-        label="收款户名"
-        width="174px"
-      />
+      <el-form-item label="收款户名">
+        <FormInput
+          @keyup.native.enter="$emit('on-search', formData)"
+          @on-change="$set(formData, 'username', $event)"
+          placeholder="收款户名"
+          :styles="{ width: '140px' }"
+        />
+      </el-form-item>
 
       <div style="display: inline-block">
         <SearchIcon @click.native="search" />

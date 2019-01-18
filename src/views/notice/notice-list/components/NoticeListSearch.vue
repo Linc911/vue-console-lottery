@@ -5,17 +5,14 @@
       ref="dateRange"
     />
 
-    <FormSelectStatic
-      @on-change="$set(formData, 'status', $event)"
-      :options="[
-        { value: 0, label: '启用' },
-        { value: 1, label: '禁用' },
-        { value: 2, label: '发布' }
-      ]"
-      label="启用状态"
-      width="100px"
-      ref="status"
-    />
+    <el-form-item label="启用状态">
+      <FormSelectArray
+        @on-change="$set(formData, 'status', $event)"
+        :options="[ '启用', '禁用', '发布' ]"
+        :styles="{ width: '100px' }"
+        ref="status"
+      />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />
@@ -28,13 +25,13 @@
 import { searchInnerMixin } from '@/mixins'
 
 import FormDateRange from '@/components/form/FormDateRange'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
   name: 'NoticeListSearch',
   components: {
     FormDateRange,
-    FormSelectStatic
+    FormSelectArray
   },
   mixins: [ searchInnerMixin ]
 }

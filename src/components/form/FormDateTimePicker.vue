@@ -11,10 +11,12 @@
 export default {
   name: 'FormDateTimePicker',
   props: {
+    // 默认值
     value: {
       type: [ String, Number ],
       default: ''
     },
+    // 不同的值类型的时间选择器
     type: {
       type: String,
       default: 'datetime'
@@ -22,10 +24,16 @@ export default {
   },
   data () {
     return {
-      time: this.value === 'number' ? new Date(this.value) : this.value
+      time: ''
+    }
+  },
+  watch: {
+    value () {
+      if (typeof this.value === 'number') this.time = new Date(this.value)
     }
   },
   methods: {
+    // 将时间戳传递给父组件
     handleTimePickerChange (payload) {
       this.$emit('on-change', Date.parse(payload))
     }

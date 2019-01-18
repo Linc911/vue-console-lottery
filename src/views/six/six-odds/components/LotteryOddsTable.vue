@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div v-if="data.length">
     <el-table :data="data" size="small" :max-height="590" highlight-current-row border>
       <el-table-column type="index" :width="36" />
 
@@ -7,19 +7,20 @@
 
       <el-table-column prop="name" label="类型名称" :min-width="120">
         <template slot-scope="scope">
-          <span v-if="scope.row.remark.includes('三军')">
-            <BaseDice :number="Number(scope.row.name)" />
-          </span>
-          <span v-else-if="scope.row.remark.match(/围骰\/全骰_\d+|长牌|短牌/)">
-            <template v-for="(item, index) in scope.row.name.split('')">
-              <BaseDice :number="Number(item)" :key="index" />
-            </template>
-          </span>
-          <span v-else>{{ scope.row.name }}</span>
+          <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="odds1" label="赔率" />
+      <!-- 部分玩法有两种赔率 -->
+      <div v-if="data[0].odds2">
+        <el-table-column prop="odds1" label="赔率1" />
+        <el-table-column prop="odds2" label="赔率2" />
+      </div>
+      <div v-else>
+        <el-table-column prop="odds1" label="赔率" />
+      </div>
+
+      <el-table-column prop="rebate" label="返水比例%" />
 
       <el-table-column prop="sort" label="排列顺序" />
 

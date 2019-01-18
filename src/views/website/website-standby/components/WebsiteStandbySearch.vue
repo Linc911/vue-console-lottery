@@ -1,31 +1,33 @@
 <template lang="html">
   <el-form :model="formData" size="small" inline>
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'showDomain', $event)"
-      label="显示域名"
-      width="174px"
-      ref="showDomain"
-    />
+    <el-form-item label="显示域名">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'showDomain', $event)"
+        placeholder="显示域名"
+        :styles="{ width: '180px' }"
+        ref="showDomain"
+      />
+    </el-form-item>
 
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'forwardDomain', $event)"
-      label="跳转域名"
-      width="174px"
-      ref="forwardDomain"
-    />
+    <el-form-item label="跳转域名">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'forwardDomain', $event)"
+        placeholder="跳转域名"
+        :styles="{ width: '180px' }"
+        ref="forwardDomain"
+      />
+    </el-form-item>
 
-    <FormSelectStatic
-      @on-change="$set(formData, 'status', $event)"
-      :options="[
-        { value: 0, label: '启用' },
-        { value: 1, label: '禁用' },
-      ]"
-      label="启用状态"
-      width="100px"
-      ref="status"
-    />
+    <el-form-item label="启用状态">
+      <FormSelectArray
+        @on-change="$set(formData, 'status', $event)"
+        :options="[ '启用', '禁用' ]"
+        :styles="{ width: '100px' }"
+        ref="status"
+      />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />
@@ -38,13 +40,13 @@
 import { searchInnerMixin } from '@/mixins'
 
 import FormInput from '@/components/form/FormInput'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
   name: 'WebsiteStandbySearch',
   components: {
     FormInput,
-    FormSelectStatic
+    FormSelectArray
   },
   mixins: [ searchInnerMixin ]
 }

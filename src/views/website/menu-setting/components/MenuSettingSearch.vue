@@ -1,12 +1,14 @@
 <template lang="html">
   <el-form @submit.native.prevent :model="formData" size="small" inline>
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'name', $event)"
-      label="菜单名称"
-      width="174px"
-      ref="name"
-    />
+    <el-form-item label="菜单名称">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'name', $event)"
+        placeholder="菜单名称"
+        :styles="{ width: '140px' }"
+        ref="name"
+      />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />

@@ -1,23 +1,23 @@
 <template lang="html">
   <el-form :model="formData" size="small" inline>
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'name', $event)"
-      label="类型名称"
-      width="174px"
-      ref="name"
-    />
+    <el-form-item label="类型名称">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'name', $event)"
+        placeholder="类型名称"
+        :styles="{ width: '120px' }"
+        ref="name"
+      />
+    </el-form-item>
 
-    <FormSelectStatic
+    <el-form-item label="推荐状态">
+    <FormSelectArray
       @on-change="$set(formData, 'status', $event)"
-      :options="[
-        { value: 0, label: '推荐' },
-        { value: 1, label: '不推荐' },
-      ]"
-      label="推荐状态"
-      width="100px"
+      :options="[ '推荐', '不推荐' ]"
+      :styles="{ width: '100px' }"
       ref="status"
     />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />
@@ -30,15 +30,13 @@
 import { searchInnerMixin } from '@/mixins'
 
 import FormInput from '@/components/form/FormInput'
-import FormSelect from '@/components/form/FormSelect'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
   name: 'PaymentPortSearch',
   components: {
     FormInput,
-    FormSelect,
-    FormSelectStatic
+    FormSelectArray
   },
   mixins: [ searchInnerMixin ]
 }

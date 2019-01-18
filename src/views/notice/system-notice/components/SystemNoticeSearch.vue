@@ -1,38 +1,31 @@
 <template lang="html">
   <el-form :model="formData" size="small" inline>
-    <FormSelectStatic
-      @on-change="$set(formData, 'pc', $event)"
-      :options="[
-        { value: 0, label: '否' },
-        { value: 1, label: '是' }
-      ]"
-      label="是否PC"
-      width="100px"
-      ref="pc"
-    />
+    <el-form-item label="是否PC">
+      <FormSelectArray
+        @on-change="$set(formData, 'pc', $event)"
+        :options="[ '否', '是' ]"
+        :styles="{ width: '100px' }"
+        ref="pc"
+      />
+    </el-form-item>
 
-    <FormSelectStatic
-      @on-change="$set(formData, 'mp', $event)"
-      :options="[
-        { value: 0, label: '否' },
-        { value: 1, label: '是' }
-      ]"
-      label="是否MP"
-      width="100px"
-      ref="mp"
-    />
+    <el-form-item label="是否MP">
+      <FormSelectArray
+        @on-change="$set(formData, 'mp', $event)"
+        :options="[ '否', '是' ]"
+        :styles="{ width: '100px' }"
+        ref="mp"
+      />
+    </el-form-item>
 
-    <FormSelectStatic
-      @on-change="$set(formData, 'status', $event)"
-      :options="[
-        { value: 0, label: '启用' },
-        { value: 1, label: '禁用' },
-        { value: 2, label: '发布' }
-      ]"
-      label="启用状态"
-      width="100px"
-      ref="status"
-    />
+    <el-form-item label="启用状态">
+      <FormSelectArray
+        @on-change="$set(formData, 'status', $event)"
+        :options="[ '启用', '禁用', '发布' ]"
+        :styles="{ width: '100px' }"
+        ref="status"
+      />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />
@@ -44,12 +37,12 @@
 <script type="text/javascript">
 import { searchInnerMixin } from '@/mixins'
 
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
   name: 'SystemNoticeSearch',
   components: {
-    FormSelectStatic
+    FormSelectArray
   },
   mixins: [ searchInnerMixin ]
 }

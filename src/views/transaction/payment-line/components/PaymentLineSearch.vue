@@ -2,12 +2,14 @@
   <!-- 条件筛选 -->
   <div class="search">
     <el-form :model="formData" size="small" inline>
-      <FormInput
-        @keyup.native.enter="$emit('on-search', formData)"
-        @on-change="$set(formData, 'name', $event)"
-        label="路线名称"
-        width="174px"
-      />
+      <el-form-item label="路线名称">
+        <FormInput
+          @keyup.native.enter="$emit('on-search', formData)"
+          @on-change="$set(formData, 'name', $event)"
+          placeholder="路线名称"
+          :styles="{ width: '140px' }"
+        />
+      </el-form-item>
 
       <FormSelect
         @on-change="$set(formData, 'interfaceTypeId', $event)"

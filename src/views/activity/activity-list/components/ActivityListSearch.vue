@@ -8,16 +8,14 @@
       ref="title"
     /> -->
 
-    <FormSelectStatic
-      @on-change="$set(formData, 'status', $event)"
-      :options="[
-        { value: 0, label: '启用' },
-        { value: 1, label: '禁用' },
-      ]"
-      label="启用状态"
-      width="100px"
-      ref="status"
-    />
+    <el-form-item label="启用状态">
+      <FormSelectArray
+        @on-change="$set(formData, 'status', $event)"
+        :options="[ '启用', '禁用' ]"
+        :styles="{ width: '100px' }"
+        ref="status"
+      />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />
@@ -30,13 +28,13 @@
 import { searchInnerMixin } from '@/mixins'
 
 import FormInput from '@/components/form/FormInput'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
   name: 'ActivityListSearch',
   components: {
     FormInput,
-    FormSelectStatic
+    FormSelectArray
   },
   mixins: [ searchInnerMixin ]
 }

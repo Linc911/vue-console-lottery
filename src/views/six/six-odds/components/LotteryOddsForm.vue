@@ -10,9 +10,20 @@
       <el-input v-model.trim="formData.name" placeholder="类型名称" />
     </el-form-item>
 
-    <el-form-item prop="odds1" label="赔率">
-      <el-input v-model.trim="formData.odds1" type="number" min="0" placeholder="赔率" />
-    </el-form-item>
+    <!-- 部分玩法有两种赔率 -->
+    <div v-if="formData.odds2">
+      <el-form-item prop="odds1" label="赔率1">
+        <el-input v-model.trim="formData.odds1" type="number" min="0" placeholder="赔率1" />
+      </el-form-item>
+      <el-form-item prop="odds2" label="赔率2">
+        <el-input v-model.trim="formData.odds2" type="number" min="0" placeholder="赔率2" />
+      </el-form-item>
+    </div>
+    <div v-else>
+      <el-form-item prop="odds1" label="赔率">
+        <el-input v-model.trim="formData.odds1" type="number" min="0" placeholder="赔率" />
+      </el-form-item>
+    </div>
 
     <el-form-item prop="sort" label="排列顺序">
       <el-input v-model.trim="formData.sort" type="number" min="0" placeholder="排列顺序" />
@@ -39,6 +50,7 @@ export default {
       rules: {
         name: validators.validateRequired('类型名称'),
         odds1: validators.validateRequired('赔率'),
+        odds2: validators.validateRequired('赔率'),
         sort: validators.validateInteger('排列顺序')
       }
     }

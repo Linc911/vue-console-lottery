@@ -17,13 +17,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="pc" label="是否PC" :min-width="45">
+      <el-table-column prop="pc" label="是否PC" :min-width="40">
         <template slot-scope="scope">
           <BaseIndicator :status="scope.row.pc"/>
         </template>
       </el-table-column>
 
-      <el-table-column prop="mp" label="是否MP" :min-width="45">
+      <el-table-column prop="mp" label="是否MP" :min-width="40">
         <template slot-scope="scope">
           <BaseIndicator :status="scope.row.mp"/>
         </template>

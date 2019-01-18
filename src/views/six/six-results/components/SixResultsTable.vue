@@ -45,9 +45,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="amount" label="订单数量" />
+      <el-table-column prop="amount" label="订单数量" width="45" />
 
-      <el-table-column prop="totalBets" label="注单数量" />
+      <el-table-column prop="totalBets" label="注单数量" width="45" />
 
       <el-table-column prop="totalAmount" label="下注金额">
         <template slot-scope="scope">
@@ -61,13 +61,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="结算状态" :min-width="70">
+      <el-table-column label="结算状态" :width="70">
         <template slot-scope="scope">
           <span>{{ scope.row.status | lotteryStatus }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :min-width="210">
+      <el-table-column label="操作" :min-width="215">
         <template slot-scope="scope">
           <el-button
             @click="showDialog(scope.row, 'dialogBets')"

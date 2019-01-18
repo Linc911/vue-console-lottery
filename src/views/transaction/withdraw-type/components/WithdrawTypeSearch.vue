@@ -1,15 +1,13 @@
 <template lang="html">
   <el-form :model="formData" size="small" inline>
-    <FormSelectStatic
-      @on-change="$set(formData, 'status', $event)"
-      :options="[
-        { value: 0, label: '启用' },
-        { value: 1, label: '禁用' }
-      ]"
-      label="启用状态"
-      width="100px"
-      ref="status"
-    />
+    <el-form-item label="启用状态">
+      <FormSelectStatic
+        @on-change="$set(formData, 'status', $event)"
+        :options="[ '启用', '禁用' ]"
+        :styles="{ width: '100px' }"
+        ref="status"
+      />
+    </el-form-item>
 
     <div style="display: inline-block">
       <SearchIcon @click.native="search" />

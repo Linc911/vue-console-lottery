@@ -2,14 +2,15 @@
   <!-- 条件筛选 -->
   <div class="search">
     <el-form :model="formData" size="small" inline>
-      <FormInput
-        @keyup.native.enter="$emit('on-search', formData)"
-        @submit.prevent.stop
-        @on-change="$set(formData, 'name', $event)"
-        label="分润设置名称"
-        width="174px"
-        ref="name"
-      />
+      <el-form-item label="分润设置名称">
+        <FormInput
+          @keyup.native.enter="$emit('on-search', formData)"
+          @on-change="$set(formData, 'name', $event)"
+          placeholder="分润设置名称"
+          :styles="{ width: '140px' }"
+          ref="name"
+        />
+      </el-form-item>
 
       <FormSelect
         @on-change="$set(formData, 'gameConfigId', $event)"
@@ -22,16 +23,14 @@
         ref="gameConfigId"
       />
 
-      <FormSelectStatic
-        @on-change="$set(formData, 'status', $event)"
-        :options="[
-          { value: 0, label: '启用' },
-          { value: 1, label: '禁用' },
-        ]"
-        label="启用状态"
-        width="100px"
-        ref="status"
-      />
+      <el-form-item label="启用状态">
+        <FormSelectArray
+          @on-change="$set(formData, 'status', $event)"
+          :options="[ '启用', '禁用' ]"
+          :styles="{ width: '100px' }"
+          ref="status"
+        />
+      </el-form-item>
 
       <div style="display: inline-block">
         <SearchIcon @click.native="search" />
@@ -46,14 +45,14 @@ import { searchInnerMixin } from '@/mixins'
 
 import FormInput from '@/components/form/FormInput'
 import FormSelect from '@/components/form/FormSelect'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
   name: 'RebateSettingSearch',
   components: {
     FormInput,
     FormSelect,
-    FormSelectStatic
+    FormSelectArray
   },
   mixins: [ searchInnerMixin ]
 }

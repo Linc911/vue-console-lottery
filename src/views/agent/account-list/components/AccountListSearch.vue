@@ -1,15 +1,16 @@
 <template lang="html">
   <!-- 条件筛选 -->
   <div class="search">
-    <el-form :model="formData" size="small" inline>
-      <FormInput
-        @keyup.native.enter="$emit('on-search', formData)"
-        @submit.prevent.stop
-        @on-change="$set(formData, 'username', $event)"
-        label="代理账户"
-        width="174px"
-        ref="username"
-      />
+    <el-form @submit.native.prevent :model="formData" size="small" inline>
+      <el-form-item label="代理账户">
+        <FormInput
+          @keyup.native.enter="$emit('on-search', formData)"
+          @on-change="$set(formData, 'username', $event)"
+          placeholder="代理账户"
+          :styles="{ width: '140px' }"
+          ref="username"
+        />
+      </el-form-item>
 
       <FormDateRange @on-change="handleDateRangeChange" ref="dateRange" />
 

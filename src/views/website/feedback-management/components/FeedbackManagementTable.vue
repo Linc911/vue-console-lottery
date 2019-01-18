@@ -3,6 +3,8 @@
     <el-table :data="data" size="small" highlight-current-row border>
       <el-table-column type="index" :width="36" />
 
+      <el-table-column prop="username" label="用户账号" :min-width="100"/>
+
       <el-table-column prop="title" label="反馈标题" :min-width="120"/>
 
       <el-table-column prop="content" label="反馈内容" :min-width="240"/>

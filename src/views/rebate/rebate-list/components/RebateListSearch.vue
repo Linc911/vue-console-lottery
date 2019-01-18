@@ -1,15 +1,16 @@
 <template lang="html">
   <!-- 条件筛选 -->
   <div class="search">
-    <el-form :model="formData" size="small" inline>
-      <FormInput
-        @keyup.native.enter="$emit('on-search', formData)"
-        @submit.prevent.stop
-        @on-change="$set(formData, 'userName', $event)"
-        label="用户账号"
-        width="174px"
-        ref="userName"
-      />
+    <el-form @submit.native.prevent :model="formData" size="small" inline>
+      <el-form-item label="用户账号">
+        <FormInput
+          @keyup.native.enter="$emit('on-search', formData)"
+          @on-change="$set(formData, 'userName', $event)"
+          placeholder="用户账号"
+          :styles="{ width: '140px' }"
+          ref="userName"
+        />
+      </el-form-item>
 
       <!-- <FormSelect
         @on-change="$set(formData, 'gameConfigId', $event)"

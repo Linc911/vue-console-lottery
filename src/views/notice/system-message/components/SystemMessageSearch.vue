@@ -1,12 +1,13 @@
 <template lang="html">
   <el-form :model="formData" size="small" inline>
-    <FormInput
-      @keyup.native.enter="$emit('on-search', formData)"
-      @on-change="$set(formData, 'author', $event)"
-      label="消息作者"
-      width="174px"
-      ref="author"
-    />
+    <el-form-item label="消息作者">
+      <FormInput
+        @keyup.native.enter="$emit('on-search', formData)"
+        @on-change="$set(formData, 'author', $event)"
+        :styles="{ width: '140px' }"
+        ref="author"
+      />
+    </el-form-item>
 
     <FormSelect
       @on-change="$set(formData, 'target', $event)"

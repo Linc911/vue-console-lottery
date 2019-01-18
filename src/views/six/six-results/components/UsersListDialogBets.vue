@@ -8,13 +8,9 @@
     <!-- 条件筛选 -->
     <el-form :model="formData" size="small" inline style="display: none">
       <el-form-item label="结算状态">
-        <FormSelectStatic
+        <FormSelectArray
           @on-change="$set(formData, 'status', $event)"
-          :options="[
-            { value: 0, label: '未结算' },
-            { value: 1, label: '中奖' },
-            { value: 2, label: '未中奖' }
-          ]"
+          :options="[ '未结算', '中奖', '未中奖' ]"
           :styles="{ width: '100px' }"
           ref="status"
         />
@@ -32,8 +28,6 @@
       <el-table :data="tableData" size="small" highlight-current-row border>
 
         <el-table-column type="index" :width="36" />
-
-        <el-table-column prop="username" label="账户名称" :width="100" />
 
         <el-table-column prop="currentDrawno" label="投注期号" :min-width="90" />
 
@@ -93,7 +87,7 @@ import { onePageMixin } from '@/mixins'
 import BaseIcon from '@/components/base/BaseIcon'
 import FormInput from '@/components/form/FormInput'
 import FormSelectGame from '@/components/form/FormSelectGame'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectArray from '@/components/form/FormSelectArray'
 import BasePopoverTextarea from '@/components/base/BasePopoverTextarea'
 
 import DialogBetsDetail from '@/components/dialog/DialogBetsDetail'
@@ -103,7 +97,7 @@ export default {
   components: {
     FormInput,
     FormSelectGame,
-    FormSelectStatic,
+    FormSelectArray,
     BasePopoverTextarea,
     BaseIcon,
     DialogBetsDetail
