@@ -6,11 +6,7 @@
     style="min-width: 768px"
   >
     <!-- 条件筛选 -->
-    <el-form
-      :model="formData"
-      size="small"
-      inline
-    >
+    <el-form :model="formData" size="small" inline>
       <el-form-item label="彩票期号">
         <FormInput
           @keyup.native.enter="$emit('on-search', formData)"
@@ -156,7 +152,7 @@ export default {
   methods: {
     // 判断表格中的 注单为赢时；高亮显示这行
     tableRowClassName ({ row }) {
-      if (row.totalAmount < row.totalAwardAmount) {
+      if (row.totalAwardAmount > 0 ) {
         return 'warning-row'
       }
       return ''
