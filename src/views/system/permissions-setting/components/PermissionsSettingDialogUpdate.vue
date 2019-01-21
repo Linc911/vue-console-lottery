@@ -22,7 +22,7 @@ export default {
   data () {
     return {
       updateHttpAPI: 'updateSystePermissionsItem',
-      httpParams: { id: this.data.id }
+      httpParams: {}
     }
   },
   watch: {

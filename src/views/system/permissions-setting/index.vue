@@ -6,7 +6,7 @@
         <PermissionsSettingSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
-        <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
+        <BaseAdd @on-click="$refs.dialogCreate.toggleDialogVisible(true)" />
       </div>
     </SearchLayout>
 

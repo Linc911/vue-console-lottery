@@ -22,7 +22,7 @@ export default {
   data () {
     return {
       updateHttpAPI: 'updateSystemRolesItem',
-      httpParams: { id: this.data.id }
+      httpParams: {}
     }
   },
   watch: {

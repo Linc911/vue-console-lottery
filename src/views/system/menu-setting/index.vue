@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="right">
-        <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
+        <BaseAdd @on-click="$refs.dialogCreate.toggleDialogVisible(true)" />
       </div>
     </SearchLayout>
 
@@ -36,7 +36,7 @@ export default {
     return {
       tableOriginData: [],
       tableData: [],
-      tableHttpAPI: 'fetchSystemMenuList',
+      tableHttpAPI: 'fetchSidebarMenuList',
       requestParams: {}
     }
   },

@@ -12,7 +12,7 @@
 
     <el-form-item prop="permission" label="权限标识">
       <el-input
-        @keyup.native.enter="validateForm ()"
+        @keyup.native.enter="validateForm()"
         v-model.trim="formData.permission"
         placeholder="log:query"
       />

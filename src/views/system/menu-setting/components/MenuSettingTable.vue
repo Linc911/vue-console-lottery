@@ -1,10 +1,10 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" :max-height="590" highlight-current-row border>
+    <el-table :data="data" size="small" :max-height="590" highlight-current-row stripe border>
 
       <el-table-column type="index" :width="36" />
 
-      <el-table-column prop="name" label="名称" :min-width="120">
+      <el-table-column prop="name" label="名称" :min-width="140">
         <template slot-scope="scope">
           <!-- 不同级别菜单显示不同菜单 -->
           <div v-if="!scope.row.parentId" @click="$emit('on-submenu-toggle', scope.row)">
@@ -20,13 +20,13 @@
 
       <el-table-column prop="url" label="访问路由" :min-width="140" />
 
-      <el-table-column prop="css" label="图标" :min-width="45">
+      <el-table-column prop="css" label="图标" :min-width="40">
         <template slot-scope="scope">
           <i class="fa" :class="scope.row.css"></i>
         </template>
       </el-table-column>
 
-      <el-table-column prop="sort" label="排序" :min-width="45" />
+      <el-table-column prop="sort" label="排序" :min-width="40" />
 
       <el-table-column prop="createTime" label="创建时间" :min-width="140">
         <template slot-scope="scope">

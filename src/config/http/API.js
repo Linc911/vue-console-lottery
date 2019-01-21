@@ -8,8 +8,8 @@ export default {
   fetchPublicUsersBasic: (options) => axios.get('/api-u/users/basic', options), // 会员列表(简单数据)
   fetchPublicUsers: (options) => axios.get('/api-u/backend/userList', options), // 会员列表
 
-  fetchSidebarMenuList: (options) => axios.get('/api-b/menus/all', options), // 页面侧边栏菜单列表
-  fetchSidebarMenu: (options) => axios.get('/api-b/menus/me', options), // 页面侧边栏菜单列表（控制权限）
+  fetchSidebarMenuList: (options) => axios.get('/api-b/menus/all', options), // 页面侧边栏菜单列表（仅一层结构）
+  fetchSidebarMenu: (options) => axios.get('/api-b/menus/me', options), // 页面侧边栏菜单列表（层级结构）
 
   fetchGameClasses: (options) => axios.get('/api-g/gameconfig/parent', options), // 游戏菜单(大类)
   fetchGamesMenu: (options) => axios.get('/api-g/GameTypeConfig/tree', options), // 游戏菜单（细分）
@@ -31,7 +31,6 @@ export default {
 
   /* ===================================== 系统管理 ======================================= */
 
-  fetchSystemMenuList: (options) => axios.get('/api-b/menus/all', options), // 菜单列表
   createSystemMenuItem: (data) => axios.post('/api-b/menus', data), // 创建新菜单
   updateSystemMenuItem: (data) => axios.put('/api-b/menus', data), // 修改菜单配置
 

@@ -4,7 +4,7 @@
     :rules="rules"
     label-width="80px"
     size="small"
-    ref="formCreate"
+    ref="form"
   >
     <el-form-item label="上级菜单" prop="parentId">
       <el-select
@@ -36,7 +36,7 @@
 
     <el-form-item label="排列顺序" prop="sort">
       <el-input
-        @keyup.native.enter="submitForm('formCreate')"
+        @keyup.native.enter="validateForm()"
         v-model.trim="formData.sort"
         type="number"
         :min="1"
@@ -44,34 +44,22 @@
         placeholder="排列顺序"
       />
     </el-form-item>
-
-    <el-form-item style="text-align: right">
-      <el-checkbox v-model="checked" class="pull-left">{{ saveString }}</el-checkbox>
-      <el-button @click="submitForm('formCreate')" type="primary" size="small">确定</el-button>
-    </el-form-item>
   </el-form>
 </template>
 
 <script>
-import config from '@/config/data'
+import { formComponentMixin } from '@/mixins'
+
 import validators from '@/config/form'
 
 export default {
   name: 'MenuSettingForm',
-  props: {
-    data: {
-      type: Object,
-      default () {
-        return { parentId: '', name: '', url: '', css: 'fa-gear', sort: 0 }
-      }
-    }
-  },
+  mixins: [ formComponentMixin ],
   data () {
     return {
-      saveString: config.COMPONENT_CREATION_RECORD,
+      options: this.$store.getters['sidebar/menu'],
       checked: true,
-      options: [],
-      formData: this.data,
+      formData: { parentId: '', name: '', url: '', css: 'fa-gear', sort: 0 },
       rules: {
         parentId: validators.validateSelect('上级菜单'),
         name: validators.validateRequired('菜单名称'),
@@ -83,42 +71,21 @@ export default {
   },
   watch: {
     data () {
-      this.formData = Object.assign(this.formData, this.data)
-
-      this._generateValidationOfUrl(this.data.parentId) // 根据选择不同级别的菜单，url 字段是否是必填
+      // this.formData = Object.assign(this.formData, this.data)
+      // 根据选择不同级别的菜单，url 字段是否是必填
+      this._generateValidationOfUrl(this.data.parentId)
     }
-  },
-  created () {
-    this.fetchMenuList()
   },
   methods: {
     // 根据选择不同级别的菜单，url 字段是否是必填
     hanldeSelectChanged (value) {
+      this.$set(this.formData, 'parentId', value)
+
+      // 根据上级菜单是root时， url才是选填；其他情况必须填写
       this._generateValidationOfUrl(value)
     },
-    // 提交表单
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$emit('on-validated', { data: this.formData, checked: this.checked })
-        } else {
-          this.$message.warning(config.VALIDATION_FAILED)
-        }
-      })
-    },
-    // 初始化表单
-    resetFields () {
-      this.$refs.formCreate.resetFields()
-    },
-    // 请求菜单数据，获取第一级菜单
-    fetchMenuList () {
-      this.$httpAPI.fetchSystemMenuList().then(response => {
-        this.options = this.$_.filter(response.data, (item) => !item.parentId)
-      }).catch(error => console.log(error))
-    },
-    // 根据上级菜单是root时， url才是选填；其他情况必须填写
-    _generateValidationOfUrl (vale) {
-      if (vale) {
+    _generateValidationOfUrl (value) {
+      if (value) {
         this.$set(this.rules, 'url', validators.validateRequired('路由地址'))
       } else {
         this.$set(this.rules, 'url', {})
