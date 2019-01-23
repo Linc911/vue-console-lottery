@@ -11,7 +11,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('loginForm')">短信登录</el-button>
+        <el-button type="primary" @click="submitForm('loginForm')">短信登陆</el-button>
       </el-form-item>
     </el-form>
     <div class="switch-login-type">
@@ -42,12 +42,12 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$message({
-            message: '开始登录中...',
+            message: '开始登陆中...',
             type: 'success'
           })
         } else {
           this.$message({
-            message: '用户名或密码格式不正确，无法登录！',
+            message: '用户名或密码格式不正确，无法登陆！',
             type: 'warning'
           })
           return false

@@ -38,7 +38,7 @@
           <el-input :value="formData.phone | phoneFormat" />
         </el-form-item>
 
-        <el-form-item label="登录密码">
+        <el-form-item label="登陆密码">
           <el-input :value="formData.password" />
         </el-form-item>
 

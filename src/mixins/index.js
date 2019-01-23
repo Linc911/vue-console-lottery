@@ -153,6 +153,22 @@ export const searchInnerMixin = {
     }
   },
   methods: {
+    // 区间变化时，更新搜索条件，通知父组件请求数据
+    handleRangeChange ({ start, end }, AttrName1, AttrName2) {
+      this.formData[AttrName1] = start
+      this.formData[AttrName2] = end
+      this.$emit('on-search', this.formData)
+    },
+    // 选择性变化时，更新搜索条件，通知父组件请求数据
+    handleSelectChange (value, attrName) {
+      this.$set(this.formData, attrName, value)
+      this.$emit('on-search', this.formData)
+    },
+    // 重置搜索组件值，同时按搜索条件请求接口
+    handleRefresh () {
+      this.reset()
+      this.search()
+    },
     // 通知父组件触发搜索事件；将请求参数传给父组件
     search () {
       this.$emit('on-search', this.formData)

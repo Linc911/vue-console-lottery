@@ -21,8 +21,11 @@ export default {
   fetchSixBetsList: (data) => axios.get('/api-g/markSix/userBet', data), // 港彩注单列表
   fetchLotterBetDetail: (data) => axios.get('/api-g/userBet/detail', data), // 单个注单详情
 
-  /* ===================================== 登   录 ======================================= */
+  /* ===================================== 后台主页 ======================================= */
 
+  fetchKeyData: (options) => axios.get('/api-b/index/statistic', options), // 关键数据统计
+
+  /* ===================================== 登   录 ======================================= */
   fetchLogoutInfo: (options) => axios.get('/api-u/sys/logout', options),
   postUserLogin: (data, options) => axios.post('/api-u/sys/login', data, options),
 

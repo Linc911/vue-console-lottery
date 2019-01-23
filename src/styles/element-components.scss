@@ -1,7 +1,13 @@
 /*
  * Override ElementUI Default Components Styles
  */
-
+ @import 'variables';
+ 
+@media only screen and (max-width: 1399px) {
+  .hidden-xl-and-down {
+    display: none !important;
+  }
+}
 /* input 组件 */
 // 设置属性 disabled 时
 .el-input.is-disabled .el-input__inner {
@@ -55,5 +61,15 @@
 .el-table .warning-row {
   color: #f56c6c;
 }
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+  background: #f0f9eb;
+}
 
 
+/* DateTimePicker(range) 组件 */
+.el-date-editor--datetimerange.el-input__inner {
+  width: 340px;
+}
+.el-date-editor .el-range-separator {
+  margin: 0 6px;
+}

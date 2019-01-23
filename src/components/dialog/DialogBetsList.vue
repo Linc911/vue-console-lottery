@@ -152,7 +152,7 @@ export default {
   methods: {
     // 判断表格中的 注单为赢时；高亮显示这行
     tableRowClassName ({ row }) {
-      if (row.totalAwardAmount > 0 ) {
+      if (row.totalAwardAmount > 0) {
         return 'warning-row'
       }
       return ''

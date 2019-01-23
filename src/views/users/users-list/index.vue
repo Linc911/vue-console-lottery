@@ -6,7 +6,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <UsersListTable @on-changed="fetchTableData()" :data="tableData" />
+      <UsersListTable @on-changed="fetchTableData()" @on-sort="handleSortChange" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -41,13 +41,12 @@ export default {
   },
   methods: {
     // 改变分组选择项时，同步数据到列表
-    syncGroupData (payload) {
-      this.$_.forEach(this.tableData, item => {
-        if (String(item.id) === payload.userId) {
-          item.groupIds = payload.value
-          item.groupNames = payload.label
-        }
-      })
+    handleSortChange (orderType) {
+      // 重置到第一页
+      this.$set(this.page, 'current', 1)
+      // 带上请求顺序参数
+      this.$set(this.requestParams, 'orderType', orderType)
+      this.fetchTableData()
     }
   }
 }

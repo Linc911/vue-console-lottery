@@ -1,7 +1,7 @@
 /* ========================================== 登   录 ============================================= */
 
-import LoginLayout from '@/views/login/LoginLayout'
-import LoginUsername from '@/views/login/LoginUsername'
+const LoginLayout = resolve => require(['@/views/login/LoginLayout'], resolve)
+const LoginUsername = resolve => require(['@/views/login/LoginUsername'], resolve)
 const LoginPhone = resolve => require(['@/views/login/LoginPhone'], resolve)
 
 /* ========================================== 主   页 ============================================ */
@@ -147,7 +147,7 @@ const routes = [
     path: '',
     redirect: '/login/username'
   },
-  /* ========================================== 登录模块 ============================================ */
+  /* ========================================== 登陆模块 ============================================ */
   {
     name: 'LoginLayout',
     path: '/login',
@@ -158,13 +158,13 @@ const routes = [
         name: 'LoginUsername',
         path: 'username',
         component: LoginUsername,
-        meta: { title: '账号登录', keepAlive: true }
+        meta: { title: '账号登陆', keepAlive: true }
       },
       {
         name: 'LoginPhone',
         path: 'phone',
         component: LoginPhone,
-        meta: { title: '手机登录', keepAlive: true }
+        meta: { title: '手机登陆', keepAlive: true }
       }
     ]
   },
@@ -197,19 +197,19 @@ const routes = [
             name: 'UserActiveInfoUpdate',
             path: 'info/update',
             component: UserActiveInfoUpdate,
-            meta: { title: '修改登录用户信息', keepAlive: true }
+            meta: { title: '修改登陆用户信息', keepAlive: true }
           },
           {
             name: 'UserActiveAvatarUpdate',
             path: 'avatar/update',
             component: UserActiveAvatarUpdate,
-            meta: { title: '上传登录用户头像', keepAlive: true }
+            meta: { title: '上传登陆用户头像', keepAlive: true }
           },
           {
             name: 'UserActivePhoneUpdate',
             path: 'phone/update',
             component: UserActivePhoneUpdate,
-            meta: { title: '修改登录用户绑定手机', keepAlive: true }
+            meta: { title: '修改登陆用户绑定手机', keepAlive: true }
           }
         ]
       },

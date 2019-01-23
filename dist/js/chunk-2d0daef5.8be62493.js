@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0daef5"],{"6e5e":function(e,n,t){"use strict";t.r(n);var a=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",{staticClass:"finance-manage"},[e.$route.meta.keepAlive?t("keep-alive",[t("router-view")],1):t("router-view")],1)},i=[],r=t("048f"),u={},l=Object(r["a"])(u,a,i,!1,null,null,null);l.options.__file="SportManage.vue";n["default"]=l.exports}}]);
-//# sourceMappingURL=chunk-2d0daef5.8be62493.js.map

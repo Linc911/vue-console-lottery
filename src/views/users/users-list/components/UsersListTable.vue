@@ -1,17 +1,25 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" max-height="600" highlight-current-row border>
+    <el-table
+      @sort-change="handleTableSort"
+      :data="data"
+      size="small"
+      max-height="600"
+      highlight-current-row
+      stripe
+      border
+    >
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="username" label="会员账号" :min-width="100" />
 
-      <el-table-column prop="createTime" label="注册时间" :min-width="140" sortable>
+      <!-- <el-table-column class-name="hidden-xl-and-down" prop="createTime" label="注册时间" :min-width="140" sortable="custom">
         <template slot-scope="scope">
           <span>{{ scope.row.createTime | time }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
-      <el-table-column prop="createTime" label="最近登录时间" :min-width="140" sortable>
+      <el-table-column prop="loginTime" label="最近登陆时间" :min-width="140" sortable="custom">
         <template slot-scope="scope">
           <span>{{ scope.row.loginTime | time }}</span>
         </template>
@@ -23,14 +31,14 @@
             <span>{{ scope.row.groupNames }}</span>
             <BaseIcon
               @on-click="showDialog(scope.row, 'dialogGroup')"
-              icon="el-icon-edit"
+              icon="el-icon-zoom-in"
               class="pull-right"
             />
           </div>
         </template>
       </el-table-column>
 
-      <el-table-column prop="banlance" label="余额" :min-width="120" sortable>
+      <el-table-column prop="banlance" label="余额" :min-width="150" sortable="custom" align="right">
         <template slot-scope="scope">
           <span>{{ scope.row.banlance | RMB }}</span>
           <!-- 各种账号的金额查询 -->
@@ -51,21 +59,21 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="win" label="输赢" :min-width="100" sortable>
+      <el-table-column prop="win" label="输赢" :min-width="120" sortable="custom" align="right">
         <template slot-scope="scope">
           <span>{{ scope.row.win | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="agent" label="代理状态" :width="45">
+      <el-table-column prop="agent" label="代理状态" :width="60">
         <template slot-scope="scope">
-          <BaseIndicator :status="scope.row.agent"/>
+          <span>{{ scope.row.agent ? '代理' : '未代理' }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="recharge" label="充值状态" :width="45">
+      <el-table-column prop="recharge" label="充值状态" :width="60">
         <template slot-scope="scope">
-          <BaseIndicator :status="scope.row.recharge"/>
+          <span>{{ scope.row.recharge ? '充值' : '未充值' }}</span>
         </template>
       </el-table-column>
 
@@ -85,26 +93,28 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :width="200">
+      <el-table-column label="操作" :min-width="200">
         <template slot-scope="scope">
-          <el-button
-            @click="showDialog(scope.row, 'dialogDetail')"
-            type="primary"
-            icon="el-icon-view"
-            size="mini"
-          />
+          <div>
+            <el-button
+              @click="showDialog(scope.row, 'dialogDetail')"
+              type="primary"
+              icon="el-icon-view"
+              size="mini"
+            />
 
-          <el-button
-            @click="showDialog(scope.row, 'dialogBets')"
-            type="primary"
-            size="mini"
-          >注单详情</el-button>
+            <el-button
+              @click="showDialog(scope.row, 'dialogBets')"
+              type="primary"
+              size="mini"
+            >注单详情</el-button>
 
-          <el-button
-            @click="showDialog(scope.row, 'dialogLogs')"
-            type="primary"
-            size="mini"
-          >日志详情</el-button>
+            <el-button
+              @click="showDialog(scope.row, 'dialogLogs')"
+              type="primary"
+              size="mini"
+            >日志详情</el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -139,7 +149,6 @@
 import { tableComponentMixin, switchMixin } from '@/mixins'
 
 import BaseIcon from '@/components/base/BaseIcon'
-import BaseIndicator from '@/components/base/BaseIndicator'
 
 import DialogGroupSetting from './DialogGroupSetting'
 import UserRebateSetting from './UserRebateSetting'
@@ -151,7 +160,6 @@ export default {
   name: 'UsersListTable',
   components: {
     BaseIcon,
-    BaseIndicator,
     DialogGroupSetting,
     UserRebateSetting,
     UsersListDialogDetail,
@@ -166,6 +174,46 @@ export default {
         API: 'updateUserListStatus',
         attrId: 'userId',
         attrValue: 'control'
+      }
+    }
+  },
+  methods: {
+    handleTableSort ({ prop, order }) {
+      let orderType = ''
+
+      // 没有输入排序要求，按原来默认列表排序
+      if (prop === null) {
+        // 将排序要求通知父组件
+        this.$emit('on-sort', orderType)
+        // 程序不再往下执行
+        return
+      }
+
+      // 按注册时间排序时
+      if (prop === 'createTime') {
+        order === 'ascending' ? (orderType = 10) : (orderType = 11)
+        this.$emit('on-sort', orderType)
+        return
+      }
+
+      // 按登陆时间排序时
+      if (prop === 'loginTime') {
+        order === 'ascending' ? (orderType = 40) : (orderType = 41)
+        this.$emit('on-sort', orderType)
+        return
+      }
+
+      // 按余额排序时
+      if (prop === 'banlance') {
+        order === 'ascending' ? (orderType = 20) : (orderType = 21)
+        this.$emit('on-sort', orderType)
+        return
+      }
+
+      // 按注册时间排序时
+      if (prop === 'win') {
+        order === 'ascending' ? (orderType = 30) : (orderType = 31)
+        this.$emit('on-sort', orderType)
       }
     }
   }

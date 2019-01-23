@@ -55,15 +55,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .el-input__inner {
-  width: 200px;
+  width: 220px;
   height: 32px;
   padding: 0;
   line-height: 32px;
 }
 .el-range-editor .el-range-input {
-  width: 45%;
+  width: 42%;
   height: 28px;
   padding-left: 10px;
 }

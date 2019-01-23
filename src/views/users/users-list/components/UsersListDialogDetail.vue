@@ -55,7 +55,7 @@
         <el-input :value="formData.createTime | time" />
       </el-form-item>
 
-      <el-form-item prop="loginTime" label="最近登录时间">
+      <el-form-item prop="loginTime" label="最近登陆时间">
         <el-input :value="formData.loginTime | time" />
       </el-form-item>
     </el-form>

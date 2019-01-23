@@ -76,7 +76,7 @@ export default {
     // select 是否添加过滤功能
     filterable: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   data () {

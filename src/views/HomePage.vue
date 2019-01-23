@@ -6,7 +6,7 @@
           <i class="fa fa-gears"></i>
           <span> 关键数据实时指标</span>
         </div>
-        <ul class="clearfix">
+        <ul v-if="dataReady" class="clearfix">
           <router-link
             v-for="item in summary"
             :key="item.identifier"
@@ -23,6 +23,45 @@
         </ul>
       </el-card>
     </section>
+
+    <section class="data-summary">
+      <el-card>
+        <div slot="header">
+          <i class="fa fa-gears"></i>
+          <span> 关键数据指标</span>
+        </div>
+
+        <el-table :data="tableData1" :show-header="false" size="small" border stripe style="width: 100%">
+          <el-table-column prop="name">
+            <template slot-scope="scope">
+              <span>{{ scope.row.name | nameTransfer }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="value">
+            <template slot-scope="scope">
+              <span>{{ scope.row.value | RMB }}</span>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <el-table
+          :data="tableData2"
+          :show-header="false"
+          size="small"
+          border
+          stripe
+          style="width: 100%; margin-top: 30px;"
+        >
+          <el-table-column prop="name">
+            <template slot-scope="scope">
+              <span>{{ scope.row.name | nameTransfer }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="value" />
+        </el-table>
+      </el-card>
+    </section>
+
     <div class="data-summary">
       <!-- 会员在线人员统计 -->
       <!-- <section class="data-summary">
@@ -48,7 +87,8 @@
           </div>
         </el-card>
       </section>
-      <!-- 优博公告 -->
+
+      <!-- 系统公告 -->
       <section class="data-summary">
         <el-card>
           <div slot="header">
@@ -68,7 +108,8 @@
           </div>
         </el-card>
       </section>
-      <!-- 站内公告 -->
+
+      <!-- 系统消息 -->
       <section class="data-summary">
         <el-card>
           <div slot="header">
@@ -86,12 +127,13 @@
           </ul>
         </el-card>
       </section>
-      <!-- 登录异常警告 -->
+
+      <!-- 登陆异常警告 -->
       <section class="data-summary">
         <el-card>
           <div slot="header">
             <i class="fa fa-gears"></i>
-            <span> 登录异常警告</span>
+            <span> 登陆异常警告</span>
           </div>
           <div style="min-height: 120px;">
             <p>暂无内容</p>
@@ -115,6 +157,34 @@ export default {
     BarChart,
     DoughnutChart
   },
+  filters: {
+    nameTransfer (value) {
+      switch (value) {
+        case 'onlineuseramount':
+          return '当前在线人数'
+        case 'useramount':
+          return '总注册会员数'
+        case 'todayuseramount':
+          return '今日新增会员数'
+        case 'todayorderamount':
+          return '今日注单笔数'
+        case 'todayordermoney':
+          return '今日注单总额'
+        case 'totalAwardAmount':
+          return '今日派彩总额'
+        case 'controlamount':
+          return '监控会员数'
+        case 'activeuseramount':
+          return '活跃用户数'
+        case 'depositmoney':
+          return '今日充值金额'
+        case 'drawmoney':
+          return '今日提款金额'
+        default:
+          return ''
+      }
+    }
+  },
   data () {
     return {
       show: true,
@@ -123,6 +193,9 @@ export default {
       systemNotices: [],
       systemMessages: [],
       statisticData: {},
+      dataReady: false,
+      tableData1: [],
+      tableData2: [],
       summary: [
         { title: '今日新增会员数量', identifier: 'todayuseramount', color: 'blue', path: { name: 'UsersList' } },
         { title: '总会员数量', identifier: 'useramount', color: 'orange', path: { name: 'UsersList' } },
@@ -136,6 +209,7 @@ export default {
     this.fetchIndexStatistic()
     this.fetchSystemNotices()
     this.fetchSystemMessages()
+    this.fetchKeyData()
   },
   mounted () {
     this.fetchUsersOnline()
@@ -149,6 +223,7 @@ export default {
     fetchIndexStatistic () {
       this.$axios.get('/api-b/index/statistic').then(response => {
         this.statisticData = response.data.data
+        this.dataReady = true
       }).catch(error => console.log(error))
     },
     // 在线会员统计
@@ -183,6 +258,82 @@ export default {
         params: { pageNo: 1, pageSize: 10 }
       }).then((response) => {
         this.systemMessages = response.data.data
+      }).catch((error) => console.log(error))
+    },
+    fetchKeyData () {
+      this.$httpAPI.fetchKeyData().then((response) => {
+        const obj = response.data.data
+        const table1 = []
+        const table2 = []
+
+        for (let key in obj) {
+          switch (key) {
+            case 'onlineuseramount':
+              table2[0] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            case 'useramount':
+              table2[2] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            case 'todayuseramount':
+              table2[3] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            case 'todayorderamount':
+              table1[0] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            case 'todayordermoney':
+              table1[1] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            case 'totalAwardAmount':
+              table1[2] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            case 'controlamount':
+              table2[4] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            case 'activeuseramount':
+              table2[1] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            case 'depositmoney':
+              table1[3] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            case 'drawmoney':
+              table1[4] = {
+                name: key,
+                value: obj[key]
+              }
+              break
+            default:
+              return
+          }
+        }
+        this.tableData1 = table1
+        this.tableData2 = table2
       }).catch((error) => console.log(error))
     },
     // 存款统计

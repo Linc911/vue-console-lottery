@@ -6,31 +6,31 @@
   >
     <el-form :model="formData" :rules="rules" label-width="80px" size="small" ref="form" class="clearfix">
       <el-form-item prop="number1" label="正码一">
-        <el-input v-model.trim="formData.number1" />
+        <el-input v-model.trim="formData.number1" type="number" min="1" max="49" />
       </el-form-item>
 
       <el-form-item prop="number2" label="正码二">
-        <el-input v-model.trim="formData.number2" />
+        <el-input v-model.trim="formData.number2" type="number" min="1" max="49" />
       </el-form-item>
 
       <el-form-item prop="number3" label="正码三">
-        <el-input v-model.trim="formData.number3" />
+        <el-input v-model.trim="formData.number3" type="number" min="1" max="49" />
       </el-form-item>
 
       <el-form-item prop="number4" label="正码四">
-        <el-input v-model.trim="formData.number4" />
+        <el-input v-model.trim="formData.number4" type="number" min="1" max="49" />
       </el-form-item>
 
       <el-form-item prop="number5" label="正码五">
-        <el-input v-model.trim="formData.number5" />
+        <el-input v-model.trim="formData.number5" type="number" min="1" max="49" />
       </el-form-item>
 
       <el-form-item prop="number6" label="正码六">
-        <el-input v-model.trim="formData.number6" />
+        <el-input v-model.trim="formData.number6" type="number" min="1" max="49" />
       </el-form-item>
 
       <el-form-item prop="number7" label="特码">
-        <el-input v-model.trim="formData.number7" />
+        <el-input v-model.trim="formData.number7" type="number" min="1" max="49" />
       </el-form-item>
 
       <el-form-item style="text-align: right">
@@ -100,15 +100,26 @@ export default {
     },
     // 确认撤单；发送请求，成功时通知父组件更新数据
     handleConfirm () {
-      this.$message.warning('接口调试中...')
-      return
-      // eslint-disable-next-line
-      console.log(this.data)
-      console.log(this.formData)
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.$httpAPI.updateSixResultManual(this.formData).then(response => {
-            if (response.data.data) {
+          this.dialogVisible = false
+
+          const result = [
+            this.formData.number1,
+            this.formData.number2,
+            this.formData.number3,
+            this.formData.number4,
+            this.formData.number5,
+            this.formData.number6,
+            this.formData.number7
+          ]
+
+          this.$httpAPI.updateSixResultManual({
+            drawno: this.data.drawno,
+            gameType: this.data.gameType,
+            balls: result
+          }).then(response => {
+            if (response.data.status === 200) {
               this.$emit('on-updated')
 
               this.$message.success(config.UPDATE_SUCCEEDED)

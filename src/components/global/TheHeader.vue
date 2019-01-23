@@ -100,7 +100,7 @@ export default {
   color: #333;
 }
 
-// 用户登录信息
+// 用户登陆信息
 .head-user {
   float: right;
 }

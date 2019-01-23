@@ -2,7 +2,7 @@
   <el-form-item>
     <el-button
       type="primary"
-      icon="el-icon-delete"
+      icon="el-icon-refresh"
       size="mini"
       title="重置"
       style="font-size: 16px"

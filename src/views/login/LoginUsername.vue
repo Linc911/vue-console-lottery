@@ -15,7 +15,7 @@
      </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+        <el-button type="primary" @click="submitForm('loginForm')">登陆</el-button>
       </el-form-item>
     </el-form>
     <div class="switch-login-type">
@@ -48,7 +48,7 @@ export default {
         if (valid) {
           this.$store.dispatch('auth/login', this._generatePairKeys(this.formData))
         } else {
-          this.$message.warning('用户名或密码格式不正确，无法登录！')
+          this.$message.warning('用户名或密码格式不正确，无法登陆！')
           return false
         }
       })

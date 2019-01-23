@@ -28,8 +28,8 @@
           <el-input v-model.trim="formData.phone" type="number" placeholder="手机号码" />
         </el-form-item>
 
-        <el-form-item prop="password" label="登录密码">
-          <el-input v-model.trim="formData.password" placeholder="登录密码" />
+        <el-form-item prop="password" label="登陆密码">
+          <el-input v-model.trim="formData.password" placeholder="登陆密码" />
         </el-form-item>
 
         <el-form-item prop="withdrawal" label="取款密码">
@@ -90,8 +90,8 @@ export default {
           { min: 4, max: 15, message: '用户名称长度在 4 - 15 字符之间' }
         ],
         password: [
-          { required: true, message: '登录密码不能为空' }
-          // { min: 6, max: 20, message: '登录密码长度在 6 - 20 字符之间' }
+          { required: true, message: '登陆密码不能为空' }
+          // { min: 6, max: 20, message: '登陆密码长度在 6 - 20 字符之间' }
         ],
         phone: [
           { required: true, message: '手机号码不能为空' },
