@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <el-table :data="data" size="small" highlight-current-row stripe border>
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="areaName" label="所属地区" />
@@ -25,22 +25,47 @@
 
       <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
+          <div>
+            <!-- <el-button
+              @click="showDialog(scope.row, 'dialogDetail')"
+              type="primary"
+              icon="el-icon-view"
+              size="mini"
+            /> -->
+
+            <el-button
+              @click="showDialog(scope.row, 'dialogUpdate')"
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+            />
+
+            <el-button
+              @click="showDialog(scope.row, 'dialogDelete')"
+              type="warning"
+              icon="el-icon-delete"
+              size="mini"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>
 
+    <!-- 详情弹框 -->
+    <BanksSettingDialogDetail :data="activeItem" ref="dialogDetail" />
+
     <!-- 修改弹框 -->
-    <UsersSettingDialogDetail :data="activeItem" ref="dialogDetail" />
-    <!-- 修改弹框 -->
-    <UsersSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <BanksSettingDialogUpdate
+      @on-updated="$emit('on-updated')"
+      :data="activeItem"
+      ref="dialogUpdate"
+    />
+
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
       @on-confirm="handleDeleteConfirm"
-      title="用户账户"
-      :name="activeItem.username"
+      title="银行名称"
+      :name="activeItem.name"
       ref="dialogDelete"
     />
   </div>
@@ -49,17 +74,15 @@
 <script>
 import { tableComponentMixin, switchMixin } from '@/mixins'
 
-import BaseIndicator from '@/components/base/BaseIndicator'
-import UsersSettingDialogDetail from './UsersSettingDialogDetail'
-import UsersSettingDialogUpdate from './UsersSettingDialogUpdate'
+import BanksSettingDialogDetail from './BanksSettingDialogDetail'
+import BanksSettingDialogUpdate from './BanksSettingDialogUpdate'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
-  name: 'UsersSettingTable',
+  name: 'BanksSettingTable',
   components: {
-    BaseIndicator,
-    UsersSettingDialogDetail,
-    UsersSettingDialogUpdate,
+    BanksSettingDialogDetail,
+    BanksSettingDialogUpdate,
     DialogDeleteConfirm
   },
   mixins: [ tableComponentMixin, switchMixin ],
@@ -72,7 +95,7 @@ export default {
         attrId: 'id',
         attrValue: 'enabled'
       },
-      activeItem: { username: '' }
+      activeItem: { name: '' }
     }
   }
 }

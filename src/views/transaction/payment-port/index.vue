@@ -13,18 +13,14 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <PaymentPortTable
-        :data="tableData"
-        @on-updated="fetchTableData()"
-        @on-status-change="fetchTableData()"
-      />
+      <PaymentPortTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
         :page="page"
-        :requestParams="requestParams"
         :httpURL="tableHttpAPI"
+        :requestParams="requestParams"
       />
     </div>
 
@@ -34,29 +30,24 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationPostMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
 import PaymentPortSearch from './components/PaymentPortSearch'
-import BaseAdd from '@/components/base/BaseAdd'
 import PaymentPortTable from './components/PaymentPortTable'
 import PaymentPortDialogCreate from './components/PaymentPortDialogCreate'
 
 export default {
-  name: 'TransactionPaymentType',
+  name: 'TransactionPaymentPort',
   components: {
-    SearchLayout,
     PaymentPortSearch,
-    BaseAdd,
     PaymentPortTable,
     PaymentPortDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationPostMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationPostMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchTransactionPaymentPort',
-      requestParams: {},
+      requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }
     }
   }

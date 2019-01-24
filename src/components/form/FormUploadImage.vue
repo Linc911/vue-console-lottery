@@ -3,6 +3,7 @@
     :action="action"
     :on-success="handleUploadSuccess"
     :on-remove="handleRemoveFile"
+    :file-list="fileList"
     :limit="limit"
     :disabled="uploadDisabled"
     list-type="picture-card"
@@ -18,6 +19,12 @@ export default {
     limit: {
       type: Number,
       default: 1
+    },
+    fileList: {
+      type: Array,
+      default () {
+        return []
+      }
     }
   },
   data () {

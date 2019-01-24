@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <el-table :data="data" size="small" max-height="600" highlight-current-row stripe border>
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="name" label="类型名称" :min-width="140" />
@@ -22,16 +22,28 @@
 
       <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
+          <div>
+            <el-button
+              @click="showDialog(scope.row, 'dialogDetail')"
+              type="primary"
+              icon="el-icon-view"
+              size="mini"
+            />
 
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
+            <el-button
+              @click="showDialog(scope.row, 'dialogUpdate')"
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+            />
 
-          <el-button
-            @click="showDialog(scope.row, 'dialogDelete')"
-            type="warning"
-            icon="el-icon-delete"
-            size="mini"
-          />
+            <el-button
+              @click="showDialog(scope.row, 'dialogDelete')"
+              type="warning"
+              icon="el-icon-delete"
+              size="mini"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -40,7 +52,7 @@
     <WithdrawTypeDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 修改弹框 -->
-    <WithdrawTypeDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <WithdrawTypeDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm

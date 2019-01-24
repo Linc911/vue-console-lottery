@@ -12,20 +12,16 @@
     </SearchLayout>
 
     <!-- 主要内容 -->
-    <div class="table-list">
+    <div>
       <!-- 表格 -->
-      <PaymentTypeTable
-        :data="tableData"
-        @on-updated="fetchTableData()"
-        @on-status-change="fetchTableData()"
-      />
+      <PaymentTypeTable @on-changed="fetchTableData()" :data="tableData"/>
 
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
         :page="page"
-        :requestParams="requestParams"
         :httpURL="tableHttpAPI"
+        :requestParams="requestParams"
       />
     </div>
 
@@ -35,30 +31,25 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
 import PaymentTypeSearch from './components/PaymentTypeSearch'
-import BaseAdd from '@/components/base/BaseAdd'
 import PaymentTypeTable from './components/PaymentTypeTable'
 import PaymentTypeDialogCreate from './components/PaymentTypeDialogCreate'
 
 export default {
   name: 'TransactionPaymentType',
   components: {
-    SearchLayout,
     PaymentTypeSearch,
-    BaseAdd,
     PaymentTypeTable,
     PaymentTypeDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchTransactionPaymentType',
-      requestParams: { pageNo: 1, pageSize: 20 },
-      page: { current: 1, size: 20, total: 10 }
+      requestParams: { pageNo: 1, pageSize: 10 },
+      page: { current: 1, size: 10, total: 10 }
     }
   }
 }

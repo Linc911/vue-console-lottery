@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <UsersSettingSearch @on-search="handleSearch" />
+        <BanksSettingSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -13,12 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <BanksSettingTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        @on-status-change="fetchTableData()"
-        :data="tableData"
-      />
+      <BanksSettingTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -26,7 +21,6 @@
         :page="page"
         :httpURL="tableHttpAPI"
         :requestParams="requestParams"
-        httpMethod="post"
       />
     </div>
 
@@ -36,27 +30,22 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import UsersSettingSearch from './components/UsersSettingSearch'
-import BaseAdd from '@/components/base/BaseAdd'
+import BanksSettingSearch from './components/BanksSettingSearch'
 import BanksSettingTable from './components/BanksSettingTable'
 import BanksSettingDialogCreate from './components/BanksSettingDialogCreate'
 
 export default {
   name: 'SystemBanksSetting',
   components: {
-    SearchLayout,
-    UsersSettingSearch,
-    BaseAdd,
+    BanksSettingSearch,
     BanksSettingTable,
     BanksSettingDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchSystemBanksList',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }

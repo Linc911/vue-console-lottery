@@ -13,12 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <WithdrawAccountTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        @on-status-changed="fetchTableData()"
-        :data="tableData"
-      />
+      <WithdrawAccountTable @on-changed="fetchTableData()" :data="tableData" />
     </div>
 
     <!-- 创建弹框 -->
@@ -27,10 +22,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithoutPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithoutPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import WithdrawAccountSearch from './components/WithdrawAccountSearch'
 import WithdrawAccountTable from './components/WithdrawAccountTable'
 import WithdrawAccountDialogCreate from './components/WithdrawAccountDialogCreate'
@@ -38,16 +31,13 @@ import WithdrawAccountDialogCreate from './components/WithdrawAccountDialogCreat
 export default {
   name: 'TransactionWithdrawAccount',
   components: {
-    SearchLayout,
-    BaseAdd,
     WithdrawAccountSearch,
     WithdrawAccountTable,
     WithdrawAccountDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithoutPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithoutPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchWithdrawAccountList',
       requestParams: {}
     }

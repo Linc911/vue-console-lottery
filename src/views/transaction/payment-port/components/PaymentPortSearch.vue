@@ -1,7 +1,6 @@
 <template lang="html">
-  <!-- 条件筛选 -->
-  <div class="search">
-    <el-form :model="formData" size="small" inline>
+  <el-form :model="formData" size="small" inline>
+    <SearchFormLayout @on-search="search()" @on-reset="handleRefresh">
       <el-form-item label="接口名称">
         <FormInput
           @keyup.native.enter="$emit('on-search', formData)"
@@ -12,58 +11,55 @@
         />
       </el-form-item>
 
-      <FormSelect
-        @on-change="$set(formData, 'interfaceTypeId', $event)"
-        httpAPIName="fetchTransactionPaymentPortType"
-        :httpAPIParams="{ params: { type: 1 } }"
-        labelAttr="name"
-        valueAttr="dictionaryId"
-        prop="interfaceTypeId"
-        label="接口类型"
-        ref="interfaceTypeId"
-      />
+      <el-form-item label="接口类型">
+        <FormSelectAsync
+          @on-change="$set(formData, 'interfaceTypeId', $event)"
+          httpAPIName="fetchTransactionPaymentPortType"
+          :httpAPIParams="{ params: { type: 1 } }"
+          labelAttr="name"
+          valueAttr="dictionaryId"
+          ref="interfaceTypeId"
+        />
+      </el-form-item>
 
-      <FormSelect
-        @on-change="$set(formData, 'payTypeId', $event)"
-        httpAPIName="fetchTransactionPaymentType"
-        :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
-        labelAttr="name"
-        valueAttr="id"
-        prop="payTypeId"
-        label="支付类型"
-        ref="payTypeId"
-      />
+      <el-form-item label="支付类型">
+        <FormSelectAsync
+          @on-change="$set(formData, 'payTypeId', $event)"
+          httpAPIName="fetchTransactionPaymentType"
+          :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
+          labelAttr="name"
+          valueAttr="id"
+          ref="payTypeId"
+        />
+      </el-form-item>
 
       <el-form-item label="启用状态">
-        <FormSelectStatic
+        <FormSelectArray
           @on-change="$set(formData, 'status', $event)"
           :options="[ '启用', '禁用' ]"
           :styles="{ width: '100px' }"
           ref="status"
         />
       </el-form-item>
-
-      <div style="display: inline-block">
-        <SearchIcon @click.native="search" />
-        <SearchReset @click.native="reset" />
-      </div>
-    </el-form>
-  </div>
+    </SearchFormLayout>
+  </el-form>
 </template>
 
 <script type="text/javascript">
 import { searchInnerMixin } from '@/mixins'
 
+import SearchFormLayout from '@/components/layout/SearchFormLayout'
 import FormInput from '@/components/form/FormInput'
-import FormSelect from '@/components/form/FormSelect'
-import FormSelectStatic from '@/components/form/FormSelectStatic'
+import FormSelectAsync from '@/components/form/FormSelectAsync'
+import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
   name: 'PaymentPortSearch',
   components: {
+    SearchFormLayout,
     FormInput,
-    FormSelect,
-    FormSelectStatic
+    FormSelectAsync,
+    FormSelectArray
   },
   mixins: [ searchInnerMixin ]
 }

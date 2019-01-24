@@ -54,9 +54,9 @@
 
         <el-table-column prop="username" label="账户名称" :width="100" />
 
-        <el-table-column prop="currentDrawno" label="投注期号" :min-width="90" />
-
         <el-table-column prop="gameName" label="彩票类型" :min-width="120" />
+
+        <el-table-column prop="currentDrawno" label="投注期号" :min-width="90" />
 
         <el-table-column prop="totalBets" label="投注数" :width="95" sortable>
           <template slot-scope="scope">

@@ -1,32 +1,32 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" :max-height="590" highlight-current-row border>
+    <el-table :data="data" size="small" max-height="590" highlight-current-row stripe border>
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="name" label="分组名称" />
 
       <el-table-column prop="groupId" label="分组ID" :min-width="150" />
 
-      <!-- <el-table-column prop="sort" label="排序" :min-width="45" /> -->
-
       <el-table-column prop="remark" label="备注" :min-width="150" />
 
       <el-table-column prop="operations" label="操作" :min-width="90">
         <!-- 默认分组不能编辑和删除 -->
         <template v-if="scope.row.groupId" slot-scope="scope">
-          <el-button
-            @click="showDialog(scope.row, 'dialogUpdate')"
-            type="primary"
-            icon="el-icon-edit"
-            size="mini"
-          />
+          <div>
+            <el-button
+              @click="showDialog(scope.row, 'dialogUpdate')"
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+            />
 
-          <el-button
-            @click="showDialog(scope.row, 'dialogDelete')"
-            type="warning"
-            icon="el-icon-delete"
-            size="mini"
-          />
+            <el-button
+              @click="showDialog(scope.row, 'dialogDelete')"
+              type="warning"
+              icon="el-icon-delete"
+              size="mini"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>

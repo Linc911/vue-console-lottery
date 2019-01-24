@@ -1,9 +1,9 @@
 <template lang="html">
-  <div class="remittance-user">
+  <div>
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <PaymentLineSearch @on-search="handleSearch" />
+        <RemittanceUserSearch @on-search="handleSearch" />
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -11,50 +11,41 @@
     </SearchLayout>
 
     <!-- 主要内容 -->
-    <div class="content-container">
+    <div>
       <!-- 表格 -->
-      <UserRemittanceTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        :data="tableData"
-      />
+      <RemittanceUserTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
         :page="page"
-        :requestParams="requestParams"
         :httpURL="tableHttpAPI"
+        :requestParams="requestParams"
       />
     </div>
 
     <!-- 创建新支付路线弹框 -->
-    <UserRemittanceDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
+    <RemittanceUserDialogCreate @on-created="fetchTableData()" ref="dialogCreate" />
   </div>
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationPostMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationPostMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import PaymentLineSearch from './components/PaymentLineSearch'
-import BaseAdd from '@/components/base/BaseAdd'
-import UserRemittanceTable from './components/UserRemittanceTable'
-import UserRemittanceDialogCreate from './components/UserRemittanceDialogCreate'
+import RemittanceUserSearch from './components/RemittanceUserSearch'
+import RemittanceUserTable from './components/RemittanceUserTable'
+import RemittanceUserDialogCreate from './components/RemittanceUserDialogCreate'
 
 export default {
   name: 'TransactionRemittanceUser',
   components: {
-    SearchLayout,
-    PaymentLineSearch,
-    BaseAdd,
-    UserRemittanceTable,
-    UserRemittanceDialogCreate
+    RemittanceUserSearch,
+    RemittanceUserTable,
+    RemittanceUserDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationPostMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationPostMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchTransactionRemittance',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }

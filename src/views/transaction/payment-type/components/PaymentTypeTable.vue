@@ -1,13 +1,7 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
-      <el-table-column type="index" :width="40" />
-
-      <el-table-column prop="createTime" label="创建时间">
-        <template slot-scope="scope">
-          {{ scope.row.createTime | time }}
-        </template>
-      </el-table-column>
+    <el-table :data="data" size="small" max-height="600" highlight-current-row stripe border>
+      <el-table-column type="index" :width="36" />
 
       <el-table-column prop="name" label="支付类型" />
 
@@ -21,7 +15,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="sort" label="排列顺序" sortable />
+      <el-table-column prop="sort" label="排列顺序" />
+
+      <el-table-column prop="createTime" label="创建时间">
+        <template slot-scope="scope">
+          <span>{{ scope.row.createTime | time }}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column prop="remark" label="备注" :min-width="140" />
 
@@ -36,13 +36,14 @@
 
     <!-- 详情弹框 -->
     <PaymentTypeDialogDetail :data="activeItem" ref="dialogDetail" />
+
     <!-- 修改弹框 -->
-    <PaymentTypeDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <PaymentTypeDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
   </div>
 </template>
 
 <script>
-import { tableComponentMixin, statusSwitchMixin } from '@/mixins'
+import { tableComponentMixin, switchMixin } from '@/mixins'
 
 import PaymentTypeDialogDetail from './PaymentTypeDialogDetail'
 import PaymentTypeDialogUpdate from './PaymentTypeDialogUpdate'
@@ -53,10 +54,15 @@ export default {
     PaymentTypeDialogDetail,
     PaymentTypeDialogUpdate
   },
-  mixins: [ tableComponentMixin, statusSwitchMixin ],
+  mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
-      statusSwitchAPI: 'updateTransactionPaymentType'
+      activeItem: {},
+      switchObj: {
+        API: 'updateTransactionPaymentType',
+        attrId: 'id',
+        attrValue: 'status'
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 <template lang="html">
-  <div class="table-container">
-    <el-table :data="data" size="small" highlight-current-row border>
-      <el-table-column type="index" :min-width="30" />
+  <div>
+    <el-table :data="data" size="small" max-height="600" highlight-current-row stripe border>
+      <el-table-column type="index" :width="36" />
 
       <el-table-column prop="name" label="接口名称" :min-width="100" />
 
@@ -29,30 +29,6 @@
         </template>
       </el-table-column>
 
-      <!-- <el-table-column prop="limitStatus" label="是否限额" :width="45">
-        <template slot-scope="scope">
-          <BaseIndicator :status="scope.row.limitStatus" opposite />
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="fineTuningStatus" label="是否微调" :width="45">
-        <template slot-scope="scope">
-          <BaseIndicator :status="scope.row.fineTuningStatus" opposite />
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="pcStatus" label="是否 电脑端" :width="60">
-        <template slot-scope="scope">
-          <BaseIndicator :status="scope.row.pcStatus" opposite />
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="phoneStatus" label="是否 手机端" :width="60">
-        <template slot-scope="scope">
-          <BaseIndicator :status="scope.row.pcStatus" opposite />
-        </template>
-      </el-table-column> -->
-
       <el-table-column prop="sort" label="排列顺序" :width="45" />
 
       <el-table-column prop="remark" label="备注" :min-width="120" />
@@ -70,28 +46,30 @@
     <PaymentPortDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 修改弹框 -->
-    <PaymentPortDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <PaymentPortDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
   </div>
 </template>
 
 <script>
-import { tableComponentMixin, statusSwitchMixin } from '@/mixins'
+import { tableComponentMixin, switchMixin } from '@/mixins'
 
-import BaseIndicator from '@/components/base/BaseIndicator'
 import PaymentPortDialogDetail from './PaymentPortDialogDetail'
 import PaymentPortDialogUpdate from './PaymentPortDialogUpdate'
 
 export default {
   name: 'PaymentPortTable',
   components: {
-    BaseIndicator,
     PaymentPortDialogDetail,
     PaymentPortDialogUpdate
   },
-  mixins: [ tableComponentMixin, statusSwitchMixin ],
+  mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
-      statusSwitchAPI: 'updateTransactionPaymentPort'
+      switchObj: {
+        API: 'updateTransactionPaymentPort',
+        attrId: 'id',
+        attrValue: 'status'
+      }
     }
   }
 }

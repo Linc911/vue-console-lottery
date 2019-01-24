@@ -30,7 +30,7 @@
       </el-form-item>
 
       <el-form-item label="审核状态">
-        <el-input :value="data.status" />
+        <el-input :value="data.status | auditStatus" />
       </el-form-item>
 
       <el-form-item label="银行名称">

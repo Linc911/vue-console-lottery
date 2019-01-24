@@ -1,6 +1,13 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <el-table
+      :data="data"
+      :row-class-name="tableRowClassName"
+      size="small"
+      max-height="600"
+      highlight-current-row
+      border
+    >
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="username" label="用户账号" :min-width="100" />
@@ -15,7 +22,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="调整金额">
+      <el-table-column label="调整金额" align="right">
         <template slot-scope="scope">
           <span>{{ scope.row.money | RMB }}</span>
         </template>
@@ -69,6 +76,14 @@ export default {
   data () {
     return {
       activeItem: {}
+    }
+  },
+  methods: {
+    tableRowClassName ({ row }) {
+      if (row.status === 2) {
+        return 'success-row'
+      }
+      return ''
     }
   }
 }

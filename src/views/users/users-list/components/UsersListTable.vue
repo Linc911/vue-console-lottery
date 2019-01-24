@@ -25,7 +25,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="分组" :width="120">
+      <el-table-column label="分组" :min-width="120">
         <template slot-scope="scope">
           <div>
             <span>{{ scope.row.groupNames }}</span>
@@ -65,19 +65,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="agent" label="代理状态" :width="60">
+      <el-table-column prop="agent" label="代理状态" :min-width="60">
         <template slot-scope="scope">
           <span>{{ scope.row.agent ? '代理' : '未代理' }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="recharge" label="充值状态" :width="60">
+      <el-table-column prop="recharge" label="充值状态" :min-width="60">
         <template slot-scope="scope">
           <span>{{ scope.row.recharge ? '充值' : '未充值' }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="control" label="监控状态" :width="70">
+      <el-table-column prop="control" label="监控状态" :min-width="70">
         <template slot-scope="scope">
           <BaseSwitch
             @on-change="handleSwitchChange"
@@ -87,13 +87,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="enable" label="账号状态" :width="45">
+      <el-table-column prop="enable" label="账号状态" :min-width="45">
         <template slot-scope="scope">
           <span>{{ scope.row.enabled ? '正常': '异常' }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" :min-width="200">
+      <el-table-column label="操作" :width="200">
         <template slot-scope="scope">
           <div>
             <el-button

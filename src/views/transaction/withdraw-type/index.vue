@@ -13,11 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <WithdrawTypeTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        :data="tableData"
-      />
+      <WithdrawTypeTable @on-changed="fetchTableData()" :data="tableData" />
     </div>
 
     <!-- 创建弹框 -->
@@ -26,10 +22,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithoutPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithoutPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import WithdrawTypeSearch from './components/WithdrawTypeSearch'
 import WithdrawTypeTable from './components/WithdrawTypeTable'
 import WithdrawTypeDialogCreate from './components/WithdrawTypeDialogCreate'
@@ -37,13 +31,11 @@ import WithdrawTypeDialogCreate from './components/WithdrawTypeDialogCreate'
 export default {
   name: 'TransactionWithdrawType',
   components: {
-    SearchLayout,
-    BaseAdd,
     WithdrawTypeSearch,
     WithdrawTypeTable,
     WithdrawTypeDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithoutPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithoutPaginationMixin ],
   data () {
     return {
       tableData: [],

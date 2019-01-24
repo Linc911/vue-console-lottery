@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="Limit-change">
+  <div>
     <!-- 菜单切换栏 -->
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
       <el-tab-pane label="所有存款记录" name="deposit" />
@@ -10,7 +10,7 @@
     <DepositWithdrawSearch @on-search="handleSearch" />
 
     <!-- 主要内容 -->
-    <div class="table-list">
+    <div>
       <!-- 表格 -->
       <component :is="activeComponent" :data="tableData" />
 

@@ -2,31 +2,30 @@
   <el-form
     :model="formData"
     :rules="rules"
-    label-width="120px"
+    label-width="100px"
     size="medium"
     style="max-width: 800px"
     ref="form"
   >
-    <FormSelect
-      @on-change="$set(formData, 'username', $event)"
-      httpAPIName="fetchPublicUsersBasic"
-      labelAttr="username"
-      valueAttr="id"
-      prop="username"
-      label="用户账号"
-      filterable
-    />
+    <el-form-item prop="username" label="用户账号">
+      <el-input v-model.trim="formData.username" placeholder="用户账号" />
+      <!-- <FormSelectAsync
+        @on-change="$set(formData, 'username', $event)"
+        httpAPIName="fetchPublicUsersBasic"
+        labelAttr="username"
+        valueAttr="id"
+      /> -->
+    </el-form-item>
 
-    <FormSelect
-      @on-change="$set(formData, 'gameType', $event)"
-      httpAPIName="fetchGamesList"
-      labelAttr="name"
-      valueAttr="id"
-      prop="gameType"
-      label="账户类型"
-      filterable
-      ref="gameType"
-    />
+    <el-form-item prop="gameType" label="账户类型">
+      <FormSelectAsync
+        @on-change="$set(formData, 'gameType', $event)"
+        httpAPIName="fetchGamesList"
+        labelAttr="name"
+        valueAttr="id"
+        ref="gameType"
+      />
+    </el-form-item>
 
     <el-form-item prop="type" label="调整方向">
       <el-radio-group v-model="formData.type">
@@ -35,24 +34,23 @@
       </el-radio-group>
     </el-form-item>
 
-    <FormSelect
-      @on-change="$set(formData, 'loanType', $event)"
-      httpAPIName="fetchFinanceLoanType"
-      labelAttr="name"
-      valueAttr="dictionaryId"
-      prop="loanType"
-      label="账户类型"
-      filterable
-      ref="loanType"
-    />
+    <el-form-item prop="loanType" label="借贷类型">
+      <FormSelectAsync
+        @on-change="$set(formData, 'loanType', $event)"
+        httpAPIName="fetchFinanceLoanType"
+        labelAttr="name"
+        valueAttr="dictionaryId"
+        ref="loanType"
+      />
+    </el-form-item>
 
     <el-form-item prop="money" label="调整金额">
-      <el-input v-model="formData.money" type="number" min="0" placeholder="调整金额" />
+      <el-input v-model.trim="formData.money" type="number" min="0" placeholder="调整金额" />
     </el-form-item>
 
     <el-form-item prop="remark" label="调整理由">
       <el-input
-        v-model="formData.remark"
+        v-model.trim="formData.remark"
         @keyup.native.enter="submitForm('balanceForm')"
         type="textarea"
         :rows="5"
@@ -76,12 +74,12 @@ import config from '@/config/data'
 
 import validators from '@/config/form'
 
-import FormSelect from '@/components/form/FormSelect'
+import FormSelectAsync from '@/components/form/FormSelectAsync'
 
 export default {
   name: 'BalanceManipulationForm',
   components: {
-    FormSelect
+    FormSelectAsync
   },
   data () {
     return {

@@ -29,26 +29,22 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithoutPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithoutPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
 import PaymentLineMenu from './components/PaymentLineMenu'
 import PaymentLineSearch from './components/PaymentLineSearch'
-import BaseAdd from '@/components/base/BaseAdd'
 import PaymentLineTable from './components/PaymentLineTable'
 import PaymentLineDialogCreate from './components/PaymentLineDialogCreate'
 
 export default {
   name: 'TransactionPaymentLine',
   components: {
-    SearchLayout,
     PaymentLineMenu,
     PaymentLineSearch,
-    BaseAdd,
     PaymentLineTable,
     PaymentLineDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithoutPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithoutPaginationMixin ],
   data () {
     return {
       tableData: [],

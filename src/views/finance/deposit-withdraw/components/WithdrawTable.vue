@@ -2,7 +2,9 @@
   <el-table
     :data="data"
     size="small"
+    max-height="600"
     highlight-current-row
+    stripe
     border
   >
     <el-table-column type="index" :width="36" />

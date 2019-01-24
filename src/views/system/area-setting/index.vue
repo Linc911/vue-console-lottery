@@ -13,12 +13,7 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <AreaSettingTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        @on-status-change="fetchTableData()"
-        :data="tableData"
-      />
+      <AreaSettingTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
@@ -26,7 +21,6 @@
         :page="page"
         :httpURL="tableHttpAPI"
         :requestParams="requestParams"
-        httpMethod="post"
       />
     </div>
 
@@ -36,27 +30,22 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
 import AreaSettingSearch from './components/AreaSettingSearch'
-import BaseAdd from '@/components/base/BaseAdd'
 import AreaSettingTable from './components/AreaSettingTable'
 import AreaSettingDialogCreate from './components/AreaSettingDialogCreate'
 
 export default {
   name: 'SystemAreaSetting',
   components: {
-    SearchLayout,
     AreaSettingSearch,
-    BaseAdd,
     AreaSettingTable,
     AreaSettingDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchSystemAreaListTree',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }

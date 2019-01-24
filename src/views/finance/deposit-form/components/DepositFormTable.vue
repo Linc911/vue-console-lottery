@@ -1,6 +1,13 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <el-table
+      :data="data"
+      :row-class-name="tableRowClassName"
+      size="small"
+      max-height="600"
+      highlight-current-row
+      border
+    >
       <el-table-column type="index" />
 
       <el-table-column prop="createUsername" label="汇款账号" />
@@ -9,7 +16,7 @@
 
       <el-table-column prop="configPayTypeName" label="支付方式" />
 
-      <el-table-column label="汇款金额" :min-width="100" sortable>
+      <el-table-column label="汇款金额" :min-width="100" align="right" sortable>
         <template slot-scope="scope">
           <span>{{ scope.row.remitMoney | RMB }}</span>
         </template>
@@ -28,6 +35,12 @@
       </el-table-column>
 
       <el-table-column prop="remark" label="备注" />
+
+      <el-table-column label="审批状态" :min-width="70">
+        <template slot-scope="scope">
+          <span>{{ scope.row.status | auditStatus }}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -63,6 +76,14 @@ export default {
   data () {
     return {
       activeItem: {}
+    }
+  },
+  methods: {
+    tableRowClassName ({ row }) {
+      if (row.status === 2) {
+        return 'success-row'
+      }
+      return ''
     }
   }
 }

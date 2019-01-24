@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <el-table :data="data" size="small" highlight-current-row stripe border>
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="name" label="地区名称" />
@@ -25,14 +25,32 @@
 
       <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
+          <div>
+            <el-button
+              @click="showDialog(scope.row, 'dialogUpdate')"
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+              />
+
+            <el-button
+              @click="showDialog(scope.row, 'dialogDelete')"
+              type="warning"
+              icon="el-icon-delete"
+              size="mini"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 修改弹框 -->
-    <AreaSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <AreaSettingDialogUpdate
+      @on-updated="$emit('on-changed')"
+      :data="activeItem"
+      ref="dialogUpdate"
+    />
+
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
       @on-confirm="handleDeleteConfirm"
@@ -46,14 +64,12 @@
 <script>
 import { tableComponentMixin, switchMixin } from '@/mixins'
 
-import BaseIndicator from '@/components/base/BaseIndicator'
 import AreaSettingDialogUpdate from './AreaSettingDialogUpdate'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
   name: 'UsersSettingTable',
   components: {
-    BaseIndicator,
     AreaSettingDialogUpdate,
     DialogDeleteConfirm
   },

@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <el-table :data="data" size="small" max-height="600" highlight-current-row stripe border>
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="name" label="类型名称" />
@@ -38,16 +38,28 @@
 
       <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
+          <div>
+            <el-button
+              @click="showDialog(scope.row, 'dialogDetail')"
+              type="primary"
+              icon="el-icon-view"
+              size="mini"
+            />
 
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
+            <el-button
+              @click="showDialog(scope.row, 'dialogUpdate')"
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+            />
 
-          <el-button
-            @click="showDialog(scope.row, 'dialogDelete')"
-            type="warning"
-            icon="el-icon-delete"
-            size="mini"
-          />
+            <el-button
+              @click="showDialog(scope.row, 'dialogDelete')"
+              type="warning"
+              icon="el-icon-delete"
+              size="mini"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -56,7 +68,7 @@
     <WithdrawAccountDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 修改弹框 -->
-    <WithdrawAccountDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <WithdrawAccountDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
@@ -71,7 +83,6 @@
 <script>
 import { tableComponentMixin, switchMixin } from '@/mixins'
 
-import BaseSwitch from '@/components/base/BaseSwitch'
 import WithdrawAccountDialogDetail from './WithdrawAccountDialogDetail'
 import WithdrawAccountDialogUpdate from './WithdrawAccountDialogUpdate'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
@@ -79,7 +90,6 @@ import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 export default {
   name: 'WithdrawAccountTable',
   components: {
-    BaseSwitch,
     WithdrawAccountDialogDetail,
     WithdrawAccountDialogUpdate,
     DialogDeleteConfirm

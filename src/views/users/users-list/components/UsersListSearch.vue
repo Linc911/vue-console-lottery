@@ -13,30 +13,30 @@
 
       <el-form-item label="注册时间">
         <SearchDatePicker
-          @on-change="handleRangeChange($event, 'startTime', 'endTime')"
+          @on-change="handleTimeRangeChange($event, 'startTime', 'endTime')"
           ref="registerRange"
         />
       </el-form-item>
 
       <el-form-item label="登陆时间">
         <SearchDatePicker
-          @on-change="handleRangeChange($event, 'loginStartTime', 'loginEndTime')"
+          @on-change="handleTimeRangeChange($event, 'loginStartTime', 'loginEndTime')"
           ref="loginRange"
         />
       </el-form-item>
 
       <el-form-item label="余额">
         <SearchNumberRange
+          @on-change="handleNumberRangeChange($event, 'minBanlance', 'maxBanlance')"
           @on-enter="$emit('on-search', formData)"
-          @on-change="handleNumberRangeChange"
           ref="numberRange"
         />
       </el-form-item>
 
       <el-form-item label="输赢">
         <SearchNumberRange
+          @on-change="handleNumberRangeChange($event, 'minWin', 'maxWin')"
           @on-enter="$emit('on-search', formData)"
-          @on-change="handleWinRangeChange"
           ref="winRange"
         />
       </el-form-item>
@@ -70,11 +70,9 @@ import { searchInnerMixin } from '@/mixins'
 import SearchFormLayout from '@/components/layout/SearchFormLayout'
 import FormInput from '@/components/form/FormInput'
 import FormSelectAsync from '@/components/form/FormSelectAsync'
-import FormDateRange from '@/components/form/FormDateRange'
-import FormNumberRange from '@/components/form/FormNumberRange'
+import FormSelectArray from '@/components/form/FormSelectArray'
 import SearchDatePicker from '@/components/search/SearchDatePicker'
 import SearchNumberRange from '@/components/search/SearchNumberRange'
-import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
   name: 'UsersListSearch',
@@ -82,37 +80,10 @@ export default {
     SearchFormLayout,
     FormInput,
     FormSelectAsync,
-    FormDateRange,
-    FormNumberRange,
+    FormSelectArray,
     SearchDatePicker,
-    SearchNumberRange,
-    FormSelectArray
+    SearchNumberRange
   },
-  mixins: [ searchInnerMixin ],
-  methods: {
-    // 时间变化时，更新搜索条件，通知父组件请求数据
-    handleDateRangeChange ({ startTime, endTime }) {
-      this.formData = Object.assign(this.formData, { startTime, endTime })
-      this.$emit('on-search', this.formData)
-    },
-    // 时间变化时，更新搜索条件，通知父组件请求数据
-    handleLoginRangeChange ({ startTime, endTime }) {
-      this.formData = Object.assign(this.formData, { loginStartTime: startTime, loginEndTime: endTime })
-      this.$emit('on-search', this.formData)
-    },
-    handleNumberRangeChange ({ start, end }) {
-      this.formData.minBanlance = start
-      this.formData.maxBanlance = end
-    },
-    handleWinRangeChange ({ start, end }) {
-      this.formData.minWin = start
-      this.formData.maxWin = end
-    },
-    // 时间变化时，更新搜索条件，通知父组件请求数据
-    handleSelectGroup (value) {
-      this.$set(this.formData, 'groupId', value)
-      this.$emit('on-search', this.formData)
-    }
-  }
+  mixins: [ searchInnerMixin ]
 }
 </script>

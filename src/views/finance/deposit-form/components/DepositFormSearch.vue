@@ -1,46 +1,40 @@
 <template lang="html">
-  <el-form :model="formData" size="small" label-width="80px" inline>
-    <el-form-item label="汇款账号">
-      <FormInput
-        @keyup.native.enter="$emit('on-search', formData)"
-        @on-change="$set(formData, 'username', $event)"
-        placeholder="汇款账号"
-        :styles="{ width: '140px' }"
-        ref="username"
-      />
-    </el-form-item>
+  <el-form :model="formData" size="small" inline>
+    <SearchFormLayout @on-search="search()" @on-reset="handleRefresh">
+      <el-form-item label="汇款账号">
+        <FormInput
+          @on-change="$set(formData, 'username', $event)"
+          @keyup.native.enter="$emit('on-search', formData)"
+          placeholder="汇款账号"
+          :styles="{ width: '140px' }"
+          ref="username"
+        />
+      </el-form-item>
 
-    <FormDateRange
-      @on-change="handleDateRangeChange"
-      label="汇款时间"
-      ref="dateRange"
-    />
-
-    <div style="display: inline-block">
-      <SearchIcon @click.native="search" />
-      <SearchReset @click.native="reset" />
-    </div>
+      <el-form-item label="汇款时间">
+        <SearchDatePicker
+          @on-change="handleTimeRangeChange($event, 'startTime', 'endTime')"
+          ref="timeRange"
+        />
+      </el-form-item>
+    </SearchFormLayout>
   </el-form>
 </template>
 
 <script type="text/javascript">
 import { searchInnerMixin } from '@/mixins'
 
+import SearchFormLayout from '@/components/layout/SearchFormLayout'
 import FormInput from '@/components/form/FormInput'
-import FormDateRange from '@/components/form/FormDateRange'
+import SearchDatePicker from '@/components/search/SearchDatePicker'
 
 export default {
   name: 'DepositeFormSearch',
   components: {
+    SearchFormLayout,
     FormInput,
-    FormDateRange
+    SearchDatePicker
   },
-  mixins: [ searchInnerMixin ],
-  methods: {
-    handleDateRangeChange ({ startTime, endTime }) {
-      this.formData.startTime = startTime
-      this.formData.endTime = endTime
-    }
-  }
+  mixins: [ searchInnerMixin ]
 }
 </script>
