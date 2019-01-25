@@ -20,7 +20,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="提款金额" align="right">
+      <el-table-column label="提款金额" align="right" :min-width="120">
         <template slot-scope="scope">
           <span>{{ scope.row.money | RMB }}</span>
         </template>

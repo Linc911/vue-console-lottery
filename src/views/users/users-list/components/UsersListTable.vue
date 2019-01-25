@@ -31,7 +31,7 @@
             <span>{{ scope.row.groupNames }}</span>
             <BaseIcon
               @on-click="showDialog(scope.row, 'dialogGroup')"
-              icon="el-icon-zoom-in"
+              icon="el-icon-edit"
               class="pull-right"
             />
           </div>
@@ -101,6 +101,7 @@
               type="primary"
               icon="el-icon-view"
               size="mini"
+              title="预览"
             />
 
             <el-button
