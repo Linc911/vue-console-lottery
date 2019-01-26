@@ -39,7 +39,10 @@
           </el-table-column>
           <el-table-column prop="value">
             <template slot-scope="scope">
-              <span>{{ scope.row.value | RMB }}</span>
+              <div>
+                <span v-if="scope.$index === 0">{{ scope.row.value | number }}</span>
+                <span v-else>{{ scope.row.value | RMB }}</span>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -57,7 +60,11 @@
               <span>{{ scope.row.name | nameTransfer }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="value" />
+          <el-table-column>
+            <template slot-scope="scope">
+              <span>{{ scope.row.value | number }}</span>
+            </template>
+          </el-table-column>
         </el-table>
       </el-card>
     </section>
@@ -128,12 +135,12 @@
         </el-card>
       </section>
 
-      <!-- 登陆异常警告 -->
+      <!-- 登录异常警告 -->
       <section class="data-summary">
         <el-card>
           <div slot="header">
             <i class="fa fa-gears"></i>
-            <span> 登陆异常警告</span>
+            <span> 登录异常警告</span>
           </div>
           <div style="min-height: 120px;">
             <p>暂无内容</p>

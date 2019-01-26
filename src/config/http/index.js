@@ -21,7 +21,7 @@ function initLoginStatus () {
   store.dispatch('tab/clearRoutes') // 重置浏览记录导航条
   store.dispatch('sidebar/updateActiveMenu', '') // 重置侧边栏 active 状态菜单
 
-  axios.defaults.headers.common['Authorization'] = '' // 登陆时不能带上，在这里要重置
+  axios.defaults.headers.common['Authorization'] = '' // 登录时不能带上，在这里要重置
 
   router.push({ name: 'LoginUsername' })
 }
@@ -50,18 +50,18 @@ axios.interceptors.response.use(response => {
   // http响应完成时，停止动画； 返回获取的对象
   endLoading()
 
-  // 在登陆Token已过期下返回的状态码
+  // 在登录Token已过期下返回的状态码
   if (response.status === 401 || response.status === 404) {
     initLoginStatus()
 
-    Message.warning('登陆Token已过期，请重新登陆。')
+    Message.warning('登录Token已过期，请重新登录。')
 
     return response
 
-  // 在其他设备登陆下返回的状态码
+  // 在其他设备登录下返回的状态码
   } else if (response.data.status === -9998 || response.data.status === -9999) {
     initLoginStatus()
-    Message.warning('该账户已在其他设备登陆')
+    Message.warning('该账户已在其他设备登录')
   }
 
   return response
@@ -73,7 +73,7 @@ axios.interceptors.response.use(response => {
   if (error.response && error.response.status === 401) {
     initLoginStatus()
 
-    Message.warning('登陆Token已过期，请重新登陆。')
+    Message.warning('登录Token已过期，请重新登录。')
   }
   //
   // switch (error.status) {
@@ -81,7 +81,7 @@ axios.interceptors.response.use(response => {
   //     store.dispatch('CLEAR_TOKEN')
   //     axios.defaults.headers.common['Authorization'] = ''
   //     router.push({ name: 'LoginUsername' })
-  //     Message.warning('登陆Token已过期，请重新登陆。')
+  //     Message.warning('登录Token已过期，请重新登录。')
   //     break
   //   case '403':
   //     console.log('未授权，请检查HTTP请求头是否携带Token。')

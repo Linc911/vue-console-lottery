@@ -19,7 +19,7 @@
         </template>
       </el-table-column> -->
 
-      <el-table-column prop="loginTime" label="最近登陆时间" :min-width="140" sortable="custom">
+      <el-table-column prop="loginTime" label="最近登录时间" :min-width="140" sortable="custom">
         <template slot-scope="scope">
           <span>{{ scope.row.loginTime | time }}</span>
         </template>
@@ -197,7 +197,7 @@ export default {
         return
       }
 
-      // 按登陆时间排序时
+      // 按登录时间排序时
       if (prop === 'loginTime') {
         order === 'ascending' ? (orderType = 40) : (orderType = 41)
         this.$emit('on-sort', orderType)

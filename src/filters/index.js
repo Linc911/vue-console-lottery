@@ -46,6 +46,15 @@ Vue.filter('RMB', value => {
   return '￥ ' + Number(arr[0]).toLocaleString() + '.' + arr[1]
 })
 
+// 数值格式化
+Vue.filter('number', value => {
+  if (value === null || value === undefined) {
+    return ''
+  }
+
+  return Number(value).toLocaleString()
+})
+
 // 百分比
 Vue.filter('percent', value => {
   return Number(value).toFixed(2) + '%'

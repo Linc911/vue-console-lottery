@@ -8,7 +8,10 @@
     </el-tabs>
 
     <!-- 主要内容 -->
-    <component v-bind:is="currentTabComponent" @on-created="handleCreated"></component>
+    <keep-alive>
+      <component v-if="currentTabComponent === 'BalanceManipulationForm'" v-bind:is="currentTabComponent" @on-created="handleCreated"></component>
+    </keep-alive>
+    <component v-if="currentTabComponent !== 'BalanceManipulationForm'" v-bind:is="currentTabComponent" @on-created="handleCreated"></component>
   </div>
 </template>
 

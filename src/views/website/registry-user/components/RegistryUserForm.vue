@@ -20,7 +20,7 @@
       </el-form-item>
 
       <el-form-item prop="remark" label="备注">
-        <el-input v-model.trim="formData.remark" type="textarea" rows="3" placeholder="微信登陆方式..." />
+        <el-input v-model.trim="formData.remark" type="textarea" rows="3" placeholder="微信登录方式..." />
       </el-form-item>
     </el-form>
 </template>

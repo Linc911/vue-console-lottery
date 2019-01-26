@@ -11,11 +11,11 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('loginForm')">短信登陆</el-button>
+        <el-button type="primary" @click="submitForm('loginForm')">短信登录</el-button>
       </el-form-item>
     </el-form>
     <div class="switch-login-type">
-      <router-link to="/login/username" class="login-type">用户名密码登陆</router-link>
+      <router-link to="/login/username" class="login-type">用户名密码登录</router-link>
     </div>
   </section>
 </template>
@@ -42,12 +42,12 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$message({
-            message: '开始登陆中...',
+            message: '开始登录中...',
             type: 'success'
           })
         } else {
           this.$message({
-            message: '用户名或密码格式不正确，无法登陆！',
+            message: '用户名或密码格式不正确，无法登录！',
             type: 'warning'
           })
           return false

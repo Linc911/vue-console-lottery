@@ -18,7 +18,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="登陆时间">
+      <el-form-item label="登录时间">
         <SearchDatePicker
           @on-change="handleTimeRangeChange($event, 'loginStartTime', 'loginEndTime')"
           ref="loginRange"

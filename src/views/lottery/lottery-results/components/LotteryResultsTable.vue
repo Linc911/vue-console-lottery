@@ -6,6 +6,7 @@
       max-height="600"
       size="small"
       highlight-current-row
+      stripe
       border
     >
       <el-table-column type="index" :width="36" />
@@ -20,7 +21,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="彩球号码" :min-width="260">
+      <el-table-column label="彩球号码" :width="375">
         <template slot-scope="scope">
           <div>
             <!-- 骰子类型 -->
@@ -42,17 +43,17 @@
 
       <el-table-column prop="ballSum" label="总和" :min-width="45" />
 
-      <el-table-column prop="amount" label="订单数量" />
+      <el-table-column prop="amount" label="订单数量" :min-width="45" />
 
-      <el-table-column prop="totalBets" label="注单数量" />
+      <el-table-column prop="totalBets" label="注单数量" :min-width="45" />
 
-      <el-table-column prop="totalAmount" label="下注金额">
+      <el-table-column prop="totalAmount" label="下注金额" align="right">
         <template slot-scope="scope">
           <span>{{ scope.row.totalAmount | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="totalAwardAmount" label="奖金金额">
+      <el-table-column prop="totalAwardAmount" label="奖金金额" align="right">
         <template slot-scope="scope">
           <span>{{ scope.row.totalAwardAmount | RMB }}</span>
         </template>

@@ -26,7 +26,7 @@ const actions = {
   clearToken ({ commit }) {
     commit('clearToken')
   },
-  // 登陆 -- 存储token，调整到主页
+  // 登录 -- 存储token，调整到主页
   login ({ commit, state }, payload) {
     axios.post('/api-u/sys/login', payload, {
       headers: {
@@ -56,7 +56,7 @@ const actions = {
       }
     })
   },
-  // 登出 -- token设置为空，调整到用户登陆页
+  // 登出 -- token设置为空，调整到用户登录页
   logout ({ commit }) {
     axios.get('/api-u/sys/logout').then(response => {
       commit('clearToken') // 清除token相关的数据

@@ -51,14 +51,14 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$httpAPI.putUserInfo(this.user).then(response => {
-            this.$message.success('修改登陆用户信息成功！')
+            this.$message.success('修改登录用户信息成功！')
             this.$router.push({ name: 'HomePage' })
           }).catch(error => {
             console.log(error)
-            this.$message.error('修改登陆用户信息失败！')
+            this.$message.error('修改登录用户信息失败！')
           })
         } else {
-          this.$message.warning('登陆用户信息填写不正确！')
+          this.$message.warning('登录用户信息填写不正确！')
         }
       })
     }

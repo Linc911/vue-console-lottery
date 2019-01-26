@@ -19,11 +19,11 @@
             style="min-width: 300px"
           />
         </el-form-item>
-        <el-form-item prop="password" label="登陆密码">
+        <el-form-item prop="password" label="登录密码">
           <el-input
             v-model.trim="formData.password"
             type="password"
-            placeholder="登陆密码"
+            placeholder="登录密码"
             style="min-width: 300px"
           />
         </el-form-item>
@@ -54,7 +54,7 @@
 
           <el-table-column prop="options" label="操作">
             <template slot-scope="scope">
-              <!-- <el-button type="primary" size="small">赔率预览</el-button> -->
+              <el-button type="primary" size="small">赔率预览</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -77,7 +77,7 @@ export default {
       formData: {},
       rules: {
         username: FormValidation.validateRequired('会员账户'),
-        password: FormValidation.validateRequired('登陆密码'),
+        password: FormValidation.validateRequired('登录密码'),
         cpyx: FormValidation.validateRequired('彩票游戏'),
         qpyx: FormValidation.validateRequired('棋牌游戏'),
         tyjj: FormValidation.validateRequired('体育竞技'),
