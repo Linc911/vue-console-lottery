@@ -6,16 +6,8 @@
     size="small"
     ref="form"
   >
-    <el-form-item prop="areaId" label="所属地区">
-      <FormSelectAsync
-        @on-change="$set(formData, 'areaId', $event)"
-        :value="formData.areaId"
-        httpAPIName="fetchSystemAreaList"
-        :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
-        labelAttr="name"
-        valueAttr="areaId"
-        ref="areaId"
-      />
+    <el-form-item prop="name" label="银行名称">
+      <el-input v-model.trim="formData.name" placeholder="银行名称" />
     </el-form-item>
 
     <el-form-item prop="parentId" label="上级银行">
@@ -25,9 +17,21 @@
         httpAPIName="fetchSystemBanksList"
         :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
         labelAttr="name"
-        valueAttr="parentId"
-        optionRoot
+        valueAttr="bankConfigId"
+        rootVisible
         ref="parentId"
+      />
+    </el-form-item>
+
+    <el-form-item prop="areaId" label="所属地区">
+      <FormSelectAsync
+        @on-change="$set(formData, 'areaId', $event)"
+        :value="formData.areaId"
+        httpAPIName="fetchSystemAreaList"
+        :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
+        labelAttr="name"
+        valueAttr="areaId"
+        ref="areaId"
       />
     </el-form-item>
 
@@ -56,9 +60,12 @@ export default {
   mixins: [ formComponentMixin ],
   data () {
     return {
-      formData: { name: '', sort: 0 },
+      formData: { name: '', parentId: '', areaId: '', sort: 0 },
       rules: {
-        name: validators.validateRequired('银行名称')
+        name: validators.validateRequired('银行名称'),
+        parentId: validators.validateSelect('上级银行'),
+        areaId: validators.validateSelect('所属地区'),
+        sort: validators.validateRequired('排序')
       }
     }
   }

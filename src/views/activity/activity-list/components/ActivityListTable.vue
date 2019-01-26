@@ -68,7 +68,7 @@
     <ActivityListDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 修改弹框 -->
-    <ActivityListDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <ActivityListDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm

@@ -1,6 +1,13 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row stripe border>
+    <el-table
+      :data="data"
+      size="small"
+      max-height="600"
+      highlight-current-row
+      stripe
+      border
+    >
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="areaName" label="所属地区" />
@@ -26,13 +33,6 @@
       <el-table-column prop="operations" label="操作" :min-width="130">
         <template slot-scope="scope">
           <div>
-            <!-- <el-button
-              @click="showDialog(scope.row, 'dialogDetail')"
-              type="primary"
-              icon="el-icon-view"
-              size="mini"
-            /> -->
-
             <el-button
               @click="showDialog(scope.row, 'dialogUpdate')"
               type="primary"
@@ -51,12 +51,9 @@
       </el-table-column>
     </el-table>
 
-    <!-- 详情弹框 -->
-    <BanksSettingDialogDetail :data="activeItem" ref="dialogDetail" />
-
     <!-- 修改弹框 -->
     <BanksSettingDialogUpdate
-      @on-updated="$emit('on-updated')"
+      @on-updated="$emit('on-changed')"
       :data="activeItem"
       ref="dialogUpdate"
     />
@@ -74,22 +71,21 @@
 <script>
 import { tableComponentMixin, switchMixin } from '@/mixins'
 
-import BanksSettingDialogDetail from './BanksSettingDialogDetail'
 import BanksSettingDialogUpdate from './BanksSettingDialogUpdate'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
   name: 'BanksSettingTable',
   components: {
-    BanksSettingDialogDetail,
     BanksSettingDialogUpdate,
     DialogDeleteConfirm
   },
   mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
-      deleteHttpAPI: 'deleteRebateSettingItem',
-      deleteAttrName: 'rebateId',
+      deleteHttpAPI: 'deleteSystemBanksItem',
+      deleteAttrName: 'bankConfigId',
+      deleteId: 'bankConfigId',
       switchObj: {
         API: 'updateSystemUsersItem',
         attrId: 'id',

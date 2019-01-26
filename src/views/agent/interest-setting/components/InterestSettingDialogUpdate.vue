@@ -88,7 +88,7 @@ import FormRadio from '@/components/form/FormRadio'
 import FormTimeSelect from '@/components/form/FormTimeSelect'
 
 export default {
-  name: 'RebateSettingDialogCreate',
+  name: 'DialogCreate',
   components: {
     FormSelect,
     FormRadio,

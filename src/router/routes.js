@@ -79,8 +79,8 @@ const FinanceSettingLoan = resolve => require(['@/views/finance/setting/loan'], 
 /* ========================================== 返水管理 ============================================ */
 
 const RebateManage = resolve => require(['@/views/rebate/RebateManage'], resolve)
-const RebateList = resolve => require(['@/views/rebate/rebate-list'], resolve)
-const RebateSetting = resolve => require(['@/views/rebate/rebate-setting'], resolve)
+const RebateRecord = resolve => require(['@/views/rebate/rebate-record'], resolve)
+const RebatePlan = resolve => require(['@/views/rebate/rebate-plan'], resolve)
 
 /* ========================================== 收款出款 ============================================ */
 
@@ -793,31 +793,23 @@ const routes = [
       {
         name: 'RebateManage',
         path: '/rebate',
-        redirect: '/rebate/list',
+        redirect: '/rebate/plan',
         component: RebateManage,
         children: [
           {
-            name: 'RebateSetting',
-            path: 'setting',
-            component: RebateSetting,
+            name: 'RebatePlan',
+            path: 'plan',
+            component: RebatePlan,
             meta: {
-              title: '设置返水计划',
-              breadcrumb: [
-                { name: '返水管理' },
-                { name: '设置返水计划' }
-              ]
+              title: '设置返水计划'
             }
           },
           {
-            name: 'RebateList',
-            path: 'list',
-            component: RebateList,
+            name: 'RebateRecord',
+            path: 'record',
+            component: RebateRecord,
             meta: {
-              title: '查看返水记录',
-              breadcrumb: [
-                { name: '返水管理' },
-                { name: '查看返水记录' }
-              ]
+              title: '查看返水记录'
             }
           }
         ]

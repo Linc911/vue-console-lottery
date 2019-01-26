@@ -1,6 +1,13 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <el-table
+      :data="data"
+      :row-class-name="tableRowClassName"
+      size="small"
+      max-height="600"
+      highlight-current-row
+      border
+    >
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="username" label="会员账号" />
@@ -15,49 +22,61 @@
 
       <el-table-column prop="discount" label="优惠%" :min-width="60" />
 
-      <el-table-column prop="poundage" label="手续费">
+      <el-table-column prop="poundage" label="手续费" align="right">
         <template slot-scope="scope">
           <span>{{ scope.row.poundage | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="money" label="变动金额" :min-width="100" sortable>
+      <el-table-column prop="money" label="变动金额" :min-width="120" sortable align="right">
         <template slot-scope="scope">
           <span>{{ scope.row.money | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="before" label="改变前金额" :min-width="100">
+      <el-table-column prop="before" label="改变前金额" :min-width="120" align="right">
         <template slot-scope="scope">
           <span>{{ scope.row.before | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="after" label="改变后金额" :min-width="100">
+      <el-table-column prop="after" label="改变后金额" :min-width="120" align="right">
         <template slot-scope="scope">
           <span>{{ scope.row.after | RMB }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="type" label="类型" :min-width="70">
+      <el-table-column prop="type" label="类型" :width="70">
         <template slot-scope="scope">
           <span>{{ scope.row.type | typeFilter }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="status" label="处理状态" :min-width="70">
+      <el-table-column prop="status" label="处理状态" :width="70">
         <template slot-scope="scope">
           <span>{{ scope.row.status | statusFilter }}</span>
         </template>
       </el-table-column>
 
-      <!-- <el-table-column prop="remark" label="备注" :min-width="100" /> -->
-
-      <el-table-column prop="operations" label="操作" :min-width="90">
+      <el-table-column prop="operations" label="操作" :width="90">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
+          <div>
+            <el-button
+              @click="showDialog(scope.row, 'dialogDetail')"
+              type="primary"
+              icon="el-icon-view"
+              size="mini"
+              title="预览"
+            />
 
-          <el-button @click="showDialog(scope.row, 'dialogRetrieve')" type="primary" icon="el-icon-sold-out" size="mini" />
+            <el-button
+              @click="showDialog(scope.row, 'dialogRetrieve')"
+              type="primary"
+              icon="el-icon-sold-out"
+              size="mini"
+              title="资金回收"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -66,7 +85,11 @@
     <UserAssetDialogDetail :data="activeItem" ref="dialogDetail" />
 
     <!-- 回收弹框 -->
-    <UserAssetDialogRetrieve @on-status-changed="$emit('on-status-changed')" :data="activeItem" ref="dialogRetrieve" />
+    <UserAssetDialogRetrieve
+      @on-status-changed="$emit('on-status-changed')"
+      :data="activeItem"
+      ref="dialogRetrieve"
+    />
   </div>
 </template>
 
@@ -130,6 +153,14 @@ export default {
   data () {
     return {
       activeItem: {}
+    }
+  },
+  methods: {
+    tableRowClassName ({ row }) {
+      if (row.status === 1) {
+        return 'success-row'
+      }
+      return ''
     }
   }
 }

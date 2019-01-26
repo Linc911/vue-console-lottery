@@ -63,9 +63,9 @@ export default {
     // 获取初始表格数据
     fetchTableData (parentId) {
       this.$httpAPI[this.tableHttpAPI](this.requestParams).then(response => {
-        if (response.data) {
+        if (response.data.status === 200) {
           // 作为参考数据
-          this.tableOriginData = response.data
+          this.tableOriginData = response.data.data
 
           // （重载）数据处理：只列举第一级的全部菜单
           if (arguments[0] === undefined) {

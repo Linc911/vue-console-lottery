@@ -1,6 +1,6 @@
 <template lang="html">
-  <el-dialog :visible.sync="dialogVisible" title="创建新优惠活动" width="768px">
-    <ActivityListForm @on-validated="handleValidationSuccess" ref="form" />
+  <el-dialog :visible.sync="dialogVisible" title="创建新返水计划设置" width="768px">
+    <PlanForm @on-validated="handleValidationSuccess" ref="form" />
 
     <span slot="footer">
       <el-checkbox v-model="checked" class="pull-left">{{ saveString }}</el-checkbox>
@@ -12,17 +12,17 @@
 <script>
 import { dialogCreateMixin } from '@/mixins'
 
-import ActivityListForm from './ActivityListForm'
+import PlanForm from './Form'
 
 export default {
-  name: 'ActivityListDialogCreate',
+  name: 'DialogCreate',
   components: {
-    ActivityListForm
+    PlanForm
   },
   mixins: [ dialogCreateMixin ],
   data () {
     return {
-      createHttpAPI: 'updateActivityItem'
+      createHttpAPI: 'updateRebateSettingList'
     }
   }
 }

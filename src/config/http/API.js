@@ -65,6 +65,7 @@ export default {
 
   fetchSystemBanksList: (data) => axios.post('/api-b/bankConfig/list', data), // 银行设置列表
   createSystemBanksItem: (data) => axios.put('/api-b/bankConfig/save', data), // 创建新银行配置
+  deleteSystemBanksItem: (options) => axios.delete('/api-b/bankConfig/delete', options), // 删除银行
 
   fetchSystemAreaList: (data) => axios.post('/api-b/area/list', data), // 地区设置列表
   fetchSystemAreaListTree: (data) => axios.post('/api-b/area/tree', data), // 地区设置列表
@@ -157,8 +158,7 @@ export default {
   /* ===================================== 返水管理 ======================================= */
 
   fetchRebateSettingList: (options) => axios.get('/api-b/rebate/list', options), // 设置返水计划列表
-  createRebateSettingList: (data) => axios.post('/api-b/rebate/save', data), // 会设置返水计划保存
-  updateRebateSettingStatus: (options) => axios.get('/api-b/rebate/status', options), // 设置返水计划修改
+  updateRebateSettingList: (data) => axios.post('/api-b/rebate/save', data), // 会设置返水计划保存
   deleteRebateSettingItem: (options) => axios.delete('/api-b/rebate/delete', options), // 删除设置返水计划
 
   fetchRebateLogsList: (options) => axios.get('/api-b/rebateLog/list', options), // 查看返水记录列表

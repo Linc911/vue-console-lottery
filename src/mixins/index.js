@@ -3,10 +3,18 @@ import config from '@/config/data'
 import BasePagination from '@/components/base/BasePagination'
 import BaseSwitch from '@/components/base/BaseSwitch'
 import BaseTimePicker from '@/components/base/BaseTimePicker'
+
+import LayoutTablePlain from '@/components/layout/LayoutTablePlain'
+
 import SearchLayout from '@/components/layout/SearchLayout'
+import SearchFormLayout from '@/components/layout/SearchFormLayout'
 import BaseAdd from '@/components/base/BaseAdd'
 import SearchIcon from '@/components/search/SearchIcon'
 import SearchReset from '@/components/search/SearchReset'
+
+import ButtonOperationPreview from '@/components/button/ButtonOperationPreview'
+import ButtonOperationEdit from '@/components/button/ButtonOperationEdit'
+import ButtonOperationDelete from '@/components/button/ButtonOperationDelete'
 
 /* ========================================== 公共函数 ========================================== */
 // 触发搜索函数
@@ -144,6 +152,7 @@ export const searchOuterMixin = { // deprecated
 // 顶部筛选 - 搜索组件调用
 export const searchInnerMixin = {
   components: {
+    SearchFormLayout,
     SearchIcon,
     SearchReset
   },
@@ -306,6 +315,12 @@ export const tableWithoutPaginationPostMixin = { // deprecated
 
 /* ========================================== Table 组件 ========================================== */
 export const tableComponentMixin = {
+  components: {
+    LayoutTablePlain,
+    ButtonOperationPreview,
+    ButtonOperationEdit,
+    ButtonOperationDelete
+  },
   props: {
     data: {
       type: Array,
@@ -472,7 +487,7 @@ export const dialogCreateMixin = {
             this.$refs.form.resetFields()
           }
 
-          this.$emit('on-created')
+          this.$emit('on-created', data)
 
           this.$message.success(config.CREATE_SUCCEEDED)
         } else {

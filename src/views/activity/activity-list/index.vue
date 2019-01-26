@@ -13,19 +13,14 @@
     <!-- 主要内容 -->
     <div>
       <!-- 表格 -->
-      <ActivityListTable
-        @on-updated="fetchTableData()"
-        @on-deleted="fetchTableData()"
-        @on-status-changed="fetchTableData()"
-        :data="tableData"
-      />
+      <ActivityListTable @on-changed="fetchTableData()" :data="tableData" />
 
       <!-- 分页 -->
       <BasePagination
         @on-change="handlePaginationChange"
         :page="page"
-        :requestParams="requestParams"
         :httpURL="tableHttpAPI"
+        :requestParams="requestParams"
       />
     </div>
 
@@ -35,10 +30,8 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
-import BaseAdd from '@/components/base/BaseAdd'
 import ActivityListSearch from './components/ActivityListSearch'
 import ActivityListTable from './components/ActivityListTable'
 import ActivityListDialogCreate from './components/ActivityListDialogCreate'
@@ -46,13 +39,11 @@ import ActivityListDialogCreate from './components/ActivityListDialogCreate'
 export default {
   name: 'ActivityList',
   components: {
-    SearchLayout,
-    BaseAdd,
     ActivityListSearch,
     ActivityListTable,
     ActivityListDialogCreate
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableData: [],

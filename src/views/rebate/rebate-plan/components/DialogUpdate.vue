@@ -1,6 +1,6 @@
 <template lang="html">
-  <el-dialog :visible.sync="dialogVisible" title="创建新优惠活动" width="768px">
-    <ActivityListForm @on-validated="handleValidationSuccess" :data="data" ref="form" />
+  <el-dialog :visible.sync="dialogVisible" title="修改返水计划设置" width="768px">
+    <PlanForm @on-validated="handleValidationSuccess" :data="data" ref="form" />
 
     <span slot="footer">
       <el-button @click="$refs.form.validateForm()" type="primary" size="small">确定</el-button>
@@ -11,17 +11,17 @@
 <script>
 import { dialogUpdateMixin } from '@/mixins'
 
-import ActivityListForm from './ActivityListForm'
+import PlanForm from './Form'
 
 export default {
-  name: 'ActivityListDialogUpdate',
+  name: 'RebatePlanDialogUpdate',
   components: {
-    ActivityListForm
+    PlanForm
   },
   mixins: [ dialogUpdateMixin ],
   data () {
     return {
-      updateHttpAPI: 'updateActivityItem',
+      updateHttpAPI: 'updateRebateSettingList',
       httpParams: {}
     }
   },

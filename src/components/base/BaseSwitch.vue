@@ -16,6 +16,7 @@ export default {
         return {}
       }
     },
+    // 当传入的值为相反时（0代表启用时），要在组件中将词值设为true
     opposite: {
       type: Boolean,
       default: false
