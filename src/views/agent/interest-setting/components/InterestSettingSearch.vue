@@ -1,7 +1,6 @@
 <template lang="html">
-  <!-- 条件筛选 -->
-  <div class="search">
-    <el-form :model="formData" size="small" inline>
+  <el-form :model="formData" size="small" inline>
+    <SearchFormLayout @on-search="search()" @on-reset="handleRefresh">
       <el-form-item label="分润设置名称">
         <FormInput
           @keyup.native.enter="$emit('on-search', formData)"
@@ -12,16 +11,16 @@
         />
       </el-form-item>
 
-      <FormSelect
-        @on-change="$set(formData, 'gameConfigId', $event)"
-        :value="formData.gameConfigId"
-        httpAPIName="fetchGameClasses"
-        labelAttr="name"
-        valueAttr="id"
-        prop="gameConfigId"
-        label="游戏类型"
-        ref="gameConfigId"
-      />
+      <el-form-item label="游戏类型">
+        <FormSelectAsync
+          @on-change="$set(formData, 'gameConfigId', $event)"
+          :value="formData.gameConfigId"
+          httpAPIName="fetchGameClasses"
+          labelAttr="name"
+          valueAttr="id"
+          ref="gameConfigId"
+        />
+      </el-form-item>
 
       <el-form-item label="启用状态">
         <FormSelectArray
@@ -31,27 +30,22 @@
           ref="status"
         />
       </el-form-item>
-
-      <div style="display: inline-block">
-        <SearchIcon @click.native="search" />
-        <SearchReset @click.native="reset" />
-      </div>
-    </el-form>
-  </div>
+    </SearchFormLayout>
+  </el-form>
 </template>
 
 <script type="text/javascript">
 import { searchInnerMixin } from '@/mixins'
 
 import FormInput from '@/components/form/FormInput'
-import FormSelect from '@/components/form/FormSelect'
+import FormSelectAsync from '@/components/form/FormSelectAsync'
 import FormSelectArray from '@/components/form/FormSelectArray'
 
 export default {
-  name: 'RebateSettingSearch',
+  name: 'InterestSettingSearch',
   components: {
     FormInput,
-    FormSelect,
+    FormSelectAsync,
     FormSelectArray
   },
   mixins: [ searchInnerMixin ]

@@ -1,7 +1,6 @@
 <template lang="html">
-  <!-- 条件筛选 -->
-  <div class="search">
-    <el-form @submit.native.prevent :model="formData" size="small" inline>
+  <el-form :model="formData" size="small" inline>
+    <SearchFormLayout @on-search="search()" @on-reset="handleRefresh">
       <el-form-item label="代理账户">
         <FormInput
           @keyup.native.enter="$emit('on-search', formData)"
@@ -12,48 +11,38 @@
         />
       </el-form-item>
 
-      <FormDateRange @on-change="handleDateRangeChange" ref="dateRange" />
+      <el-form-item label="时间查询">
+        <SearchDatePicker
+          @on-change="handleTimeRangeChange($event, 'startTime', 'endTime')"
+          ref="loginRange"
+        />
+      </el-form-item>
 
-      <FormNumberRange
-        @on-change="handleWinRangeChange"
-        label="会员余额"
-        startPlaceholder="最小金额"
-        endPlaceholder="最大金额"
-        ref="numberRange"
-      />
-
-      <div style="display: inline-block">
-        <SearchIcon @click.native="search" />
-        <SearchReset @click.native="reset" />
-      </div>
-    </el-form>
-  </div>
+      <el-form-item label="会员余额">
+        <SearchNumberRange
+          @on-change="handleNumberRangeChange($event, 'minWin', 'maxWin')"
+          @on-enter="$emit('on-search', formData)"
+          ref="numberRange"
+        />
+      </el-form-item>
+    </SearchFormLayout>
+  </el-form>
 </template>
 
 <script type="text/javascript">
 import { searchInnerMixin } from '@/mixins'
 
 import FormInput from '@/components/form/FormInput'
-import FormDateRange from '@/components/form/FormDateRange'
-import FormNumberRange from '@/components/form/FormNumberRange'
+import SearchDatePicker from '@/components/search/SearchDatePicker'
+import SearchNumberRange from '@/components/search/SearchNumberRange'
 
 export default {
-  name: 'RebateSettingSearch',
+  name: 'AccountListSearch',
   components: {
     FormInput,
-    FormDateRange,
-    FormNumberRange
+    SearchDatePicker,
+    SearchNumberRange
   },
-  mixins: [ searchInnerMixin ],
-  methods: {
-    handleDateRangeChange ({ startTime, endTime }) {
-      this.formData.startTime = startTime
-      this.formData.endTime = endTime
-    },
-    handleWinRangeChange ({ start, end }) {
-      this.formData.minWin = start
-      this.formData.maxWin = end
-    }
-  }
+  mixins: [ searchInnerMixin ]
 }
 </script>

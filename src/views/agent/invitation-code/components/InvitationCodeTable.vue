@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <LayoutTablePlain :tableData="data">
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="inviteCode" label="邀请码" />
@@ -30,7 +30,7 @@
           <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
         </template>
       </el-table-column>
-    </el-table>
+    </LayoutTablePlain>
 
     <!-- 删除弹框 -->
     <DialogDeleteConfirm

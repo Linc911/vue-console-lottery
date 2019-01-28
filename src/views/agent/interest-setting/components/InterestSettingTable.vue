@@ -1,28 +1,30 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <LayoutTablePlain :tableData="data">
 
       <el-table-column type="index" :width="40" />
 
       <el-table-column prop="name" label="分润设置名称" :min-width="120" />
 
-      <el-table-column prop="upperLimit" label="有效投注上限" :width="80" />
+      <el-table-column prop="gameConfigName" label="游戏类型" :min-width="100" />
 
-      <el-table-column prop="lowerLimit" label="有效投注下限" :width="80" />
+      <el-table-column prop="upperLimit" label="有效投注上限" :min-width="80" />
 
-      <el-table-column prop="ratio" label="返佣比例" :width="80">
+      <el-table-column prop="lowerLimit" label="有效投注下限" :min-width="80" />
+
+      <el-table-column prop="ratio" label="返佣比例" :min-width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.ratio | percent }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="startTime" label="计划开始时间" :width="140">
+      <el-table-column prop="startTime" label="计划开始时间" :min-width="140">
         <template slot-scope="scope">
           <span>{{ scope.row.startTime | time }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="endTime" label="计划结束时间" :width="140">
+      <el-table-column prop="endTime" label="计划结束时间" :min-width="140">
         <template slot-scope="scope">
           <span>{{ scope.row.endTime | time }}</span>
         </template>
@@ -34,21 +36,23 @@
             @on-change="handleSwitchChange"
             :propValue="!scope.row.status"
             :payload="{ id: scope.row.id }"
+            opposite
           />
         </template>
       </el-table-column>
 
-      <el-table-column prop="operations" label="操作" :min-width="130">
+      <el-table-column prop="operations" label="操作" :width="130">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row, 'dialogDetail')" type="primary" icon="el-icon-view" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogUpdate')" type="primary" icon="el-icon-edit" size="mini" />
-          <el-button @click="showDialog(scope.row, 'dialogDelete')" type="warning" icon="el-icon-delete" size="mini" />
+          <!-- <ButtonOperationPreview @click.native="showDialog(scope.row, 'dialogDetail')" /> -->
+          <ButtonOperationEdit @click.native="showDialog(scope.row, 'dialogUpdate')" />
+          <ButtonOperationDelete @click.native="showDialog(scope.row, 'dialogDelete')" />
         </template>
       </el-table-column>
-    </el-table>
+    </LayoutTablePlain>
 
     <!-- 修改弹框 -->
-    <InterestSettingDialogUpdate @on-updated="$emit('on-updated')" :data="activeItem" ref="dialogUpdate" />
+    <InterestSettingDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogUpdate" />
+
     <!-- 删除弹框 -->
     <DialogDeleteConfirm
       @on-confirm="handleDeleteConfirm"
@@ -60,39 +64,29 @@
 </template>
 
 <script>
-import { tableComponentMixin } from '@/mixins'
+import { tableComponentMixin, switchMixin } from '@/mixins'
 
-import BaseIndicator from '@/components/base/BaseIndicator'
-import BaseSwitch from '@/components/base/BaseSwitch'
 import InterestSettingDialogUpdate from './InterestSettingDialogUpdate'
 import DialogDeleteConfirm from '@/components/dialog/DialogDeleteConfirm'
 
 export default {
   name: 'InterestSettingTable',
   components: {
-    BaseIndicator,
-    BaseSwitch,
     InterestSettingDialogUpdate,
     DialogDeleteConfirm
   },
-  mixins: [ tableComponentMixin ],
+  mixins: [ tableComponentMixin, switchMixin ],
   data () {
     return {
+      activeItem: { name: '' },
       deleteHttpAPI: 'deleteAgentInterestSettingItem',
-      deleteAttrName: 'rebateId'
-    }
-  },
-  methods: {
-    handleSwitchChange (payload) {
-      this.$httpAPI.updateRebateSettingStatus({
-        params: { rebateId: payload.id, status: Number(!payload.value) }
-      }).then(response => {
-        if (response.data.status === 200) {
-          this.$message.success('修改启用状态成功！')
-        } else {
-          this.$message.error('修改启用状态失败！')
-        }
-      }).catch(error => console.log(error))
+      deleteAttrName: 'commisionConfigId',
+      deletedId: 'commisionConfigId',
+      switchObj: {
+        API: 'updateAgentInterestSettingItem',
+        attrId: 'id',
+        attrValue: 'status'
+      }
     }
   }
 }

@@ -1,9 +1,5 @@
 <template lang="html">
-    <el-dialog
-      :visible.sync="dialogVisible"
-      title="变更下级代理"
-      width="450px"
-    >
+    <el-dialog :visible.sync="dialogVisible" title="变更下级代理" width="500px">
       <el-form :model="formData" size="small">
         <el-form-item prop="parentId" label="代理账号">
           <el-select

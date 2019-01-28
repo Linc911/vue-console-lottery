@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" highlight-current-row border>
+    <LayoutTablePlain :tableData="data">
 
       <el-table-column type="index" :width="36" />
 
@@ -16,13 +16,15 @@
 
       <el-table-column prop="value" label="分润基数(%)" :width="96">
         <template slot-scope="scope">
-          <span>{{ scope.row.value }}</span>
-          <IconEdit @on-click="showDialog(scope.row, 'dialogInput')" class="pull-right" />
+          <div>
+            <span>{{ scope.row.value }}</span>
+            <IconEdit @on-click="showDialog(scope.row, 'dialogInput')" class="pull-right" />
+          </div>
         </template>
       </el-table-column>
 
       <el-table-column prop="remark" label="备注" :min-width="140" />
-    </el-table>
+    </LayoutTablePlain>
 
     <!-- 修改弹框 -->
     <DialogInput

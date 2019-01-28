@@ -54,7 +54,9 @@
 
           <el-table-column prop="options" label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" size="small">赔率预览</el-button>
+              <div>
+                <!-- <el-button type="primary" size="small">赔率预览</el-button> -->
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -106,7 +108,7 @@ export default {
               this.$router.push({ name: 'AgentAccountList' })
               this.$message.success('创建成功！')
             } else {
-              this.$message.error('创建失败！')
+              this.$message.error(`创建失败: ${response.data.msg}`)
             }
           }).catch(error => console.log(error))
         } else {

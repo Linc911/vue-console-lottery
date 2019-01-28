@@ -1,11 +1,7 @@
 <template lang="html">
   <div>
     <!-- 条件筛选 -->
-    <SearchLayout>
-      <div slot="left">
-        <InvitationCodeSearch @on-search="handleSearch" />
-      </div>
-    </SearchLayout>
+    <InvitationCodeSearch @on-search="handleSearch" />
 
     <!-- 主要内容 -->
     <div>
@@ -27,23 +23,20 @@
 </template>
 
 <script>
-import { searchOuterMixin, tableWithPaginationMixin } from '@/mixins'
+import { searchLayoutWithoutAddMixin, tableWithPaginationMixin } from '@/mixins'
 
-import SearchLayout from '@/components/layout/SearchLayout'
 import InvitationCodeSearch from './components/InvitationCodeSearch'
 import InvitationCodeTable from './components/InvitationCodeTable'
 
 export default {
   name: 'AgentInvitationCode',
   components: {
-    SearchLayout,
     InvitationCodeSearch,
     InvitationCodeTable
   },
-  mixins: [ searchOuterMixin, tableWithPaginationMixin ],
+  mixins: [ searchLayoutWithoutAddMixin, tableWithPaginationMixin ],
   data () {
     return {
-      tableData: [],
       tableHttpAPI: 'fetchAgentInvitationCode',
       requestParams: { pageNo: 1, pageSize: 10 },
       page: { current: 1, size: 10, total: 10 }

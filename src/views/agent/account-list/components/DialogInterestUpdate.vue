@@ -1,18 +1,18 @@
 <template lang="html">
-    <el-dialog
-      :visible.sync="dialogVisible"
-      title="修改分润"
-      width="400px"
-    >
-      <el-form :model="formData" size="small" label-width="90px" >
-        <el-form-item label="分润比例%">
-          <el-input v-model="formData.rate" type="number" />
-        </el-form-item>
-      </el-form>
+  <el-dialog
+    :visible.sync="dialogVisible"
+    title="修改分润"
+    width="400px"
+  >
+    <el-form :model="formData" size="small" label-width="90px" >
+      <el-form-item label="分润比例%">
+        <el-input v-model="formData.rate" type="number" />
+      </el-form-item>
+    </el-form>
 
-      <span slot="footer">
-        <el-button @click="submitForm()" type="primary" size="small">确定</el-button>
-      </span>
+    <span slot="footer">
+      <el-button @click="submitForm()" type="primary" size="small">确定</el-button>
+    </span>
   </el-dialog>
 </template>
 
