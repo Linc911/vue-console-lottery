@@ -3,7 +3,7 @@
     <!-- 条件筛选 -->
     <SearchLayout>
       <div slot="left">
-        <RemittanceUserSearch @on-search="handleSearch" />
+        <!-- <RemittanceUserSearch @on-search="handleSearch" /> -->
       </div>
       <div slot="right">
         <BaseAdd @click.native="$refs.dialogCreate.toggleDialogVisible(true)" />
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { searchLayoutMixin, tableWithPaginationPostMixin } from '@/mixins'
+import { searchLayoutMixin, tableWithPaginationMixin } from '@/mixins'
 
 import RemittanceUserSearch from './components/RemittanceUserSearch'
 import RemittanceUserTable from './components/RemittanceUserTable'
@@ -43,7 +43,7 @@ export default {
     RemittanceUserTable,
     RemittanceUserDialogCreate
   },
-  mixins: [ searchLayoutMixin, tableWithPaginationPostMixin ],
+  mixins: [ searchLayoutMixin, tableWithPaginationMixin ],
   data () {
     return {
       tableHttpAPI: 'fetchTransactionRemittance',

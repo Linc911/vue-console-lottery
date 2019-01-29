@@ -71,8 +71,10 @@ export default {
       this.$refs.dialogDelete.toggleDialogVisible(false)
 
       this.$httpAPI.deleteTransactionPortLine({
-        payTypeId: this.activeItem.payTypeId,
-        payInterfaceIds: [ this.activeItem.id ]
+        params: {
+          payTypeId: this.activeItem.payTypeId,
+          payInterfaceIds: this.activeItem.id
+        }
       }).then(response => {
         if (response.data.status === 200) {
           this.$emit('on-deleted')

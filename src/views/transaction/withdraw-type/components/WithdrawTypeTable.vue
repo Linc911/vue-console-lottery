@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" max-height="600" highlight-current-row stripe border>
+    <LayoutTablePlain :tableData="data">
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="name" label="类型名称" :min-width="140" />
@@ -46,7 +46,7 @@
           </div>
         </template>
       </el-table-column>
-    </el-table>
+    </LayoutTablePlain>
 
     <!-- 详情弹框 -->
     <WithdrawTypeDialogDetail :data="activeItem" ref="dialogDetail" />

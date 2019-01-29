@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <el-table :data="data" size="small" max-height="600" highlight-current-row stripe border>
+    <LayoutTablePlain :tableData="data">
       <el-table-column type="index" :width="36" />
 
       <el-table-column prop="username" label="收款户名" :min-width="120" />
@@ -52,7 +52,7 @@
           </div>
         </template>
       </el-table-column>
-    </el-table>
+    </LayoutTablePlain>
 
     <!-- 修改弹框 -->
     <RemittanceUserDialogUpdate @on-updated="$emit('on-changed')" :data="activeItem" ref="dialogCreate" />
@@ -90,8 +90,8 @@ export default {
   data () {
     return {
       deleteHttpAPI: 'deleteTransactionRemittance',
-      deleteAttrName: 'paymentMerchantId',
-      deleteId: 'paymentMerchantId',
+      deleteAttrName: 'remitId',
+      deleteId: 'id',
       activeItem: { username: '' },
       imgUrl: ''
     }

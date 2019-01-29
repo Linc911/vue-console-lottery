@@ -43,16 +43,16 @@
       </el-radio-group>
     </el-form-item>
 
-    <el-form-item prop="rebateUserGroups" label="会员分组" class="custom-block">
+    <el-form-item prop="userGroups" label="会员分组" class="custom-block">
       <FormSelectAsync
-        @on-change="$set(formData, 'rebateUserGroups', $event)"
+        @on-change="$set(formData, 'userGroups', $event)"
         :value="formData.userGroups"
         httpAPIName="fetchUserGroups"
         :httpAPIParams="{ params: { pageNo: 1, pageSize: 100 } }"
         labelAttr="name"
         valueAttr="groupId"
         multiple
-        ref="rebateUserGroups"
+        ref="userGroups"
       />
     </el-form-item>
 
@@ -104,7 +104,7 @@ export default {
         discountRatio: '',
         status: '',
         sort: '',
-        rebateUserGroups: '',
+        userGroups: '',
         merchantId: '',
         payAddress: '',
         publicKey: '',
@@ -118,7 +118,7 @@ export default {
         discountRatio: validators.validateSelect('优惠比例不能为空'),
         status: validators.validateSelect('启用状态必须选择一个'),
         sort: validators.validateRequired('排序顺序不能为空'),
-        rebateUserGroups: validators.validateSelect('会员分组至少选择一个'),
+        userGroups: validators.validateSelect('会员分组至少选择一个'),
         merchantId: validators.validateRequired('商家账号不能为空'),
         payAddress: validators.validateRequired('支付地址不能为空'),
         publicKey: validators.validateRequired('秘钥(公钥)不能为空'),

@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { tableWithPaginationPostMixin } from '@/mixins'
+import { tableWithPaginationMixin } from '@/mixins'
 
 import BaseIndicator from '@/components/base/BaseIndicator'
 
@@ -74,7 +74,7 @@ export default {
   components: {
     BaseIndicator
   },
-  mixins: [ tableWithPaginationPostMixin ],
+  mixins: [ tableWithPaginationMixin ],
   props: {
     tab: {
       type: Object,

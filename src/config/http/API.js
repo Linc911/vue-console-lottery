@@ -169,20 +169,22 @@ export default {
   fetchTransactionPaymentType: (options) => axios.get('/api-b/configPayType/list', options), // 支付类型列表
   createTransactionPaymentType: (data) => axios.post('/api-b/configPayType/save', data), // 创建新支付类型
   updateTransactionPaymentType: (data) => axios.post('/api-b/configPayType/update', data), // 修改支付类型配置
+  deleteTransactionPaymentType: (options) => axios.delete('/api-b/configPayType/delete', options), // 删除支付类型
 
-  fetchTransactionPaymentPort: (data) => axios.post('/api-b/configPayInterface/list', data), // 支付接口列表
+  fetchTransactionPaymentPort: (data) => axios.get('/api-b/configPayInterface/list', data), // 支付接口列表
   fetchTransactionPaymentPortType: (options) => axios.get('/api-b/dictionary/list', options), // 支付接口类型列表
   createTransactionPaymentPort: (data) => axios.post('/api-b/configPayInterface/save', data), // 创建新支付接口
-  updateTransactionPaymentPort: (data) => axios.post('/api-b/configPayInterface/update', data), // 接口类型列表
+  updateTransactionPaymentPort: (data) => axios.post('/api-b/configPayInterface/update', data), // 修改接口类型列表
+  deleteTransactionPaymentPort: (options) => axios.delete('/api-b/configPayInterface/delete', options), // 删除接口类型
 
   fetchTransactionPortLine: (options) => axios.get('/api-b/configPayRoute/list', options), // 支付路线类型列表
   createTransactionPortLine: (data) => axios.post('/api-b/configPayRoute/save', data), // 创建新支付路线（可一对多）
-  deleteTransactionPortLine: (data) => axios.post('/api-b/configPayRoute/deleteMany', data), // 删除路线配置
+  deleteTransactionPortLine: (options) => axios.delete('/api-b/configPayRoute/deleteMany', options), // 删除路线配置
 
-  fetchTransactionRemittance: (data) => axios.post('/api-b/configRemit/list', data), // 会员汇款设置列表
+  fetchTransactionRemittance: (options) => axios.get('/api-b/configRemit/list', options), // 会员汇款设置列表
   createTransactionRemittance: (data) => axios.post('/api-b/configRemit/save', data), // 创建新会员汇款设置
   updateTransactionRemittance: (data) => axios.post('/api-b/configRemit/updateById', data), // 创建新会员汇款设置
-  deleteTransactionRemittance: (options) => axios.get('/api-b/configRemit/delete', options), // 删除会员汇款设置
+  deleteTransactionRemittance: (options) => axios.delete('/api-b/configRemit/delete', options), // 删除会员汇款设置
 
   fetchWithdrawAccountTypeList: (options) => axios.get('/api-b/dictionary/list', options), // 出款商户类型列表
   updateWithdrawAccountTypeItem: (data) => axios.put('/api-b/dictionary/save', data), // 创建与修改出款商户类型

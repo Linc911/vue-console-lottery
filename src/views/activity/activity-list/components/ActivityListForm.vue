@@ -64,6 +64,7 @@
       <FormUploadImage
         @on-uploaded="$set(formData, 'coverImg', $event.response)"
         @on-removed="$set(formData, 'coverImg', $event)"
+        :fileList="formData.coverImg ? [{ name: formData.title, url: formData.coverImg }] : []"
       />
     </el-form-item>
 
@@ -71,6 +72,7 @@
       <FormUploadImage
         @on-uploaded="$set(formData, 'activityImg', $event.response)"
         @on-removed="$set(formData, 'activityImg', $event)"
+        :fileList="formData.activityImg ? [ { name: formData.title, url: formData.activityImg }] : []"
       />
     </el-form-item>
   </el-form>
