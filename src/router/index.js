@@ -9,7 +9,14 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    return {
+      x:0,
+      y:0
+    }
+  }
 })
 
 // 路由配置
